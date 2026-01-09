@@ -66,8 +66,6 @@ docs/node_modules/
 docs/build/
 docs/.docusaurus/
 docs/.cache/
-docs/yarn.lock
-docs/package-lock.json
 docs/docs/policies/
 docs/i18n/*/docusaurus-plugin-content-docs/current/policies/
 pkg/policy/index_gen.go
