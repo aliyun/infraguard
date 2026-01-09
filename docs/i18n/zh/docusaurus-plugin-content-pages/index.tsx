@@ -51,7 +51,7 @@ function HomepageHeader() {
             <div className={styles.buttons}>
               <Link
                 className={clsx('button button--primary button--lg', styles.button)}
-                to="/zh/docs/getting-started/quick-start">
+                to="/docs/getting-started/quick-start">
                 <Translate id="homepage.getStarted" description="Get started button text">
                   快速开始 →
                 </Translate>
@@ -158,7 +158,7 @@ function InfrastructureCompliance() {
             <div className="padding-vert--md">
               <Link
                 className="button button--primary button--lg"
-                to="/zh/docs/user-guide/scanning-templates">
+                to="/docs/user-guide/scanning-templates">
                 了解更多
               </Link>
             </div>

@@ -17,12 +17,12 @@ InfraGuard 是一个命令行工具，帮助您确保基础设施代码在部署
 
 ## 核心功能
 
-- <img src={require('@site/static/img/features/validation.svg').default} width="20" height="20" style={{verticalAlign: 'middle', marginRight: '4px'}} /> **部署前验证** - 在问题到达生产环境之前捕获合规问题
-- <img src={require('@site/static/img/features/rules.svg').default} width="20" height="20" style={{verticalAlign: 'middle', marginRight: '4px'}} /> **策略包** - 预构建的合规包（MLPS、ISO 27001、PCI-DSS 等）
-- <img src={require('@site/static/img/features/i18n.svg').default} width="20" height="20" style={{verticalAlign: 'middle', marginRight: '4px'}} /> **国际化** - 完整支持英文和中文
-- <img src={require('@site/static/img/features/formats.svg').default} width="20" height="20" style={{verticalAlign: 'middle', marginRight: '4px'}} /> **多种输出格式** - 表格、JSON 和 HTML 报告
-- <img src={require('@site/static/img/features/extensible.svg').default} width="20" height="20" style={{verticalAlign: 'middle', marginRight: '4px'}} /> **可扩展** - 使用 Rego 编写自定义策略
-- <img src={require('@site/static/img/features/fast.svg').default} width="20" height="20" style={{verticalAlign: 'middle', marginRight: '4px'}} /> **快速** - 使用 Go 构建，速度快、效率高
+- **部署前验证** - 在问题到达生产环境之前捕获合规问题
+- **策略包** - 预构建的合规包（MLPS、ISO 27001、PCI-DSS 等）
+- **国际化** - 完整支持英文和中文
+- **多种输出格式** - 表格、JSON 和 HTML 报告
+- **可扩展** - 使用 Rego 编写自定义策略
+- **快速** - 使用 Go 构建，速度快、效率高
 
 ## 支持的云服务商
 
