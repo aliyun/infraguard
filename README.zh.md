@@ -25,11 +25,10 @@
 ### 安装
 
 ```bash
-# 克隆并构建
-git clone https://github.com/aliyun/infraguard.git
-cd infraguard
-make build
+go install github.com/aliyun/infraguard/cmd/infraguard@latest
 ```
+
+或从 [GitHub Releases](https://github.com/aliyun/infraguard/releases) 下载预编译的二进制文件。
 
 ### 基本用法
 

@@ -4,48 +4,23 @@ title: 安装
 
 # 安装
 
-## 前置要求
+## 使用 go install 安装（推荐）
 
-- **Go 1.24.6 或更高版本**（用于从源码构建）
-- **Git**（用于克隆仓库）
-
-## 从源码构建
-
-目前，InfraGuard 以源码形式分发。按照以下步骤构建和安装：
-
-### 1. 克隆仓库
+安装 InfraGuard 最简单的方式是使用 `go install`：
 
 ```bash
-git clone https://github.com/aliyun/infraguard.git
-cd infraguard
+go install github.com/aliyun/infraguard/cmd/infraguard@latest
 ```
 
-### 2. 构建二进制文件
+这将下载、编译并安装 `infraguard` 二进制文件到您的 `$GOPATH/bin` 目录（如果未设置 `GOPATH`，则为 `$HOME/go/bin`）。
+
+确保您的 Go bin 目录在 PATH 中：
 
 ```bash
-make build
+export PATH=$PATH:$(go env GOPATH)/bin
 ```
 
-这将在项目根目录创建 `infraguard` 二进制文件。
-
-### 3. 安装到 PATH（可选）
-
-您可以将二进制文件手动复制到 PATH 中的目录：
-
-```bash
-# 选项 1：系统级安装（需要 sudo）
-sudo cp infraguard /usr/local/bin/
-
-# 选项 2：用户级安装（确保 ~/bin 在您的 PATH 中）
-cp infraguard ~/bin/
-
-# 选项 3：临时将当前目录添加到 PATH
-export PATH=$PATH:$(pwd)
-```
-
-或者，您也可以直接运行 InfraGuard 而无需安装（见下文）。
-
-### 4. 验证安装
+### 验证安装
 
 ```bash
 infraguard version
@@ -53,12 +28,69 @@ infraguard version
 
 您应该看到版本信息显示。
 
-## 替代方案：不安装直接运行
+## 下载预编译的二进制文件
 
-您也可以直接运行 InfraGuard 而无需安装：
+您可以从 [GitHub Releases](https://github.com/aliyun/infraguard/releases) 下载预编译的二进制文件。
+
+### 支持的平台
+
+| 平台 | 架构 | 文件名 |
+|------|------|--------|
+| Linux | amd64 | `infraguard-vX.X.X-linux-amd64` |
+| Linux | arm64 | `infraguard-vX.X.X-linux-arm64` |
+| macOS | amd64 (Intel) | `infraguard-vX.X.X-darwin-amd64` |
+| macOS | arm64 (Apple Silicon) | `infraguard-vX.X.X-darwin-arm64` |
+| Windows | amd64 | `infraguard-vX.X.X-windows-amd64.exe` |
+| Windows | arm64 | `infraguard-vX.X.X-windows-arm64.exe` |
+
+### 安装步骤
+
+1. 从 [Releases 页面](https://github.com/aliyun/infraguard/releases) 下载适合您平台的二进制文件
+
+2. 添加可执行权限（Linux/macOS）：
 
 ```bash
-go run ./cmd/infraguard <command>
+chmod +x infraguard-*
+```
+
+3. 移动到 PATH 目录：
+
+```bash
+# Linux/macOS
+sudo mv infraguard-* /usr/local/bin/infraguard
+
+# 或仅用户安装
+mv infraguard-* ~/bin/infraguard
+```
+
+4. 验证安装：
+
+```bash
+infraguard version
+```
+
+## 从源码构建（可选）
+
+如果您需要修改代码或希望从源码构建：
+
+### 前置要求
+
+- **Go 1.24.6 或更高版本**
+- **Git**
+- **Make**
+
+### 步骤
+
+```bash
+# 克隆仓库
+git clone https://github.com/aliyun/infraguard.git
+cd infraguard
+
+# 构建二进制文件
+make build
+
+# 可选：安装到 PATH
+sudo cp infraguard /usr/local/bin/
 ```
 
 ## 下一步

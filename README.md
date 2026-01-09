@@ -25,11 +25,10 @@
 ### Installation
 
 ```bash
-# Clone and build
-git clone https://github.com/aliyun/infraguard.git
-cd infraguard
-make build
+go install github.com/aliyun/infraguard/cmd/infraguard@latest
 ```
+
+Or download pre-built binaries from [GitHub Releases](https://github.com/aliyun/infraguard/releases).
 
 ### Basic Usage
 
