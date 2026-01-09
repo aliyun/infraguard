@@ -1,0 +1,39 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  # Server Group
+  MyServerGroup:
+    Type: ALIYUN::NLB::ServerGroup
+    Properties:
+      ServerGroupName: my-sg
+      VpcId: vpc-123
+      ServerGroupType: Instance
+
+  # ECS Instance in Zone A
+  EcsInstanceA1:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      ImageId: ubuntu_18_04_64_20G_alibase_20190624.vhd
+      InstanceType: ecs.g6.large
+      ZoneId: cn-hangzhou-a
+
+  # ECS Instance in Zone A (Same Zone)
+  EcsInstanceA2:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      ImageId: ubuntu_18_04_64_20G_alibase_20190624.vhd
+      InstanceType: ecs.g6.large
+      ZoneId: cn-hangzhou-a
+
+  # Attachment linking SG to EcsA1 and EcsA2
+  MyAttachment:
+    Type: ALIYUN::NLB::BackendServerAttachment
+    Properties:
+      ServerGroupId:
+        Ref: MyServerGroup
+      Servers:
+        - ServerId:
+            Ref: EcsInstanceA1
+          ServerType: Ecs
+        - ServerId:
+            Ref: EcsInstanceA2
+          ServerType: Ecs

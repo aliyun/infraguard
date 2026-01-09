@@ -1,0 +1,12 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  HBase:
+    Type: ALIYUN::HBase::Cluster
+    Properties:
+      NodeCount: 1
+      ClusterName: test-hbase
+      Engine: hbase
+      EngineVersion: '2.0'
+      PayType: Postpaid
+      ZoneId: cn-hangzhou-b
+      CoreInstanceType: hbase.sn1.medium

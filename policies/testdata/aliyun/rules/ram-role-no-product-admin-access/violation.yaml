@@ -1,0 +1,21 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for ram-role-no-product-admin-access rule - Non-compliant case
+Resources:
+  # 不合规：角色绑定了管理员权限
+  NonCompliantRole:
+    Type: ALIYUN::RAM::Role
+    Properties:
+      RoleName: NonCompliantAdminRole
+      Description: Role with admin access
+      AssumeRolePolicyDocument:
+        Version: '1'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ecs.aliyuncs.com
+            Action: sts:AssumeRole
+      PolicyAttachments:
+        System:
+          - AdministratorAccess
+        Custom: []

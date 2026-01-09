@@ -1,0 +1,9 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Non-compliant SLB Instance without slave zone
+Resources:
+  SLBLoadBalancer:
+    Type: ALIYUN::SLB::LoadBalancer
+    Properties:
+      LoadBalancerSpec: slb.s1.small
+      MasterZoneId: cn-hangzhou-h
+

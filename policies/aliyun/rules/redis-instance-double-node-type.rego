@@ -1,0 +1,43 @@
+package infraguard.rules.aliyun.redis_instance_double_node_type
+
+import rego.v1
+
+import data.infraguard.helpers
+
+rule_meta := {
+	"id": "rule:aliyun:redis-instance-double-node-type",
+	"name": {
+		"en": "Redis Instance Double Node Type",
+		"zh": "Redis 实例节点类型为双副本"
+	},
+	"severity": "medium",
+	"description": {
+		"en": "Ensures Redis instance uses double node type for high availability.",
+		"zh": "确保 Redis 实例使用双副本节点类型以确保高可用性。"
+	},
+	"reason": {
+		"en": "Double node type provides high availability through replication.",
+		"zh": "双副本类型通过复制提供高可用性。"
+	},
+	"recommendation": {
+		"en": "Use double node type for Redis instance.",
+		"zh": "为 Redis 实例使用双副本节点类型。"
+	},
+	"resource_types": ["ALIYUN::REDIS::Instance"],
+}
+
+is_compliant(resource) if {
+	node_type := helpers.get_property(resource, "NodeType", "Double")
+	node_type == "Double"
+}
+
+deny contains result if {
+	some name, resource in helpers.resources_by_type("ALIYUN::REDIS::Instance")
+	not is_compliant(resource)
+	result := {
+		"id": rule_meta.id,
+		"resource_id": name,
+		"violation_path": ["Properties", "NodeType"],
+		"meta": {"severity": rule_meta.severity, "reason": rule_meta.reason, "recommendation": rule_meta.recommendation},
+	}
+}

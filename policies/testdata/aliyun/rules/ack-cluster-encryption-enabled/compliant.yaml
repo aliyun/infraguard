@@ -1,0 +1,20 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  CompliantProCluster:
+    Type: ALIYUN::CS::ManagedKubernetesCluster
+    Properties:
+      Name: pro-cluster
+      VpcId: vpc-123
+      VSwitchIds:
+        - vsw-123
+      ClusterSpec: ack.pro.small
+      EncryptionProviderKey: key-123
+  
+  CompliantStandardCluster:
+    Type: ALIYUN::CS::ManagedKubernetesCluster
+    Properties:
+      Name: standard-cluster
+      VpcId: vpc-123
+      VSwitchIds:
+        - vsw-123
+      ClusterSpec: ack.standard

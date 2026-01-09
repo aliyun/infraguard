@@ -1,0 +1,16 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  CompliantPrepaid:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceChargeType: PrePaid
+      AutoRenew: true
+      ImageId: ubuntu_18_04_x64_20G_alibase_20190624.vhd
+      InstanceType: ecs.t6-c1m1.large
+      
+  CompliantPostpaid:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceChargeType: PostPaid
+      ImageId: ubuntu_18_04_x64_20G_alibase_20190624.vhd
+      InstanceType: ecs.t6-c1m1.large

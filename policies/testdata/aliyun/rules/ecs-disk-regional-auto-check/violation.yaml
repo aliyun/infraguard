@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Non-compliant ECS Disk with standard ESSD storage
+Resources:
+  DataDisk:
+    Type: ALIYUN::ECS::Disk
+    Properties:
+      DiskName: my-data-disk
+      DiskCategory: cloud_essd
+      Size: 100
+      ZoneId: cn-hangzhou-h
+

@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - OSS bucket without public read access
+
+Resources:
+  OSSBucket:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: private-bucket
+      AccessControl: private
+

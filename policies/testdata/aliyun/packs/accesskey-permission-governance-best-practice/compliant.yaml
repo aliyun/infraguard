@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - accesskey-permission-governance-best-practice
+Resources:
+  DummyResource:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: test-sg
+      Description: Test security group for access key permission governance
+      SecurityGroupType: enterprise
+      VpcId: vpc-test123

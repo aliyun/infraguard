@@ -1,0 +1,14 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - Security group ingress from private CIDR only
+
+Resources:
+  # Compliant: Security group with ingress from private network
+  SecurityGroup:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: test-sg
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          PortRange: 22/22
+          SourceCidrIp: 10.0.0.0/8
+

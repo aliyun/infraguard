@@ -1,0 +1,12 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  ECI:
+    Type: ALIYUN::ECI::ContainerGroup
+    Properties:
+      ContainerGroupName: test-eci
+      Container:
+        - Name: test
+          Image: nginx
+      Volume:
+        - Name: empty-dir
+          Type: EmptyDirVolume

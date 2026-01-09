@@ -1,0 +1,16 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Parameters:
+  minVersion:
+    Type: String
+    Default: "3.5.0"
+Resources:
+  MSECluster:
+    Type: ALIYUN::MSE::Cluster
+    Properties:
+      ClusterSpecification: MSE_SC_2_4_60_c
+      ClusterType: ZooKeeper
+      ClusterVersion: ZooKeeper_3_4_0
+      NetType: privatenet
+      InstanceCount: 3
+      VpcId: vpc-bp1abcdefg
+      VSwitchId: vsw-bp1abcdefg

@@ -1,0 +1,16 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  # Violation: RAM policy not attached to any user, group, or role
+  UnusedPolicy:
+    Type: ALIYUN::RAM::ManagedPolicy
+    Properties:
+      PolicyName: unused-policy
+      PolicyDocument:
+        Version: '1'
+        Statement:
+          - Effect: Allow
+            Action:
+              - 'oss:ListBuckets'
+            Resource:
+              - '*'
+

@@ -1,0 +1,24 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Parameters:
+  UserName:
+    Type: String
+    Description: RAM user name
+
+Resources:
+  # Violation: RAM user with administrative policies
+  RamUser:
+    Type: ALIYUN::RAM::User
+    Properties:
+      UserName:
+        Ref: UserName
+      DisplayName: Test User
+      Policies:
+        - PolicyName: AdminPolicy
+          PolicyDocument:
+            Version: '1'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - '*'
+                Resource:
+                  - '*'

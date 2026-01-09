@@ -1,0 +1,20 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - PolarDB Application Best Practice
+
+Resources:
+  # Compliant PolarDB cluster with all best practices
+  PolarDBClusterCompliant:
+    Type: ALIYUN::POLARDB::DBCluster
+    Properties:
+      DBType: MySQL
+      DBVersion: '8.0'
+      DBNodeClass: polar.mysql.x4.large
+      DBNodeNum: 2
+      PayType: Postpaid
+      SecurityIPList: '10.0.0.0/8'
+      MaintainTime: '02:00Z-03:00Z'
+      DeletionProtection: true
+      # RenewalStatus defaults to Normal for Postpaid, which is compliant
+
+
+

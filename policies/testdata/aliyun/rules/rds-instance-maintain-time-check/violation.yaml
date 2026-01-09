@@ -1,0 +1,34 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Parameters:
+  EngineVersion:
+    Type: String
+    Default: '8.0'
+    Description: Database engine version
+  Engine:
+    Type: String
+    Default: MySQL
+    Description: Database engine
+  DBInstanceClass:
+    Type: String
+    Default: rds.mysql.s2.large
+    Description: Database instance class
+  DBInstanceStorage:
+    Type: Number
+    Default: 20
+    Description: Database instance storage (GB)
+
+Resources:
+  # Violation: RDS instance without maintenance window configured
+  RdsInstance:
+    Type: ALIYUN::RDS::DBInstance
+    Properties:
+      Engine:
+        Ref: Engine
+      EngineVersion:
+        Ref: EngineVersion
+      DBInstanceClass:
+        Ref: DBInstanceClass
+      DBInstanceStorage:
+        Ref: DBInstanceStorage
+      PayType: Postpaid
+      SecurityIPList: '0.0.0.0/0'

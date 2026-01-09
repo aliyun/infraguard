@@ -1,0 +1,15 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Non-compliant ClickHouse DBCluster with Basic edition
+Resources:
+  ClickHouseCluster:
+    Type: ALIYUN::ClickHouse::DBCluster
+    Properties:
+      Category: Basic
+      DBClusterType: S4
+      DBClusterVersion: 19.15.2.2
+      DBClusterNetworkType: VPC
+      DBNodeCount: 1
+      DBNodeStorage: 100
+      DbNodeStorageType: cloud_essd
+      PaymentType: Postpaid
+

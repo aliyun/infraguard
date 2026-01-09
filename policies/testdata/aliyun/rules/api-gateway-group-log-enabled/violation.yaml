@@ -1,0 +1,9 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for api-gateway-group-log-enabled rule - Non-compliant case
+Resources:
+  # 不合规：分组没有绑定日志配置
+  NonCompliantGroup:
+    Type: ALIYUN::ApiGateway::Group
+    Properties:
+      GroupName: NonCompliantApiGroup
+      Description: API group without logging

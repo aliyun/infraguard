@@ -1,0 +1,9 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  Service:
+    Type: ALIYUN::FC::Service
+    Properties:
+      ServiceName: my-service
+      LogConfig:
+        Logstore: my-logstore
+        Project: my-project

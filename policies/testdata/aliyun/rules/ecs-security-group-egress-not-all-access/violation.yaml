@@ -1,0 +1,14 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - Security group egress set to all access
+
+Resources:
+  # Violation: Security group with all access egress rule
+  SecurityGroup:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: test-sg
+      SecurityGroupEgress:
+        - IpProtocol: all
+          PortRange: -1/-1
+          DestCidrIp: 0.0.0.0/0
+

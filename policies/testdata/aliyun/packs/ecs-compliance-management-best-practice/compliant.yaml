@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - ecs-compliance-management-best-practice
+Resources:
+  DummyResource:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: test-sg
+      VpcId: vpc-test123
+      Description: Test security group for compliance
+      SecurityGroupType: enterprise

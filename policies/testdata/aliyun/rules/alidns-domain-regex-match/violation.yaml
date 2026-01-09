@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - DNS domain name does not match regex pattern
+Resources:
+  ViolationDomain:
+    Type: ALIYUN::DNS::Domain
+    Properties:
+      DomainName: Invalid_Domain_Name!

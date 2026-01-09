@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant SLB instance - intranet only
+Resources:
+  LoadBalancer:
+    Type: ALIYUN::SLB::LoadBalancer
+    Properties:
+      LoadBalancerSpec: slb.s3.small
+      MasterZoneId: cn-hangzhou-h
+      SlaveZoneId: cn-hangzhou-g
+      AddressType: intranet
+      VpcId: vpc-123

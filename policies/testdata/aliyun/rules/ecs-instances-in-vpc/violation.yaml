@@ -1,0 +1,21 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - ECS instances not in VPC (classic network)
+
+Resources:
+  # Violation: ECS instance without VPC
+  ECSInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.g6.large
+      ImageId: centos_7
+      SecurityGroupId: sg-bp1234567890
+
+  # Violation: ECS instance group without VPC
+  ECSInstanceGroup:
+    Type: ALIYUN::ECS::InstanceGroup
+    Properties:
+      InstanceType: ecs.g6.large
+      ImageId: centos_7
+      MaxAmount: 1
+      SecurityGroupId: sg-bp1234567890
+

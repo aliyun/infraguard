@@ -1,0 +1,23 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for ram-user-specified-permission-bound rule - Compliant case
+Resources:
+  # 合规：用户没有绑定高危权限
+  CompliantUser:
+    Type: ALIYUN::RAM::User
+    Properties:
+      UserName: compliant-user
+      DisplayName: Compliant User
+      PolicyAttachments:
+        System:
+          - ReadOnlyAccess
+        Custom: []
+      Policies:
+        - PolicyName: SafePolicy
+          PolicyDocument:
+            Version: '1'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - oss:ListBuckets
+                Resource:
+                  - acs:oss:*:*:my-bucket

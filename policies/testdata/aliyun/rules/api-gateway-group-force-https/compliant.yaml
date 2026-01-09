@@ -1,0 +1,26 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for api-gateway-group-force-https rule - Compliant case
+Resources:
+  # 合规：分组绑定了域名并启用了HTTPS强制跳转
+  CompliantGroup:
+    Type: ALIYUN::ApiGateway::Group
+    Properties:
+      GroupName: CompliantApiGroup
+      Description: API group with HTTPS
+
+  CompliantDomain:
+    Type: ALIYUN::ApiGateway::CustomDomain
+    Properties:
+      GroupId:
+        Fn::GetAtt:
+          - CompliantGroup
+          - GroupId
+      DomainName: api.example.com
+      CertificateBody: |
+        -----BEGIN CERTIFICATE-----
+        MIIFazCCA1OgAwIBAgIRAIIQz7DSQONZRGPgu2OCiwAwDQYJKoZIhvcNAQELBQAw
+        -----END CERTIFICATE-----
+      CertificatePrivateKey: |
+        -----BEGIN PRIVATE KEY-----
+        MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7VJTUt9Us8cKj
+        -----END PRIVATE KEY-----

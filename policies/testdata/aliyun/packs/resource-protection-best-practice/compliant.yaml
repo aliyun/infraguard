@@ -1,0 +1,17 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - Resource Protection Best Practice
+
+Resources:
+  # Note: Most protection features (deletion/release protection) are configured
+  # post-deployment through console/API and are not exposed in ROS templates.
+  # This is a minimal compliant template showing resource creation.
+  
+  # Compliant: Resources exist (protection configured post-deployment)
+  DummyResource:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: protection-test-sg
+      Description: Test security group for protection pack
+      SecurityGroupType: enterprise
+      VpcId: vpc-test123
+

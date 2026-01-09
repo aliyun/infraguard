@@ -1,0 +1,9 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant OTS Instance with zone-redundant storage (VPC_CONSIST)
+Resources:
+  OTSInstance:
+    Type: ALIYUN::OTS::Instance
+    Properties:
+      InstanceName: my-ots-instance
+      Network: VPC_CONSIST
+      ClusterType: SSD

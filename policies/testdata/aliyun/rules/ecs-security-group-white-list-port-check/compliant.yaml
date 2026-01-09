@@ -1,0 +1,14 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - Security group with only whitelisted port from 0.0.0.0/0
+
+Resources:
+  # Compliant: Security group with whitelisted port 80 from public
+  SecurityGroup:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: test-sg
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          PortRange: 80/80
+          SourceCidrIp: 0.0.0.0/0
+

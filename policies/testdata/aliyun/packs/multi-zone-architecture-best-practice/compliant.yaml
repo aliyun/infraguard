@@ -1,0 +1,78 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - Multi-zone architecture best practices
+
+Resources:
+  SecurityGroup:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: alb-sg
+      Description: Security group for ALB load balancer
+      SecurityGroupType: enterprise
+      VpcId: vpc-bp1qg7z02222222222
+
+  # Compliant: ALB with multiple zones
+  ALBLoadBalancer:
+    Type: ALIYUN::ALB::LoadBalancer
+    Properties:
+      LoadBalancerEdition: StandardWithWaf
+      AddressType: Intranet
+      VpcId: vpc-bp1qg7z02222222222
+      SecurityGroupIds:
+        - Ref: SecurityGroup
+      ZoneMappings:
+        - ZoneId: cn-hangzhou-h
+          VSwitchId: vsw-bp1g7z02222222222
+        - ZoneId: cn-hangzhou-g
+          VSwitchId: vsw-bp1g7z03333333333
+      DeletionProtectionEnabled: true
+      LoadBalancerBillingConfig:
+        PayType: PostPay
+
+  # Compliant: RDS with multi-AZ and encryption
+  RDSInstance:
+    Type: ALIYUN::RDS::DBInstance
+    Properties:
+      Engine: MySQL
+      EngineVersion: '8.0'
+      DBInstanceClass: mysql.n2.small.1
+      DBInstanceStorage: 20
+      DBInstanceStorageType: cloud_essd
+      MultiAZ: true
+      DeletionProtection: true
+      SSLSetting: EnabledForInnerConnection
+      SQLCollectorStatus: Enable
+      SecurityIPList: '127.0.0.1'
+      EnableBackupLog: true
+      ZoneId: cn-hangzhou-MAZ5(h,g)
+      EncryptionKey: key-12345678
+
+  # Compliant: OSS with ZRS and encryption
+  OSSBucket:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: multi-zone-bucket
+      RedundancyType: ZRS
+      ServerSideEncryptionConfiguration:
+        SSEAlgorithm: KMS
+        KMSMasterKeyID: key-12345678
+      LoggingConfiguration:
+        TargetBucket: log-bucket
+        TargetPrefix: logs/
+      VersioningConfiguration:
+        Status: Enabled
+      Policy:
+        Statement:
+          - Action: '*'
+            Effect: Deny
+            Principal: '*'
+            Resource: '*'
+            Condition:
+              Bool:
+                acs:SecureTransport: 'false'
+              IpAddress:
+                acs:SourceIp: 192.168.1.0/24
+      RefererConfiguration:
+        AllowEmptyReferer: false
+        RefererList:
+          - https://example.com
+

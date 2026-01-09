@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - 数据库合规管理最佳实践
+Resources:
+  DummyResource:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: test-sg
+      VpcId: vpc-test123
+      Description: Test security group for compliance
+      SecurityGroupType: enterprise

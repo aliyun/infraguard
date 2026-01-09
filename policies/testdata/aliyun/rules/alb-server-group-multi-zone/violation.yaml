@@ -1,0 +1,53 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Non-compliant ALB ServerGroup with servers in single zone
+Resources:
+  VPC:
+    Type: ALIYUN::ECS::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/8
+      VpcName: test-vpc
+  
+  ServerGroup:
+    Type: ALIYUN::ALB::ServerGroup
+    Properties:
+      ServerGroupName: single-zone-server-group
+      VpcId:
+        Ref: VPC
+      HealthCheckConfig:
+        HealthCheckEnabled: true
+  
+  ECSInstance1:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      ImageId: centos_7
+      InstanceType: ecs.g6.large
+      ZoneId: cn-hangzhou-h
+      VpcId:
+        Ref: VPC
+  
+  ECSInstance2:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      ImageId: centos_7
+      InstanceType: ecs.g6.large
+      ZoneId: cn-hangzhou-h
+      VpcId:
+        Ref: VPC
+  
+  BackendAttachment:
+    Type: ALIYUN::ALB::BackendServerAttachment
+    Properties:
+      ServerGroupId:
+        Ref: ServerGroup
+      Servers:
+        - ServerId:
+            Ref: ECSInstance1
+          ServerType: Ecs
+          Port: 80
+          Weight: 100
+        - ServerId:
+            Ref: ECSInstance2
+          ServerType: Ecs
+          Port: 80
+          Weight: 100
+

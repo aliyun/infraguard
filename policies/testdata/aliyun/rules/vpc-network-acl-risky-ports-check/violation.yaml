@@ -1,0 +1,12 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  NetworkAcl:
+    Type: ALIYUN::VPC::NetworkAcl
+    Properties:
+      VpcId: vpc-123
+      NetworkAclName: risky-acl
+      IngressAclEntries:
+        - Policy: accept
+          SourceCidrIp: 0.0.0.0/0
+          Port: 22
+          Protocol: tcp

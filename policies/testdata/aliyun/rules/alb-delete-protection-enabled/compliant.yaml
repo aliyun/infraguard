@@ -1,0 +1,16 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  ALBLoadBalancer:
+    Type: ALIYUN::ALB::LoadBalancer
+    Properties:
+      LoadBalancerEdition: Standard
+      VpcId: vpc-123456
+      AddressType: Internet
+      ZoneMappings:
+        - ZoneId: cn-hangzhou-h
+          VSwitchId: vsw-123456
+        - ZoneId: cn-hangzhou-i
+          VSwitchId: vsw-123457
+      DeletionProtectionEnabled: true
+      LoadBalancerBillingConfig:
+        PayType: PostPay

@@ -1,0 +1,14 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - Using deprecated Elasticsearch node spec
+Resources:
+  ViolationElasticsearch:
+    Type: ALIYUN::ElasticSearch::Instance
+    Properties:
+      Version: '7.10_with_X-Pack'
+      VSwitchId: vsw-123456
+      Password: 'Test123!@#'
+      DataNode:
+        Amount: 3
+        DiskSize: 20
+        Spec: elasticsearch.sn1.small
+        DiskType: cloud_ssd

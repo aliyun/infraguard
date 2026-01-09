@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - AI Model Training Architecture Best Practice
+Resources:
+  DummyResource:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: ai-training-test-sg
+      VpcId: vpc-test123
+      Description: Test security group for compliance
+      SecurityGroupType: enterprise

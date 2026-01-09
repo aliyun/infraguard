@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Non-compliant PrivateLink VPC Endpoint Service with single zone
+Resources:
+  VpcEndpointService:
+    Type: ALIYUN::PrivateLink::VpcEndpointService
+    Properties:
+      Resource:
+        - ZoneId: cn-hangzhou-h
+          ResourceId: nlb-xxxxx
+          ResourceType: nlb
+

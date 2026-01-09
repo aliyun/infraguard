@@ -1,0 +1,17 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  Service:
+    Type: ALIYUN::FC::Service
+    Properties:
+      ServiceName: my-service
+      InternetAccess: true
+  CustomDomain:
+    Type: ALIYUN::FC::CustomDomain
+    Properties:
+      DomainName: api.example.com
+      Protocol: HTTP,HTTPS
+      RouteConfig:
+        Routes:
+          - Path: /*
+            ServiceName: my-service
+            FunctionName: my-function

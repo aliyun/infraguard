@@ -1,0 +1,12 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant ESS Scaling Group with multiple VSwitches
+Resources:
+  ScalingGroup:
+    Type: ALIYUN::ESS::ScalingGroup
+    Properties:
+      MaxSize: 10
+      MinSize: 1
+      VSwitchIds:
+        - vsw-bp1g7z02222222222
+        - vsw-bp1g7z03333333333
+

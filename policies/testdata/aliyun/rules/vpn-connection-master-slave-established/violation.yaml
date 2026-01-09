@@ -1,0 +1,8 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  ViolationVpn:
+    Type: ALIYUN::VPC::VpnConnection
+    Properties:
+      VpnGatewayId: vpn-123
+      LocalSubnet: 192.168.0.0/24
+      RemoteSubnet: 10.0.0.0/24

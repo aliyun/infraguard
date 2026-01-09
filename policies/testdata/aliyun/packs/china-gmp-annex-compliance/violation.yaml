@@ -1,0 +1,56 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - China GMP Annex Compliance
+
+Resources:
+  # Violation: ECS disk without encryption
+  ECSDisk:
+    Type: ALIYUN::ECS::Disk
+    Properties:
+      ZoneId: cn-hangzhou-h
+      DiskCategory: cloud_essd
+      Size: 100
+      Encrypted: false
+
+  # Violation: OSS bucket with public write access
+  OSSBucket1:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: public-write-bucket
+      AccessControl: public-read-write
+
+  # Violation: OSS bucket without versioning
+  OSSBucket2:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: no-versioning-bucket
+      AccessControl: private
+
+  # Violation: OSS bucket without logging
+  OSSBucket3:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: no-logging-bucket
+      AccessControl: private
+
+  # Violation: OSS bucket without ZRS
+  OSSBucket4:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: no-zrs-bucket
+      AccessControl: private
+      RedundancyType: LRS
+
+  # Violation: OSS bucket with anonymous access in policy
+  OSSBucket5:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: anonymous-bucket
+      AccessControl: private
+      Policy:
+        Statement:
+          - Effect: Allow
+            Principal: "*"
+            Action:
+              - oss:GetObject
+            Resource:
+              - acs:oss:*:*:anonymous-bucket/*

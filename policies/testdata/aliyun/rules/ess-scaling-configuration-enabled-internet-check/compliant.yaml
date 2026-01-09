@@ -1,0 +1,18 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template - ESS scaling configuration without public internet access
+Parameters:
+  ImageId:
+    Type: String
+    Default: aliyun_2_1903_x64_20G_alibase_20231221.vhd
+Resources:
+  CompliantScalingConfiguration:
+    Type: ALIYUN::ESS::ScalingConfiguration
+    Properties:
+      ScalingGroupId: sg-12345678
+      ImageId:
+        Ref: ImageId
+      InstanceType: ecs.g6.large
+      ScalingConfigurationName: CompliantScalingConfig
+      SystemDiskCategory: cloud_essd
+      SystemDiskSize: 40
+      InternetMaxBandwidthOut: 0

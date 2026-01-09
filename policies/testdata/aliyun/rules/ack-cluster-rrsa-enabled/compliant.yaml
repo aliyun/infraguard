@@ -1,0 +1,12 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for ack-cluster-rrsa-enabled rule - Compliant case
+Resources:
+  CompliantCluster:
+    Type: 'ALIYUN::CS::ManagedKubernetesCluster'
+    Properties:
+      Name: test-cluster
+      VpcId: vpc-test123
+      VSwitchIds:
+        - vsw-test123
+      RrsaConfig:
+        Enabled: true

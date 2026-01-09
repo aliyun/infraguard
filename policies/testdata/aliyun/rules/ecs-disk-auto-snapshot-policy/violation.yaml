@@ -1,0 +1,15 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - ECS disk without auto snapshot policy configured
+Parameters:
+  ZoneId:
+    Type: String
+    Default: cn-hangzhou-i
+Resources:
+  ViolationDisk:
+    Type: ALIYUN::ECS::Disk
+    Properties:
+      ZoneId:
+        Ref: ZoneId
+      DiskName: ViolationDisk
+      DiskCategory: cloud_essd
+      Size: 40

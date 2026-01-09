@@ -1,0 +1,22 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template - ECS instance with key pair bound
+Parameters:
+  ZoneId:
+    Type: String
+    Default: cn-hangzhou-i
+  KeyPairName:
+    Type: String
+    Default: my-key-pair
+Resources:
+  CompliantInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      ZoneId:
+        Ref: ZoneId
+      InstanceName: CompliantInstanceWithKeyPair
+      ImageId: aliyun_2_1903_x64_20G_alibase_20231221.vhd
+      InstanceType: ecs.g6.large
+      KeyPairName:
+        Ref: KeyPairName
+      SystemDiskCategory: cloud_essd
+      SystemDiskSize: 40

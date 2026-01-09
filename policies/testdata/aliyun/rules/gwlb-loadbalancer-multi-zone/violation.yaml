@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Non-compliant GWLB LoadBalancer with single zone
+Resources:
+  GWLBLoadBalancer:
+    Type: ALIYUN::GWLB::LoadBalancer
+    Properties:
+      VpcId: vpc-bp1qg7z02222222222
+      ZoneMappings:
+        - ZoneId: cn-hangzhou-h
+          VSwitchId: vsw-bp1g7z02222222222
+

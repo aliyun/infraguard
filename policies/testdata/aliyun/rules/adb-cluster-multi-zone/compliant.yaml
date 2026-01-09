@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  CompliantADB:
+    Type: ALIYUN::ADBLake::DBCluster
+    Properties:
+      DBClusterVersion: '5.0'
+      VPCId: vpc-12345
+      VSwitchId: vsw-1
+      ZoneId: cn-hangzhou-g
+      PayType: Postpaid
+      SecondaryZoneId: cn-hangzhou-h

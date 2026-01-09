@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  Logstore:
+    Type: ALIYUN::SLS::Logstore
+    Properties:
+      ProjectName: test-project
+      LogstoreName: secure-store
+      EncryptConf:
+        Enable: true
+        EncryptType: default

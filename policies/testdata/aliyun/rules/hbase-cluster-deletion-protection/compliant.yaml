@@ -1,0 +1,12 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  HBaseCluster:
+    Type: ALIYUN::HBase::Cluster
+    Properties:
+      Engine: hbase
+      EngineVersion: '2.0'
+      NodeCount: 2
+      ZoneId: cn-hangzhou-h
+      PayType: PostPaid
+      CoreInstanceType: hbase.sn2.2xlarge
+      DeletionProtection: true

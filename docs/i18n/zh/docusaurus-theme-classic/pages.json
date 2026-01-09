@@ -1,0 +1,11 @@
+{
+  "theme.HomePage.title": {
+    "message": "IaC 合规预检 CLI",
+    "description": "The homepage title"
+  },
+  "theme.HomePage.description": {
+    "message": "专为阿里云 ROS 模板设计的基础设施即代码合规预检 CLI。在部署前捕获安全和合规问题。",
+    "description": "The homepage description"
+  }
+}
+

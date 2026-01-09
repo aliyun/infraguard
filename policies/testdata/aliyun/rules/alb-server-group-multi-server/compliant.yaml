@@ -1,0 +1,42 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  MyServerGroup:
+    Type: ALIYUN::ALB::ServerGroup
+    Properties:
+      ServerGroupName: my-server-group
+      ServerGroupType: Instance
+      VpcId: vpc-bp1abcdefg
+      HealthCheckConfig:
+        HealthCheckEnabled: true
+  Server1:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceName: server1
+      ImageId: centos_7_04_64_20G_alibase_201701015.vhd
+      InstanceType: ecs.t5-lc1m1.small
+      VpcId: vpc-bp1abcdefg
+      ZoneId: cn-hangzhou-b
+  Server2:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceName: server2
+      ImageId: centos_7_04_64_20G_alibase_201701015.vhd
+      InstanceType: ecs.t5-lc1m1.small
+      VpcId: vpc-bp1abcdefg
+      ZoneId: cn-hangzhou-c
+  Attachment1:
+    Type: ALIYUN::ALB::BackendServerAttachment
+    Properties:
+      ServerGroupId:
+        Ref: MyServerGroup
+      Servers:
+        - ServerId:
+            Ref: Server1
+          ServerType: Ecs
+          Port: 80
+          Weight: 100
+        - ServerId:
+            Ref: Server2
+          ServerType: Ecs
+          Port: 80
+          Weight: 100

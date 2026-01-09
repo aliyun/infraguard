@@ -1,0 +1,17 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant CR Instance with zone-redundant OSS bucket
+Resources:
+  OSSBucket:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: my-zrs-bucket
+      StorageClass: ZRS
+  
+  CRInstance:
+    Type: ALIYUN::CR::Instance
+    Properties:
+      InstanceName: my-cr-instance
+      InstanceType: Standard
+      InstanceStorageName:
+        Ref: OSSBucket
+

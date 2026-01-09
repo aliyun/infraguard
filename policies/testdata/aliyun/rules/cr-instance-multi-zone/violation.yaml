@@ -1,0 +1,17 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Non-compliant CR Instance with standard OSS bucket
+Resources:
+  OSSBucket:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: my-standard-bucket
+      StorageClass: Standard
+  
+  CRInstance:
+    Type: ALIYUN::CR::Instance
+    Properties:
+      InstanceName: my-cr-instance
+      InstanceType: Standard
+      InstanceStorageName:
+        Ref: OSSBucket
+

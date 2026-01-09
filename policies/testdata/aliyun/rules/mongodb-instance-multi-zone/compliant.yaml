@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  CompliantMongoDB:
+    Type: ALIYUN::MONGODB::Instance
+    Properties:
+      DBInstanceClass: dds.mongo.mid
+      DBInstanceStorage: 10
+      ZoneId: cn-hangzhou-a
+      SecondaryZoneId: cn-hangzhou-b
+      VpcId: vpc-123
+      VSwitchId: vsw-1

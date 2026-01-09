@@ -1,0 +1,20 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - Redis Application Best Practice
+
+Resources:
+  # Compliant Redis instance with all best practices
+  RedisInstanceCompliant:
+    Type: ALIYUN::REDIS::Instance
+    Properties:
+      InstanceClass: redis.master.small.default
+      EngineVersion: '5.0'
+      ZoneId: cn-hangzhou-h
+      SecondaryZoneId: cn-hangzhou-j
+      SSLEnabled: Enable
+      DeletionProtection: true
+      ChargeType: PostPaid
+      # No PublicConnection - compliant
+      # AutoRenewDuration not needed for PostPaid
+
+
+

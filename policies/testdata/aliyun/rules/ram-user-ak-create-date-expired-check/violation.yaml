@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for ram-user-ak-create-date-expired-check rule - Non-compliant case
+Resources:
+  NonCompliantAccessKey:
+    Type: 'ALIYUN::RAM::AccessKey'
+    Properties:
+      UserName: test-user

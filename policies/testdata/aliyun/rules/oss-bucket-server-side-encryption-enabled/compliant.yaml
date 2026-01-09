@@ -1,0 +1,12 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - OSS bucket with server-side encryption enabled
+
+Resources:
+  OSSBucket:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: encrypted-bucket
+      ServerSideEncryptionConfiguration:
+        SSEAlgorithm: KMS
+        KMSMasterKeyID: 12345678-1234-1234-1234-123456789012
+

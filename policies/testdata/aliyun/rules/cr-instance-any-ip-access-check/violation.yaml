@@ -1,0 +1,18 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Non-compliant CR instance with any IP access
+Resources:
+  CRInstance:
+    Type: ALIYUN::CR::Instance
+    Properties:
+      InstanceName: my-cr-instance
+      InstanceType: Standard
+  
+  AclPolicy:
+    Type: ALIYUN::CR::InstanceEndpointAclPolicy
+    Properties:
+      InstanceId:
+        Fn::GetAtt:
+          - CRInstance
+          - InstanceId
+      Entry: 0.0.0.0/0
+      Comment: Any IP access

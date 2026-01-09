@@ -1,0 +1,9 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for apig-group-custom-trace-enabled rule - Non-compliant case
+Resources:
+  # 不合规：分组没有启用追踪
+  NonCompliantGroup:
+    Type: ALIYUN::ApiGateway::Group
+    Properties:
+      GroupName: NonCompliantApiGroup
+      Description: API group without tracing enabled

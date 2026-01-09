@@ -1,0 +1,12 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  CustomDomain:
+    Type: ALIYUN::FC::CustomDomain
+    Properties:
+      DomainName: example.com
+      Protocol: HTTP
+      RouteConfig:
+        Routes:
+          - Path: /*
+            ServiceName: my-service
+            FunctionName: my-function

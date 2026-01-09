@@ -1,0 +1,8 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  Disk:
+    Type: ALIYUN::ECS::Disk
+    Properties:
+      ZoneId: cn-hangzhou-h
+      Size: 40
+      Encrypted: true

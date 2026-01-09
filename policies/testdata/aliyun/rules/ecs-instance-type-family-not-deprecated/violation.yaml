@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  ECS:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.t1.small
+      ImageId: m-123
+      VpcId: vpc-123
+      VSwitchId: vsw-123
+      SecurityGroupId: sg-123

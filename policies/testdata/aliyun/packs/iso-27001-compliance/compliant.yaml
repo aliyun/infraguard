@@ -1,0 +1,6 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: 'Compliant template for ISO-27001安全管理标准合规包'
+Resources:
+  # Empty template - all rules skip template-level validation
+  DummyResource:
+    Type: ALIYUN::ROS::WaitConditionHandle

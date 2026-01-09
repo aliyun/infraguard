@@ -1,0 +1,8 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  MongoDBInstance:
+    Type: ALIYUN::MONGODB::Instance
+    Properties:
+      DBInstanceClass: dds.mongo.standard
+      DBInstanceStorage: 20
+      SecurityIPArray: 192.168.1.1,10.0.0.1

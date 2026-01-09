@@ -1,0 +1,13 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  CompliantBastionHost:
+    Type: ALIYUN::BastionHost::Instance
+    Properties:
+      Version: Enterprise
+      ExtraBandwidth: 0
+      Plan: 50
+      ExtendedStoragePlans: 0
+      StartInstanceParam:
+        VswitchId: vsw-1
+        SecurityGroupIds:
+          - sg-1

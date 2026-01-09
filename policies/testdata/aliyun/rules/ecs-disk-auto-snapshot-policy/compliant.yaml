@@ -1,0 +1,20 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template - ECS disk with auto snapshot policy configured
+Parameters:
+  ZoneId:
+    Type: String
+    Default: cn-hangzhou-i
+  AutoSnapshotPolicyId:
+    Type: String
+    Default: sp-12345678
+Resources:
+  CompliantDisk:
+    Type: ALIYUN::ECS::Disk
+    Properties:
+      ZoneId:
+        Ref: ZoneId
+      DiskName: CompliantDisk
+      DiskCategory: cloud_essd
+      Size: 40
+      AutoSnapshotPolicyId:
+        Ref: AutoSnapshotPolicyId

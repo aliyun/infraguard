@@ -1,0 +1,13 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  VPC:
+    Type: ALIYUN::ECS::VPC
+    Properties: {CidrBlock: 10.0.0.0/8}
+  FlowLog:
+    Type: ALIYUN::VPC::FlowLog
+    Properties:
+      ResourceId: {Ref: VPC}
+      ResourceType: VPC
+      ProjectName: test-project
+      LogStoreName: test-store
+      TrafficType: All

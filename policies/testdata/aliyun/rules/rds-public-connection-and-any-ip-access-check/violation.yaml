@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  RDSInstance:
+    Type: ALIYUN::RDS::DBInstance
+    Properties:
+      Engine: MySQL
+      EngineVersion: '8.0'
+      DBInstanceClass: rds.mysql.s2.large
+      DBInstanceStorage: 20
+      SecurityIPList: 0.0.0.0/0
+      AllocatePublicConnection: true

@@ -1,0 +1,6 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  EmptyGroup:
+    Type: ALIYUN::RAM::Group
+    Properties:
+      GroupName: empty-group

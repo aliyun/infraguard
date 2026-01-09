@@ -1,0 +1,14 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  Trigger:
+    Type: ALIYUN::FC::Trigger
+    Properties:
+      TriggerName: my-http-trigger
+      ServiceName: my-service
+      FunctionName: my-function
+      TriggerType: http
+      TriggerConfig:
+        AuthType: function
+        Methods:
+          - GET
+          - POST

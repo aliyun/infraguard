@@ -1,0 +1,28 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - SLB Application Best Practice
+
+Resources:
+  # Note: Most SLB/ALB configurations are runtime settings not exposed in ROS templates.
+  # This violation template includes resources that would violate SLB rules
+  # if configurations are not set properly post-deployment.
+  
+  # Resources that may violate SLB rules
+  SLBLoadBalancer:
+    Type: ALIYUN::SLB::LoadBalancer
+    Properties:
+      LoadBalancerName: test-slb
+      AddressType: internet
+      VpcId: vpc-test123
+
+  ALBLoadBalancer:
+    Type: ALIYUN::ALB::LoadBalancer
+    Properties:
+      LoadBalancerEdition: Standard
+      LoadBalancerName: test-alb
+      AddressType: Internet
+      VpcId: vpc-test123
+      ZoneMappings:
+        - ZoneId: cn-hangzhou-h
+          VSwitchId: vsw-test123
+      LoadBalancerBillingConfig:
+        PayType: PostPay

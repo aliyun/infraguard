@@ -1,0 +1,14 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Non-compliant CDN Domain with single origin server
+Resources:
+  CDNDomain:
+    Type: ALIYUN::CDN::Domain
+    Properties:
+      DomainName: example.com
+      CdnType: web
+      OriginServers:
+        - Type: ipaddr
+          Content: 1.1.1.1
+          Priority: '20'
+          Weight: '10'
+

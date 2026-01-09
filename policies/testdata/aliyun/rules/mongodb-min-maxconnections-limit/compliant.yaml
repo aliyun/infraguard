@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Parameters:
+  minConnections:
+    Type: Number
+    Default: 500
+Resources:
+  MongoDB:
+    Type: ALIYUN::MONGODB::Instance
+    Properties:
+      DBInstanceClass: dds.mongo.replica_set
+      DBInstanceStorage: 100

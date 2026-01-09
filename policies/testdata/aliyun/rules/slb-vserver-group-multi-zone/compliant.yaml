@@ -1,0 +1,29 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template - SLB VServerGroup with backend servers from multiple zones
+Resources:
+  LoadBalancer:
+    Type: ALIYUN::SLB::LoadBalancer
+    Properties:
+      LoadBalancerName: MultiZoneSLB
+      AddressType: internet
+      InternetChargeType: paybytraffic
+      VpcId: vpc-12345678
+      VSwitchId: vsw-12345678
+      MasterZoneId: cn-hangzhou-i
+      SlaveZoneId: cn-hangzhou-h
+
+  VServerGroup:
+    Type: ALIYUN::SLB::VServerGroup
+    Properties:
+      VServerGroupName: MultiZoneVServerGroup
+      LoadBalancerId:
+        Ref: LoadBalancer
+      BackendServers:
+        - ServerId: i-12345678
+          Port: 80
+          Weight: 100
+          ServerIp: 192.168.1.1
+        - ServerId: i-87654321
+          Port: 80
+          Weight: 100
+          ServerIp: 192.168.2.1

@@ -1,0 +1,19 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - Using deprecated Elasticsearch version
+Parameters:
+  VSwitchId:
+    Type: String
+    Default: vsw-12345678
+Resources:
+  ViolationElasticsearch:
+    Type: ALIYUN::ElasticSearch::Instance
+    Properties:
+      VSwitchId:
+        Ref: VSwitchId
+      Password: Test123!@#
+      Version: 6.3_with_X-Pack
+      DataNode:
+        Amount: 3
+        DiskSize: 20
+        DiskType: cloud_ssd
+        Spec: elasticsearch.sn1ne.large

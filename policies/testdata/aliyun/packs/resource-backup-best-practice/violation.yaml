@@ -1,0 +1,38 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - Resource Backup Best Practice
+
+Resources:
+  # Violation: OSS bucket without versioning
+  OSSBucket:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: no-versioning-bucket
+      AccessControl: private
+
+  # Note: Most backup features are runtime configurations not exposed in ROS templates.
+  # This violation template includes resources that would violate backup rules
+  # if backup is not enabled post-deployment.
+  
+  # Resources that may violate backup rules if backup is not enabled
+  RDSInstance:
+    Type: ALIYUN::RDS::DBInstance
+    Properties:
+      Engine: MySQL
+      EngineVersion: '8.0'
+      DBInstanceClass: mysql.n2.small.1
+      DBInstanceStorage: 20
+      SecurityIPList: '127.0.0.1'
+
+  MongoDBInstance:
+    Type: ALIYUN::MONGODB::Instance
+    Properties:
+      DBInstanceClass: dds.mongo.mid
+      DBInstanceStorage: 20
+      EngineVersion: '4.0'
+
+  RedisInstance:
+    Type: ALIYUN::REDIS::Instance
+    Properties:
+      EngineVersion: '5.0'
+      InstanceClass: redis.master.small.default
+      Capacity: 1

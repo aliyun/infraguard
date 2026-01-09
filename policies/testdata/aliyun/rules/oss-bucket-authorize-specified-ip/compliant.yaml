@@ -1,0 +1,15 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  OSS:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: test-bucket
+      Policy:
+        Statement:
+          - Effect: Allow
+            Principal: '*'
+            Action: 'oss:GetObject'
+            Resource: '*'
+            Condition:
+              IpAddress:
+                acs:SourceIp: '192.168.1.0/24'

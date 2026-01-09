@@ -1,0 +1,14 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - Security group with full public access
+
+Resources:
+  # Violation: Security group with all ports from all sources
+  SecurityGroup:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: test-sg
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          PortRange: -1/-1
+          SourceCidrIp: 0.0.0.0/0
+

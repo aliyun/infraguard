@@ -1,0 +1,16 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - Auto snapshot policy with insufficient retention days (< 7)
+Resources:
+  ViolationAutoSnapshotPolicy:
+    Type: ALIYUN::ECS::AutoSnapshotPolicy
+    Properties:
+      AutoSnapshotPolicyName: ViolationPolicy
+      TimePoints:
+        - 2
+      RepeatWeekdays:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+      RetentionDays: 3

@@ -1,0 +1,28 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant API Gateway API with HTTPS enabled for internet requests
+Resources:
+  ApiGatewayGroup:
+    Type: ALIYUN::ApiGateway::Group
+    Properties:
+      GroupName: MyApiGroup
+      Description: API Gateway Group for HTTPS testing
+
+  ApiGatewayApi:
+    Type: ALIYUN::ApiGateway::Api
+    Properties:
+      ApiName: SecureApi
+      GroupId:
+        Fn::GetAtt:
+          - ApiGatewayGroup
+          - GroupId
+      Visibility: PUBLIC
+      RequestConfig:
+        RequestProtocol: HTTPS
+        RequestHttpMethod: GET
+        RequestPath: /secure
+        RequestMode: PASSTHROUGH
+      ServiceConfig:
+        ServiceProtocol: HTTP
+        ServiceAddress: http://backend.example.com
+        ServicePath: /api
+        ServiceHttpMethod: GET

@@ -1,0 +1,16 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - AccessKey and Permission Governance Best Practice
+
+Resources:
+  # Note: Most AccessKey and permission governance checks are runtime configurations
+  # not exposed in ROS templates. This violation template includes resources that
+  # would violate rules if configurations are not set properly post-deployment.
+  
+  # Resources that may violate AccessKey and permission governance rules
+  ECSInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.g6.large
+      ImageId: centos_7
+      VpcId: vpc-test123
+      VSwitchId: vsw-test123

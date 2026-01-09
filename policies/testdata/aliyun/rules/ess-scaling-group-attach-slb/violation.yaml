@@ -1,0 +1,8 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  ScalingGroup:
+    Type: ALIYUN::ESS::ScalingGroup
+    Properties:
+      ScalingGroupName: my-scaling-group
+      MinSize: 1
+      MaxSize: 10

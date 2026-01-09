@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - OSS bucket without logging
+
+Resources:
+  OSSBucket:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: data-bucket-no-logging
+      AccessControl: private
+

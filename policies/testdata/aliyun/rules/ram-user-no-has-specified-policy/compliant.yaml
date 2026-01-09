@@ -1,0 +1,14 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for ram-user-no-has-specified-policy rule - Compliant case
+Resources:
+  # 合规：用户没有绑定高危策略
+  CompliantUser:
+    Type: ALIYUN::RAM::User
+    Properties:
+      UserName: compliant-user
+      DisplayName: Compliant User
+      PolicyAttachments:
+        System:
+          - ReadOnlyAccess
+        Custom:
+          - CustomReadOnlyPolicy

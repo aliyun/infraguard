@@ -1,0 +1,8 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  MyAcl:
+    Type: ALIYUN::ALB::Acl
+    Properties:
+      AclName: my-insecure-acl
+      AclEntries:
+        - Entry: "0.0.0.0/0"

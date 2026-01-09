@@ -1,0 +1,351 @@
+# Chinese locale for InfraGuard CLI
+# Optional - missing translations will fall back to English
+
+# Cobra template strings
+usage: "用法"
+available_commands: "可用命令"
+additional_commands: "其他命令"
+flags: "选项"
+global_flags: "全局选项"
+additional_help: "使用 \"{{.CommandPath}} [command] --help\" 获取命令的更多信息。"
+aliases: "别名"
+examples: "示例"
+
+# Built-in commands
+completion:
+  short: "为指定的 shell 生成自动补全脚本"
+help:
+  short: "获取任意命令的帮助信息"
+  long: "Help 提供应用中任意命令的帮助信息。\n输入 {{.Name}} help [命令路径] 获取完整详情。"
+
+# Version command
+version:
+  short: "打印版本信息"
+  long: "打印 InfraGuard 和 OPA 的版本信息。"
+  infraguard: "InfraGuard"
+  opa: "OPA"
+
+# Root command
+root:
+  short: "InfraGuard - IaC 合规预检 CLI"
+  long: |
+    InfraGuard 是一个 IaC（基础设施即代码）合规预检 CLI 工具。
+    它在部署前扫描 IaC 模板（当前支持阿里云 ROS 模板）并检查 OPA/Rego 策略，
+    帮助提前发现安全隐患和不合规配置。
+
+# Policy command
+policy:
+  short: "管理合规策略"
+  long: "用于管理合规策略的命令，包括下载和更新策略库。"
+
+# Policy update command
+policy_update:
+  short: "从仓库下载/更新策略库"
+  long: |
+    从 Git 仓库下载策略库。
+    policies/ 子目录将被下载并存储到本地。
+
+    支持的仓库格式：
+      - host/path（例如 github.com/aliyun/infraguard）
+      - HTTPS URL（例如 https://github.com/aliyun/infraguard.git）
+      - SSH URL（例如 ssh://git@github.com/aliyun/infraguard.git）
+      - SCP 格式（例如 git@github.com:aliyun/infraguard.git）
+  repo_flag: "Git 仓库 URL 或路径"
+  version_flag: "Git 分支、标签或提交"
+  progress: "正在从 %s 更新策略（版本：%s）..."
+  success: "策略更新成功。"
+
+# Policy get command
+policy_get:
+  short: "获取规则或合规包详情"
+  long: |
+    显示合规规则或合规包的详细信息。
+    根据 ID 前缀自动检测类型（规则/合规包）。
+
+    示例：
+      infraguard policy get rule:aliyun:ecs-public-ip
+      infraguard policy get pack:aliyun:security-baseline
+  not_found_rule: "未找到规则：%s。"
+  not_found_pack: "未找到合规包：%s。"
+  no_rules_loaded: "没有加载任何规则。请先运行 'infraguard policy update'。"
+  no_packs_loaded: "没有加载任何合规包。请先运行 'infraguard policy update'。"
+  rule_details: "规则详情"
+  pack_details: "合规包详情"
+  included_rules: "包含的规则"
+  included_rules_format: "%s: %s"
+  name: "名称"
+  description: "描述"
+  resource_types: "资源类型"
+  pack_id: "合规包 ID"
+
+# Policy list command
+policy_list:
+  short: "列出所有可用的规则和合规包"
+  long: |
+    列出所有可用的合规规则和合规包。
+    显示规则/合规包的 ID、名称和其他信息。
+  rules: "规则"
+  packs: "合规包"
+
+# Policy validate command
+policy_validate:
+  short: "验证策略文件是否符合 InfraGuard 规范"
+  long: |
+    根据 InfraGuard 规范验证 Rego 策略文件。
+    仅验证声明了 package infraguard.rules.* 或 infraguard.packs.* 的文件。
+    检查 rule_meta、pack_meta 和 deny 规则格式。
+
+    示例：
+      infraguard policy validate ./policies/aliyun/rules/
+      infraguard policy validate ./my-rule.rego
+  no_files_found: "未找到策略文件（文件必须声明 package infraguard.rules.* 或 infraguard.packs.*）。"
+  passed: "验证通过：%d 个文件已验证"
+  failed: "验证失败。"
+  summary: "验证：共 %d 个，%d 个通过，%d 个失败"
+  skipped_summary: "跳过 %d 个文件（非 InfraGuard 策略文件）："
+  suggestion: "建议"
+  file_type_rule: "规则"
+  file_type_pack: "合规包"
+  file_type_unknown: "未知"
+  skipped_prefix: "  - "
+  error_prefix: "  ✗ "
+  suggestion_prefix: "    → "
+  errors:
+    SYNTAX_ERROR: "语法错误。"
+    SYNTAX_ERROR_suggestion: "在验证前修复 Rego 语法错误。"
+    READ_ERROR: "读取文件失败。"
+    READ_ERROR_suggestion: "确保文件存在且可读。"
+    RULE_MISSING_META: "rule_meta 是必需的，但未找到或存在错误。"
+    RULE_MISSING_META_suggestion: "添加 rule_meta 对象，包含必填字段：id、name、severity、reason。"
+    RULE_MISSING_ID: "rule_meta.id 是必需的。"
+    RULE_MISSING_ID_suggestion: "在 rule_meta 中添加 id 字段。"
+    RULE_MISSING_NAME: "rule_meta.name 是必需的。"
+    RULE_MISSING_NAME_suggestion: "添加 name 字段，包含英文和中文翻译。"
+    RULE_MISSING_SEVERITY: "rule_meta.severity 是必需的。"
+    RULE_MISSING_SEVERITY_suggestion: "添加 severity 字段，值为：high、medium 或 low。"
+    RULE_MISSING_REASON: "rule_meta.reason 是必需的。"
+    RULE_MISSING_REASON_suggestion: "添加 reason 字段，解释违规发生的原因。"
+    RULE_INVALID_SEVERITY: "rule_meta.severity 必须是以下之一：high、medium、low。"
+    RULE_INVALID_SEVERITY_suggestion: "将 severity 改为有效值：high、medium、low。"
+    RULE_INVALID_FIELD_TYPE: "字段必须是字符串或翻译字典。"
+    RULE_INVALID_FIELD_TYPE_suggestion: "将字段改为字符串或对象格式如 {\"en\": \"...\", \"zh\": \"...\"}。"
+    RULE_MISSING_DENY: "deny 规则是必需的。"
+    RULE_MISSING_DENY_suggestion: "添加 deny 规则：deny contains result if { ... }，result 需包含 id、resource_id、violation_path、meta。"
+    RULE_INVALID_DENY_FORMAT: "deny result 字段是必需的。"
+    RULE_INVALID_DENY_FORMAT_suggestion: "在 deny result 对象中添加缺失的字段。"
+    PACK_MISSING_META: "pack_meta 是必需的，但未找到或存在错误。"
+    PACK_MISSING_META_suggestion: "添加 pack_meta 对象，包含必填字段：id、name、rules。"
+    PACK_MISSING_ID: "pack_meta.id 是必需的。"
+    PACK_MISSING_ID_suggestion: "在 pack_meta 中添加 id 字段。"
+    PACK_MISSING_NAME: "pack_meta.name 是必需的。"
+    PACK_MISSING_NAME_suggestion: "添加 name 字段，包含英文和中文翻译。"
+    PACK_MISSING_RULES: "pack_meta.rules 是必需的且不能为空。"
+    PACK_MISSING_RULES_suggestion: "添加 rules 字段，包含规则 ID 列表。"
+    PACK_INVALID_FIELD_TYPE: "字段必须是字符串或翻译字典。"
+    PACK_INVALID_FIELD_TYPE_suggestion: "将字段改为字符串或对象格式如 {\"en\": \"...\", \"zh\": \"...\"}。"
+
+# Policy format command
+policy_format:
+  short: "使用 OPA 格式化器格式化策略文件"
+  long: |
+    使用 OPA 内置格式化器格式化 Rego 策略文件。
+    默认显示需要格式化的文件，不会修改它们。
+
+    示例：
+      infraguard policy format ./policies/       # 检查格式
+      infraguard policy format ./policies/ -w    # 格式化并写入
+      infraguard policy format ./my-rule.rego -d # 显示差异
+  write_flag: "将格式化输出写入文件"
+  diff_flag: "仅显示差异输出"
+  no_files_found: "未找到 .rego 文件。"
+  formatted: "已格式化"
+  already_formatted: "格式正确"
+  needs_formatting: "需要格式化"
+  summary_changed: "%d 个文件已更改"
+  summary_unchanged: "%d 个文件无需更改"
+  needs_format: "部分文件需要格式化。使用 --write 进行格式化。"
+  error_prefix: "✗ "
+  success_prefix: "✓ "
+  needs_format_prefix: "✗ "
+
+# Config command
+config:
+  short: "管理 CLI 配置"
+  long: |
+    管理 InfraGuard CLI 配置。
+    配置存储在 ~/.infraguard/config.yaml。
+
+    可用的配置键：
+      lang    输出语言（en 或 zh）
+  set_success: "配置保存成功。"
+  unset_success: "配置移除成功。"
+  list_format: "%s=%s"
+  set:
+    short: "设置配置值"
+    long: |
+      设置配置值。
+
+      示例：
+        infraguard config set lang zh
+        infraguard config set lang en
+  get:
+    short: "获取配置值"
+    long: |
+      获取配置值。
+
+      示例：
+        infraguard config get lang
+  unset:
+    short: "移除配置值"
+    long: |
+      移除配置值。
+
+      示例：
+        infraguard config unset lang
+  list:
+    short: "列出所有配置值"
+    long: |
+      列出所有配置值。
+
+      示例：
+        infraguard config list
+  errors:
+    unknown_key: "未知的配置键：%s（有效键：%s）。"
+    invalid_value: "%s 的值无效：%s（有效值：%s）。"
+
+# Scan command
+scan:
+  short: "扫描 IaC 模板的合规问题"
+  long: |
+    根据 OPA/Rego 策略扫描 IaC 模板。
+  policy_flag: "策略规格：规则ID、合规包ID、.rego 文件或目录（可多次指定）"
+  input_flag: "参数值，支持 key=value、JSON 格式或文件路径（可多次指定）"
+  format_flag: "输出格式（table、json 或 html）"
+  output_flag: "输出文件路径（html 格式默认：report.html）"
+  report_written: "报告已写入 %s"
+  no_violations: "未发现违规。"
+  total_violations: "总计：%d 个违规"
+  file_prefix: "扫描模板："
+  no_templates_found: "未找到模板文件。"
+  skipped_file: "跳过无效模板 %s：%v"
+  file_error: "文件 %s：%v"
+
+# Report
+report:
+  title: "InfraGuard 合规报告"
+  total_violations: "违规总数：%d"
+  passed_rules: "通过规则：%d"
+  failed_rules: "违规规则：%d"
+  severity: "严重程度"
+  rule_id: "规则 ID"
+  resource: "资源"
+  location: "位置"
+  line: "行"
+  reason: "原因"
+  recommendation: "修复建议"
+  results: "检查结果"
+  count: "数量"
+  type: "类型"
+  breakdown: "细分"
+  passed: "通过"
+  failed: "违规"
+  total: "合计"
+  no_violations_prefix: "✓ "
+  violation_header_format: "#%d %s"
+  location_format: "%s:%d"
+  line_highlight_prefix: "> %4d"
+  line_normal_prefix: "  %4d"
+  metadata_prefix: "  "
+  metadata_separator: " "
+  summary_prefix: "  "
+  summary_separator: " | "
+
+# Severity levels
+severity:
+  high: "高"
+  medium: "中"
+  low: "低"
+
+# Global flags
+lang_flag: "输出语言（zh 或 en，默认：自动检测）"
+
+# Error messages
+errors:
+  invalid_format: "无效的格式 %q：必须是 table、json 或 html。"
+  invalid_lang: "无效的语言 %q：必须是 zh 或 en。"
+  policy_dir: "策略目录错误：%v。"
+  policy_dir_hint: "运行 'infraguard policy update' 下载策略。"
+  load_template: "加载模板失败：%v。"
+  evaluate_policies: "评估策略失败：%v。"
+  render_report: "渲染报告失败：%v。"
+  update_policies: "更新策略失败：%v。"
+  invalid_policy_spec: "无效的策略规格：%s。"
+  no_rego_files: "未找到 .rego 文件：%s。"
+  no_rego_files_in_dir: "目录中未找到 .rego 文件：%s。"
+  policy_not_found: "未找到策略：%s。"
+  policy_pattern_no_match: "没有策略匹配模式：%s。"
+  file_not_found: "未找到文件：%s。"
+  dir_not_found: "未找到目录：%s。"
+  path_not_found: "未找到路径：%s。"
+  policy_file_extension: "策略文件必须具有 .rego 扩展名：%s。"
+  invalid_ros_template: "无效的 ROS 模板：%v。"
+  invalid_input: "无效的输入格式：%s。应为 key=value、JSON 或文件路径。"
+  parse_input_file: "解析输入文件 %s 失败：%v。"
+  read_input_file: "读取输入文件 %s 失败：%w。"
+  unable_to_determine_home_dir: "无法确定主目录。"
+  aliyun_config_not_found: "在 %s 未找到 Aliyun CLI 配置。请先运行 'aliyun configure'。"
+  read_aliyun_config: "读取 Aliyun CLI 配置失败：%w。"
+  parse_aliyun_config: "解析 Aliyun CLI 配置失败：%w。"
+  profile_not_found: "在 Aliyun CLI 配置中未找到当前配置 %q。"
+  invalid_access_key: "配置 %q 没有有效的 AccessKey 凭证。"
+  get_home_directory: "获取主目录失败：%w。"
+  read_config_file: "读取配置文件失败：%w。"
+  parse_config_file: "解析配置文件失败：%w。"
+  create_config_dir: "创建配置目录失败：%w。"
+  marshal_config: "序列化配置失败：%w。"
+  write_config_file: "写入配置文件失败：%w。"
+  read_template_file: "读取模板文件失败：%w。"
+  parse_json_template: "解析 JSON 模板失败：%w。"
+  parse_yaml_template: "解析 YAML 模板失败：%w。"
+  path_does_not_exist: "路径不存在：%s。"
+  file_must_be_rego: "文件必须具有 .rego 扩展名：%s。"
+  read_file: "读取文件失败：%w。"
+  format_file: "格式化失败：%w。"
+  write_file: "写入文件失败：%w。"
+  no_policy_paths: "未指定策略路径。"
+  discover_rego_files: "在 %s 中发现 rego 文件失败：%w。"
+  no_rego_files_in_paths: "在指定路径中未找到 .rego 文件。"
+  read_rego_file: "读取 %s 失败：%w。"
+  prepare_rego_query: "准备 rego 查询失败：%w。"
+  evaluate_policies_internal: "评估策略失败：%w。"
+  parameter_type_mismatch: "参数 %s：值 %v 不是 %s 类型。"
+  undefined_parameters: "提供了未定义的参数：%s。请检查模板 Parameters 部分中的参数名称。"
+  no_parameters_defined: "模板中未定义参数，但提供了输入参数：%s。"
+  unknown_help_topic: "未知的帮助主题 %#q"
+  read_file_error: "读取文件失败：%v。"
+  syntax_error_with_detail: "语法错误：%v。"
+  rule_invalid_severity_with_value: "rule_meta.severity 必须是以下之一：high、medium、low（当前值：%s）。"
+  deny_rule_evaluation_error: "deny 规则评估错误：%v。"
+  deny_result_field_required: "deny result.%s 是必需的。"
+  add_field_to_deny_result: "在 deny result 对象中添加 %s 字段"
+  field_must_be_string_or_dict: "%s 必须是字符串或翻译字典。"
+  change_field_to_i18n_format: "将 %s 改为字符串或对象格式如 {\"en\": \"...\", \"zh\": \"...\"}"
+  rule_meta_field_must_be_string_or_dict: "rule_meta.%s 必须是字符串或翻译字典。"
+  invalid_ros_template_version: "无效的版本 %q，有效版本：%v。"
+  parse_html_template: "解析 HTML 模板失败：%w。"
+  marshal_i18n_data: "序列化 i18n 数据失败：%w。"
+  parse_rule_meta: "解析 rule_meta 失败：%w。"
+  parse_pack_meta: "解析 pack_meta 失败：%w。"
+  no_policies_found: "在嵌入或用户目录中未找到策略。"
+  read_embedded_policies_root: "读取嵌入策略根目录失败：%w。"
+  load_embedded_rules_for_provider: "加载提供商 %s 的嵌入规则失败：%w。"
+  load_embedded_packs_for_provider: "加载提供商 %s 的嵌入合规包失败：%w。"
+  read_policy_directory: "读取策略目录失败：%w。"
+  discover_rules_for_provider: "发现提供商 %s 的规则失败：%w。"
+  discover_packs_for_provider: "发现提供商 %s 的合规包失败：%w。"
+  clean_policy_directory: "清理策略目录失败：%w。"
+  create_policy_directory: "创建策略目录失败：%w。"
+  download_policies: "下载策略失败：%w。"
+  policy_path_does_not_exist: "策略路径不存在：%s。"
+  no_rego_files_in_policy_directory: "在策略目录中未找到 .rego 文件：%s。"
+

@@ -1,0 +1,40 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - 阿里云卓越架构安全支柱最佳实践
+Resources:
+  ActionTrail:
+    Type: ALIYUN::ACTIONTRAIL::Trail
+    Properties:
+      Name: test-trail
+      OssBucketName: test-bucket
+      EventRW: All
+  ActionTrailLogging:
+    Type: ALIYUN::ACTIONTRAIL::TrailLogging
+    Properties:
+      Name: test-trail
+      Enable: true
+  DummyResource:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: test-sg
+      VpcId: vpc-test123
+      Description: Test security group for compliance
+      SecurityGroupType: enterprise
+      Tags:
+        - Key: Environment
+          Value: test
+        - Key: Project
+          Value: test
+  Instance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      ImageId: centos_7
+      InstanceType: ecs.g6.large
+      VpcId: vpc-test123
+      VSwitchId: vsw-test123
+      SecurityGroupId: {Ref: DummyResource}
+      RamRoleName: test-role
+      Tags:
+        - Key: Environment
+          Value: test
+        - Key: Project
+          Value: test

@@ -1,0 +1,9 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Non-compliant OTS Instance without zone-redundant storage
+Resources:
+  OTSInstance:
+    Type: ALIYUN::OTS::Instance
+    Properties:
+      InstanceName: my-ots-instance
+      Network: NORMAL
+      ClusterType: SSD

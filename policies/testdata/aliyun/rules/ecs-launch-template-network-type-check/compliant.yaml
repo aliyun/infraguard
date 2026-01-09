@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template - Launch template with VPC network type
+Parameters: {}
+Resources:
+  CompliantTemplate:
+    Type: ALIYUN::ECS::LaunchTemplate
+    Properties:
+      LaunchTemplateName: CompliantVPCLaunchTemplate
+      NetworkType: vpc
+      InstanceType: ecs.c6.large
+      ImageId: m-bp1***0

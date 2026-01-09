@@ -1,0 +1,13 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  ViolationCluster:
+    Type: ALIYUN::ACS::Cluster
+    Properties:
+      Name: violation-cluster
+      ZoneIds:
+        - cn-hangzhou-g
+        - cn-hangzhou-h
+      VpcId: vpc-12345
+      VSwitchIds:
+        - vsw-1
+        - vsw-2

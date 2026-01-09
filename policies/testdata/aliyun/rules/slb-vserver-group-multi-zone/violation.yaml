@@ -1,0 +1,19 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - SLB VServerGroup without backend servers
+Resources:
+  LoadBalancer:
+    Type: ALIYUN::SLB::LoadBalancer
+    Properties:
+      LoadBalancerName: SingleZoneSLB
+      AddressType: internet
+      InternetChargeType: paybytraffic
+      VpcId: vpc-12345678
+      VSwitchId: vsw-12345678
+      MasterZoneId: cn-hangzhou-i
+
+  VServerGroup:
+    Type: ALIYUN::SLB::VServerGroup
+    Properties:
+      VServerGroupName: NoBackendVServerGroup
+      LoadBalancerId:
+        Ref: LoadBalancer

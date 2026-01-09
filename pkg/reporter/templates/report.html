@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="{{.Lang}}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="title">{{.Title}}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f1f5f9;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #eff6ff;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+
+            --high: #ef4444;
+            --high-bg: #fee2e2;
+            --medium: #f59e0b;
+            --medium-bg: #fef3c7;
+            --low: #3b82f6;
+            --low-bg: #dbeafe;
+
+            --code-bg: #1e293b;
+            --code-text: #f8fafc;
+
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --header-blur: saturate(180%) blur(20px);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: var(--header-blur);
+            -webkit-backdrop-filter: var(--header-blur);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            color: var(--primary);
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: -0.025em;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-icon {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-icon:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .lang-switcher {
+            display: flex;
+            background: var(--bg);
+            padding: 2px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .lang-btn {
+            border: none;
+            background: transparent;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+
+        .lang-btn.active {
+            background: var(--surface);
+            color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+
+        .app-layout {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+            background: #f8fafc;
+        }
+
+        .sidebar {
+            width: 340px;
+            background: var(--surface);
+            border-left: 1px solid var(--border);
+            overflow-y: auto;
+            padding: 1.5rem 0;
+        }
+
+        .sidebar-title {
+            padding: 0 1.5rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .content-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .stat-icon-wrapper {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 800;
+            line-height: 1;
+            color: var(--text);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .template-section {
+            margin-bottom: 3rem;
+        }
+
+        .template-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .template-icon {
+            color: var(--text-muted);
+        }
+
+        .template-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .template-badge {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            padding: 0.2rem 0.6rem;
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .rule-card {
+            background: var(--surface);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .rule-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+
+        .rule-header-row {
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .rule-badge {
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            text-transform: uppercase;
+        }
+
+        .rule-badge.high {
+            background: var(--high-bg);
+            color: var(--high);
+        }
+
+        .rule-badge.medium {
+            background: var(--medium-bg);
+            color: var(--medium);
+        }
+
+        .rule-badge.low {
+            background: var(--low-bg);
+            color: var(--low);
+        }
+
+        .rule-id {
+            font-weight: 600;
+            font-size: 1rem;
+            flex: 1;
+            color: var(--text);
+        }
+
+        .rule-count {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .rule-arrow {
+            color: var(--text-muted);
+            transition: transform 0.2s;
+        }
+
+        .rule-card.expanded .rule-arrow {
+            transform: rotate(90deg);
+        }
+
+        .rule-details {
+            display: none;
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .rule-card.expanded .rule-details {
+            display: block;
+        }
+
+        .violation-item {
+            padding: 1rem;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .violation-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .v-reason {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .v-meta {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .v-meta-item strong {
+            color: var(--text);
+            margin-right: 0.25rem;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.8rem;
+        }
+
+        .code-line {
+            display: flex;
+            padding: 0.1rem 1rem;
+            position: relative;
+        }
+
+        .code-line.highlight {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        .code-line.highlight::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--danger);
+        }
+
+        .line-num {
+            width: 3rem;
+            color: #475569;
+            text-align: right;
+            margin-right: 1rem;
+            user-select: none;
+        }
+
+        .line-content {
+            color: var(--code-text);
+            white-space: pre;
+        }
+
+        .recommendation-box {
+            background: #f0fdf4;
+            border-left: 4px solid var(--success);
+            padding: 0.75rem 1rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+        }
+
+        .rec-label {
+            font-weight: 700;
+            color: #166534;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+
+        .rec-text {
+            color: #14532d;
+        }
+
+        /* TOC Right Side */
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-group {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc-template-link {
+            padding: 0.6rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            transition: background 0.2s;
+        }
+
+        .toc-template-link:hover {
+            background: var(--bg);
+        }
+
+        .toc-template-link.active {
+            color: var(--primary);
+            border-right: 3px solid var(--primary);
+            background: var(--primary-light);
+        }
+
+        .toc-rules {
+            list-style: none;
+            padding-left: 3.25rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .toc-group.expanded .toc-rules {
+            display: block;
+        }
+
+        .toc-rule-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .toc-rule-link:hover {
+            color: var(--text);
+        }
+
+        .toc-sev-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .toc-sev-dot.high {
+            background: var(--high);
+        }
+
+        .toc-sev-dot.medium {
+            background: var(--medium);
+        }
+
+        .toc-sev-dot.low {
+            background: var(--low);
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 5rem 2rem;
+            color: var(--success);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .no-data-icon {
+            font-size: 4rem;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-left">
+            <div class="logo-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L3 7V12C3 17.5 7.5 21 12 22C16.5 21 21 17.5 21 12V7L12 2Z" fill="currentColor"
+                        fill-opacity="0.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </div>
+            <span class="logo-text" data-i18n="title">{{.Title}}</span>
+        </div>
+        <div class="header-right">
+            <button class="btn-icon" id="expand-all" title="Expand/Collapse All">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 15l5 5 5-5M7 9l5-5 5 5" />
+                </svg>
+            </button>
+            <div class="lang-switcher">
+                <button class="lang-btn{{if eq .Lang " en"}} active{{end}}" data-lang="en">EN</button>
+                <button class="lang-btn{{if eq .Lang " zh"}} active{{end}}" data-lang="zh">中文</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="app-layout">
+        <main class="main-content">
+            <div class="content-container">
+                {{if .Results}}
+                <div class="summary-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper" style="background: var(--primary-light); color: var(--primary);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                <polyline points="14 2 14 8 20 8" />
+                                <line x1="16" y1="13" x2="8" y2="13" />
+                                <line x1="16" y1="17" x2="8" y2="17" />
+                                <polyline points="10 9 9 9 8 9" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="stat-value">{{.TotalViolationsCount}}</div>
+                            <div class="stat-label" data-i18n="total">{{.TotalViolationsLabel}}</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper" style="background: var(--high-bg); color: var(--high);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="12" y1="8" x2="12" y2="12" />
+                                <line x1="12" y1="16" x2="12.01" y2="16" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="stat-value">{{index .SeverityCounts "high"}}</div>
+                            <div class="stat-label" data-i18n="severityHigh">{{index .SeverityLabels "high"}}</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper" style="background: var(--medium-bg); color: var(--medium);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path
+                                    d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                                <line x1="12" y1="9" x2="12" y2="13" />
+                                <line x1="12" y1="17" x2="12.01" y2="17" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="stat-value">{{index .SeverityCounts "medium"}}</div>
+                            <div class="stat-label" data-i18n="severityMedium">{{index .SeverityLabels "medium"}}</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper" style="background: var(--low-bg); color: var(--low);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="12" y1="16" x2="12" y2="12" />
+                                <line x1="12" y1="8" x2="12.01" y2="8" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="stat-value">{{index .SeverityCounts "low"}}</div>
+                            <div class="stat-label" data-i18n="severityLow">{{index .SeverityLabels "low"}}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results-list">
+                    {{range $i, $file := .Results}}
+                    <section class="template-section" id="section-{{$i}}">
+                        <div class="template-header">
+                            <svg class="template-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="17 8 12 3 7 8" />
+                                <line x1="12" y1="3" x2="12" y2="15" />
+                            </svg>
+                            <h2 class="template-name">{{$file.FilePath}}</h2>
+                            <span class="template-badge">{{$file.ViolationCount}}</span>
+                        </div>
+                        {{range $j, $rule := $file.Rules}}
+                        <div class="rule-card expanded" id="card-{{$i}}-{{$j}}">
+                            <div class="rule-header-row" onclick="toggleCard('card-{{$i}}-{{$j}}')">
+                                <span class="rule-badge {{$rule.Severity}}"
+                                    data-i18n-severity="{{$rule.Severity}}">{{$rule.LocalizedSeverity}}</span>
+                                <span class="rule-id">{{$rule.RuleID}}</span>
+                                <span class="rule-count">{{$rule.ViolationCount}}</span>
+                                <svg class="rule-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2">
+                                    <path d="M9 18l6-6-6-6" />
+                                </svg>
+                            </div>
+                            <div class="rule-details">
+                                {{range $k, $v := $rule.Violations}}
+                                <div class="violation-item">
+                                    <div class="v-reason" data-reason-en="{{$v.ReasonEN}}"
+                                        data-reason-zh="{{$v.ReasonZH}}">{{$v.Reason}}</div>
+                                    <div class="v-meta">
+                                        <div class="v-meta-item"><strong data-i18n="resource">{{$.Resource}}</strong>:
+                                            {{$v.ResourceID}}</div>
+                                        <div class="v-meta-item"><strong data-i18n="location">{{$.Location}}</strong>:
+                                            <span data-i18n="line">{{$.LineLabel}}</span> {{$v.Line}}
+                                        </div>
+                                    </div>
+
+                                    {{if $v.SnippetLines}}
+                                    <div class="code-block">
+                                        {{range $v.SnippetLines}}
+                                        <div class="code-line{{if .Highlight}} highlight{{end}}">
+                                            <span class="line-num">{{.LineNum}}</span>
+                                            <span class="line-content">{{.Content}}</span>
+                                        </div>
+                                        {{end}}
+                                    </div>
+                                    {{end}}
+
+                                    {{if $v.Recommendation}}
+                                    <div class="recommendation-box">
+                                        <div class="rec-label" data-i18n="recommendation">{{$.Recommendation}}</div>
+                                        <div class="rec-text" data-rec-en="{{$v.RecommendationEN}}"
+                                            data-rec-zh="{{$v.RecommendationZH}}">{{$v.Recommendation}}</div>
+                                    </div>
+                                    {{end}}
+                                </div>
+                                {{end}}
+                            </div>
+                        </div>
+                        {{end}}
+                    </section>
+                    {{end}}
+                </div>
+                {{else}}
+                <div class="no-data">
+                    <div class="no-data-icon">🎉</div>
+                    <div class="stat-value" data-i18n="noViolations">{{.NoViolations}}</div>
+                </div>
+                {{end}}
+            </div>
+        </main>
+
+        {{if .Results}}
+        <aside class="sidebar">
+            <div class="sidebar-title" data-i18n="toc">{{.TOC}}</div>
+            <nav class="toc-list">
+                {{range $i, $file := .Results}}
+                <div class="toc-group expanded" id="toc-group-{{$i}}">
+                    <div class="toc-template-link">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" style="transform: rotate(90deg); cursor: pointer;"
+                            onclick="toggleTOCGroup({{$i}})">
+                            <path d="M9 18l6-6-6-6" />
+                        </svg>
+                        <span style="cursor: pointer;" onclick="scrollToSection({{$i}})"
+                            title="{{$file.FilePath}}">{{truncatePath $file.FilePath 2}}</span>
+                    </div>
+                    <ul class="toc-rules">
+                        {{range $j, $rule := $file.Rules}}
+                        <li>
+                            <a href="#card-{{$i}}-{{$j}}" class="toc-rule-link"
+                                onclick="handleTOCRuleLink(event, '{{$i}}', '{{$j}}')">
+                                <span class="toc-sev-dot {{$rule.Severity}}"></span>
+                                <span>{{$rule.RuleID}}</span>
+                            </a>
+                        </li>
+                        {{end}}
+                    </ul>
+                </div>
+                {{end}}
+            </nav>
+        </aside>
+        {{end}}
+    </div>
+
+    <script>
+        const i18n = {{.I18nJSON }};
+        Object.keys(i18n).forEach(lang => {
+            if (!i18n[lang].severity) {
+                i18n[lang].severity = {
+                    high: i18n[lang].severityHigh,
+                    medium: i18n[lang].severityMedium,
+                    low: i18n[lang].severityLow
+                };
+            }
+        });
+
+        function toggleCard(id) {
+            document.getElementById(id).classList.toggle('expanded');
+        }
+
+        function toggleTOCGroup(idx) {
+            const group = document.getElementById('toc-group-' + idx);
+            group.classList.toggle('expanded');
+            group.querySelector('.toc-template-link svg').style.transform = group.classList.contains('expanded') ? 'rotate(90deg)' : 'rotate(0deg)';
+        }
+
+        function scrollToSection(idx) {
+            const section = document.getElementById('section-' + idx);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function handleTOCRuleLink(e, fileIdx, ruleIdx) {
+            e.preventDefault();
+            const cardId = 'card-' + fileIdx + '-' + ruleIdx;
+            const card = document.getElementById(cardId);
+            card.classList.add('expanded');
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // Highlight briefly
+            card.style.borderColor = 'var(--primary)';
+            setTimeout(() => card.style.borderColor = 'var(--border)', 1500);
+        }
+
+        let allExpanded = false;
+        document.getElementById('expand-all').addEventListener('click', () => {
+            allExpanded = !allExpanded;
+            document.querySelectorAll('.rule-card').forEach(c => c.classList.toggle('expanded', allExpanded));
+            document.querySelectorAll('.toc-group').forEach((g, i) => {
+                g.classList.toggle('expanded', allExpanded);
+                g.querySelector('.toc-template-link svg').style.transform = allExpanded ? 'rotate(90deg)' : 'rotate(0deg)';
+            });
+        });
+
+        function switchLanguage(lang) {
+            const t = i18n[lang];
+            if (!t) return;
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) el.textContent = t[key];
+            });
+
+            document.querySelectorAll('[data-i18n-severity]').forEach(el => {
+                const sev = el.getAttribute('data-i18n-severity');
+                if (t.severity[sev]) el.textContent = t.severity[sev];
+            });
+
+            document.querySelectorAll('.v-reason').forEach(el => {
+                el.textContent = el.getAttribute('data-reason-' + lang) || el.textContent;
+            });
+
+            document.querySelectorAll('.rec-text').forEach(el => {
+                el.textContent = el.getAttribute('data-rec-' + lang) || el.textContent;
+            });
+
+            document.querySelectorAll('.lang-btn').forEach(b => {
+                b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+            });
+
+            document.documentElement.lang = lang;
+            localStorage.setItem('infraguard-lang', lang);
+        }
+
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => switchLanguage(btn.getAttribute('data-lang')));
+        });
+
+        // Init
+        const savedLang = localStorage.getItem('infraguard-lang');
+        if (savedLang && i18n[savedLang]) switchLanguage(savedLang);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for api-gateway-group-force-https rule - Non-compliant case
+Resources:
+  # 不合规：分组绑定了域名但没有配置SSL证书
+  NonCompliantGroup:
+    Type: ALIYUN::ApiGateway::Group
+    Properties:
+      GroupName: NonCompliantApiGroup
+      Description: API group without HTTPS
+
+  NonCompliantDomain:
+    Type: ALIYUN::ApiGateway::CustomDomain
+    Properties:
+      GroupId:
+        Fn::GetAtt:
+          - NonCompliantGroup
+          - GroupId
+      DomainName: api.example.com
+      # CertificateId为空，没有启用HTTPS

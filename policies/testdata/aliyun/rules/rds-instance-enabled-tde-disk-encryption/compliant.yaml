@@ -1,0 +1,26 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - RDS instance with TDE or disk encryption enabled
+
+Resources:
+  # Compliant: RDS instance with EncryptionKey
+  RDSInstance1:
+    Type: ALIYUN::RDS::DBInstance
+    Properties:
+      Engine: MySQL
+      EngineVersion: '8.0'
+      DBInstanceClass: rds.mysql.s3.large
+      DBInstanceStorage: 100
+      SecurityIPList: 127.0.0.1/32
+      EncryptionKey: kms-xxxxxxxxxxxxx
+
+  # Compliant: RDS instance with encrypted storage type
+  RDSInstance2:
+    Type: ALIYUN::RDS::DBInstance
+    Properties:
+      Engine: MySQL
+      EngineVersion: '8.0'
+      DBInstanceClass: rds.mysql.s3.large
+      DBInstanceStorage: 100
+      SecurityIPList: 127.0.0.1/32
+      DBInstanceStorageType: cloud_essd
+

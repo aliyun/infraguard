@@ -1,0 +1,9 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  VPN:
+    Type: ALIYUN::VPC::VpnGateway
+    Properties:
+      Bandwidth: 10
+      VpcId: vpc-123
+      VSwitchId: vsw-123
+      EnableSsl: true

@@ -1,0 +1,92 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - ISO-27001 Security Management Standard Compliance
+
+Resources:
+  # Violation: ECS disk without encryption
+  ECSDisk:
+    Type: ALIYUN::ECS::Disk
+    Properties:
+      ZoneId: cn-hangzhou-h
+      DiskCategory: cloud_essd
+      Size: 100
+      Encrypted: false
+
+  # Violation: OSS bucket with public access
+  OSSBucket1:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: public-bucket
+      AccessControl: public-read
+
+  # Violation: OSS bucket with public write
+  OSSBucket2:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: public-write-bucket
+      AccessControl: public-read-write
+
+  # Violation: OSS bucket without versioning
+  OSSBucket3:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: no-versioning-bucket
+      AccessControl: private
+
+  # Violation: OSS bucket without logging
+  OSSBucket4:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: no-logging-bucket
+      AccessControl: private
+
+  # Violation: OSS bucket without KMS encryption
+  OSSBucket5:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: no-kms-bucket
+      AccessControl: private
+      ServerSideEncryptionConfiguration:
+        SSEAlgorithm: AES256
+
+  # Violation: OSS bucket without ZRS
+  OSSBucket6:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: no-zrs-bucket
+      AccessControl: private
+      RedundancyType: LRS
+
+  # Violation: NAS filesystem without encryption
+  NASFileSystem:
+    Type: ALIYUN::NAS::FileSystem
+    Properties:
+      ProtocolType: NFS
+      StorageType: Performance
+      EncryptType: 0
+
+  # Violation: KMS key without rotation
+  KMSKey:
+    Type: ALIYUN::KMS::Key
+    Properties:
+      KeySpec: Aliyun_AES_256
+      KeyUsage: ENCRYPT/DECRYPT
+      EnableAutomaticRotation: false
+
+  # Violation: KMS secret without rotation
+  KMSSecret:
+    Type: ALIYUN::KMS::Secret
+    Properties:
+      SecretName: test-secret
+      VersionId: v1
+      SecretData: secret-value
+      EnableAutomaticRotation: false
+
+  # Violation: MaxCompute project without encryption
+  MaxComputeProject:
+    Type: ALIYUN::MaxCompute::Project
+    Properties:
+      Name: test_project
+      Comment: Test project
+      Properties:
+        Encryption:
+          Enable: false

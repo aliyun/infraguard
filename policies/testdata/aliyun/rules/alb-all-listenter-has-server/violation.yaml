@@ -1,0 +1,12 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  ALBListener:
+    Type: ALIYUN::ALB::Listener
+    Properties:
+      LoadBalancerId: alb-123
+      ListenerPort: 443
+      ListenerProtocol: HTTPS
+      DefaultActions:
+        - Type: ForwardGroup
+          ForwardGroupConfig:
+            ServerGroupTuples: []

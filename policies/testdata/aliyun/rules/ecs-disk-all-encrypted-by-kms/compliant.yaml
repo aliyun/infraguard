@@ -1,0 +1,17 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template - ECS disk with KMS encryption enabled
+Parameters:
+  ZoneId:
+    Type: String
+    Default: cn-hangzhou-b
+Resources:
+  CompliantDisk:
+    Type: ALIYUN::ECS::Disk
+    Properties:
+      ZoneId:
+        Ref: ZoneId
+      DiskName: CompliantEncryptedDisk
+      DiskCategory: cloud_essd
+      Size: 40
+      Encrypted: true
+      KMSKeyId: 4c7e***-****-****-****-2b0a******6a1

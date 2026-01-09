@@ -1,0 +1,16 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - Kibana open to all IPs
+Resources:
+  ViolationElasticsearch:
+    Type: ALIYUN::ElasticSearch::Instance
+    Properties:
+      Version: 7.10_with_X-Pack
+      VSwitchId: vsw-123
+      Password: 'Test123!@#'
+      DataNode:
+        Amount: 3
+        Spec: elasticsearch.sn1ne.large
+        DiskSize: 20
+        DiskType: cloud_ssd
+      KibanaWhitelist:
+        - 0.0.0.0/0

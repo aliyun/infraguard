@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  ViolationCluster:
+    Type: ALIYUN::CS::ManagedKubernetesCluster
+    Properties:
+      Name: violation-cluster
+      VpcId: vpc-123
+      VSwitchIds:
+        - vsw-1
+      ZoneIds:
+        - cn-hangzhou-a

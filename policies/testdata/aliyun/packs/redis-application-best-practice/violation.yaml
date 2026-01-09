@@ -1,0 +1,59 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - Redis Application Best Practice
+
+Resources:
+  # Violation: Redis instance without multi-zone (missing SecondaryZoneId)
+  RedisInstanceNoMultiZone:
+    Type: ALIYUN::REDIS::Instance
+    Properties:
+      InstanceClass: redis.master.small.default
+      EngineVersion: '5.0'
+      ZoneId: cn-hangzhou-h
+      # Missing SecondaryZoneId - violates redis-instance-multi-zone
+
+  # Violation: Redis instance with public access
+  RedisInstancePublicAccess:
+    Type: ALIYUN::REDIS::Instance
+    Properties:
+      InstanceClass: redis.master.small.default
+      EngineVersion: '5.0'
+      ZoneId: cn-hangzhou-h
+      Connections:
+        PublicConnection:
+          ConnectionString: redis-public-test
+          ConnectionPort: 6379
+      # PublicConnection enabled - violates redis-public-and-any-ip-access-check
+
+  # Violation: Prepaid Redis instance without auto-renewal
+  RedisInstanceNoAutoRenew:
+    Type: ALIYUN::REDIS::Instance
+    Properties:
+      InstanceClass: redis.master.small.default
+      EngineVersion: '5.0'
+      ZoneId: cn-hangzhou-h
+      ChargeType: PrePaid
+      Period: 1
+      # Missing AutoRenewDuration - violates redis-instance-expired-check
+
+  # Violation: Redis instance without SSL enabled
+  RedisInstanceNoSSL:
+    Type: ALIYUN::REDIS::Instance
+    Properties:
+      InstanceClass: redis.master.small.default
+      EngineVersion: '5.0'
+      ZoneId: cn-hangzhou-h
+      SSLEnabled: Disable
+      # SSLEnabled is Disable - violates redis-instance-enabled-ssl
+
+  # Violation: Redis instance without deletion protection
+  RedisInstanceNoDeletionProtection:
+    Type: ALIYUN::REDIS::Instance
+    Properties:
+      InstanceClass: redis.master.small.default
+      EngineVersion: '5.0'
+      ZoneId: cn-hangzhou-h
+      DeletionProtection: false
+      # DeletionProtection is false - violates redis-instance-release-protection
+
+
+

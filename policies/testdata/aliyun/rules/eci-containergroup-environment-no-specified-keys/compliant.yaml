@@ -1,0 +1,15 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template - ECI container group without sensitive environment keys
+Resources:
+  CompliantContainerGroup:
+    Type: ALIYUN::ECI::ContainerGroup
+    Properties:
+      ContainerGroupName: safe-container-group
+      Container:
+        - Name: myapp
+          Image: nginx:latest
+          EnvironmentVar:
+            - Key: APP_ENV
+              Value: production
+            - Key: DATABASE_URL
+              Value: postgres://db:5432/main

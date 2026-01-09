@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant ECS Disk with zone-redundant storage
+Resources:
+  DataDisk:
+    Type: ALIYUN::ECS::Disk
+    Properties:
+      DiskName: my-data-disk
+      DiskCategory: cloud_regional_disk_auto
+      Size: 100
+      ZoneId: cn-hangzhou-h
+

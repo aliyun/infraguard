@@ -1,0 +1,13 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  Redis:
+    Type: ALIYUN::REDIS::Instance
+    Properties:
+      InstanceClass: redis.master.small.default
+      Connections:
+        VpcPrivateConnection:
+          ConnectionString: conn-xxxxx
+          ConnectionPort: 6379
+        PublicConnection:
+          ConnectionString: conn-xxxxx-pub
+          ConnectionPort: 6379

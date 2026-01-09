@@ -1,0 +1,8 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  CompliantBucket:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: compliant-bucket
+      VersioningConfiguration:
+        Status: Enabled

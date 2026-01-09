@@ -1,0 +1,13 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant GWLB LoadBalancer with multiple zones
+Resources:
+  GWLBLoadBalancer:
+    Type: ALIYUN::GWLB::LoadBalancer
+    Properties:
+      VpcId: vpc-bp1qg7z02222222222
+      ZoneMappings:
+        - ZoneId: cn-hangzhou-h
+          VSwitchId: vsw-bp1g7z02222222222
+        - ZoneId: cn-hangzhou-g
+          VSwitchId: vsw-bp1g7z03333333333
+

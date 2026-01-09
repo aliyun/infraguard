@@ -1,0 +1,24 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for ram-user-specified-permission-bound rule - Non-compliant case
+Resources:
+  # 不合规：用户绑定了包含高危权限的内联策略
+  NonCompliantUser:
+    Type: ALIYUN::RAM::User
+    Properties:
+      UserName: non-compliant-user
+      DisplayName: Non-Compliant User
+      PolicyAttachments:
+        System:
+          - ReadOnlyAccess
+        Custom: []
+      Policies:
+        - PolicyName: RiskyPolicy
+          PolicyDocument:
+            Version: '1'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ecs:DeleteInstance
+                  - oss:DeleteBucket
+                Resource:
+                  - '*'

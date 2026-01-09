@@ -1,0 +1,33 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  # Compliant: RAM policy attached to a user via AttachPolicyToUser
+  ManagedPolicy:
+    Type: ALIYUN::RAM::ManagedPolicy
+    Properties:
+      PolicyName: used-policy
+      PolicyDocument:
+        Version: '1'
+        Statement:
+          - Effect: Allow
+            Action:
+              - 'oss:ListBuckets'
+            Resource:
+              - '*'
+
+  TestUser:
+    Type: ALIYUN::RAM::User
+    Properties:
+      UserName: test-user
+      DisplayName: Test User
+
+  AttachPolicy:
+    Type: ALIYUN::RAM::AttachPolicyToUser
+    Properties:
+      PolicyName:
+        Fn::GetAtt:
+          - ManagedPolicy
+          - PolicyName
+      PolicyType: Custom
+      UserName:
+        Ref: TestUser
+

@@ -1,0 +1,8 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  Service:
+    Type: ALIYUN::FC::Service
+    Properties:
+      ServiceName: my-service
+      Role: acs:ram::1234567890123456:role/fc-service-role
+      Description: My Function Compute service

@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  MSECluster:
+    Type: ALIYUN::MSE::Cluster
+    Properties:
+      ClusterSpecification: mse.cluster.pro.3node
+      ClusterType: ZooKeeper
+      ClusterVersion: ZooKeeper_3_8_0
+      NetType: privatenet
+      InstanceCount: 5

@@ -1,0 +1,14 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template - TSDB instance with restricted IP whitelist
+Resources:
+  CompliantTSDB:
+    Type: ALIYUN::TSDB::HiTSDBInstance
+    Properties:
+      InstanceClass: hitsdb.hs.xlarge
+      InstanceStorage: 50
+      VPCId: vpc-123
+      VSwitchId: vsw-123
+      ZoneId: cn-hangzhou-h
+      SecurityIpList:
+        - 10.0.0.0/8
+        - 192.168.0.0/16

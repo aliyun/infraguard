@@ -1,0 +1,15 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  CompliantALB:
+    Type: ALIYUN::ALB::LoadBalancer
+    Properties:
+      LoadBalancerEdition: StandardWithWaf
+      LoadBalancerBillingConfig:
+        PayType: PostPay
+      VpcId: vpc-123
+      ZoneMappings:
+        - ZoneId: zone-a
+          VSwitchId: vsw-123
+        - ZoneId: zone-b
+          VSwitchId: vsw-456
+      AddressType: Intranet

@@ -1,0 +1,12 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  CompliantPolarDBX:
+    Type: ALIYUN::PolarDBX::DBInstance
+    Properties:
+      TopologyType: 3azones
+      EngineVersion: '5.7'
+      VPCId: vpc-123
+      VSwitchId: vsw-1
+      DBNodeClass: polarx.x4.medium.2e
+      DBNodeCount: 2
+      PrimaryZone: cn-hangzhou-a

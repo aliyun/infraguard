@@ -1,0 +1,9 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant CR Instance with image scanning enabled
+Resources:
+  CRInstance:
+    Type: ALIYUN::CR::Instance
+    Properties:
+      InstanceName: my-cr-instance
+      InstanceType: Standard
+      ImageScanner: ACR

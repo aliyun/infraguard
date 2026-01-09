@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant GPDB Instance with standby zone
+Resources:
+  GPDBInstance:
+    Type: ALIYUN::GPDB::DBInstance
+    Properties:
+      EngineVersion: '6.0'
+      ZoneId: cn-hangzhou-h
+      StandbyZoneId: cn-hangzhou-g
+      VSwitchId: vsw-bp1g7z02222222222
+

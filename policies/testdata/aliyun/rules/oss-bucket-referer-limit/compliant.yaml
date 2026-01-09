@@ -1,0 +1,12 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for oss-bucket-referer-limit rule - Compliant case
+Resources:
+  CompliantBucket:
+    Type: 'ALIYUN::OSS::Bucket'
+    Properties:
+      BucketName: test-compliant-bucket
+      AccessControl: private
+      RefererConfiguration:
+        RefererList:
+          - https://example.com
+        AllowEmptyReferer: false

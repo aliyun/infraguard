@@ -1,0 +1,12 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  RAMUser:
+    Type: ALIYUN::RAM::User
+    Properties:
+      UserName: test-user
+  PolicyAttachment:
+    Type: ALIYUN::RAM::AttachPolicyToUser
+    Properties:
+      UserName: {Ref: RAMUser}
+      PolicyName: test-policy
+      PolicyType: Custom

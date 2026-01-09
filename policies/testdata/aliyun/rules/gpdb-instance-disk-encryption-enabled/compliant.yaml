@@ -1,0 +1,12 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  GPDB:
+    Type: ALIYUN::GPDB::DBInstance
+    Properties:
+      EncryptionKey: kms-123
+      EngineVersion: '6.0'
+      DBInstanceClass: gpdb.group.se.medium
+      DBInstanceGroupCount: 2
+      ZoneId: cn-hangzhou-d
+      VPCId: vpc-123
+      VSwitchId: vsw-123

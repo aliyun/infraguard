@@ -1,0 +1,8 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  Service:
+    Type: ALIYUN::FC::Service
+    Properties:
+      ServiceName: my-service
+      InternetAccess: false
+      Description: My Function Compute service with internet access disabled

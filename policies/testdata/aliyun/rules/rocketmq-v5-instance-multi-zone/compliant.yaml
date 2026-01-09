@@ -1,0 +1,16 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  CompliantRocketMQ:
+    Type: ALIYUN::ROCKETMQ5::Instance
+    Properties:
+      InstanceName: my-rocketmq
+      SeriesCode: standard
+      SubSeriesCode: cluster_ha
+      ProductInfo:
+        MsgProcessSpec: rocketmq.vip.2xlarge
+      VpcInfo:
+        VpcId: vpc-123
+        VSwitchIds:
+          - vsw-1
+      InternetInfo:
+        InternetSpec: disable

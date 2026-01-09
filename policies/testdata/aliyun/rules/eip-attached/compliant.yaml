@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  EIP:
+    Type: ALIYUN::VPC::EIP
+    Properties: {Bandwidth: 5}
+  Association:
+    Type: ALIYUN::VPC::EIPAssociation
+    Properties:
+      AllocationId: {Ref: EIP}
+      InstanceId: i-123

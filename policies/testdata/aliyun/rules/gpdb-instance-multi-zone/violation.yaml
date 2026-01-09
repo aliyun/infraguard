@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Non-compliant GPDB Instance without standby zone
+Resources:
+  GPDBInstance:
+    Type: ALIYUN::GPDB::DBInstance
+    Properties:
+      EngineVersion: '6.0'
+      ZoneId: cn-hangzhou-h
+      VSwitchId: vsw-bp1g7z02222222222
+

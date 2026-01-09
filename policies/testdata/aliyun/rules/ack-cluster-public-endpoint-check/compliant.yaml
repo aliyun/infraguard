@@ -1,0 +1,28 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  CompliantManagedCluster:
+    Type: ALIYUN::CS::ManagedKubernetesCluster
+    Properties:
+      Name: compliant-managed-cluster
+      VpcId: vpc-12345
+      VSwitchIds:
+        - vsw-12345
+      EndpointPublicAccess: false
+
+  CompliantManagedClusterDefault:
+    Type: ALIYUN::CS::ManagedKubernetesCluster
+    Properties:
+      Name: compliant-managed-cluster-default
+      VpcId: vpc-12345
+      VSwitchIds:
+        - vsw-12345
+      # EndpointPublicAccess default is false
+
+  CompliantASKCluster:
+    Type: ALIYUN::CS::ASKCluster
+    Properties:
+      Name: compliant-ask-cluster
+      VpcId: vpc-12345
+      VSwitchIds:
+        - vsw-12345
+      EndpointPublicAccess: false

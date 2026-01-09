@@ -1,0 +1,37 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - OSS Compliance Management Best Practice
+
+Resources:
+  ViolationOSSBucket1:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: violation-oss-bucket-1
+      AccessControl: public-read
+      # Versioning NOT enabled (violation)
+      # Server-side encryption NOT enabled (violation)
+      # Logging NOT enabled (violation)
+      RedundancyType: LRS  # Not ZRS (violation)
+      # No referer configuration (violation)
+
+  ViolationOSSBucket2:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: violation-oss-bucket-2
+      AccessControl: public-read-write
+      # Versioning NOT enabled
+      ServerSideEncryptionConfiguration:
+        SSEAlgorithm: AES256
+      # Empty referer list (violation)
+      RefererConfiguration:
+        AllowEmptyReferer: true
+        RefererList: []
+      # Policy with anonymous access (violation)
+      Policy:
+        Statement:
+          - Effect: Allow
+            Principal: "*"
+            Action:
+              - oss:GetObject
+            Resource:
+              - acs:oss:*:*:violation-oss-bucket-2/*
+

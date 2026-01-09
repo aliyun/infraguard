@@ -1,0 +1,12 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Parameters:
+  minIOPS:
+    Type: Number
+    Default: 1000
+Resources:
+  MongoDB:
+    Type: ALIYUN::MONGODB::Instance
+    Properties:
+      DBInstanceClass: dds.mongo.replica_set
+      DBInstanceStorage: 200
+      StorageType: cloud_essd

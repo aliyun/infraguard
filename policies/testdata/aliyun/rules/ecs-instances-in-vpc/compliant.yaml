@@ -1,0 +1,23 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - ECS instances deployed in VPC
+
+Resources:
+  # Compliant: ECS instance in VPC
+  ECSInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.g6.large
+      ImageId: centos_7
+      VpcId: vpc-bp1qg7z02222222222
+      VSwitchId: vsw-bp1g7z02222222222
+
+  # Compliant: ECS instance group in VPC
+  ECSInstanceGroup:
+    Type: ALIYUN::ECS::InstanceGroup
+    Properties:
+      InstanceType: ecs.g6.large
+      ImageId: centos_7
+      MaxAmount: 1
+      VpcId: vpc-bp1qg7z02222222222
+      VSwitchId: vsw-bp1g7z02222222222
+

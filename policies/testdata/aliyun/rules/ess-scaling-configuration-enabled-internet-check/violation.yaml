@@ -1,0 +1,18 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - ESS scaling configuration with public internet access enabled
+Parameters:
+  ImageId:
+    Type: String
+    Default: aliyun_2_1903_x64_20G_alibase_20231221.vhd
+Resources:
+  ViolationScalingConfiguration:
+    Type: ALIYUN::ESS::ScalingConfiguration
+    Properties:
+      ScalingGroupId: sg-12345678
+      ImageId:
+        Ref: ImageId
+      InstanceType: ecs.g6.large
+      ScalingConfigurationName: ViolationScalingConfig
+      SystemDiskCategory: cloud_essd
+      SystemDiskSize: 40
+      InternetMaxBandwidthOut: 10

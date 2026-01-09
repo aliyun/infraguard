@@ -1,0 +1,9 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  PolarDB:
+    Type: ALIYUN::POLARDB::DBCluster
+    Properties:
+      DBType: MySQL
+      DBVersion: ''
+      DBNodeClass: polar.mysql.x4.medium
+      PayType: PostPaid

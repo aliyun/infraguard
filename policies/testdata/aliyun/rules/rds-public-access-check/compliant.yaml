@@ -1,0 +1,14 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - RDS instance without public access
+
+Resources:
+  RDSInstance:
+    Type: ALIYUN::RDS::DBInstance
+    Properties:
+      Engine: MySQL
+      EngineVersion: '8.0'
+      DBInstanceClass: mysql.n2.small.1
+      DBInstanceStorage: 20
+      SecurityIPList: 127.0.0.1/32
+      AllocatePublicConnection: false
+

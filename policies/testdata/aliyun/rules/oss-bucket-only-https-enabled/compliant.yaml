@@ -1,0 +1,15 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  CompliantBucket:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: compliant-https-bucket
+      Policy:
+        Statement:
+          - Action: ["oss:*"]
+            Effect: Deny
+            Principal: ["*"]
+            Resource: ["acs:oss:*:*:compliant-https-bucket/*"]
+            Condition:
+              Bool:
+                "acs:SecureTransport": "false"

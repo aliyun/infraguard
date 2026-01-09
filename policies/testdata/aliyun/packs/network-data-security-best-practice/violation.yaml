@@ -1,0 +1,39 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - Network and data security issues
+
+Resources:
+  # Violation: ECS disk without encryption
+  ECSDisk:
+    Type: ALIYUN::ECS::Disk
+    Properties:
+      ZoneId: cn-hangzhou-h
+      DiskCategory: cloud_essd
+      Size: 100
+      Encrypted: false
+
+  # Violation: ECS instance not in VPC
+  ECSInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.g6.large
+      ImageId: centos_7
+      SecurityGroupId: sg-123456
+
+  # Violation: OSS bucket with public access, no encryption, no logging
+  OSSBucket:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: insecure-bucket
+      AccessControl: public-read-write
+
+  # Violation: RDS with public access
+  RDSInstance:
+    Type: ALIYUN::RDS::DBInstance
+    Properties:
+      Engine: MySQL
+      EngineVersion: '8.0'
+      DBInstanceClass: mysql.n2.small.1
+      DBInstanceStorage: 20
+      AllocatePublicConnection: true
+      SecurityIPList: '0.0.0.0/0'
+

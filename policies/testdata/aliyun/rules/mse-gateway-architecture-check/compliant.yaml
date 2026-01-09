@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  MSEGateway:
+    Type: ALIYUN::MSE::Gateway
+    Properties:
+      Name: my-gateway
+      Replica: 2
+      Spec: MSE_GTW_2_4_200_c
+      VpcId: vpc-bp1abcdefg
+      VSwitchId: vsw-bp1abcdefg

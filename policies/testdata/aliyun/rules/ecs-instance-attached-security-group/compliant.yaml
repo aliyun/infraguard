@@ -1,0 +1,32 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - ECS instance with security group attached
+
+Resources:
+  SecurityGroup:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: test-sg
+
+  # Compliant: ECS instance with SecurityGroupId
+  ECSInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.c6.large
+      ImageId: centos_7
+      VpcId: vpc-bp1qg7z02222222222
+      VSwitchId: vsw-bp1g7z02222222222
+      SecurityGroupId:
+        Ref: SecurityGroup
+
+  # Compliant: ECS instance group with SecurityGroupIds
+  ECSInstanceGroup:
+    Type: ALIYUN::ECS::InstanceGroup
+    Properties:
+      InstanceType: ecs.c6.large
+      ImageId: centos_7
+      MaxAmount: 1
+      VpcId: vpc-bp1qg7z02222222222
+      VSwitchId: vsw-bp1g7z02222222222
+      SecurityGroupIds:
+        - Ref: SecurityGroup
+

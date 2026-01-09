@@ -1,0 +1,14 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - Security group without full public access
+
+Resources:
+  # Compliant: Security group with restricted access
+  SecurityGroup:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: test-sg
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          PortRange: 443/443
+          SourceCidrIp: 0.0.0.0/0
+

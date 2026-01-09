@@ -1,0 +1,13 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Non-compliant HBase Cluster with single node
+Resources:
+  HBaseCluster:
+    Type: ALIYUN::HBase::Cluster
+    Properties:
+      Engine: hbase
+      EngineVersion: '2.0'
+      CoreInstanceType: hbase.sn1.large
+      NodeCount: 1
+      ZoneId: cn-hangzhou-h
+      PayType: Postpaid
+

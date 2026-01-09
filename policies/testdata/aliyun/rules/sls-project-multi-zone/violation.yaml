@@ -1,0 +1,9 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Non-compliant SLS Project with LRS
+Resources:
+  SLSProject:
+    Type: ALIYUN::SLS::Project
+    Properties:
+      Name: my-lrs-project
+      DataRedundancyType: LRS
+

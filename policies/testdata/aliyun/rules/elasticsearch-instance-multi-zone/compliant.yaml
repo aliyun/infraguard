@@ -1,0 +1,14 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  CompliantElasticsearch:
+    Type: ALIYUN::ElasticSearch::Instance
+    Properties:
+      Version: '7.10'
+      ZoneCount: 3
+      DataNode:
+        Spec: elasticsearch.n4.small
+        Amount: 2
+        DiskType: cloud_ssd
+        DiskSize: 20
+      Password: password123!
+      VSwitchId: vsw-1

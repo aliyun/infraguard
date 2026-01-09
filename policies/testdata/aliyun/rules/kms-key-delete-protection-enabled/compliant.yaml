@@ -1,0 +1,9 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for kms-key-delete-protection-enabled rule - Compliant case
+Resources:
+  CompliantKey:
+    Type: 'ALIYUN::KMS::Key'
+    Properties:
+      KeySpec: Aliyun_AES_256
+      KeyUsage: ENCRYPT/DECRYPT
+      DeletionProtection: true

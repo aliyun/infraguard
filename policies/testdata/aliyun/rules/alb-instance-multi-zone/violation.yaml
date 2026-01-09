@@ -1,0 +1,16 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Non-compliant ALB LoadBalancer with single zone
+Resources:
+  SingleZoneALB:
+    Type: ALIYUN::ALB::LoadBalancer
+    Properties:
+      LoadBalancerName: single-zone-alb
+      LoadBalancerEdition: Standard
+      VpcId: vpc-xxxxx
+      AddressType: Internet
+      LoadBalancerBillingConfig:
+        PayType: PostPay
+      ZoneMappings:
+        - ZoneId: cn-hangzhou-h
+          VSwitchId: vsw-xxxxx1
+

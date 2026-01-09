@@ -1,0 +1,29 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - ECS Compliance Management Best Practice
+
+Resources:
+  # Violation: ECS disk without encryption
+  ECSDisk:
+    Type: ALIYUN::ECS::Disk
+    Properties:
+      ZoneId: cn-hangzhou-h
+      DiskCategory: cloud_essd
+      Size: 100
+      Encrypted: false
+
+  # Violation: ECS instance not in VPC
+  ECSInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.g6.large
+      ImageId: centos_7
+      SecurityGroupId: sg-123456
+
+  # Violation: ECS instance without security group
+  ECSInstanceNoSG:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.g6.large
+      ImageId: centos_7
+      VpcId: vpc-test123
+      VSwitchId: vsw-test123

@@ -1,0 +1,6 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: 'Compliant template for GxP欧盟附录11标准合规包'
+Resources:
+  # Empty template - all rules skip template-level validation
+  DummyResource:
+    Type: ALIYUN::ROS::WaitConditionHandle

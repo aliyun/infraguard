@@ -1,0 +1,19 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template - Using supported Elasticsearch version
+Parameters:
+  VSwitchId:
+    Type: String
+    Default: vsw-12345678
+Resources:
+  CompliantElasticsearch:
+    Type: ALIYUN::ElasticSearch::Instance
+    Properties:
+      VSwitchId:
+        Ref: VSwitchId
+      Password: Test123!@#
+      Version: 7.10_with_X-Pack
+      DataNode:
+        Amount: 3
+        DiskSize: 20
+        DiskType: cloud_ssd
+        Spec: elasticsearch.sn1ne.large

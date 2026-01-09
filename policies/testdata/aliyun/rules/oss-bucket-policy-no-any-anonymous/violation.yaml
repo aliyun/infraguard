@@ -1,0 +1,16 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for oss-bucket-policy-no-any-anonymous rule - Non-compliant case
+Resources:
+  NonCompliantBucket:
+    Type: 'ALIYUN::OSS::Bucket'
+    Properties:
+      BucketName: test-noncompliant-bucket
+      AccessControl: private
+      Policy:
+        Version: 1
+        Statement:
+          - Effect: Allow
+            Principal: "*"
+            Action:
+              - oss:GetObject
+            Resource: test-noncompliant-bucket/*

@@ -1,0 +1,13 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  Service:
+    Type: ALIYUN::FC::Service
+    Properties:
+      ServiceName: my-service
+  Function:
+    Type: ALIYUN::FC::Function
+    Properties:
+      FunctionName: my-function
+      ServiceName: my-service
+      Runtime: python3.10
+      Handler: ''

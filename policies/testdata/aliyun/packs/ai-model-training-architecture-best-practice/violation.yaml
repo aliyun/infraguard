@@ -1,0 +1,46 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - AI Model Training Architecture Best Practice
+
+Resources:
+  # Violation: ECS Disk without encryption
+  ECSDisk:
+    Type: ALIYUN::ECS::Disk
+    Properties:
+      ZoneId: cn-hangzhou-h
+      DiskCategory: cloud_essd
+      Size: 100
+      Encrypted: false
+
+  # Violation: KMS Key without rotation
+  KMSKey:
+    Type: ALIYUN::KMS::Key
+    Properties:
+      KeySpec: Aliyun_AES_256
+      KeyUsage: ENCRYPT/DECRYPT
+      EnableAutomaticRotation: false
+
+  # Violation: KMS Secret without rotation
+  KMSSecret:
+    Type: ALIYUN::KMS::Secret
+    Properties:
+      SecretName: ai-secret
+      VersionId: v1
+      SecretData: secret-value
+      EnableAutomaticRotation: false
+
+  # Violation: NAS FileSystem without encryption
+  NASFileSystem:
+    Type: ALIYUN::NAS::FileSystem
+    Properties:
+      ProtocolType: NFS
+      StorageType: Performance
+      EncryptType: 0
+
+  # Violation: OSS Bucket without KMS encryption
+  OSSBucket:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: ai-training-bucket
+      AccessControl: private
+      ServerSideEncryptionConfiguration:
+        SSEAlgorithm: AES256

@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  ECS:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.g6.large
+      ImageId: centos_7

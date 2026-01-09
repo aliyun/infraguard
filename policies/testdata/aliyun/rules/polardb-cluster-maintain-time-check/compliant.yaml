@@ -1,0 +1,39 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Parameters:
+  DBVersion:
+    Type: String
+    Default: '8.0'
+    Description: Database version
+  DBType:
+    Type: String
+    Default: MySQL
+    Description: Database type
+  DBNodeClass:
+    Type: String
+    Default: polar.mysql.x4.large
+    Description: Database instance type
+  VpcId:
+    Type: String
+    Description: VPC ID
+  VSwitchId:
+    Type: String
+    Description: VSwitch ID
+
+Resources:
+  # Compliant: PolarDB cluster with maintenance window configured
+  PolardbCluster:
+    Type: ALIYUN::POLARDB::DBCluster
+    Properties:
+      DBType:
+        Ref: DBType
+      DBVersion:
+        Ref: DBVersion
+      DBNodeClass:
+        Ref: DBNodeClass
+      DBNodeNum: 1
+      PayType: Postpaid
+      VpcId:
+        Ref: VpcId
+      VSwitchId:
+        Ref: VSwitchId
+      MaintainTime: '02:00Z-06:00Z'

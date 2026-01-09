@@ -1,0 +1,15 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - Resource Public Access Detection Best Practice
+
+Resources:
+  # Note: Most public access configurations are runtime settings not exposed in ROS templates.
+  # This is a minimal compliant template showing resource creation.
+  
+  DummyResource:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: public-access-test-sg
+      Description: Test security group for public access pack
+      SecurityGroupType: enterprise
+      VpcId: vpc-test123
+

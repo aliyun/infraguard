@@ -1,0 +1,8 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  LT:
+    Type: ALIYUN::ECS::LaunchTemplate
+    Properties:
+      LaunchTemplateName: test-lt
+      ImageId: centos_7
+      InstanceType: ecs.g6.large

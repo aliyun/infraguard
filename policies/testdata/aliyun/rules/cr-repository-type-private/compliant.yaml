@@ -1,0 +1,9 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  CRRepo:
+    Type: ALIYUN::CR::Repository
+    Properties:
+      RepoNamespace: test-namespace
+      RepoName: test-repo
+      RepoType: PRIVATE
+      Summary: Test private repo

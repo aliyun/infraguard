@@ -1,0 +1,14 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant NLB LoadBalancer with multiple zones
+Resources:
+  NLBLoadBalancer:
+    Type: ALIYUN::NLB::LoadBalancer
+    Properties:
+      VpcId: vpc-bp1qg7z02222222222
+      AddressType: Intranet
+      ZoneMappings:
+        - ZoneId: cn-hangzhou-h
+          VSwitchId: vsw-bp1g7z02222222222
+        - ZoneId: cn-hangzhou-g
+          VSwitchId: vsw-bp1g7z03333333333
+

@@ -1,0 +1,12 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Non-compliant SLS Logstore without BYOK encryption
+Resources:
+  Logstore:
+    Type: ALIYUN::SLS::Logstore
+    Properties:
+      ProjectName: test-project
+      LogstoreName: insecure-store
+      EncryptConf:
+        Enable: true
+        EncryptType: default
+        # Missing UserCmkInfo - using service key instead

@@ -1,0 +1,21 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant SLB with ACL configured
+Resources:
+  LoadBalancer:
+    Type: ALIYUN::SLB::LoadBalancer
+    Properties:
+      LoadBalancerSpec: slb.s3.small
+      MasterZoneId: cn-hangzhou-h
+      SlaveZoneId: cn-hangzhou-g
+      AddressType: internet
+      InternetChargeType: paybytraffic
+  Listener:
+    Type: ALIYUN::SLB::Listener
+    Properties:
+      LoadBalancerId:
+        Ref: LoadBalancer
+      ListenerPort: 80
+      Protocol: http
+      Bandwidth: 1
+      AclStatus: on
+      AclId: acl-123

@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Non-compliant API Gateway Instance with single zone
+Resources:
+  ApiGatewayInstance:
+    Type: ALIYUN::ApiGateway::Instance
+    Properties:
+      InstanceName: single-zone-api-gateway
+      InstanceSpec: api.s1.small
+      HttpsPolicy: HTTPS2_TLS1_2
+      ZoneId: cn-beijing-f
+

@@ -1,0 +1,14 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - Launch template with unencrypted data disks
+Parameters: {}
+Resources:
+  ViolationTemplate:
+    Type: ALIYUN::ECS::LaunchTemplate
+    Properties:
+      LaunchTemplateName: UnencryptedDataDiskTemplate
+      InstanceType: ecs.c6.large
+      ImageId: m-bp1***0
+      DiskMappings:
+        - Size: 40
+          Category: cloud_essd
+          Encrypted: false

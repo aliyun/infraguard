@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  PolarDB:
+    Type: ALIYUN::POLARDB::DBCluster
+    Properties:
+      DBType: MySQL
+      DBVersion: '8.0'
+      DBNodeClass: polar.mysql.x4.medium
+      PayType: PostPaid
+      DBClusterParameters:
+        Parameters: '{"default_time_zone":"SYSTEM"}'

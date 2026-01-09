@@ -1,0 +1,95 @@
+package infraguard.packs.aliyun.soc2_audit_compliance
+
+import rego.v1
+
+pack_meta := {
+	"id": "soc2-audit-compliance",
+	"name": {
+		"en": "SOC 2 Audit Standard Compliance",
+		"zh": "SOC2 审计标准实践合规包",
+	},
+	"description": {
+		"en": "Compliance pack for SOC 2 (Service Organization Control 2) audit standards. This pack helps organizations verify their cloud resources meet SOC 2 trust principles for security, availability, and confidentiality.",
+		"zh": "SOC 2(服务组织控制 2)审计标准合规包。本合规包帮助组织验证其云资源是否符合 SOC 2 安全性、可用性和保密性信任原则。",
+	},
+	"rules": [
+		# "ack-running-cluster-node-monitorenabled",
+		# "ack-cluster-node-monitorenabled",
+		# "ack-cluster-ram-authenticator-enabled",
+		# "adb-public-access-check",  # Commented: ROS ADB::DBCluster does not support PublicEndpoint property
+		# "adb-cluster-log-backup-enabled",
+		# "adb-cluster-audit-log-enabled",  # Commented: ROS ADB::DBCluster does not support AuditLog property
+		# "alb-http-drop-invalid-header-enabled",
+		# "api-gateway-api-auth-required",
+		# "api-gateway-group-log-enabled",
+		# "api-gateway-group-domain-access-waf-or-waf3",  # Commented: ROS ApiGateway::Group does not support PassthroughWaf property
+		"api-gateway-group-enabled-ssl",
+		# "cdn-domain-tls13-enabled",
+		# "cr-instance-public-access-check",  # Commented: ROS CR::Instance does not support PublicNetworkAccess property
+		"firewall-asset-open-protect",
+		# "dts-instance-sync-job-ssl-enabled",
+		"ecs-disk-encrypted",
+		"ecs-disk-auto-snapshot-policy",
+		"ecs-instance-enabled-security-protection",
+		# "ecs-instance-monitor-enabled",  # Commented: ROS ECS::Instance does not support CloudMonitorFlags property
+		"ecs-running-instance-no-public-ip",
+		# "ecs-running-instances-in-vpc",
+		# "ecs-instance-updated-security-vul",  # Commented: ROS ECS::Instance does not support Vulnerabilities property
+		# "ecs-instance-no-public-ip",
+		"ecs-instance-ram-role-attached",
+		"ecs-security-group-white-list-port-check",
+		"ecs-security-group-risky-ports-check-with-protocol",
+		"eip-attached",
+		"ess-scaling-configuration-enabled-internet-check",
+		# "elasticsearch-instance-enabled-public-check",
+		"elasticsearch-instance-enabled-data-node-encryption",
+		# "elasticsearch-instance-used-https-protocol",  # Commented: ROS ALIYUN::ElasticSearch::Instance does not support Protocol property
+		# "fc-function-settings-check",
+		"fc-service-vpc-binding",
+		"fc-service-internet-access-disable",
+		"kms-key-delete-protection-enabled",
+		# "kms-key-state-not-pending-deletion",  # Commented: ROS KMS::Key does not support KeyState property (runtime state only)
+		# "kms-secret-last-rotation-date-check",
+		"kms-secret-rotation-enabled",
+		# "nas-filesystem-enable-backup-plan",
+		"nas-filesystem-encrypt-type-check",
+		# "nat-risk-ports-check",
+		"oss-zrs-enabled",
+		"oss-bucket-server-side-encryption-enabled",
+		"oss-bucket-public-read-prohibited",
+		"oss-bucket-public-write-prohibited",
+		"oss-bucket-versioning-enabled",
+		"oss-bucket-logging-enabled",
+		"oss-bucket-only-https-enabled",
+		# "polardb-public-access-check",
+		# "polardb-cluster-address-no-public",
+		# "polardb-cluster-level-one-backup-retention",
+		"polardb-cluster-delete-protection-enabled",
+		"polardb-cluster-enabled-tde",
+		"polardb-cluster-enabled-ssl",
+		# "polardb-cluster-enabled-auditing",  # ROS does not support SQLCollectorStatus property
+		"ram-group-has-member-check",
+		# "ram-group-in-use-check",
+		"ram-policy-no-statements-with-admin-access-check",
+		# "ram-policy-in-use-check",
+		"ram-user-mfa-check",
+		"ram-user-ak-create-date-expired-check",
+		"ram-user-login-check",
+		"ram-user-no-policy-check",
+		"ram-user-group-membership-check",
+		# "ram-user-active-ak-check",
+		"rds-instance-enabled-log-backup",
+		"rds-public-access-check",
+		"rds-instacne-delete-protection-enabled",
+		# "rds-instance-enabled-tde",
+		"redis-instance-enabled-ssl",
+		"slb-listener-https-enabled",
+		"slb-all-listenter-tls-policy-check",
+		# "slb-no-public-ip",
+		"slb-instance-log-enabled",
+		# "slb-aliyun-certificate-required",
+		# "ssl-certificate-expired-check",
+		"vpc-flow-logs-enabled",
+		# "waf3-instance-enabled-specified-defense-rules",
+	],
+}

@@ -1,0 +1,17 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - ECS instance with IMDSv1 (not security-enhanced)
+Parameters:
+  ZoneId:
+    Type: String
+    Default: cn-hangzhou-b
+Resources:
+  ViolationInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      ZoneId:
+        Ref: ZoneId
+      InstanceName: InsecureMetadataInstance
+      InstanceType: ecs.c6.large
+      ImageId: m-bp1***0
+      HttpEndpoint: enabled
+      HttpTokens: optional

@@ -1,0 +1,13 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template - SLB instance with multiple zones
+Resources:
+  LoadBalancer:
+    Type: ALIYUN::SLB::LoadBalancer
+    Properties:
+      LoadBalancerName: MultiZoneSLB
+      AddressType: internet
+      InternetChargeType: paybytraffic
+      VpcId: vpc-12345678
+      VSwitchId: vsw-12345678
+      MasterZoneId: cn-hangzhou-i
+      SlaveZoneId: cn-hangzhou-h

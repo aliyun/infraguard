@@ -1,0 +1,69 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - Generative AI Compliance Best Practice
+
+Resources:
+  # Violation: CR Repository without tag immutability
+  CRRepository:
+    Type: ALIYUN::CR::Repository
+    Properties:
+      RepoName: ai-model-repo
+      RepoNamespace: ai-namespace
+      RepoType: PRIVATE
+      Summary: AI model repository
+      InstanceId: cri-12345678
+      TagImmutability: false
+
+  # Violation: ECS Disk without encryption
+  ECSDisk:
+    Type: ALIYUN::ECS::Disk
+    Properties:
+      ZoneId: cn-hangzhou-h
+      DiskCategory: cloud_essd
+      Size: 100
+      Encrypted: false
+
+  # Violation: KMS Key without rotation
+  KMSKey:
+    Type: ALIYUN::KMS::Key
+    Properties:
+      KeySpec: Aliyun_AES_256
+      KeyUsage: ENCRYPT/DECRYPT
+      EnableAutomaticRotation: false
+      DeletionProtection: false
+
+  # Violation: KMS Secret without automatic rotation
+  KMSSecret:
+    Type: ALIYUN::KMS::Secret
+    Properties:
+      SecretName: ai-api-key
+      VersionId: v1
+      SecretData: secret-value
+      EnableAutomaticRotation: false
+
+  # Violation: MaxCompute Project without encryption
+  MaxComputeProject:
+    Type: ALIYUN::MaxCompute::Project
+    Properties:
+      Name: ai_data_project
+      Comment: AI data processing project
+      Properties:
+        Encryption:
+          Enable: false
+
+  # Violation: NAS FileSystem without encryption
+  NASFileSystem:
+    Type: ALIYUN::NAS::FileSystem
+    Properties:
+      ProtocolType: NFS
+      StorageType: Performance
+      EncryptType: 0
+
+  # Violation: OSS Bucket without KMS encryption
+  OSSBucket:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: ai-model-storage
+      AccessControl: private
+      ServerSideEncryptionConfiguration:
+        SSEAlgorithm: AES256
+

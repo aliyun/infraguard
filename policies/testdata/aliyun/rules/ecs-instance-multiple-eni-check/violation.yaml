@@ -1,0 +1,69 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - ECS instance with multiple ENIs via NetworkInterfaceAttachment
+Resources:
+  TestVPC:
+    Type: ALIYUN::ECS::VPC
+    Properties:
+      VpcName: test-vpc
+      CidrBlock: 192.168.0.0/16
+  TestVSwitch:
+    Type: ALIYUN::ECS::VSwitch
+    Properties:
+      VpcId:
+        Ref: TestVPC
+      ZoneId: cn-hangzhou-b
+      VSwitchName: test-vswitch
+      CidrBlock: 192.168.1.0/24
+  TestSecurityGroup:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      VpcId:
+        Ref: TestVPC
+      SecurityGroupName: TestSecurityGroup
+  ViolationInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      ZoneId: cn-hangzhou-b
+      InstanceName: MultiENIInstance
+      InstanceType: ecs.c6.large
+      ImageId: m-bp1***0
+      VpcId:
+        Ref: TestVPC
+      VSwitchId:
+        Ref: TestVSwitch
+      SecurityGroupId:
+        Fn::GetAtt:
+          - TestSecurityGroup
+          - SecurityGroupId
+  ENI1:
+    Type: ALIYUN::ECS::NetworkInterface
+    Properties:
+      VSwitchId:
+        Ref: TestVSwitch
+      SecurityGroupId:
+        Fn::GetAtt:
+          - TestSecurityGroup
+          - SecurityGroupId
+  ENI2:
+    Type: ALIYUN::ECS::NetworkInterface
+    Properties:
+      VSwitchId:
+        Ref: TestVSwitch
+      SecurityGroupId:
+        Fn::GetAtt:
+          - TestSecurityGroup
+          - SecurityGroupId
+  Attachment1:
+    Type: ALIYUN::ECS::NetworkInterfaceAttachment
+    Properties:
+      InstanceId:
+        Ref: ViolationInstance
+      NetworkInterfaceId:
+        Ref: ENI1
+  Attachment2:
+    Type: ALIYUN::ECS::NetworkInterfaceAttachment
+    Properties:
+      InstanceId:
+        Ref: ViolationInstance
+      NetworkInterfaceId:
+        Ref: ENI2

@@ -1,0 +1,16 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  # Violation: RAM policy with admin access (Action: *, Resource: *)
+  ManagedPolicy:
+    Type: ALIYUN::RAM::ManagedPolicy
+    Properties:
+      PolicyName: admin-policy
+      PolicyDocument:
+        Version: '1'
+        Statement:
+          - Effect: Allow
+            Action:
+              - '*'
+            Resource:
+              - '*'
+

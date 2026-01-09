@@ -1,0 +1,19 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Parameters:
+  UserName:
+    Type: String
+    Description: RAM user name
+  GroupName:
+    Type: String
+    Description: RAM group name
+
+Resources:
+  # Compliant: RAM user belongs to at least one group
+  RamUser:
+    Type: ALIYUN::RAM::User
+    Properties:
+      UserName:
+        Ref: UserName
+      DisplayName: Test User
+      Groups:
+        - Ref: GroupName

@@ -1,0 +1,9 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  RedisInstance:
+    Type: ALIYUN::REDIS::Instance
+    Properties:
+      Connections:
+        VpcPrivateConnection:
+          ConnectionPort: 6379
+          ConnectionString: test-redis

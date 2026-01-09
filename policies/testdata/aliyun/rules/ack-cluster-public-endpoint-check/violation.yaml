@@ -1,0 +1,28 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  ViolationManagedCluster:
+    Type: ALIYUN::CS::ManagedKubernetesCluster
+    Properties:
+      Name: violation-managed-cluster
+      VpcId: vpc-12345
+      VSwitchIds:
+        - vsw-12345
+      EndpointPublicAccess: true
+
+  ViolationASKCluster:
+    Type: ALIYUN::CS::ASKCluster
+    Properties:
+      Name: violation-ask-cluster
+      VpcId: vpc-12345
+      VSwitchIds:
+        - vsw-12345
+      EndpointPublicAccess: true
+
+  ViolationASKClusterDefault:
+    Type: ALIYUN::CS::ASKCluster
+    Properties:
+      Name: violation-ask-cluster-default
+      VpcId: vpc-12345
+      VSwitchIds:
+        - vsw-12345
+      # EndpointPublicAccess default is true for ASK

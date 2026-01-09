@@ -1,0 +1,23 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for ram-group-in-use-check rule - Compliant case
+Resources:
+  # 合规：用户组有成员且绑定了策略
+  CompliantGroup:
+    Type: ALIYUN::RAM::Group
+    Properties:
+      GroupName: CompliantTestGroup
+      Comments: This group has members and policies
+      PolicyAttachments:
+        System:
+          - AliyunROSFullAccess
+
+  # 添加用户到组
+  UserToGroup:
+    Type: ALIYUN::RAM::UserToGroupAddition
+    Properties:
+      Users:
+        - test-user
+      GroupName:
+        Fn::GetAtt:
+          - CompliantGroup
+          - GroupName

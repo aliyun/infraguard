@@ -1,0 +1,18 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - Kafka instance with disk encryption enabled
+
+Resources:
+  # Compliant: Kafka instance with KMSKeyId in DeployOption
+  KafkaInstance:
+    Type: ALIYUN::KAFKA::Instance
+    Properties:
+      TopicQuota: 50
+      DiskSize: 500
+      DiskType: 1
+      DeployType: 5
+      IoMax: 20
+      DeployOption:
+        KMSKeyId: kms-xxxxxxxxxxxxx
+        VSwitchId: vsw-xxxxxxxxxxxxx
+        DeployModule: vpc
+

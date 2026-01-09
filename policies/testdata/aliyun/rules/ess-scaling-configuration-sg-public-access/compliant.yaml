@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  ScalingConfiguration:
+    Type: ALIYUN::ESS::ScalingConfiguration
+    Properties:
+      ScalingConfigurationName: my-scaling-config
+      ScalingGroupId: sg-12345678
+      ImageId: m-bp12345678
+      InstanceType: ecs.c5.large
+      SecurityGroupId: sg-87654321

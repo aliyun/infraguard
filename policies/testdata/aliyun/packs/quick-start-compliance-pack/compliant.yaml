@@ -1,0 +1,38 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - Quick Start Compliance Pack
+
+Resources:
+  # Note: Most rules in this pack (RAM MFA, AccessKey age, public IP binding, etc.)
+  # are runtime configurations not exposed in ROS templates.
+  # This is a minimal compliant template showing resource creation.
+  
+  CompliantOSSBucket:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: quick-start-bucket
+      AccessControl: private
+      ServerSideEncryptionConfiguration:
+        SSEAlgorithm: KMS
+        KMSMasterKeyID: alias/acs/oss
+      LoggingConfiguration:
+        TargetBucket: log-bucket
+        TargetPrefix: logs/
+      RedundancyType: ZRS
+      VersioningConfiguration:
+        Status: Enabled
+      Policy:
+        Statement:
+          - Action: '*'
+            Effect: Deny
+            Principal: '*'
+            Resource: '*'
+            Condition:
+              Bool:
+                acs:SecureTransport: 'false'
+              IpAddress:
+                acs:SourceIp: 192.168.1.0/24
+      RefererConfiguration:
+        AllowEmptyReferer: false
+        RefererList:
+          - https://example.com
+

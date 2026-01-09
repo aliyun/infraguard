@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - Launch template without security group
+Parameters: {}
+Resources:
+  ViolationTemplate:
+    Type: ALIYUN::ECS::LaunchTemplate
+    Properties:
+      LaunchTemplateName: NoSecurityGroupTemplate
+      InstanceType: ecs.c6.large
+      ImageId: m-bp1***0

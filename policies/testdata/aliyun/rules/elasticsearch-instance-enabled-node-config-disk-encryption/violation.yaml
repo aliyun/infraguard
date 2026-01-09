@@ -1,0 +1,14 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  ES:
+    Type: ALIYUN::ElasticSearch::Instance
+    Properties:
+      DataNode:
+        Amount: 2
+        DiskSize: 20
+        Spec: 'elasticsearch.sn1ne.large'
+        DiskType: 'cloud_ssd'
+        DiskEncryption: false
+      Version: '7.10'
+      VSwitchId: vsw-123
+      Password: 'Test123!@#'

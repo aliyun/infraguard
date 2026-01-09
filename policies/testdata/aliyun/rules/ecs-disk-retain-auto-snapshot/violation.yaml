@@ -1,0 +1,16 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - ECS disk will delete auto snapshots on release
+Parameters:
+  ZoneId:
+    Type: String
+    Default: cn-hangzhou-b
+Resources:
+  ViolationDisk:
+    Type: ALIYUN::ECS::Disk
+    Properties:
+      ZoneId:
+        Ref: ZoneId
+      DiskName: DeleteSnapshotDisk
+      DiskCategory: cloud_essd
+      Size: 40
+      DeleteAutoSnapshot: true

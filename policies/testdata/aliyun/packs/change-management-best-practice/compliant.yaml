@@ -1,0 +1,21 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - Change Management Best Practice
+
+Resources:
+  # Compliant: ECS Auto Snapshot Policy with off-peak timepoints and adequate retention
+  AutoSnapshotPolicy:
+    Type: ALIYUN::ECS::AutoSnapshotPolicy
+    Properties:
+      AutoSnapshotPolicyName: compliant-snapshot-policy
+      TimePoints:
+        - 2
+        - 3
+        - 4
+      RepeatWeekdays:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+      RetentionDays: 30
+

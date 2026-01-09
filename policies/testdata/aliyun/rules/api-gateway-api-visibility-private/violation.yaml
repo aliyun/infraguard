@@ -1,0 +1,22 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for api-gateway-api-visibility-private rule - Non-compliant case
+Resources:
+  # 不合规：API设置为公开可见性
+  NonCompliantApi:
+    Type: ALIYUN::ApiGateway::Api
+    Properties:
+      ApiName: NonCompliantPublicApi
+      GroupId: test-group-id
+      Visibility: PUBLIC
+      Description: This is a public API
+      RequestConfig:
+        RequestPath: /test
+        RequestProtocol: HTTP
+        RequestHttpMethod: GET
+        RequestMode: MAPPING
+        BodyFormat: FORM
+      ServiceConfig:
+        ServiceAddress: example.com
+        ServicePath: /api
+        ServiceHttpMethod: GET
+        Mock: "FALSE"

@@ -1,0 +1,15 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - ECI container group with sensitive environment keys
+Resources:
+  ViolationContainerGroup:
+    Type: ALIYUN::ECI::ContainerGroup
+    Properties:
+      ContainerGroupName: unsafe-container-group
+      Container:
+        - Name: myapp
+          Image: nginx:latest
+          EnvironmentVar:
+            - Key: APP_ENV
+              Value: production
+            - Key: ACCESS_KEY_ID
+              Value: LTAIxxxxxxxxxxxx

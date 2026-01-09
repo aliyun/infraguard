@@ -1,0 +1,20 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for api-gateway-group-https-policy-check rule - Non-compliant case
+Resources:
+  # 不合规：实例配置了不安全的HTTPS策略
+  NonCompliantInstance:
+    Type: ALIYUN::ApiGateway::Instance
+    Properties:
+      InstanceName: NonCompliantInstance
+      InstanceSpec: api.s1.small
+      HttpsPolicy: HTTPS1_1_TLS1_0  # 不安全的TLS 1.0
+      ZoneId: cn-beijing-MAZ2(f,g)
+
+  NonCompliantGroup:
+    Type: ALIYUN::ApiGateway::Group
+    Properties:
+      GroupName: NonCompliantApiGroup
+      InstanceId:
+        Fn::GetAtt:
+          - NonCompliantInstance
+          - InstanceId

@@ -1,0 +1,8 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Non-compliant CR Instance without image scanning
+Resources:
+  CRInstance:
+    Type: ALIYUN::CR::Instance
+    Properties:
+      InstanceName: my-cr-instance
+      InstanceType: Standard

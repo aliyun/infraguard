@@ -1,0 +1,71 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - Aliyun Platform Security Best Practice
+
+Resources:
+  # Violation: ECS instance not in VPC
+  ECSInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.g6.large
+      ImageId: centos_7
+      SecurityGroupId: sg-123456
+
+  # Violation: OSS bucket with public read access
+  OSSBucket1:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: public-read-bucket
+      AccessControl: public-read
+
+  # Violation: OSS bucket with public write access
+  OSSBucket2:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: public-write-bucket
+      AccessControl: public-read-write
+
+  # Violation: OSS bucket with anonymous access
+  OSSBucket3:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: anonymous-bucket
+      AccessControl: public-read
+
+  # Violation: RDS instance with public access
+  RDSInstance:
+    Type: ALIYUN::RDS::DBInstance
+    Properties:
+      Engine: MySQL
+      EngineVersion: '8.0'
+      DBInstanceClass: mysql.n2.small.1
+      DBInstanceStorage: 20
+      AllocatePublicConnection: true
+      SecurityIPList: 0.0.0.0/0
+
+  # Note: Most platform security checks are runtime configurations not exposed in ROS templates.
+  # This violation template includes resources that would violate platform security rules
+  # if configurations are not set properly post-deployment.
+  
+  # Resources that may violate platform security rules
+  MongoDBInstance:
+    Type: ALIYUN::MONGODB::Instance
+    Properties:
+      DBInstanceClass: dds.mongo.mid
+      DBInstanceStorage: 20
+      EngineVersion: '4.0'
+
+  RedisInstance:
+    Type: ALIYUN::REDIS::Instance
+    Properties:
+      EngineVersion: '5.0'
+      InstanceClass: redis.master.small.default
+      Capacity: 1
+
+  PolarDBCluster:
+    Type: ALIYUN::POLARDB::DBCluster
+    Properties:
+      DBType: MySQL
+      DBVersion: '8.0'
+      DBNodeClass: polar.mysql.x4.large
+      DBNodeNum: 2
+      PayType: Postpaid

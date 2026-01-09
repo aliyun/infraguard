@@ -1,0 +1,22 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  CompliantKafka1:
+    Type: ALIYUN::KAFKA::Instance
+    Properties:
+      DeployType: 5
+      DeployOption:
+        DeployModule: vpc
+        VSwitchId: vsw-1
+        CrossZone: true
+
+  CompliantKafka2:
+    Type: ALIYUN::KAFKA::Instance
+    Properties:
+      DeployType: 5
+      DeployOption:
+        DeployModule: vpc
+        VSwitchId: vsw-1
+        CrossZone: false
+        SelectedZones:
+          - cn-hangzhou-a
+          - cn-hangzhou-b

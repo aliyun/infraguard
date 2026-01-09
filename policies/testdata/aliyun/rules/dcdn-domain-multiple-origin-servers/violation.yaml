@@ -1,0 +1,13 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Non-compliant DCDN Domain with single origin server
+Resources:
+  DCDNDomain:
+    Type: ALIYUN::DCDN::Domain
+    Properties:
+      DomainName: example.com
+      Sources:
+        - Type: ipaddr
+          Content: 1.1.1.1
+          Priority: '20'
+          Weight: '10'
+

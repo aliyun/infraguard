@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  SLBListener:
+    Type: ALIYUN::SLB::Listener
+    Properties:
+      LoadBalancerId: lb-123
+      ListenerPort: 443
+      Protocol: https
+      Bandwidth: 1
+      HealthCheck:
+        Switch: off

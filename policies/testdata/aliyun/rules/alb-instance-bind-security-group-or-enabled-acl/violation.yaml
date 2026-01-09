@@ -1,0 +1,44 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - ALB instance without security groups
+
+Resources:
+  VPC:
+    Type: ALIYUN::ECS::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+
+  VSwitch1:
+    Type: ALIYUN::ECS::VSwitch
+    Properties:
+      VpcId:
+        Ref: VPC
+      CidrBlock: 10.0.1.0/24
+      ZoneId: cn-hangzhou-h
+
+  VSwitch2:
+    Type: ALIYUN::ECS::VSwitch
+    Properties:
+      VpcId:
+        Ref: VPC
+      CidrBlock: 10.0.2.0/24
+      ZoneId: cn-hangzhou-i
+
+  # Violation: ALB without SecurityGroupIds
+  ALBLoadBalancer:
+    Type: ALIYUN::ALB::LoadBalancer
+    Properties:
+      LoadBalancerName: violation-alb
+      LoadBalancerEdition: Standard
+      VpcId:
+        Ref: VPC
+      AddressType: Intranet
+      LoadBalancerBillingConfig:
+        PayType: PostPay
+      ZoneMappings:
+        - ZoneId: cn-hangzhou-h
+          VSwitchId:
+            Ref: VSwitch1
+        - ZoneId: cn-hangzhou-i
+          VSwitchId:
+            Ref: VSwitch2
+

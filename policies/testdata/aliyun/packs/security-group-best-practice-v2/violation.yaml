@@ -1,0 +1,29 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - Security Group Best Practice
+
+Resources:
+  # Violation: ECS instance without security group
+  ECSInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.g6.large
+      ImageId: centos_7
+      VpcId: vpc-test123
+      VSwitchId: vsw-test123
+
+  # Violation: Security group with risky ports open to public
+  SecurityGroup:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: insecure-sg
+      SecurityGroupType: normal
+      VpcId: vpc-test123
+      SecurityGroupIngress:
+        # Violation: All ports open from public
+        - IpProtocol: tcp
+          PortRange: -1/-1
+          SourceCidrIp: 0.0.0.0/0
+        # Violation: Risky port (22) open to public
+        - IpProtocol: tcp
+          PortRange: 22/22
+          SourceCidrIp: 0.0.0.0/0

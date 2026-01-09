@@ -1,0 +1,18 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template - ECS instance with only one ENI
+Parameters:
+  ZoneId:
+    Type: String
+    Default: cn-hangzhou-b
+Resources:
+  CompliantInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      ZoneId:
+        Ref: ZoneId
+      InstanceName: SingleENIInstance
+      InstanceType: ecs.c6.large
+      ImageId: m-bp1***0
+      VpcId: vpc-bp1****
+      VSwitchId: vsw-bp1****
+      SecurityGroupId: sg-bp1****

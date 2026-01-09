@@ -1,0 +1,127 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - Generative AI Compliance Best Practice
+
+Resources:
+  ActionTrail:
+    Type: ALIYUN::ACTIONTRAIL::Trail
+    Properties:
+      Name: test-trail
+      OssBucketName: test-bucket
+  # Compliant: CR Repository with tag immutability enabled
+  CRRepository:
+    Type: ALIYUN::CR::Repository
+    Properties:
+      RepoName: ai-model-repo
+      RepoNamespace: ai-namespace
+      RepoType: PRIVATE
+      Summary: AI model repository
+      InstanceId: cri-12345678
+      TagImmutability: true
+
+  # Compliant: ECS Disk with encryption and auto snapshot policy
+  ECSDisk:
+    Type: ALIYUN::ECS::Disk
+    Properties:
+      ZoneId: cn-hangzhou-h
+      DiskCategory: cloud_regional_disk_auto
+      Size: 100
+      Encrypted: true
+      KMSKeyId: key-12345678
+      AutoSnapshotPolicyId: sp-12345678
+      Tags:
+        - Key: Environment
+          Value: test
+        - Key: Project
+          Value: test
+
+  # Compliant: KMS Key with rotation and deletion protection
+  KMSKey:
+    Type: ALIYUN::KMS::Key
+    Properties:
+      KeySpec: Aliyun_AES_256
+      KeyUsage: ENCRYPT/DECRYPT
+      EnableAutomaticRotation: true
+      RotationInterval: 90d
+      DeletionProtection: true
+      Tags:
+        - Key: Environment
+          Value: test
+        - Key: Project
+          Value: test
+
+  # Compliant: KMS Secret with automatic rotation
+  KMSSecret:
+    Type: ALIYUN::KMS::Secret
+    Properties:
+      SecretName: ai-api-key
+      VersionId: v1
+      SecretData: secret-value
+      EnableAutomaticRotation: true
+      RotationInterval: 30d
+      Tags:
+        - Key: Environment
+          Value: test
+        - Key: Project
+          Value: test
+
+  # Compliant: MaxCompute Project with encryption and IP whitelist
+  MaxComputeProject:
+    Type: ALIYUN::MaxCompute::Project
+    Properties:
+      Name: ai_data_project
+      Comment: AI data processing project
+      Properties:
+        Encryption:
+          Enable: true
+          Algorithm: AES256
+          Key: key-12345678
+      IpWhiteList:
+        IpList: 192.168.1.0/24
+
+  # Compliant: NAS FileSystem with encryption
+  NASFileSystem:
+    Type: ALIYUN::NAS::FileSystem
+    Properties:
+      ProtocolType: NFS
+      StorageType: Performance
+      EncryptType: 1
+      Tags:
+        - Key: Environment
+          Value: test
+        - Key: Project
+          Value: test
+
+  # Compliant: OSS Bucket with KMS encryption, ZRS, and logging
+  OSSBucket:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: ai-model-storage
+      AccessControl: private
+      RedundancyType: ZRS
+      ServerSideEncryptionConfiguration:
+        SSEAlgorithm: KMS
+        KMSMasterKeyID: key-12345678
+      LoggingConfiguration:
+        TargetBucket: log-bucket
+        TargetPrefix: logs/
+      VersioningConfiguration:
+        Status: Enabled
+      Policy:
+        Statement:
+          - Action: '*'
+            Effect: Deny
+            Principal: '*'
+            Resource: '*'
+            Condition:
+              Bool:
+                acs:SecureTransport: 'false'
+              IpAddress:
+                acs:SourceIp: 192.168.1.0/24
+      RefererConfiguration:
+        AllowEmptyReferer: false
+        RefererList:
+          - https://example.com
+      Tags:
+        Environment: test
+        Project: test
+

@@ -1,0 +1,76 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - RMiT Financial Standard Compliance Pack
+
+Resources:
+  # Violation: ECS disk without encryption
+  ECSDisk:
+    Type: ALIYUN::ECS::Disk
+    Properties:
+      ZoneId: cn-hangzhou-h
+      DiskCategory: cloud_essd
+      Size: 100
+      Encrypted: false
+
+  # Violation: ECS instance not in VPC
+  ECSInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.g6.large
+      ImageId: centos_7
+      SecurityGroupId: sg-123456
+
+  # Violation: OSS bucket with anonymous access
+  OSSBucket1:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: anonymous-bucket
+      AccessControl: public-read
+
+  # Violation: OSS bucket without server-side encryption
+  OSSBucket2:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: no-encryption-bucket
+      AccessControl: private
+
+  # Violation: OSS bucket without logging
+  OSSBucket3:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: no-logging-bucket
+      AccessControl: private
+
+  # Violation: OSS bucket without versioning
+  OSSBucket4:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: no-versioning-bucket
+      AccessControl: private
+
+  # Violation: OSS bucket without KMS encryption
+  OSSBucket5:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: no-kms-bucket
+      AccessControl: private
+      ServerSideEncryptionConfiguration:
+        SSEAlgorithm: AES256
+
+  # Violation: KMS key without rotation
+  KMSKey:
+    Type: ALIYUN::KMS::Key
+    Properties:
+      KeySpec: Aliyun_AES_256
+      KeyUsage: ENCRYPT/DECRYPT
+      EnableAutomaticRotation: false
+
+  # Violation: RDS instance with public access
+  RDSInstance:
+    Type: ALIYUN::RDS::DBInstance
+    Properties:
+      Engine: MySQL
+      EngineVersion: '8.0'
+      DBInstanceClass: mysql.n2.small.1
+      DBInstanceStorage: 20
+      AllocatePublicConnection: true
+      SecurityIPList: '0.0.0.0/0'

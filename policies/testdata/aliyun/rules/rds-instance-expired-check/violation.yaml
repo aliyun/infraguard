@@ -1,0 +1,47 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Parameters:
+  EngineVersion:
+    Type: String
+    Default: '8.0'
+    Description: Database engine version
+  Engine:
+    Type: String
+    Default: MySQL
+    Description: Database engine
+  DBInstanceClass:
+    Type: String
+    Default: rds.mysql.s2.large
+    Description: Database instance class
+  DBInstanceStorage:
+    Type: Number
+    Default: 20
+    Description: Database instance storage (GB)
+  VpcId:
+    Type: String
+    Description: VPC ID
+  VSwitchId:
+    Type: String
+    Description: VSwitch ID
+
+Resources:
+  # Violation: Prepaid RDS instance without auto-renewal enabled
+  RdsInstance:
+    Type: ALIYUN::RDS::DBInstance
+    Properties:
+      Engine:
+        Ref: Engine
+      EngineVersion:
+        Ref: EngineVersion
+      DBInstanceClass:
+        Ref: DBInstanceClass
+      DBInstanceStorage:
+        Ref: DBInstanceStorage
+      PayType: Prepaid
+      Period: 1
+      PeriodType: Month
+      AutoRenew: false
+      VpcId:
+        Ref: VpcId
+      VSwitchId:
+        Ref: VSwitchId
+      SecurityIPList: '0.0.0.0/0'

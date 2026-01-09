@@ -1,0 +1,9 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  SLBACL:
+    Type: ALIYUN::SLB::AccessControl
+    Properties:
+      AclName: test-acl
+      AclEntries:
+        - Entry: 0.0.0.0/0
+          Comment: Allow all

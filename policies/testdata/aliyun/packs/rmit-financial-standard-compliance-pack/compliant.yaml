@@ -1,0 +1,21 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - RMiT金融标准检查合规包
+Resources:
+  ActionTrail:
+    Type: ALIYUN::ACTIONTRAIL::Trail
+    Properties:
+      Name: test-trail
+      OssBucketName: test-bucket
+      EventRW: All
+  ActionTrailLogging:
+    Type: ALIYUN::ACTIONTRAIL::TrailLogging
+    Properties:
+      Name: test-trail
+      Enable: true
+  DummyResource:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: test-sg
+      VpcId: vpc-test123
+      Description: Test security group for compliance
+      SecurityGroupType: enterprise

@@ -1,0 +1,351 @@
+# English locale for InfraGuard CLI
+# This file is required and serves as the fallback for missing translations
+
+# Cobra template strings
+usage: "Usage"
+available_commands: "Available Commands"
+additional_commands: "Additional Commands"
+flags: "Flags"
+global_flags: "Global Flags"
+additional_help: "Use \"{{.CommandPath}} [command] --help\" for more information about a command."
+aliases: "Aliases"
+examples: "Examples"
+
+# Built-in commands
+completion:
+  short: "Generate the autocompletion script for the specified shell"
+help:
+  short: "Help about any command"
+  long: "Help provides help for any command in the application.\nSimply type {{.Name}} help [path to command] for full details."
+
+# Version command
+version:
+  short: "Print version information"
+  long: "Print version information for InfraGuard and OPA."
+  infraguard: "InfraGuard"
+  opa: "OPA"
+
+# Root command
+root:
+  short: "InfraGuard - IaC compliance pre-check CLI"
+  long: |
+    InfraGuard is an IaC (Infrastructure as Code) compliance pre-check CLI tool.
+    It scans IaC templates (currently supporting Aliyun ROS templates) against
+    OPA/Rego policies before deployment, helping identify security issues and
+    non-compliant configurations early.
+
+# Policy command
+policy:
+  short: "Manage compliance policies"
+  long: "Commands for managing compliance policies, including downloading and updating policy libraries."
+
+# Policy update command
+policy_update:
+  short: "Download/update policy library from repository"
+  long: |
+    Download the policy library from a Git repository.
+    The policies/ subdirectory will be downloaded and stored locally.
+
+    Supported repository formats:
+      - host/path (e.g., github.com/aliyun/infraguard)
+      - HTTPS URL (e.g., https://github.com/aliyun/infraguard.git)
+      - SSH URL (e.g., ssh://git@github.com/aliyun/infraguard.git)
+      - SCP-like (e.g., git@github.com:aliyun/infraguard.git)
+  repo_flag: "Git repository URL or path"
+  version_flag: "Git branch, tag, or commit to download"
+  progress: "Updating policies from %s (version: %s)..."
+  success: "Policies updated successfully."
+
+# Policy get command
+policy_get:
+  short: "Get details of a rule or pack"
+  long: |
+    Display detailed information about a compliance rule or pack.
+    The type (rule/pack) is automatically detected from the ID prefix.
+
+    Examples:
+      infraguard policy get rule:aliyun:ecs-public-ip
+      infraguard policy get pack:aliyun:security-baseline
+  not_found_rule: "Rule not found: %s."
+  not_found_pack: "Pack not found: %s."
+  no_rules_loaded: "No rules loaded. Run 'infraguard policy update' first."
+  no_packs_loaded: "No packs loaded. Run 'infraguard policy update' first."
+  rule_details: "Rule Details"
+  pack_details: "Pack Details"
+  included_rules: "Included Rules"
+  included_rules_format: "%s: %s"
+  name: "Name"
+  description: "Description"
+  resource_types: "Resource Types"
+  pack_id: "Pack ID"
+
+# Policy list command
+policy_list:
+  short: "List all available rules and packs"
+  long: |
+    List all available compliance rules and packs.
+    Shows rule/pack ID, name, and additional info.
+  rules: "Rules"
+  packs: "Packs"
+
+# Policy validate command
+policy_validate:
+  short: "Validate policy files for InfraGuard compliance"
+  long: |
+    Validate Rego policy files against InfraGuard schema requirements.
+    Only files with package infraguard.rules.* or infraguard.packs.* will be validated.
+    Checks rule_meta, pack_meta, and deny rule format.
+
+    Examples:
+      infraguard policy validate ./policies/aliyun/rules/
+      infraguard policy validate ./my-rule.rego
+  no_files_found: "No policy files found (files must declare package infraguard.rules.* or infraguard.packs.*)."
+  passed: "Validation passed: %d file(s) validated"
+  failed: "Validation failed."
+  summary: "Validation: %d total, %d passed, %d failed"
+  skipped_summary: "Skipped %d file(s) (not InfraGuard policy files):"
+  suggestion: "Suggestion"
+  file_type_rule: "rule"
+  file_type_pack: "pack"
+  file_type_unknown: "unknown"
+  skipped_prefix: "  - "
+  error_prefix: "  ✗ "
+  suggestion_prefix: "    → "
+  errors:
+    SYNTAX_ERROR: "Syntax error."
+    SYNTAX_ERROR_suggestion: "Fix the Rego syntax errors before validation."
+    READ_ERROR: "Failed to read file."
+    READ_ERROR_suggestion: "Ensure the file exists and is readable."
+    RULE_MISSING_META: "rule_meta is required but not found or has errors."
+    RULE_MISSING_META_suggestion: "Add a rule_meta object with required fields: id, name, severity, reason."
+    RULE_MISSING_ID: "rule_meta.id is required."
+    RULE_MISSING_ID_suggestion: "Add id field to rule_meta."
+    RULE_MISSING_NAME: "rule_meta.name is required."
+    RULE_MISSING_NAME_suggestion: "Add name field with English and Chinese translations."
+    RULE_MISSING_SEVERITY: "rule_meta.severity is required."
+    RULE_MISSING_SEVERITY_suggestion: "Add severity field with value: high, medium, or low."
+    RULE_MISSING_REASON: "rule_meta.reason is required."
+    RULE_MISSING_REASON_suggestion: "Add reason field explaining why violations occur."
+    RULE_INVALID_SEVERITY: "rule_meta.severity must be one of: high, medium, low."
+    RULE_INVALID_SEVERITY_suggestion: "Change severity to one of the valid values: high, medium, low."
+    RULE_INVALID_FIELD_TYPE: "Field must be a string or translation dictionary."
+    RULE_INVALID_FIELD_TYPE_suggestion: "Change the field to a string or object like {\"en\": \"...\", \"zh\": \"...\"}."
+    RULE_MISSING_DENY: "deny rule is required."
+    RULE_MISSING_DENY_suggestion: "Add a deny rule: deny contains result if { ... } with result containing id, resource_id, violation_path, meta."
+    RULE_INVALID_DENY_FORMAT: "deny result field is required."
+    RULE_INVALID_DENY_FORMAT_suggestion: "Add the missing field to the deny result object."
+    PACK_MISSING_META: "pack_meta is required but not found or has errors."
+    PACK_MISSING_META_suggestion: "Add a pack_meta object with required fields: id, name, rules."
+    PACK_MISSING_ID: "pack_meta.id is required."
+    PACK_MISSING_ID_suggestion: "Add id field to pack_meta."
+    PACK_MISSING_NAME: "pack_meta.name is required."
+    PACK_MISSING_NAME_suggestion: "Add name field with English and Chinese translations."
+    PACK_MISSING_RULES: "pack_meta.rules is required and must not be empty."
+    PACK_MISSING_RULES_suggestion: "Add rules field with list of rule IDs."
+    PACK_INVALID_FIELD_TYPE: "Field must be a string or translation dictionary."
+    PACK_INVALID_FIELD_TYPE_suggestion: "Change the field to a string or object like {\"en\": \"...\", \"zh\": \"...\"}."
+
+# Policy format command
+policy_format:
+  short: "Format policy files using OPA formatter"
+  long: |
+    Format Rego policy files using OPA's built-in formatter.
+    By default, shows which files need formatting without modifying them.
+
+    Examples:
+      infraguard policy format ./policies/       # Check format
+      infraguard policy format ./policies/ -w    # Format and write
+      infraguard policy format ./my-rule.rego -d # Show diff
+  write_flag: "Write formatted output to files"
+  diff_flag: "Show diff output only"
+  no_files_found: "No .rego files found."
+  formatted: "Formatted"
+  already_formatted: "Already formatted"
+  needs_formatting: "Needs formatting"
+  summary_changed: "%d file(s) changed"
+  summary_unchanged: "%d file(s) unchanged"
+  needs_format: "Some files need formatting. Run with --write to format."
+  error_prefix: "✗ "
+  success_prefix: "✓ "
+  needs_format_prefix: "✗ "
+
+# Config command
+config:
+  short: "Manage CLI configuration"
+  long: |
+    Manage InfraGuard CLI configuration.
+    Configuration is stored in ~/.infraguard/config.yaml.
+
+    Available configuration keys:
+      lang    Output language (en or zh)
+  set_success: "Configuration saved successfully."
+  unset_success: "Configuration removed successfully."
+  list_format: "%s=%s"
+  set:
+    short: "Set a configuration value"
+    long: |
+      Set a configuration value.
+
+      Examples:
+        infraguard config set lang zh
+        infraguard config set lang en
+  get:
+    short: "Get a configuration value"
+    long: |
+      Get a configuration value.
+
+      Examples:
+        infraguard config get lang
+  unset:
+    short: "Remove a configuration value"
+    long: |
+      Remove a configuration value.
+
+      Examples:
+        infraguard config unset lang
+  list:
+    short: "List all configuration values"
+    long: |
+      List all configuration values.
+
+      Examples:
+        infraguard config list
+  errors:
+    unknown_key: "unknown configuration key: %s (valid keys: %s)."
+    invalid_value: "invalid value for %s: %s (valid values: %s)."
+
+# Scan command
+scan:
+  short: "Scan IaC template for compliance violations"
+  long: |
+    Scan an IaC template against OPA/Rego policies.
+  policy_flag: "Policy specification: rule ID, pack ID, .rego file, or directory (can be specified multiple times)"
+  input_flag: "Parameter values in key=value, JSON format, or file path (can be specified multiple times)"
+  format_flag: "Output format (table, json, or html)"
+  output_flag: "Output file path (default: report.html for html format)"
+  report_written: "Report written to %s"
+  no_violations: "No violations found."
+  total_violations: "Total: %d violation(s)"
+  file_prefix: "Scan: "
+  no_templates_found: "No template files found."
+  skipped_file: "Skipping invalid template %s: %v"
+  file_error: "File %s: %v"
+
+# Report
+report:
+  title: "InfraGuard Compliance Report"
+  total_violations: "Total violations: %d"
+  passed_rules: "Passed rules: %d"
+  failed_rules: "Failed rules: %d"
+  severity: "Severity"
+  rule_id: "Rule ID"
+  resource: "Resource"
+  location: "Location"
+  line: "ln"
+  recommendation: "Resolution"
+  results: "Results"
+  count: "Count"
+  type: "Type"
+  breakdown: "Breakdown"
+  passed: "Passed"
+  failed: "Fail"
+  total: "Total"
+  no_violations_prefix: "✓ "
+  violation_header_format: "#%d %s"
+  location_format: "%s:%d"
+  line_highlight_prefix: "> %4d"
+  line_normal_prefix: "  %4d"
+  metadata_prefix: "  "
+  metadata_separator: " "
+  summary_prefix: "  "
+  summary_separator: " | "
+
+# Severity levels
+severity:
+  high: "High"
+  medium: "Medium"
+  low: "Low"
+
+# Global flags
+lang_flag: "Output language (en or zh, default: auto-detect)"
+
+# Error messages
+errors:
+  invalid_format: "invalid format %q: must be one of table, json, html."
+  invalid_lang: "invalid language %q: must be en or zh."
+  policy_dir: "policy directory error: %v."
+  policy_dir_hint: "Run 'infraguard policy update' to download policies."
+  load_template: "failed to load template: %v."
+  evaluate_policies: "failed to evaluate policies: %v."
+  render_report: "failed to render report: %v."
+  update_policies: "failed to update policies: %v."
+  invalid_policy_spec: "invalid policy specification: %s."
+  no_rego_files: "no .rego files found in: %s."
+  no_rego_files_in_dir: "no .rego files found in directory: %s."
+  policy_not_found: "policy not found: %s."
+  policy_pattern_no_match: "no policies match pattern: %s."
+  file_not_found: "file not found: %s."
+  dir_not_found: "directory not found: %s."
+  path_not_found: "path not found: %s."
+  policy_file_extension: "policy file must have .rego extension: %s."
+  invalid_ros_template: "invalid ROS template: %v."
+  invalid_input: "invalid input format: %s. Expected key=value, JSON, or file path."
+  parse_input_file: "failed to parse input file %s: %v."
+  read_input_file: "failed to read input file %s: %w."
+  unable_to_determine_home_dir: "unable to determine home directory."
+  aliyun_config_not_found: "Aliyun CLI config not found at %s. Please run 'aliyun configure' first."
+  read_aliyun_config: "failed to read Aliyun CLI config: %w."
+  parse_aliyun_config: "failed to parse Aliyun CLI config: %w."
+  profile_not_found: "current profile %q not found in Aliyun CLI config."
+  invalid_access_key: "profile %q does not have valid AccessKey credentials."
+  get_home_directory: "failed to get home directory: %w."
+  read_config_file: "failed to read config file: %w."
+  parse_config_file: "failed to parse config file: %w."
+  create_config_dir: "failed to create config directory: %w."
+  marshal_config: "failed to marshal config: %w."
+  write_config_file: "failed to write config file: %w."
+  read_template_file: "failed to read template file: %w."
+  parse_json_template: "failed to parse JSON template: %w."
+  parse_yaml_template: "failed to parse YAML template: %w."
+  path_does_not_exist: "path does not exist: %s."
+  file_must_be_rego: "file must have .rego extension: %s."
+  read_file: "failed to read file: %w."
+  format_file: "failed to format: %w."
+  write_file: "failed to write file: %w."
+  no_policy_paths: "no policy paths specified."
+  discover_rego_files: "failed to discover rego files in %s: %w."
+  no_rego_files_in_paths: "no .rego files found in specified paths."
+  read_rego_file: "failed to read %s: %w."
+  prepare_rego_query: "failed to prepare rego query: %w."
+  evaluate_policies_internal: "failed to evaluate policies: %w."
+  parameter_type_mismatch: "parameter %s: value %v is not a %s."
+  undefined_parameters: "undefined parameters provided: %s. Please check parameter names in the template Parameters section."
+  no_parameters_defined: "no parameters defined in template, but input parameters provided: %s."
+  unknown_help_topic: "Unknown help topic %#q"
+  read_file_error: "failed to read file: %v."
+  syntax_error_with_detail: "syntax error: %v."
+  rule_invalid_severity_with_value: "rule_meta.severity must be one of: high, medium, low (got: %s)."
+  deny_rule_evaluation_error: "deny rule evaluation error: %v."
+  deny_result_field_required: "deny result.%s is required."
+  add_field_to_deny_result: "Add %s field to the deny result object"
+  field_must_be_string_or_dict: "%s must be a string or translation dictionary."
+  change_field_to_i18n_format: "Change %s to a string or object like {\"en\": \"...\", \"zh\": \"...\"}"
+  rule_meta_field_must_be_string_or_dict: "rule_meta.%s must be a string or translation dictionary."
+  invalid_ros_template_version: "invalid version %q, valid versions: %v."
+  parse_html_template: "failed to parse HTML template: %w."
+  marshal_i18n_data: "failed to marshal i18n data: %w."
+  parse_rule_meta: "failed to parse rule_meta: %w."
+  parse_pack_meta: "failed to parse pack_meta: %w."
+  no_policies_found: "no policies found in embedded or user directory."
+  read_embedded_policies_root: "failed to read embedded policies root: %w."
+  load_embedded_rules_for_provider: "failed to load embedded rules for provider %s: %w."
+  load_embedded_packs_for_provider: "failed to load embedded packs for provider %s: %w."
+  read_policy_directory: "failed to read policy directory: %w."
+  discover_rules_for_provider: "failed to discover rules for provider %s: %w."
+  discover_packs_for_provider: "failed to discover packs for provider %s: %w."
+  clean_policy_directory: "failed to clean policy directory: %w."
+  create_policy_directory: "failed to create policy directory: %w."
+  download_policies: "failed to download policies: %w."
+  policy_path_does_not_exist: "policy path does not exist: %s."
+  no_rego_files_in_policy_directory: "no .rego files found in policy directory: %s."
+

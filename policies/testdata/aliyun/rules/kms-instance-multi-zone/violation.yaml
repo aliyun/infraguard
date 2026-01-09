@@ -1,0 +1,8 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Non-compliant KMS Instance without Connection (no multi-zone)
+Resources:
+  KMSInstance:
+    Type: ALIYUN::KMS::Instance
+    Properties:
+      ProductVersion: software
+

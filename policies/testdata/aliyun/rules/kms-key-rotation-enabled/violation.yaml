@@ -1,0 +1,9 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for kms-key-rotation-enabled rule - Non-compliant case
+Resources:
+  NonCompliantKey:
+    Type: 'ALIYUN::KMS::Key'
+    Properties:
+      KeySpec: Aliyun_AES_256
+      KeyUsage: ENCRYPT/DECRYPT
+      EnableAutomaticRotation: false

@@ -1,0 +1,24 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for api-gateway-api-auth-jwt rule - Compliant case
+Resources:
+  # 合规：API使用JWT认证
+  CompliantApi:
+    Type: ALIYUN::ApiGateway::Api
+    Properties:
+      ApiName: CompliantJwtApi
+      GroupId: test-group-id
+      AuthType: APPOPENID
+      Visibility: PRIVATE
+      Description: This API uses JWT authentication
+      RequestConfig:
+        RequestPath: /test
+        RequestProtocol: HTTP
+        RequestHttpMethod: GET
+      ServiceConfig:
+        ServiceAddress: example.com
+        ServicePath: /api
+        ServiceHttpMethod: GET
+      OpenIdConnectConfig:
+        OpenIdApiType: IDTOKEN
+        PublicKeyId: test-key-id
+        PublicKey: test-public-key

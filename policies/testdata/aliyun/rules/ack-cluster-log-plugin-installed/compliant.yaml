@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  ACK:
+    Type: ALIYUN::CS::ManagedKubernetesCluster
+    Properties:
+      Name: test-ack
+      Addons:
+        - Name: log-service
+      VpcId: vpc-123
+      VSwitchIds: [vsw-123]

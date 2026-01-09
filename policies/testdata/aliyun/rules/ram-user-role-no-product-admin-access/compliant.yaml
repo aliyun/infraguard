@@ -1,0 +1,28 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for ram-user-role-no-product-admin-access rule - Compliant case
+Resources:
+  # 合规：用户定义的角色不包含管理员权限
+  CompliantRole:
+    Type: ALIYUN::RAM::Role
+    Properties:
+      RoleName: CompliantTestRole
+      Description: Role without admin access
+      AssumeRolePolicyDocument:
+        Version: '1'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ecs.aliyuncs.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: OSSReadOnlyPolicy
+          PolicyDocument:
+            Version: '1'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - oss:ListBuckets
+                  - oss:GetObject
+                Resource:
+                  - acs:oss:*:*:my-bucket

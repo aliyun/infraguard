@@ -1,0 +1,22 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for api-gateway-api-visibility-private rule - Compliant case
+Resources:
+  # 合规：API设置为私有可见性
+  CompliantApi:
+    Type: ALIYUN::ApiGateway::Api
+    Properties:
+      ApiName: CompliantPrivateApi
+      GroupId: test-group-id
+      Visibility: PRIVATE
+      Description: This is a private API
+      RequestConfig:
+        RequestPath: /test
+        RequestProtocol: HTTP
+        RequestHttpMethod: GET
+        RequestMode: MAPPING
+        BodyFormat: FORM
+      ServiceConfig:
+        ServiceAddress: example.com
+        ServicePath: /api
+        ServiceHttpMethod: GET
+        Mock: "FALSE"

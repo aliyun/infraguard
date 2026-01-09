@@ -1,0 +1,8 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  Bucket:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: test-bucket
+      VersioningConfiguration:
+        Status: Enabled

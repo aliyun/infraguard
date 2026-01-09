@@ -1,0 +1,9 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  MongoDB:
+    Type: ALIYUN::MONGODB::Instance
+    Properties:
+      DBInstanceClass: dds.mongo.standard
+      DBInstanceStorage: 100
+      TDEStatus: true
+      EncryptionKey: kms-1234567890abcdef

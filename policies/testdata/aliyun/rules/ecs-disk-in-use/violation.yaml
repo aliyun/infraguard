@@ -1,0 +1,15 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - ECS disk not in use (available state)
+Parameters:
+  ZoneId:
+    Type: String
+    Default: cn-hangzhou-b
+Resources:
+  ViolationDisk:
+    Type: ALIYUN::ECS::Disk
+    Properties:
+      ZoneId:
+        Ref: ZoneId
+      DiskName: AvailableDisk
+      DiskCategory: cloud_essd
+      Size: 40

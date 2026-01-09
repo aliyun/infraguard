@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - Security group with description
+
+Resources:
+  # Compliant: Security group with non-empty description
+  SecurityGroup:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: test-sg
+      Description: This is a security group for web servers
+

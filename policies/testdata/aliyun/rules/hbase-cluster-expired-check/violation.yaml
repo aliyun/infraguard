@@ -1,0 +1,20 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  HBaseCluster:
+    Type: ALIYUN::HBase::Cluster
+    Properties:
+      ClusterName: my-hbase-cluster
+      Engine: hbase
+      EngineVersion: "1.1"
+      PayType: Prepaid
+      Period: 3
+      PeriodUnit: Month
+      AutoRenewPeriod: 0
+      ZoneId: cn-hangzhou-i
+      CoreInstanceType: hbase.sn1.large
+      NodeCount: 2
+      DiskType: cloud_essd_pl1
+      DiskSize: 400
+      VpcId: vpc-12345678
+      VSwitchId: vsw-12345678
+      SecurityIPList: 192.168.1.0/24

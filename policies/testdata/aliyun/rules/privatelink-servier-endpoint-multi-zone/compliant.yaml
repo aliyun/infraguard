@@ -1,0 +1,31 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Parameters:
+  VpcId:
+    Type: String
+    Description: VPC ID
+  VSwitchId1:
+    Type: String
+    Description: VSwitch ID for zone 1
+  VSwitchId2:
+    Type: String
+    Description: VSwitch ID for zone 2
+  ServiceId:
+    Type: String
+    Description: PrivateLink service ID
+
+Resources:
+  # Compliant: PrivateLink endpoint deployed in multiple zones
+  VpcEndpoint:
+    Type: ALIYUN::PrivateLink::VpcEndpoint
+    Properties:
+      VpcId:
+        Ref: VpcId
+      ServiceId:
+        Ref: ServiceId
+      Zone:
+        - ZoneId: cn-hangzhou-i
+          VSwitchId:
+            Ref: VSwitchId1
+        - ZoneId: cn-hangzhou-j
+          VSwitchId:
+            Ref: VSwitchId2

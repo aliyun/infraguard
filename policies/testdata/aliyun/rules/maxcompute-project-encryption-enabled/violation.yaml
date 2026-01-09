@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Non-compliant MaxCompute project without encryption
+Resources:
+  MaxComputeProject:
+    Type: ALIYUN::MaxCompute::Project
+    Properties:
+      Name: test_project
+      Properties:
+        Encryption:
+          Enable: false

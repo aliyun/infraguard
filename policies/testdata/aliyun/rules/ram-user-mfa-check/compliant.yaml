@@ -1,0 +1,17 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Parameters:
+  UserName:
+    Type: String
+    Description: RAM user name
+
+Resources:
+  # Compliant: RAM user with MFA enabled
+  RamUser:
+    Type: ALIYUN::RAM::User
+    Properties:
+      UserName:
+        Ref: UserName
+      DisplayName: Test User
+      LoginProfile:
+        Password: 'TestPassword123!'
+        MFABindRequired: true

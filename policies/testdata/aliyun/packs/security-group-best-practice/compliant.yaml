@@ -1,0 +1,34 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - Security group following best practices
+
+Resources:
+  # Compliant: Enterprise security group with proper configuration
+  SecurityGroup:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: best-practice-sg
+      Description: Security group following best practices
+      SecurityGroupType: enterprise
+      SecurityGroupIngress:
+        # All access from private network only
+        - IpProtocol: tcp
+          PortRange: 80/80
+          SourceCidrIp: 10.0.0.0/8
+        - IpProtocol: tcp
+          PortRange: 443/443
+          SourceCidrIp: 172.16.0.0/12
+        - IpProtocol: tcp
+          PortRange: 22/22
+          SourceCidrIp: 192.168.0.0/16
+
+  # Compliant: ECS instance with security group attached
+  ECSInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.c6.large
+      ImageId: centos_7
+      VpcId: vpc-bp1qg7z02222222222
+      VSwitchId: vsw-bp1g7z02222222222
+      DeletionProtection: true
+      SecurityGroupId:
+        Ref: SecurityGroup

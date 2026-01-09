@@ -1,0 +1,8 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  ViolationInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      ImageId: ubuntu_18_04_x64_20G_alibase_20190624.vhd
+      InstanceType: ecs.t6-c1m1.large
+      AllocatePublicIP: true

@@ -1,0 +1,17 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template - ECS instance with IMDSv2 (security-enhanced mode)
+Parameters:
+  ZoneId:
+    Type: String
+    Default: cn-hangzhou-b
+Resources:
+  CompliantInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      ZoneId:
+        Ref: ZoneId
+      InstanceName: SecureMetadataInstance
+      InstanceType: ecs.c6.large
+      ImageId: m-bp1***0
+      HttpEndpoint: enabled
+      HttpTokens: required

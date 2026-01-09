@@ -1,0 +1,13 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant MSE Cluster with high-availability configuration
+Resources:
+  MSECluster:
+    Type: ALIYUN::MSE::Cluster
+    Properties:
+      ClusterType: Nacos-Ans
+      ClusterVersion: NACOS_2_0_0
+      ClusterSpecification: MSE_SC_2_4_60_c
+      InstanceCount: 3
+      NetType: privatenet
+      MseVersion: mse_pro
+

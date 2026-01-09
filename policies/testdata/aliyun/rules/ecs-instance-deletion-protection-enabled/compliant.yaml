@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  ECSInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.t5-lc1m1.small
+      ImageId: centos_7_9_x64_20G_alibase_20210521.vhd
+      DeletionProtection: true
+      SecurityGroupId: sg-123456
+      VSwitchId: vsw-123456

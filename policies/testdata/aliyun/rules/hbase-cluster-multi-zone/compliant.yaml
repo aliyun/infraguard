@@ -1,0 +1,13 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant HBase Cluster with multiple nodes
+Resources:
+  HBaseCluster:
+    Type: ALIYUN::HBase::Cluster
+    Properties:
+      Engine: hbase
+      EngineVersion: '2.0'
+      CoreInstanceType: hbase.sn1.large
+      NodeCount: 3
+      ZoneId: cn-hangzhou-h
+      PayType: Postpaid
+

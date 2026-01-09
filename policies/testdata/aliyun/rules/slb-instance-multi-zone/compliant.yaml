@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant SLB Instance with slave zone
+Resources:
+  SLBLoadBalancer:
+    Type: ALIYUN::SLB::LoadBalancer
+    Properties:
+      LoadBalancerSpec: slb.s1.small
+      MasterZoneId: cn-hangzhou-h
+      SlaveZoneId: cn-hangzhou-g
+

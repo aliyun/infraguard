@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  ViolationProCluster:
+    Type: ALIYUN::CS::ManagedKubernetesCluster
+    Properties:
+      Name: pro-cluster-violation
+      VpcId: vpc-123
+      VSwitchIds:
+        - vsw-123
+      ClusterSpec: ack.pro.small
+      # EncryptionProviderKey missing

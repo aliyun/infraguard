@@ -1,0 +1,20 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template - ECS subscription instance with auto-renewal enabled
+Parameters:
+  ZoneId:
+    Type: String
+    Default: cn-hangzhou-b
+Resources:
+  CompliantInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      ZoneId:
+        Ref: ZoneId
+      InstanceName: AutoRenewalInstance
+      InstanceType: ecs.c6.large
+      ImageId: m-bp1***0
+      InstanceChargeType: Prepaid
+      Period: 1
+      PeriodUnit: Month
+      AutoRenew: "True"
+      AutoRenewPeriod: 1

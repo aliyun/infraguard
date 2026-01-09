@@ -1,0 +1,46 @@
+{
+  "version.label": {
+    "message": "最新",
+    "description": "The label for version current"
+  },
+  "sidebar.docsSidebar.category.Getting Started": {
+    "message": "快速开始",
+    "description": "The label for category 'Getting Started' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.User Guide": {
+    "message": "用户指南",
+    "description": "The label for category 'User Guide' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Policy Reference": {
+    "message": "策略参考",
+    "description": "The label for category 'Policy Reference' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Aliyun": {
+    "message": "阿里云",
+    "description": "The label for category 'Aliyun' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Rules": {
+    "message": "规则",
+    "description": "The label for category 'Rules' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Packs": {
+    "message": "合规包",
+    "description": "The label for category 'Packs' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Development": {
+    "message": "开发指南",
+    "description": "The label for category 'Development' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.CLI Reference": {
+    "message": "CLI 参考",
+    "description": "The label for category 'CLI Reference' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.doc.Introduction": {
+    "message": "简介",
+    "description": "The label for the doc item 'Introduction' in sidebar 'docsSidebar', linking to the doc intro"
+  },
+  "sidebar.docsSidebar.doc.FAQ": {
+    "message": "常见问题",
+    "description": "The label for the doc item 'FAQ' in sidebar 'docsSidebar', linking to the doc faq"
+  }
+}

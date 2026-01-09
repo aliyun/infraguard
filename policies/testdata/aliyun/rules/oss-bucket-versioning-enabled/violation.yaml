@@ -1,0 +1,13 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  ViolationBucketMissing:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: violation-bucket-1
+
+  ViolationBucketSuspended:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: violation-bucket-2
+      VersioningConfiguration:
+        Status: Suspended

@@ -1,0 +1,13 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - TSDB instance with any IP access
+Resources:
+  ViolationTSDB:
+    Type: ALIYUN::TSDB::HiTSDBInstance
+    Properties:
+      InstanceClass: hitsdb.hs.xlarge
+      InstanceStorage: 50
+      VPCId: vpc-123
+      VSwitchId: vsw-123
+      ZoneId: cn-hangzhou-h
+      SecurityIpList:
+        - 0.0.0.0/0

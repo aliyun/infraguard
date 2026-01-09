@@ -1,0 +1,18 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template - Security group without risky ports to 0.0.0.0/0
+Parameters: {}
+Resources:
+  CompliantSG:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: CompliantSecurityGroup
+      VpcId: vpc-bp1****
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          PortRange: 80/80
+          SourceCidrIp: 10.0.0.0/8
+          Priority: 1
+        - IpProtocol: tcp
+          PortRange: 443/443
+          SourceCidrIp: 10.0.0.0/8
+          Priority: 1

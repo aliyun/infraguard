@@ -1,0 +1,47 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - OSS Compliance Management Best Practice
+
+Resources:
+  CompliantOSSBucket:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: compliant-oss-bucket
+      AccessControl: private
+      # Versioning enabled
+      VersioningConfiguration:
+        Status: Enabled
+      # Server-side encryption enabled
+      ServerSideEncryptionConfiguration:
+        SSEAlgorithm: KMS
+        KMSMasterKeyID: alias/acs/oss
+      # Logging enabled
+      LoggingConfiguration:
+        TargetBucket: log-bucket
+        TargetPrefix: logs/
+      # ZRS enabled
+      RedundancyType: ZRS
+      # Referer whitelist configured
+      RefererConfiguration:
+        AllowEmptyReferer: false
+        RefererList:
+          - https://example.com
+          - https://trusted-domain.com
+      # Policy without anonymous access
+      Policy:
+        Statement:
+          - Effect: Allow
+            Principal: "1234567890123456"
+            Action:
+              - oss:GetObject
+            Resource:
+              - acs:oss:*:*:compliant-oss-bucket/*
+          - Action: '*'
+            Effect: Deny
+            Principal: '*'
+            Resource: '*'
+            Condition:
+              Bool:
+                acs:SecureTransport: 'false'
+              IpAddress:
+                acs:SourceIp: 192.168.1.0/24
+

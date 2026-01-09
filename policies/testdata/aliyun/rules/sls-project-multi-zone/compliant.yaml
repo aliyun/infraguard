@@ -1,0 +1,9 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant SLS Project with ZRS enabled
+Resources:
+  SLSProject:
+    Type: ALIYUN::SLS::Project
+    Properties:
+      Name: my-zrs-project
+      DataRedundancyType: ZRS
+

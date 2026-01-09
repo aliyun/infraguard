@@ -1,0 +1,83 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - Network and data security best practices
+
+Resources:
+  SecurityGroup:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: test-sg
+      Description: Security group for testing
+      SecurityGroupType: enterprise
+      VpcId: vpc-bp1qg7z02222222222
+
+  # Compliant: ECS disk with encryption and zone-redundant storage
+  ECSDisk:
+    Type: ALIYUN::ECS::Disk
+    Properties:
+      ZoneId: cn-hangzhou-h
+      DiskCategory: cloud_regional_disk_auto
+      Size: 100
+      Encrypted: true
+      KMSKeyId: key-12345678
+      AutoSnapshotPolicyId: sp-12345678
+
+  # Compliant: ECS instance in VPC with security group
+  ECSInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.g6.large
+      ImageId: centos_7
+      VpcId: vpc-bp1qg7z02222222222
+      VSwitchId: vsw-bp1g7z02222222222
+      DeletionProtection: true
+      SecurityGroupId:
+        Ref: SecurityGroup
+
+  # Compliant: OSS bucket with encryption, logging, private access, ZRS
+  OSSBucket:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: secure-bucket
+      AccessControl: private
+      RedundancyType: ZRS
+      ServerSideEncryptionConfiguration:
+        SSEAlgorithm: KMS
+        KMSMasterKeyID: key-12345678
+      LoggingConfiguration:
+        TargetBucket: log-bucket
+        TargetPrefix: logs/
+      VersioningConfiguration:
+        Status: Enabled
+      Policy:
+        Statement:
+          - Action: '*'
+            Effect: Deny
+            Principal: '*'
+            Resource: '*'
+            Condition:
+              Bool:
+                acs:SecureTransport: 'false'
+              IpAddress:
+                acs:SourceIp: 192.168.1.0/24
+      RefererConfiguration:
+        AllowEmptyReferer: false
+        RefererList:
+          - https://example.com
+
+  # Compliant: RDS without public access, with multi-AZ and encryption
+  RDSInstance:
+    Type: ALIYUN::RDS::DBInstance
+    Properties:
+      Engine: MySQL
+      EngineVersion: '8.0'
+      DBInstanceClass: mysql.n2.small.1
+      DBInstanceStorage: 20
+      DBInstanceStorageType: cloud_essd
+      MultiAZ: true
+      DeletionProtection: true
+      SSLSetting: EnabledForInnerConnection
+      SQLCollectorStatus: Enable
+      EnableBackupLog: true
+      EncryptionKey: key-12345678
+      AllocatePublicConnection: false
+      SecurityIPList: '127.0.0.1'

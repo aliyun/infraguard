@@ -1,0 +1,15 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  CompliantTrail:
+    Type: ALIYUN::ACTIONTRAIL::Trail
+    Properties:
+      Name: compliant-trail
+      EventRW: All
+      OssBucketName: my-bucket
+      RoleName: my-role
+
+  CompliantLogging:
+    Type: ALIYUN::ACTIONTRAIL::TrailLogging
+    Properties:
+      Name: compliant-trail
+      Enable: true

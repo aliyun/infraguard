@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  User:
+    Type: ALIYUN::RAM::User
+    Properties: {UserName: user1}
+  AK1:
+    Type: ALIYUN::RAM::AccessKey
+    Properties: {UserName: user1}
+  AK2:
+    Type: ALIYUN::RAM::AccessKey
+    Properties: {UserName: user1}

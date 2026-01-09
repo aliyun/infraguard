@@ -1,0 +1,12 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant MSE Gateway with backup VSwitch
+Resources:
+  MSEGateway:
+    Type: ALIYUN::MSE::Gateway
+    Properties:
+      Spec: MSE_GTW_2_4_200_c
+      Replica: 2
+      VpcId: vpc-bp1qg7z02222222222
+      VSwitchId: vsw-bp1g7z02222222222
+      BackupVSwitchId: vsw-bp1g7z03333333333
+

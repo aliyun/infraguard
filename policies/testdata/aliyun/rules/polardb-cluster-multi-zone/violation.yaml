@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  ViolationPolarDB:
+    Type: ALIYUN::POLARDB::DBCluster
+    Properties:
+      DBNodeClass: polar.mysql.x4.large
+      DBType: MySQL
+      DBVersion: '8.0'
+      ZoneId: cn-hangzhou-a
+      PayType: PostPaid

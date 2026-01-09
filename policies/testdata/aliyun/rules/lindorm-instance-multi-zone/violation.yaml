@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Non-compliant Lindorm Instance without multi-zone configuration
+Resources:
+  LindormInstance:
+    Type: ALIYUN::Lindorm::Instance
+    Properties:
+      InstanceName: my-lindorm-instance
+      DiskCategory: cloud_efficiency
+      VpcId: vpc-bp1qg7z02222222222
+      LindormNum: 2
+

@@ -1,0 +1,8 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  MountTarget:
+    Type: ALIYUN::NAS::MountTarget
+    Properties:
+      FileSystemId: fs-123
+      NetworkType: Vpc
+      AccessGroupName: DEFAULT_VPC_GROUP_NAME

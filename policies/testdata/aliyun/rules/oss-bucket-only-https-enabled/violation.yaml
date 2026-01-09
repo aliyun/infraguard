@@ -1,0 +1,17 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  ViolationBucketNoPolicy:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: violation-https-bucket-1
+
+  ViolationBucketWrongPolicy:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: violation-https-bucket-2
+      Policy:
+        Statement:
+          - Action: ["oss:Get*"]
+            Effect: Allow
+            Principal: ["*"]
+            Resource: ["acs:oss:*:*:violation-https-bucket-2/*"]

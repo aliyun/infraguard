@@ -1,0 +1,22 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  MyServerGroup:
+    Type: ALIYUN::ALB::ServerGroup
+    Properties:
+      ServerGroupName: my-server-group
+      ServerGroupType: Instance
+      VpcId: vpc-bp1abcdefg
+      HealthCheckConfig:
+        HealthCheckEnabled: true
+  ALBListener:
+    Type: ALIYUN::ALB::Listener
+    Properties:
+      LoadBalancerId: alb-123
+      ListenerPort: 443
+      ListenerProtocol: HTTPS
+      DefaultActions:
+        - Type: ForwardGroup
+          ForwardGroupConfig:
+            ServerGroupTuples:
+              - ServerGroupId:
+                  Ref: MyServerGroup

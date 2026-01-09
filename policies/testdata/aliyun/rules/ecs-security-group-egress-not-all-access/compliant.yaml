@@ -1,0 +1,14 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - Security group egress not set to all access
+
+Resources:
+  # Compliant: Security group with restricted egress
+  SecurityGroup:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: test-sg
+      SecurityGroupEgress:
+        - IpProtocol: tcp
+          PortRange: 443/443
+          DestCidrIp: 0.0.0.0/0
+

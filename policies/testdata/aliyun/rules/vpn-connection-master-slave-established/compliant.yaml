@@ -1,0 +1,15 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  CompliantVpn:
+    Type: ALIYUN::VPC::VpnConnection
+    Properties:
+      VpnGatewayId: vpn-123
+      LocalSubnet: 192.168.0.0/24
+      RemoteSubnet: 10.0.0.0/24
+      TunnelOptionsSpecification:
+        - Role: master
+          TunnelIpsecConfig:
+            IpsecAuthAlg: md5
+        - Role: slave
+          TunnelIpsecConfig:
+            IpsecAuthAlg: md5

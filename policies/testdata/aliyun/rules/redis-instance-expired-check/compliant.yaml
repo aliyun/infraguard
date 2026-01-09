@@ -1,0 +1,28 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Parameters:
+  InstanceClass:
+    Type: String
+    Default: redis.master.small.default
+    Description: Redis instance class
+  VpcId:
+    Type: String
+    Description: VPC ID
+  VSwitchId:
+    Type: String
+    Description: VSwitch ID
+
+Resources:
+  # Compliant: Prepaid Redis instance with auto-renewal enabled
+  RedisInstance:
+    Type: ALIYUN::REDIS::Instance
+    Properties:
+      InstanceClass:
+        Ref: InstanceClass
+      VpcId:
+        Ref: VpcId
+      VSwitchId:
+        Ref: VSwitchId
+      ChargeType: PrePaid
+      Period: 1
+      PeriodUnit: Month
+      AutoRenewDuration: 1

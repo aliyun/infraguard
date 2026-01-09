@@ -1,0 +1,9 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  ACK:
+    Type: ALIYUN::CS::ManagedKubernetesCluster
+    Properties:
+      KubernetesVersion: '1.24'
+      VpcId: vpc-123
+      VSwitchIds: [vsw-123]
+      Name: test-ack

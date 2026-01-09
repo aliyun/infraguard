@@ -1,0 +1,35 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - Change Management Best Practice
+
+Resources:
+  # Violation: ECS Auto Snapshot Policy with peak-hour timepoints
+  AutoSnapshotPolicyBadTime:
+    Type: ALIYUN::ECS::AutoSnapshotPolicy
+    Properties:
+      AutoSnapshotPolicyName: violation-snapshot-policy-time
+      TimePoints:
+        - 10
+        - 14
+        - 18
+      RepeatWeekdays:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+      RetentionDays: 30
+
+  # Violation: ECS Auto Snapshot Policy with insufficient retention days
+  AutoSnapshotPolicyShortRetention:
+    Type: ALIYUN::ECS::AutoSnapshotPolicy
+    Properties:
+      AutoSnapshotPolicyName: violation-snapshot-policy-retention
+      TimePoints:
+        - 2
+        - 3
+      RepeatWeekdays:
+        - 1
+        - 2
+        - 3
+      RetentionDays: 3
+

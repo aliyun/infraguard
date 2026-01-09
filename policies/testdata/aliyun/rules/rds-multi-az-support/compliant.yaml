@@ -1,0 +1,13 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant RDS Instance with multi-AZ enabled
+Resources:
+  RDSInstance:
+    Type: ALIYUN::RDS::DBInstance
+    Properties:
+      Engine: MySQL
+      EngineVersion: '8.0'
+      DBInstanceClass: rds.mysql.s1.small
+      DBInstanceStorage: 20
+      SecurityIPList: 0.0.0.0/0
+      MultiAZ: true
+

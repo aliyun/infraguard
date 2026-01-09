@@ -1,0 +1,14 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Parameters:
+  UserName:
+    Type: String
+    Description: RAM user name
+
+Resources:
+  # Violation: RAM user does not belong to any group
+  RamUser:
+    Type: ALIYUN::RAM::User
+    Properties:
+      UserName:
+        Ref: UserName
+      DisplayName: Test User

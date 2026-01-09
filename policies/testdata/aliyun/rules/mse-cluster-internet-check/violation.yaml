@@ -1,0 +1,13 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  MSECluster:
+    Type: ALIYUN::MSE::Cluster
+    Properties:
+      ClusterSpecification: MSE_SC_2_4_60_c
+      ClusterType: ZooKeeper
+      ClusterVersion: ZooKeeper_3_8_0
+      NetType: pubnet
+      InstanceCount: 3
+      PubNetworkFlow: 10
+      VpcId: vpc-bp1abcdefg
+      VSwitchId: vsw-bp1abcdefg

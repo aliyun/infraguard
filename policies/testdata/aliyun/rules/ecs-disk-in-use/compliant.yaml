@@ -1,0 +1,29 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template - ECS disk in use (attached to instance via DiskAttachment)
+Parameters:
+  ZoneId:
+    Type: String
+    Default: cn-hangzhou-b
+Resources:
+  CompliantDisk:
+    Type: ALIYUN::ECS::Disk
+    Properties:
+      ZoneId:
+        Ref: ZoneId
+      DiskName: InUseDisk
+      DiskCategory: cloud_essd
+      Size: 40
+  CompliantInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      ZoneId:
+        Ref: ZoneId
+      InstanceType: ecs.c6.large
+      ImageId: m-bp1***0
+  DiskAttachment:
+    Type: ALIYUN::ECS::DiskAttachment
+    Properties:
+      InstanceId:
+        Ref: CompliantInstance
+      DiskId:
+        Ref: CompliantDisk

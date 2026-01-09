@@ -1,0 +1,50 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - Resource Protection Best Practice
+
+Resources:
+  # Note: Most protection features (deletion/release protection) are configured
+  # post-deployment through console/API and are not exposed in ROS templates.
+  # This violation template includes resources that would violate protection rules
+  # if protection is not enabled post-deployment.
+  
+  # Resources without protection (protection must be enabled post-deployment)
+  ECSInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.g6.large
+      ImageId: centos_7
+      VpcId: vpc-test123
+      VSwitchId: vsw-test123
+
+  ALBLoadBalancer:
+    Type: ALIYUN::ALB::LoadBalancer
+    Properties:
+      LoadBalancerEdition: Standard
+      LoadBalancerName: test-alb
+      AddressType: Internet
+      VpcId: vpc-test123
+      ZoneMappings:
+        - ZoneId: cn-hangzhou-h
+          VSwitchId: vsw-test123
+      LoadBalancerBillingConfig:
+        PayType: PostPay
+
+  EIP:
+    Type: ALIYUN::VPC::EIP
+    Properties:
+      Bandwidth: 5
+      InternetChargeType: PayByBandwidth
+
+  NATGateway:
+    Type: ALIYUN::VPC::NatGateway
+    Properties:
+      VpcId: vpc-test123
+      VSwitchId: vsw-test123
+      NatGatewayName: test-nat
+
+  SLBLoadBalancer:
+    Type: ALIYUN::SLB::LoadBalancer
+    Properties:
+      LoadBalancerName: test-slb
+      AddressType: internet
+      VpcId: vpc-test123

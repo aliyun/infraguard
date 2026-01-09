@@ -1,0 +1,50 @@
+package infraguard.packs.aliyun.rmit_financial_standard_compliance_pack
+
+import rego.v1
+
+pack_meta := {
+	"id": "rmit-financial-standard-compliance-pack",
+	"name": {
+		"en": "RMiT Financial Standard Compliance Pack",
+		"zh": "RMiT 金融标准检查合规包",
+	},
+	"description": {
+		"en": "Compliance pack for RMiT financial standards",
+		"zh": "RMiT 金融标准检查合规包",
+	},
+	"rules": [
+		"actiontrail-trail-intact-enabled",
+		"ram-password-policy-check",
+		"root-ak-check",
+		"actiontrail-enabled",
+		"ecs-disk-encrypted",
+		"ecs-disk-auto-snapshot-policy",
+		# "ecs-instance-no-public-ip",
+		"ecs-instances-in-vpc",
+		"sg-public-access-check",
+		# "elasticsearch-instance-in-vpc",  # Commented: ROS ALIYUN::ElasticSearch::Instance requires VSwitchId (all instances are in VPC)
+		"kms-key-rotation-enabled",
+		"oss-bucket-anonymous-prohibited",
+		"oss-bucket-server-side-encryption-enabled",
+		"oss-encryption-byok-check",
+		"oss-bucket-logging-enabled",
+		"oss-default-encryption-kms",
+		"oss-bucket-versioning-enabled",
+		"oss-bucket-only-https-enabled",
+		"ram-group-has-member-check",
+		"ram-policy-no-statements-with-admin-access-check",
+		"ram-user-mfa-check",
+		"ram-user-last-login-expired-check",
+		"ram-user-group-membership-check",
+		"ram-user-no-policy-check",
+		"rds-public-access-check",
+		"rds-multi-az-support",
+		# "rds-instance-enabled-tde",
+		"slb-delete-protection-enabled",
+		"slb-listener-https-enabled",
+		# "slb-server-certificate-expired",
+		"vpc-flow-logs-enabled",
+		# "vpn-ipsec-connection-status-check",
+		"waf-instance-logging-enabled",
+	],
+}

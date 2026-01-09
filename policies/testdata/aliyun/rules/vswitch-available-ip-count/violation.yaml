@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - VSwitch with insufficient IP addresses
+Resources:
+  VSwitch:
+    Type: ALIYUN::ECS::VSwitch
+    Properties:
+      VSwitchName: VSwitchWithFewIPs
+      CidrBlock: 192.168.0.0/29
+      VpcId: vpc-12345678
+      ZoneId: cn-hangzhou-i

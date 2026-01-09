@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant SLS Logstore with hot storage (TTL > 7 days)
+Resources:
+  Logstore:
+    Type: ALIYUN::SLS::Logstore
+    Properties:
+      ProjectName: test-project
+      LogstoreName: hot-store
+      TTL: 30
+      PreserveStorage: false

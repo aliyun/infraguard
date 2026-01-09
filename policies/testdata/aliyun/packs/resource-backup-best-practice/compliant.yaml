@@ -1,0 +1,15 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - Resource Backup Best Practice
+
+Resources:
+  # Note: Most backup configurations are runtime settings not exposed in ROS templates.
+  # This is a minimal compliant template showing resource creation.
+  
+  DummyResource:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: backup-test-sg
+      Description: Test security group for backup pack
+      SecurityGroupType: enterprise
+      VpcId: vpc-test123
+

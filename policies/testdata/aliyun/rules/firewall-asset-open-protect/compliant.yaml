@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  FwSwitch:
+    Type: ALIYUN::CLOUDFW::FwSwitch
+    Properties:
+      ResourceTypeList:
+        - EIP

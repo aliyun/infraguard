@@ -1,0 +1,14 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - Security group with non-whitelisted port from 0.0.0.0/0
+
+Resources:
+  # Violation: Security group with non-whitelisted port from public
+  SecurityGroup:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: test-sg
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          PortRange: 8080/8080
+          SourceCidrIp: 0.0.0.0/0
+

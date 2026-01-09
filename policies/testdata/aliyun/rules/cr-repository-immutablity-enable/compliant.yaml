@@ -1,0 +1,21 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant CR Repository with tag immutability enabled
+Resources:
+  CRInstance:
+    Type: ALIYUN::CR::Instance
+    Properties:
+      InstanceName: my-cr-instance
+      InstanceType: Standard
+
+  CRRepository:
+    Type: ALIYUN::CR::Repository
+    Properties:
+      RepoName: my-repo
+      RepoNamespace: my-namespace
+      RepoType: PRIVATE
+      Summary: My repository
+      Detail: This is my repository
+      InstanceId:
+        Ref: CRInstance
+      # TagImmutability is enabled (compliant)
+      TagImmutability: true

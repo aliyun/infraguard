@@ -1,0 +1,17 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant DCDN Domain with multiple origin servers
+Resources:
+  DCDNDomain:
+    Type: ALIYUN::DCDN::Domain
+    Properties:
+      DomainName: example.com
+      Sources:
+        - Type: ipaddr
+          Content: 1.1.1.1
+          Priority: '20'
+          Weight: '10'
+        - Type: ipaddr
+          Content: 2.2.2.2
+          Priority: '20'
+          Weight: '10'
+

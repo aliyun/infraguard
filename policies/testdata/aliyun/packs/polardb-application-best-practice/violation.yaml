@@ -1,0 +1,53 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - PolarDB Application Best Practice
+
+Resources:
+  # Violation: Prepaid PolarDB cluster without auto-renewal
+  PolarDBClusterNoAutoRenew:
+    Type: ALIYUN::POLARDB::DBCluster
+    Properties:
+      DBType: MySQL
+      DBVersion: '8.0'
+      DBNodeClass: polar.mysql.x4.large
+      DBNodeNum: 2
+      PayType: Prepaid
+      Period: 1
+      # RenewalStatus defaults to Normal (not AutoRenewal) - violates polardb-cluster-expired-check
+
+  # Violation: PolarDB cluster with public IP access (0.0.0.0/0)
+  PolarDBClusterPublicAccess:
+    Type: ALIYUN::POLARDB::DBCluster
+    Properties:
+      DBType: MySQL
+      DBVersion: '8.0'
+      DBNodeClass: polar.mysql.x4.large
+      DBNodeNum: 2
+      PayType: Postpaid
+      SecurityIPList: '0.0.0.0/0'
+      # SecurityIPList is 0.0.0.0/0 - violates polardb-public-and-any-ip-access-check
+
+  # Violation: PolarDB cluster without maintenance time
+  PolarDBClusterNoMaintainTime:
+    Type: ALIYUN::POLARDB::DBCluster
+    Properties:
+      DBType: MySQL
+      DBVersion: '8.0'
+      DBNodeClass: polar.mysql.x4.large
+      DBNodeNum: 2
+      PayType: Postpaid
+      # Missing MaintainTime - violates polardb-cluster-maintain-time-check
+
+  # Violation: PolarDB cluster without deletion protection
+  PolarDBClusterNoDeletionProtection:
+    Type: ALIYUN::POLARDB::DBCluster
+    Properties:
+      DBType: MySQL
+      DBVersion: '8.0'
+      DBNodeClass: polar.mysql.x4.large
+      DBNodeNum: 2
+      PayType: Postpaid
+      DeletionProtection: false
+      # DeletionProtection is false - violates polardb-cluster-delete-protection-enabled
+
+
+

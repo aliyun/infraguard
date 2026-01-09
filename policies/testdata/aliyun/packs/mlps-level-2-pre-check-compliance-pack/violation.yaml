@@ -1,0 +1,29 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - MLPS Level 2 Pre-check Compliance Pack
+
+Resources:
+  # Violation: OSS bucket with anonymous access in policy
+  OSSBucket1:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: anonymous-bucket
+      AccessControl: private
+      Policy:
+        Statement:
+          - Effect: Allow
+            Principal: "*"
+            Action:
+              - oss:GetObject
+            Resource:
+              - acs:oss:*:*:anonymous-bucket/*
+
+  # Violation: RDS instance with public connection
+  RDSInstance:
+    Type: ALIYUN::RDS::DBInstance
+    Properties:
+      Engine: MySQL
+      EngineVersion: '8.0'
+      DBInstanceClass: mysql.n2.small.1
+      DBInstanceStorage: 20
+      AllocatePublicConnection: true
+      SecurityIPList: '0.0.0.0/0'

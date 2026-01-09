@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Non-compliant NAT Gateway - SNAT EIP bandwidth inconsistency
+Resources:
+  NatGateway:
+    Type: ALIYUN::VPC::NatGateway
+    Properties:
+      VpcId: vpc-123
+      VSwitchId: vsw-hangzhou-h
+      NatType: Enhanced
+      InternetChargeType: PayByLcu

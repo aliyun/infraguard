@@ -1,0 +1,14 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - ECS disk with encryption enabled
+
+Resources:
+  ECSDisk:
+    Type: ALIYUN::ECS::Disk
+    Properties:
+      ZoneId: cn-hangzhou-h
+      DiskCategory: cloud_essd
+      Size: 100
+      Encrypted: true
+      KMSKeyId: 12345678-1234-1234-1234-123456789012
+      DiskName: encrypted-data-disk
+

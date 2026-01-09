@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Non-compliant Transit Router VPC Attachment with single zone
+Resources:
+  TransitRouterVpcAttachment:
+    Type: ALIYUN::CEN::TransitRouterVpcAttachment
+    Properties:
+      VpcId: vpc-xxxxx
+      ZoneMappings:
+        - ZoneId: cn-hangzhou-h
+          VSwitchId: vsw-xxxxx1
+

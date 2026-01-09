@@ -1,0 +1,14 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  User1:
+    Type: ALIYUN::RAM::User
+    Properties: {UserName: user1}
+  RAMGroup:
+    Type: ALIYUN::RAM::Group
+    Properties:
+      GroupName: test-group
+  GroupAddition:
+    Type: ALIYUN::RAM::UserToGroupAddition
+    Properties:
+      GroupName: {Ref: RAMGroup}
+      Users: [{Ref: User1}]

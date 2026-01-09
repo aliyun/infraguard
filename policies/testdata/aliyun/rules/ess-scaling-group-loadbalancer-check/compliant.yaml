@@ -1,0 +1,15 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  ScalingGroup:
+    Type: ALIYUN::ESS::ScalingGroup
+    Properties:
+      ScalingGroupName: my-scaling-group
+      MinSize: 1
+      MaxSize: 10
+      LoadBalancerIds:
+        - lb-12345678
+      ServerGroups:
+        - Type: ALB
+          Port: 80
+          ServerGroupId: sgp-12345678
+          Weight: 100

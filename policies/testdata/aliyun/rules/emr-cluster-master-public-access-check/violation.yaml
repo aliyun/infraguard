@@ -1,0 +1,27 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - EMR cluster with public IP
+
+Resources:
+  EMRCluster:
+    Type: ALIYUN::EMR::Cluster
+    Properties:
+      Name: test-cluster
+      EmrVer: EMR-3.38.0
+      ClusterType: HADOOP
+      ZoneId: cn-hangzhou-h
+      NetType: vpc
+      VpcId: vpc-xxxxxxxx
+      VSwitchId: vsw-xxxxxxxx
+      HostGroup:
+        - HostGroupType: MASTER
+          NodeCount: 1
+          InstanceType: ecs.g6.xlarge
+          DiskType: CLOUD_ESSD
+          DiskCapacity: 100
+          DiskCount: 1
+          SysDiskType: CLOUD_ESSD
+          SysDiskCapacity: 100
+          ChargeType: PostPaid
+      IsOpenPublicIp: true
+      ChargeType: PostPaid
+      UseLocalMetaDb: true

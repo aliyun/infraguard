@@ -1,0 +1,8 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  WAF:
+    Type: ALIYUN::WAF3::Instance
+    Properties:
+      PayType: PayAsYouGo
+      Region: ChineseMainland
+      LogService: true

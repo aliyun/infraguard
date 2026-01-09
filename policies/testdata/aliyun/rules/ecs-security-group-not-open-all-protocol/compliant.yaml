@@ -1,0 +1,14 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - Security group ingress with specific protocol
+
+Resources:
+  # Compliant: Security group with specific protocol
+  SecurityGroup:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: test-sg
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          PortRange: 443/443
+          SourceCidrIp: 0.0.0.0/0
+

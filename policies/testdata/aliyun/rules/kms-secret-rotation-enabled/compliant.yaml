@@ -1,0 +1,12 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for kms-secret-rotation-enabled rule - Compliant case
+Resources:
+  CompliantSecret:
+    Type: 'ALIYUN::KMS::Secret'
+    Properties:
+      SecretName: test-secret
+      SecretType: Generic
+      SecretData: test-secret-data
+      VersionId: v1
+      EnableAutomaticRotation: true
+      RotationInterval: 30d

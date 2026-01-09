@@ -1,0 +1,8 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  ViolationSAS:
+    Type: ALIYUN::ThreatDetection::Instance
+    Properties:
+      VersionCode: level2
+      PaymentType: Subscription
+      BuyNumber: "10"

@@ -1,0 +1,17 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - ECS instance without RAM role attached
+Parameters:
+  ZoneId:
+    Type: String
+    Default: cn-hangzhou-i
+Resources:
+  ViolationInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      ZoneId:
+        Ref: ZoneId
+      InstanceName: ViolationInstanceWithoutRamRole
+      ImageId: aliyun_2_1903_x64_20G_alibase_20231221.vhd
+      InstanceType: ecs.g6.large
+      SystemDiskCategory: cloud_essd
+      SystemDiskSize: 40

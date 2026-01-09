@@ -1,0 +1,13 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Non-compliant MSE Cluster with Development Edition
+Resources:
+  MSECluster:
+    Type: ALIYUN::MSE::Cluster
+    Properties:
+      ClusterType: Nacos-Ans
+      ClusterVersion: NACOS_2_0_0
+      ClusterSpecification: MSE_SC_1_2_60_c
+      InstanceCount: 1
+      NetType: privatenet
+      MseVersion: mse_dev
+

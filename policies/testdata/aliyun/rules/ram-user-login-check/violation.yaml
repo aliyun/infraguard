@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for ram-user-login-check rule - Non-compliant case
+Resources:
+  NonCompliantUser:
+    Type: 'ALIYUN::RAM::User'
+    Properties:
+      UserName: test-user
+      DisplayName: Test User
+      LoginProfile:
+        MFABindRequired: true

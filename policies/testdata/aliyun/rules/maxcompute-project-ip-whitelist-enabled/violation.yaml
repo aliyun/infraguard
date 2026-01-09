@@ -1,0 +1,6 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  MaxComputeProject:
+    Type: ALIYUN::MaxCompute::Project
+    Properties:
+      Name: test_project

@@ -1,0 +1,12 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for api-gateway-group-log-enabled rule - Compliant case
+Resources:
+  # 合规：分组绑定了日志配置（通过Tags标记）
+  CompliantGroup:
+    Type: ALIYUN::ApiGateway::Group
+    Properties:
+      GroupName: CompliantApiGroup
+      Description: API group with logging enabled
+      Tags:
+        - Key: LogEnabled
+          Value: "true"

@@ -1,0 +1,9 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  NASRule:
+    Type: ALIYUN::NAS::AccessRule
+    Properties:
+      AccessGroupName: test-group
+      SourceCidrIp: 0.0.0.0/0
+      RWAccessType: RDWR
+      UserAccessType: no_squash

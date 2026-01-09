@@ -1,0 +1,12 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for apig-group-custom-trace-enabled rule - Compliant case
+Resources:
+  # 合规：分组启用了追踪
+  CompliantGroup:
+    Type: ALIYUN::ApiGateway::Group
+    Properties:
+      GroupName: CompliantApiGroup
+      Description: API group with tracing enabled
+      Tags:
+        - Key: TracingEnabled
+          Value: 'true'

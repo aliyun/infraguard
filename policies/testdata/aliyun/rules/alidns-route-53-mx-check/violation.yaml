@@ -1,0 +1,22 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - MX record without valid SPF TXT record
+Resources:
+  ViolationDomain:
+    Type: ALIYUN::DNS::Domain
+    Properties:
+      DomainName: example.com
+  MXRecord:
+    Type: ALIYUN::DNS::DomainRecord
+    Properties:
+      DomainName: example.com
+      RR: "@"
+      Type: MX
+      Priority: 10
+      Value: mail.example.com
+  TXTRecord:
+    Type: ALIYUN::DNS::DomainRecord
+    Properties:
+      DomainName: example.com
+      RR: "@"
+      Type: TXT
+      Value: "v=spf1 -all"

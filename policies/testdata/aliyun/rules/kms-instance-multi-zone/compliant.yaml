@@ -1,0 +1,15 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant KMS Instance with multiple zones
+Resources:
+  KMSInstance:
+    Type: ALIYUN::KMS::Instance
+    Properties:
+      ProductVersion: software
+      Connection:
+        VpcId: vpc-bp1qg7z02222222222
+        ZoneIds:
+          - cn-hangzhou-h
+          - cn-hangzhou-g
+        VSwitchIds:
+          - vsw-bp1g7z02222222222
+

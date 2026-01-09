@@ -1,0 +1,18 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant ALB LoadBalancer with multiple zones
+Resources:
+  MultiZoneALB:
+    Type: ALIYUN::ALB::LoadBalancer
+    Properties:
+      LoadBalancerName: multi-zone-alb
+      LoadBalancerEdition: Standard
+      VpcId: vpc-xxxxx
+      AddressType: Internet
+      LoadBalancerBillingConfig:
+        PayType: PostPay
+      ZoneMappings:
+        - ZoneId: cn-hangzhou-h
+          VSwitchId: vsw-xxxxx1
+        - ZoneId: cn-hangzhou-i
+          VSwitchId: vsw-xxxxx2
+

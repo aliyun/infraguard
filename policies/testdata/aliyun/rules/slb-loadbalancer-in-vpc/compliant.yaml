@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  SLB:
+    Type: ALIYUN::SLB::LoadBalancer
+    Properties:
+      VpcId: vpc-123
+      VSwitchId: vsw-123

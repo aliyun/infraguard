@@ -1,0 +1,19 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - ECS subscription instance without auto-renewal
+Parameters:
+  ZoneId:
+    Type: String
+    Default: cn-hangzhou-b
+Resources:
+  ViolationInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      ZoneId:
+        Ref: ZoneId
+      InstanceName: NoAutoRenewalInstance
+      InstanceType: ecs.c6.large
+      ImageId: m-bp1***0
+      InstanceChargeType: Prepaid
+      Period: 1
+      PeriodUnit: Month
+      AutoRenew: "False"

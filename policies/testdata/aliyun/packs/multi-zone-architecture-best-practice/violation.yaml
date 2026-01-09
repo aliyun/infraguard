@@ -1,0 +1,36 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - Single zone architecture
+
+Resources:
+  # Violation: ALB with single zone
+  ALBLoadBalancer:
+    Type: ALIYUN::ALB::LoadBalancer
+    Properties:
+      LoadBalancerEdition: Standard
+      AddressType: Internet
+      VpcId: vpc-bp1qg7z02222222222
+      ZoneMappings:
+        - ZoneId: cn-hangzhou-h
+          VSwitchId: vsw-bp1g7z02222222222
+      LoadBalancerBillingConfig:
+        PayType: PostPay
+
+  # Violation: RDS without multi-AZ
+  RDSInstance:
+    Type: ALIYUN::RDS::DBInstance
+    Properties:
+      Engine: MySQL
+      EngineVersion: '8.0'
+      DBInstanceClass: mysql.n2.small.1
+      DBInstanceStorage: 20
+      MultiAZ: false
+      ZoneId: cn-hangzhou-h
+      SecurityIPList: '127.0.0.1'
+
+  # Violation: OSS with LRS (not ZRS)
+  OSSBucket:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: single-zone-bucket
+      RedundancyType: LRS
+

@@ -1,0 +1,33 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - ECS instance with public IP via EIPAssociation
+Parameters:
+  ZoneId:
+    Type: String
+    Default: cn-hangzhou-b
+Resources:
+  ViolationInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      ZoneId:
+        Ref: ZoneId
+      InstanceName: PublicIPInstance
+      InstanceType: ecs.c6.large
+      ImageId: m-bp1***0
+      VpcId: vpc-bp1****
+      VSwitchId: vsw-bp1****
+      SecurityGroupId: sg-bp1****
+      AllocatePublicIP: false
+      InternetMaxBandwidthOut: 0
+  EIP:
+    Type: ALIYUN::VPC::EIP
+    Properties:
+      Bandwidth: 10
+  EIPAssociation:
+    Type: ALIYUN::VPC::EIPAssociation
+    Properties:
+      InstanceId:
+        Ref: ViolationInstance
+      AllocationId:
+        Fn::GetAtt:
+          - EIP
+          - AllocationId

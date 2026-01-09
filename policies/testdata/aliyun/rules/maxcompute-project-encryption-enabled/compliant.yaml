@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant MaxCompute project with encryption enabled
+Resources:
+  MaxComputeProject:
+    Type: ALIYUN::MaxCompute::Project
+    Properties:
+      Name: test_project
+      Properties:
+        Encryption:
+          Enable: true
+          Algorithm: AES256

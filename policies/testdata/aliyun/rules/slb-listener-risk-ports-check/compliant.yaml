@@ -1,0 +1,9 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  SLBListener:
+    Type: ALIYUN::SLB::Listener
+    Properties:
+      LoadBalancerId: lb-123
+      ListenerPort: 8080
+      Protocol: http
+      Bandwidth: 1

@@ -1,0 +1,18 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant BastionHost instance with auto-renewal enabled
+Resources:
+  BastionHostInstance:
+    Type: ALIYUN::BastionHost::Instance
+    Properties:
+      Version: Enterprise
+      Plan: 50
+      ExtraBandwidth: 10
+      ExtendedStoragePlans: 10
+      Period: 1
+      PeriodUnit: Month
+      AutoRenew: true
+      AutoPay: true
+      StartInstanceParam:
+        VswitchId: vsw-123456
+        SecurityGroupIds:
+          - sg-123456

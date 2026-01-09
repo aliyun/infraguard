@@ -1,0 +1,15 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  CompliantSAS:
+    Type: ALIYUN::ThreatDetection::Instance
+    Properties:
+      VersionCode: level3
+      PaymentType: Subscription
+      BuyNumber: "10"
+  
+  UltimateSAS:
+    Type: ALIYUN::ThreatDetection::Instance
+    Properties:
+      VersionCode: level8
+      PaymentType: Subscription
+      BuyNumber: "10"

@@ -1,0 +1,9 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  ViolationRedis:
+    Type: ALIYUN::REDIS::Instance
+    Properties:
+      InstanceClass: redis.master.small.default
+      ZoneId: cn-hangzhou-a
+      VpcId: vpc-123
+      VSwitchId: vsw-1

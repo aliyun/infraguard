@@ -1,0 +1,17 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template - Launch template with encrypted data disks
+Parameters: {}
+Resources:
+  CompliantTemplate:
+    Type: ALIYUN::ECS::LaunchTemplate
+    Properties:
+      LaunchTemplateName: EncryptedDataDiskTemplate
+      InstanceType: ecs.c6.large
+      ImageId: m-bp1***0
+      DiskMappings:
+        - Size: 40
+          Category: cloud_essd
+          Encrypted: true
+        - Size: 100
+          Category: cloud_ssd
+          Encrypted: true

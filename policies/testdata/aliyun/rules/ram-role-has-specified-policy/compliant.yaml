@@ -1,0 +1,22 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for ram-role-has-specified-policy rule - Compliant case
+Resources:
+  # 合规：角色绑定了指定的策略
+  CompliantRole:
+    Type: ALIYUN::RAM::Role
+    Properties:
+      RoleName: CompliantTestRole
+      Description: Role with specified policy
+      AssumeRolePolicyDocument:
+        Version: '1'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ecs.aliyuncs.com
+            Action: sts:AssumeRole
+      PolicyAttachments:
+        System:
+          - ReadOnlyAccess
+          - AliyunKMSReadOnlyAccess
+        Custom: []

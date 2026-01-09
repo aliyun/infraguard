@@ -1,0 +1,16 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - ECS instance in classic network
+Parameters:
+  ZoneId:
+    Type: String
+    Default: cn-hangzhou-b
+Resources:
+  ViolationInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      ZoneId:
+        Ref: ZoneId
+      InstanceName: ClassicInstance
+      InstanceType: ecs.c6.large
+      ImageId: m-bp1***0
+      SecurityGroupId: sg-bp1****

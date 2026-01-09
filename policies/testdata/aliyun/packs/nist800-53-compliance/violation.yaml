@@ -1,0 +1,92 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation - NIST 800-53 Compliance
+
+Resources:
+  # Violation: ECS disk without encryption
+  ECSDisk:
+    Type: ALIYUN::ECS::Disk
+    Properties:
+      ZoneId: cn-hangzhou-h
+      DiskCategory: cloud_essd
+      Size: 100
+      Encrypted: false
+
+  # Violation: OSS bucket with public read access
+  OSSBucket1:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: public-read-bucket
+      AccessControl: public-read
+
+  # Violation: OSS bucket with public write access
+  OSSBucket2:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: public-write-bucket
+      AccessControl: public-read-write
+
+  # Violation: OSS bucket without server-side encryption
+  OSSBucket3:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: no-encryption-bucket
+      AccessControl: private
+
+  # Violation: OSS bucket without versioning
+  OSSBucket4:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: no-versioning-bucket
+      AccessControl: private
+
+  # Violation: OSS bucket without logging
+  OSSBucket5:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: no-logging-bucket
+      AccessControl: private
+
+  # Violation: OSS bucket without ZRS
+  OSSBucket6:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: no-zrs-bucket
+      AccessControl: private
+      RedundancyType: LRS
+
+  # Violation: OSS bucket without KMS encryption
+  OSSBucket7:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName: no-kms-bucket
+      AccessControl: private
+      ServerSideEncryptionConfiguration:
+        SSEAlgorithm: AES256
+
+  # Violation: NAS filesystem without encryption
+  NASFileSystem:
+    Type: ALIYUN::NAS::FileSystem
+    Properties:
+      ProtocolType: NFS
+      StorageType: Performance
+      EncryptType: 0
+
+  # Violation: KMS secret without rotation
+  KMSSecret:
+    Type: ALIYUN::KMS::Secret
+    Properties:
+      SecretName: nist-secret
+      VersionId: v1
+      SecretData: secret-value
+      EnableAutomaticRotation: false
+
+  # Violation: RDS instance with public connection
+  RDSInstance:
+    Type: ALIYUN::RDS::DBInstance
+    Properties:
+      Engine: MySQL
+      EngineVersion: '8.0'
+      DBInstanceClass: mysql.n2.small.1
+      DBInstanceStorage: 20
+      AllocatePublicConnection: true
+      SecurityIPList: '0.0.0.0/0'

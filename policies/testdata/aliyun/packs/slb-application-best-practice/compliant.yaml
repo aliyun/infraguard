@@ -1,0 +1,16 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant - SLB Application Best Practice
+
+Resources:
+  # Note: Most SLB/ALB configurations (health checks, ACLs, TLS policies, etc.) are
+  # runtime settings not exposed in ROS templates.
+  # This is a minimal compliant template showing resource creation.
+  
+  DummyResource:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: slb-test-sg
+      Description: Test security group for SLB pack
+      SecurityGroupType: enterprise
+      VpcId: vpc-test123
+

@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for nas-filesystem-encrypt-type-check rule - Compliant case
+Resources:
+  CompliantFileSystem:
+    Type: 'ALIYUN::NAS::FileSystem'
+    Properties:
+      FileSystemType: standard
+      ProtocolType: NFS
+      StorageType: Performance
+      Description: test filesystem
+      EncryptType: 1

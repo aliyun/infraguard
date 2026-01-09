@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template - VSwitch with sufficient IP addresses
+Resources:
+  VSwitch:
+    Type: ALIYUN::ECS::VSwitch
+    Properties:
+      VSwitchName: VSwitchWithEnoughIPs
+      CidrBlock: 192.168.0.0/24
+      VpcId: vpc-12345678
+      ZoneId: cn-hangzhou-i

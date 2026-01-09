@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant NAT Gateway - SNAT EIP bandwidth consistency
+Resources:
+  NatGateway:
+    Type: ALIYUN::VPC::NatGateway
+    Properties:
+      VpcId: vpc-123
+      VSwitchId: vsw-hangzhou-h
+      NatType: Enhanced
+      InternetChargeType: PayByLcu
+      EipBindMode: MULTI_BINDED

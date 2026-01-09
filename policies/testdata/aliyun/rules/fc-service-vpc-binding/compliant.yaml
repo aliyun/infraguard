@@ -1,0 +1,12 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  Service:
+    Type: ALIYUN::FC::Service
+    Properties:
+      ServiceName: my-service
+      VpcConfig:
+        VpcId: vpc-12345678
+        VSwitchIds:
+          - vsw-12345678
+        SecurityGroupId: sg-12345678
+      Description: My Function Compute service with VPC binding

@@ -1,0 +1,8 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  Redis:
+    Type: ALIYUN::REDIS::Instance
+    Properties:
+      InstanceClass: redis.master.small.default
+      VpcId: vpc-bp1234567890abcdef
+      VSwitchId: vsw-bp1234567890abcdef

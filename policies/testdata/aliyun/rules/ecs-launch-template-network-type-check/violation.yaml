@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - Launch template with classic network type
+Parameters: {}
+Resources:
+  ViolationTemplate:
+    Type: ALIYUN::ECS::LaunchTemplate
+    Properties:
+      LaunchTemplateName: ClassicLaunchTemplate
+      NetworkType: classic
+      InstanceType: ecs.c6.large
+      ImageId: m-bp1***0

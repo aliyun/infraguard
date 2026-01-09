@@ -1,0 +1,15 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  CompliantCluster:
+    Type: ALIYUN::CS::ManagedKubernetesCluster
+    Properties:
+      Name: compliant-cluster
+      VpcId: vpc-123
+      VSwitchIds:
+        - vsw-1
+        - vsw-2
+        - vsw-3
+      ZoneIds:
+        - cn-hangzhou-a
+        - cn-hangzhou-b
+        - cn-hangzhou-c

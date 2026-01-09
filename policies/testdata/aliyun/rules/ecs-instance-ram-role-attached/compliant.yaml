@@ -1,0 +1,22 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template - ECS instance with RAM role attached
+Parameters:
+  ZoneId:
+    Type: String
+    Default: cn-hangzhou-i
+  RamRoleName:
+    Type: String
+    Default: MyRamRole
+Resources:
+  CompliantInstance:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      ZoneId:
+        Ref: ZoneId
+      InstanceName: CompliantInstanceWithRamRole
+      ImageId: aliyun_2_1903_x64_20G_alibase_20231221.vhd
+      InstanceType: ecs.g6.large
+      RamRoleName:
+        Ref: RamRoleName
+      SystemDiskCategory: cloud_essd
+      SystemDiskSize: 40

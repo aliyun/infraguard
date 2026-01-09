@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Non-compliant ESS Scaling Group with single VSwitch
+Resources:
+  ScalingGroup:
+    Type: ALIYUN::ESS::ScalingGroup
+    Properties:
+      MaxSize: 10
+      MinSize: 1
+      VSwitchIds:
+        - vsw-bp1g7z02222222222
+

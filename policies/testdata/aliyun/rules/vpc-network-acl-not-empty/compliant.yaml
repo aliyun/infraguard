@@ -1,0 +1,11 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  ACL:
+    Type: ALIYUN::VPC::NetworkAcl
+    Properties:
+      VpcId: vpc-123
+      IngressAclEntries:
+        - Policy: accept
+          SourceCidrIp: 10.0.0.0/8
+          Port: '80/80'
+          Protocol: tcp

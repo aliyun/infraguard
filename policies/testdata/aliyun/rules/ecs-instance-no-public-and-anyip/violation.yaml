@@ -1,0 +1,12 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for ecs-instance-no-public-and-anyip rule - Non-compliant case
+Resources:
+  NonCompliantInstance:
+    Type: 'ALIYUN::ECS::Instance'
+    Properties:
+      InstanceType: ecs.n1.small
+      ImageId: centos_7
+      AllocatePublicIP: true
+      InternetMaxBandwidthOut: 5
+      SecurityGroupId: sg-test123
+

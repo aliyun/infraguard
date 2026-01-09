@@ -1,0 +1,39 @@
+<svg width="500" height="300" viewBox="0 0 500 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Left Side: Inconsistent Raw IaC -->
+  <rect x="30" y="80" width="40" height="40" rx="4" fill="#94a3b8" />
+  <circle cx="50" cy="160" r="20" fill="#94a3b8" />
+  <path d="M30 210L70 210L50 240Z" fill="#94a3b8" />
+  <text x="50" y="270" text-anchor="middle" fill="#64748b" font-family="sans-serif" font-size="12">Raw IaC</text>
+
+  <!-- Middle: InfraGuard Gate -->
+  <rect x="180" y="50" width="140" height="200" rx="12" fill="#5c94eb" fill-opacity="0.05" stroke="#5c94eb" stroke-width="1" stroke-dasharray="4 4" />
+  
+  <!-- Logo Container -->
+  <g transform="translate(210, 100) scale(0.2)">
+    <path d="M 200 20 L 350 70 V 260 C 350 360, 220 410, 200 430 C 180 410, 50 360, 50 260 V 70 Z" fill="#D4ECF7" />
+    <path d="M 200 20 L 350 70 V 260 C 350 360, 220 410, 200 430 C 180 410, 50 360, 50 260 V 70 Z" fill="none" stroke="#5c94eb" stroke-width="14" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M 200 60 L 315 100 V 250 C 315 325, 215 370, 200 385 C 185 370, 85 325, 85 250 V 100 Z" fill="none" stroke="#5c94eb" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M 150 285 L 260 285 C 305 285, 310 245, 280 235 C 285 185, 215 170, 190 200 C 165 175, 115 195, 125 240 C 105 255, 115 285, 150 285 Z" fill="none" stroke="#5c94eb" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+
+  <text x="250" y="235" text-anchor="middle" fill="#5c94eb" font-family="sans-serif" font-size="14" font-weight="bold">InfraGuard</text>
+
+  <!-- Right Side: Standardized & Compliant -->
+  <rect x="400" y="80" width="40" height="40" rx="4" fill="#5c94eb" />
+  <rect x="400" y="140" width="40" height="40" rx="4" fill="#5c94eb" />
+  <rect x="400" y="200" width="40" height="40" rx="4" fill="#5c94eb" />
+  
+  <path d="M455 100L460 105L470 95" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M455 160L460 165L470 155" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M455 220L460 225L470 215" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="430" y="270" text-anchor="middle" fill="#5c94eb" font-family="sans-serif" font-size="12">Standardized</text>
+
+  <!-- Flow arrows -->
+  <path d="M100 150H170" stroke="#cbd5e1" stroke-width="2" stroke-linecap="round" marker-end="url(#arrow)" />
+  <path d="M330 150H390" stroke="#cbd5e1" stroke-width="2" stroke-linecap="round" marker-end="url(#arrow)" />
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orientation="auto">
+      <path d="M0 0L10 5L0 10Z" fill="#cbd5e1" />
+    </marker>
+  </defs>
+</svg>

@@ -1,0 +1,18 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - Security group with risky ports to 0.0.0.0/0
+Parameters: {}
+Resources:
+  ViolationSG:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: RiskySecurityGroup
+      VpcId: vpc-bp1****
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          PortRange: 22/22
+          SourceCidrIp: 0.0.0.0/0
+          Priority: 1
+        - IpProtocol: tcp
+          PortRange: 3389/3389
+          SourceCidrIp: 0.0.0.0/0
+          Priority: 1

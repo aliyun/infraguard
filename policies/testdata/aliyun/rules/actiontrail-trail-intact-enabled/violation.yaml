@@ -1,0 +1,24 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  ViolationTrailRW:
+    Type: ALIYUN::ACTIONTRAIL::Trail
+    Properties:
+      Name: violation-trail-rw
+      EventRW: Write # Should be All
+      OssBucketName: my-bucket
+      RoleName: my-role
+
+  ViolationLoggingRW:
+    Type: ALIYUN::ACTIONTRAIL::TrailLogging
+    Properties:
+      Name: violation-trail-rw
+      Enable: true
+
+  ViolationTrailNotEnabled:
+    Type: ALIYUN::ACTIONTRAIL::Trail
+    Properties:
+      Name: violation-trail-not-enabled
+      EventRW: All
+      OssBucketName: my-bucket
+      RoleName: my-role
+    # Missing TrailLogging or Enable=false

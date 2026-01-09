@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for polardb-dbcluster-in-vpc rule - Non-compliant case with classic network
+Resources:
+  PolarDB:
+    Type: ALIYUN::POLARDB::DBCluster
+    Properties:
+      DBType: MySQL
+      DBVersion: '8.0'
+      DBNodeClass: polar.mysql.x4.medium
+      PayType: PostPaid

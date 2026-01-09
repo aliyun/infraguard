@@ -1,0 +1,9 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template for ram-group-in-use-check rule - Non-compliant case
+Resources:
+  # 不合规：用户组没有成员也没有绑定策略
+  NonCompliantGroup:
+    Type: ALIYUN::RAM::Group
+    Properties:
+      GroupName: NonCompliantTestGroup
+      Comments: This group has no members and no policies

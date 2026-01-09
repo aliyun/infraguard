@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template - DNS domain name matches regex pattern
+Resources:
+  CompliantDomain:
+    Type: ALIYUN::DNS::Domain
+    Properties:
+      DomainName: my-app-production

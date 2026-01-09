@@ -1,0 +1,15 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - Elasticsearch public access enabled
+Resources:
+  ViolationElasticsearch:
+    Type: ALIYUN::ElasticSearch::Instance
+    Properties:
+      Version: 7.10_with_X-Pack
+      VSwitchId: vsw-12345678
+      Password: 'Test123!@#'
+      DataNode:
+        Amount: 3
+        Spec: elasticsearch.sn1ne.large
+        DiskSize: 20
+        DiskType: cloud_ssd
+      EnablePublic: true

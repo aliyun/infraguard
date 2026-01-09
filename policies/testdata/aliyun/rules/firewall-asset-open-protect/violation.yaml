@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template - Assets not protected by Cloud Firewall
+Resources:
+  # No FwSwitch resource means assets are not protected
+  # Adding a placeholder resource to satisfy ROS template requirements
+  PlaceholderVPC:
+    Type: ALIYUN::ECS::VPC
+    Properties:
+      VpcName: placeholder-vpc
+      CidrBlock: 10.0.0.0/16

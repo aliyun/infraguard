@@ -1,0 +1,16 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template - Auto snapshot policy with sufficient retention days (>= 7)
+Resources:
+  CompliantAutoSnapshotPolicy:
+    Type: ALIYUN::ECS::AutoSnapshotPolicy
+    Properties:
+      AutoSnapshotPolicyName: CompliantPolicy
+      TimePoints:
+        - 2
+      RepeatWeekdays:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+      RetentionDays: 30
