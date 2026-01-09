@@ -3,6 +3,7 @@ import clsx from "clsx";
 import Link from "@docusaurus/Link";
 import Translate, { translate } from "@docusaurus/Translate";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import useBaseUrl from "@docusaurus/useBaseUrl";
 import Layout from "@theme/Layout";
 import HomepageFeatures from "@site/src/components/HomepageFeatures";
 import Heading from "@theme/Heading";
@@ -34,6 +35,7 @@ function CheckIcon() {
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
+  const logoUrl = useBaseUrl("/img/logo.svg");
   return (
     <header className={clsx("hero", styles.heroBanner)}>
       <div className="container">
@@ -78,7 +80,7 @@ function HomepageHeader() {
           </div>
           <div className="col col--4">
             <img
-              src="img/logo.svg"
+              src={logoUrl}
               alt="InfraGuard Logo"
               className={styles.heroLogo}
               style={{ maxHeight: "300px", width: "auto" }}
@@ -168,6 +170,7 @@ function CodeExample() {
 }
 
 function InfrastructureCompliance() {
+  const standardizationUrl = useBaseUrl("/img/standardization.svg");
   return (
     <section className={clsx(styles.section, styles.sectionAlt)}>
       <div className="container">
@@ -203,7 +206,7 @@ function InfrastructureCompliance() {
           <div className="col col--6">
             <div className="text--center">
               <img
-                src="img/standardization.svg"
+                src={standardizationUrl}
                 alt="Infrastructure Standardization"
                 style={{ width: "100%", height: "auto" }}
               />

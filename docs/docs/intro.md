@@ -17,12 +17,12 @@ InfraGuard is a command-line tool that helps you ensure your infrastructure code
 
 ## Key Features
 
-- <img src="/img/features/validation.svg" width="20" height="20" style={{verticalAlign: 'middle', marginRight: '4px'}} /> **Pre-deployment Validation** - Catch compliance issues before they reach production
-- <img src="/img/features/rules.svg" width="20" height="20" style={{verticalAlign: 'middle', marginRight: '4px'}} /> **Policy Packs** - Pre-built compliance packs (MLPS, ISO 27001, PCI-DSS, etc.)
-- <img src="/img/features/i18n.svg" width="20" height="20" style={{verticalAlign: 'middle', marginRight: '4px'}} /> **Internationalization** - Full support for English and Chinese
-- <img src="/img/features/formats.svg" width="20" height="20" style={{verticalAlign: 'middle', marginRight: '4px'}} /> **Multiple Output Formats** - Table, JSON, and HTML reports
-- <img src="/img/features/extensible.svg" width="20" height="20" style={{verticalAlign: 'middle', marginRight: '4px'}} /> **Extensible** - Write custom policies in Rego
-- <img src="/img/features/fast.svg" width="20" height="20" style={{verticalAlign: 'middle', marginRight: '4px'}} /> **Fast** - Built in Go for speed and efficiency
+- <img src={require('@site/static/img/features/validation.svg').default} width="20" height="20" style={{verticalAlign: 'middle', marginRight: '4px'}} /> **Pre-deployment Validation** - Catch compliance issues before they reach production
+- <img src={require('@site/static/img/features/rules.svg').default} width="20" height="20" style={{verticalAlign: 'middle', marginRight: '4px'}} /> **Policy Packs** - Pre-built compliance packs (MLPS, ISO 27001, PCI-DSS, etc.)
+- <img src={require('@site/static/img/features/i18n.svg').default} width="20" height="20" style={{verticalAlign: 'middle', marginRight: '4px'}} /> **Internationalization** - Full support for English and Chinese
+- <img src={require('@site/static/img/features/formats.svg').default} width="20" height="20" style={{verticalAlign: 'middle', marginRight: '4px'}} /> **Multiple Output Formats** - Table, JSON, and HTML reports
+- <img src={require('@site/static/img/features/extensible.svg').default} width="20" height="20" style={{verticalAlign: 'middle', marginRight: '4px'}} /> **Extensible** - Write custom policies in Rego
+- <img src={require('@site/static/img/features/fast.svg').default} width="20" height="20" style={{verticalAlign: 'middle', marginRight: '4px'}} /> **Fast** - Built in Go for speed and efficiency
 
 ## Supported Providers
 
