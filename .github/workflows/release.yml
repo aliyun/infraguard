@@ -44,8 +44,8 @@ jobs:
         with:
           go-version: '1.24'
 
-      - name: Generate policy index
-        run: go run cmd/policy-gen/main.go
+      # Note: index_gen.go is now committed to the repository.
+      # CI workflow ensures it's up to date before merge.
 
       - name: Build binary
         env:

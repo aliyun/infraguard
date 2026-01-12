@@ -1,5 +1,7 @@
 package policy
 
+//go:generate go run ../../cmd/policy-gen/main.go
+
 import (
 	"github.com/aliyun/infraguard/pkg/models"
 )

@@ -33,6 +33,7 @@ all: clean gen-policy build ## Clean and build the binary
 
 gen-policy: ## Generate policy index
 	$(GORUN) cmd/policy-gen/main.go
+	$(GOFMT) pkg/policy/index_gen.go
 
 build: gen-policy ## Build the binary
 	$(GOBUILD) -ldflags "$(LDFLAGS)" -o $(BUILD_DIR)/$(BINARY_NAME) $(MAIN_PATH)
@@ -75,6 +76,20 @@ test-coverage: ## Run tests with coverage for pkg/ and cmd/ and open report
 	fi
 
 ## Code quality targets
+
+check-gen: ## Check if generated files are up to date
+	@echo "Checking if index_gen.go is up to date..."
+	@cp pkg/policy/index_gen.go pkg/policy/index_gen.go.bak 2>/dev/null || true
+	@$(GORUN) cmd/policy-gen/main.go
+	@$(GOFMT) pkg/policy/index_gen.go >/dev/null
+	@if ! diff -q pkg/policy/index_gen.go pkg/policy/index_gen.go.bak >/dev/null 2>&1; then \
+		echo "ERROR: pkg/policy/index_gen.go is out of date!"; \
+		echo "Please run 'make gen-policy' and commit the changes."; \
+		mv pkg/policy/index_gen.go.bak pkg/policy/index_gen.go 2>/dev/null || true; \
+		exit 1; \
+	fi
+	@rm -f pkg/policy/index_gen.go.bak
+	@echo "✓ pkg/policy/index_gen.go is up to date"
 
 format: ## Format code
 	$(GOFMT) ./...
