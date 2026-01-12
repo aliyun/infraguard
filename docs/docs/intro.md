@@ -26,7 +26,7 @@ InfraGuard is a command-line tool that helps you ensure your infrastructure code
 
 ## Supported Providers
 
-- **Aliyun (Alibaba Cloud)** - 78+ rules and 34+ compliance packs
+- **Aliyun (Alibaba Cloud)** - Hundreds of rules and dozens of compliance packs
 
 ## Quick Example
 
