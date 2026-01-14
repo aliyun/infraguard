@@ -167,10 +167,20 @@ func extractPackageName(content string) string {
 
 // DiscoverRules finds all rules in a directory.
 func DiscoverRules(dir string) ([]*models.Rule, error) {
+	return DiscoverRulesWithExtraModules(dir, nil)
+}
+
+// DiscoverRulesWithExtraModules finds all rules in a directory with additional helper modules.
+// The extraModules parameter allows providing helper libraries (e.g., embedded helpers)
+// that rules may depend on but are not present in the local directory.
+func DiscoverRulesWithExtraModules(dir string, extraModules []RegoModule) ([]*models.Rule, error) {
 	var rules []*models.Rule
 
 	// Load helper libraries from lib directory
 	helperModules := loadHelperModulesFromDir(dir)
+
+	// Append extra modules (e.g., embedded helpers)
+	helperModules = append(helperModules, extraModules...)
 
 	err := filepath.WalkDir(dir, func(path string, d os.DirEntry, err error) error {
 		if err != nil {

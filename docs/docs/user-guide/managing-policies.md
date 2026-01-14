@@ -68,8 +68,16 @@ This downloads policies to `~/.infraguard/policies/`, which takes precedence ove
 
 ### Policy Loading Priority
 
-1. **User-local policies**: `~/.infraguard/policies/` (highest priority)
-2. **Embedded policies**: Built into the binary (fallback)
+InfraGuard loads policies from three sources with the following priority (highest to lowest):
+
+1. **Workspace-local policies**: `.infraguard/policies/` (relative to current working directory)
+2. **User-local policies**: `~/.infraguard/policies/`
+3. **Embedded policies**: Built into the binary (fallback)
+
+Policies with the same ID from higher-priority sources override lower-priority ones. This allows:
+- **Project-specific policies**: Define custom rules in `.infraguard/policies/` that are version-controlled with your project
+- **User customizations**: Override embedded policies globally via `~/.infraguard/policies/`
+- **Seamless fallback**: Built-in policies work out of the box
 
 ## Validating Custom Policies
 
@@ -123,7 +131,18 @@ Located in the binary under:
 
 ### Custom Policies
 
-Store custom policies in:
+#### Workspace-Local Policies (Project-Specific)
+
+Store project-specific policies in your project directory:
+- `.infraguard/policies/<provider>/rules/` - Project-specific rules
+- `.infraguard/policies/<provider>/packs/` - Project-specific packs
+- `.infraguard/policies/<provider>/lib/` - Project-specific helper libraries
+
+These policies are automatically loaded when running InfraGuard commands from within the project directory and can be version-controlled alongside your IaC templates.
+
+#### User-Local Policies (Global)
+
+Store global custom policies in your home directory:
 - `~/.infraguard/policies/<provider>/rules/` - Custom rules
 - `~/.infraguard/policies/<provider>/packs/` - Custom packs
 - `~/.infraguard/policies/<provider>/lib/` - Custom helper libraries

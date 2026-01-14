@@ -416,3 +416,396 @@ func TestLoaderMatchPacks(t *testing.T) {
 		})
 	})
 }
+
+func TestWorkspacePolicyDir(t *testing.T) {
+	Convey("Given the WorkspacePolicyDir function", t, func() {
+		Convey("When INFRAGUARD_WORKSPACE_POLICY_DIR is set", func() {
+			tmpDir, err := os.MkdirTemp("", "workspace-policy-test")
+			So(err, ShouldBeNil)
+			defer os.RemoveAll(tmpDir)
+
+			oldEnv := os.Getenv("INFRAGUARD_WORKSPACE_POLICY_DIR")
+			defer os.Setenv("INFRAGUARD_WORKSPACE_POLICY_DIR", oldEnv)
+
+			os.Setenv("INFRAGUARD_WORKSPACE_POLICY_DIR", tmpDir)
+			dir := WorkspacePolicyDir()
+
+			Convey("It should return the env var value", func() {
+				So(dir, ShouldEqual, tmpDir)
+			})
+		})
+
+		Convey("When INFRAGUARD_WORKSPACE_POLICY_DIR is not set", func() {
+			oldEnv := os.Getenv("INFRAGUARD_WORKSPACE_POLICY_DIR")
+			defer os.Setenv("INFRAGUARD_WORKSPACE_POLICY_DIR", oldEnv)
+
+			os.Unsetenv("INFRAGUARD_WORKSPACE_POLICY_DIR")
+			dir := WorkspacePolicyDir()
+
+			Convey("It should return a non-empty default path", func() {
+				So(dir, ShouldNotBeEmpty)
+			})
+
+			Convey("It should contain .infraguard and policies", func() {
+				So(dir, ShouldContainSubstring, ".infraguard")
+				So(dir, ShouldContainSubstring, "policies")
+			})
+
+			Convey("It should be an absolute path based on cwd", func() {
+				cwd, err := os.Getwd()
+				So(err, ShouldBeNil)
+				expectedPath := filepath.Join(cwd, ".infraguard", "policies")
+				So(dir, ShouldEqual, expectedPath)
+			})
+		})
+	})
+}
+
+func TestLoadFlatDirectoryStructure(t *testing.T) {
+	Convey("Given a flat directory structure with .rego files directly in subdirectory", t, func() {
+		// Save original env vars
+		oldPolicyDir := os.Getenv("INFRAGUARD_POLICY_DIR")
+		oldWorkspaceDir := os.Getenv("INFRAGUARD_WORKSPACE_POLICY_DIR")
+		defer func() {
+			os.Setenv("INFRAGUARD_POLICY_DIR", oldPolicyDir)
+			os.Setenv("INFRAGUARD_WORKSPACE_POLICY_DIR", oldWorkspaceDir)
+		}()
+
+		Convey("When policies are placed directly in a subdirectory (flat structure)", func() {
+			// Create temp directories
+			workspaceDir, err := os.MkdirTemp("", "flat-structure-test")
+			So(err, ShouldBeNil)
+			defer os.RemoveAll(workspaceDir)
+
+			// Create flat structure: my-rules/*.rego (no rules/ subdirectory)
+			flatRulesDir := filepath.Join(workspaceDir, "my-custom-rules")
+			err = os.MkdirAll(flatRulesDir, 0755)
+			So(err, ShouldBeNil)
+
+			flatRule := `package infraguard.rules.custom.flat_test_rule
+
+import rego.v1
+
+rule_meta := {
+	"id": "rule:custom:flat-test-rule",
+	"name": {"en": "Flat Structure Test Rule", "zh": "扁平结构测试规则"},
+	"severity": "medium",
+	"description": {"en": "Test rule in flat directory", "zh": "扁平目录中的测试规则"},
+	"reason": {"en": "Test reason", "zh": "测试原因"},
+	"recommendation": {"en": "Test recommendation", "zh": "测试建议"},
+	"resource_types": ["ALIYUN::ECS::Instance"],
+}
+
+deny contains result if {
+	false
+	result := {"id": rule_meta.id, "resource_id": "test", "violation_path": [], "meta": {"severity": rule_meta.severity, "reason": rule_meta.reason, "recommendation": rule_meta.recommendation}}
+}
+`
+			err = os.WriteFile(filepath.Join(flatRulesDir, "flat-test-rule.rego"), []byte(flatRule), 0644)
+			So(err, ShouldBeNil)
+
+			// Set env vars (no user policies)
+			emptyDir, err := os.MkdirTemp("", "empty-user-test")
+			So(err, ShouldBeNil)
+			defer os.RemoveAll(emptyDir)
+
+			os.Setenv("INFRAGUARD_POLICY_DIR", emptyDir)
+			os.Setenv("INFRAGUARD_WORKSPACE_POLICY_DIR", workspaceDir)
+
+			// Load policies
+			loader, err := LoadWithFallback()
+			So(err, ShouldBeNil)
+			So(loader, ShouldNotBeNil)
+
+			Convey("It should load the rule from flat directory structure", func() {
+				rule := loader.GetRule("rule:custom:flat-test-rule")
+				So(rule, ShouldNotBeNil)
+				So(rule.Name.Get("en"), ShouldEqual, "Flat Structure Test Rule")
+			})
+		})
+
+		Convey("When using provider-first structure (provider/rules/)", func() {
+			// Create temp directories
+			workspaceDir, err := os.MkdirTemp("", "provider-first-test")
+			So(err, ShouldBeNil)
+			defer os.RemoveAll(workspaceDir)
+
+			// Create provider-first structure: aliyun/rules/*.rego
+			providerRulesDir := filepath.Join(workspaceDir, "aliyun", "rules")
+			err = os.MkdirAll(providerRulesDir, 0755)
+			So(err, ShouldBeNil)
+
+			providerRule := `package infraguard.rules.aliyun.provider_test_rule
+
+import rego.v1
+
+rule_meta := {
+	"id": "rule:aliyun:provider-test-rule",
+	"name": {"en": "Provider Structure Test Rule", "zh": "Provider结构测试规则"},
+	"severity": "high",
+	"description": {"en": "Test rule in provider directory", "zh": "Provider目录中的测试规则"},
+	"reason": {"en": "Test reason", "zh": "测试原因"},
+	"recommendation": {"en": "Test recommendation", "zh": "测试建议"},
+	"resource_types": ["ALIYUN::ECS::Instance"],
+}
+
+deny contains result if {
+	false
+	result := {"id": rule_meta.id, "resource_id": "test", "violation_path": [], "meta": {"severity": rule_meta.severity, "reason": rule_meta.reason, "recommendation": rule_meta.recommendation}}
+}
+`
+			err = os.WriteFile(filepath.Join(providerRulesDir, "provider-test-rule.rego"), []byte(providerRule), 0644)
+			So(err, ShouldBeNil)
+
+			// Set env vars (no user policies)
+			emptyDir, err := os.MkdirTemp("", "empty-user-test2")
+			So(err, ShouldBeNil)
+			defer os.RemoveAll(emptyDir)
+
+			os.Setenv("INFRAGUARD_POLICY_DIR", emptyDir)
+			os.Setenv("INFRAGUARD_WORKSPACE_POLICY_DIR", workspaceDir)
+
+			// Load policies
+			loader, err := LoadWithFallback()
+			So(err, ShouldBeNil)
+			So(loader, ShouldNotBeNil)
+
+			Convey("It should load the rule from provider-first structure", func() {
+				rule := loader.GetRule("rule:aliyun:provider-test-rule")
+				So(rule, ShouldNotBeNil)
+				So(rule.Name.Get("en"), ShouldEqual, "Provider Structure Test Rule")
+			})
+		})
+	})
+}
+
+func TestLoadWithFallbackPriority(t *testing.T) {
+	Convey("Given LoadWithFallback with multiple policy sources", t, func() {
+		// Save original env vars
+		oldPolicyDir := os.Getenv("INFRAGUARD_POLICY_DIR")
+		oldWorkspaceDir := os.Getenv("INFRAGUARD_WORKSPACE_POLICY_DIR")
+		defer func() {
+			os.Setenv("INFRAGUARD_POLICY_DIR", oldPolicyDir)
+			os.Setenv("INFRAGUARD_WORKSPACE_POLICY_DIR", oldWorkspaceDir)
+		}()
+
+		Convey("When workspace policies override user-local policies", func() {
+			// Create temp directories
+			userDir, err := os.MkdirTemp("", "user-policy-test")
+			So(err, ShouldBeNil)
+			defer os.RemoveAll(userDir)
+
+			workspaceDir, err := os.MkdirTemp("", "workspace-policy-test")
+			So(err, ShouldBeNil)
+			defer os.RemoveAll(workspaceDir)
+
+			// Create user-local rule
+			userRulesDir := filepath.Join(userDir, "aliyun", "rules")
+			err = os.MkdirAll(userRulesDir, 0755)
+			So(err, ShouldBeNil)
+			userRule := `package infraguard.rules.aliyun.test_rule
+
+import rego.v1
+
+rule_meta := {
+	"id": "rule:aliyun:test-rule",
+	"name": {"en": "User Test Rule", "zh": "用户测试规则"},
+	"severity": "medium",
+	"description": {"en": "User rule description", "zh": "用户规则描述"},
+	"reason": {"en": "User reason", "zh": "用户原因"},
+	"recommendation": {"en": "User recommendation", "zh": "用户建议"},
+	"resource_types": ["ALIYUN::ECS::Instance"],
+}
+
+deny contains result if {
+	false
+	result := {"id": rule_meta.id, "resource_id": "test", "violation_path": [], "meta": {"severity": rule_meta.severity, "reason": rule_meta.reason, "recommendation": rule_meta.recommendation}}
+}
+`
+			err = os.WriteFile(filepath.Join(userRulesDir, "test-rule.rego"), []byte(userRule), 0644)
+			So(err, ShouldBeNil)
+
+			// Create workspace rule with same ID but different name
+			workspaceRulesDir := filepath.Join(workspaceDir, "aliyun", "rules")
+			err = os.MkdirAll(workspaceRulesDir, 0755)
+			So(err, ShouldBeNil)
+			workspaceRule := `package infraguard.rules.aliyun.test_rule
+
+import rego.v1
+
+rule_meta := {
+	"id": "rule:aliyun:test-rule",
+	"name": {"en": "Workspace Test Rule", "zh": "工作区测试规则"},
+	"severity": "high",
+	"description": {"en": "Workspace rule description", "zh": "工作区规则描述"},
+	"reason": {"en": "Workspace reason", "zh": "工作区原因"},
+	"recommendation": {"en": "Workspace recommendation", "zh": "工作区建议"},
+	"resource_types": ["ALIYUN::ECS::Instance"],
+}
+
+deny contains result if {
+	false
+	result := {"id": rule_meta.id, "resource_id": "test", "violation_path": [], "meta": {"severity": rule_meta.severity, "reason": rule_meta.reason, "recommendation": rule_meta.recommendation}}
+}
+`
+			err = os.WriteFile(filepath.Join(workspaceRulesDir, "test-rule.rego"), []byte(workspaceRule), 0644)
+			So(err, ShouldBeNil)
+
+			// Set env vars
+			os.Setenv("INFRAGUARD_POLICY_DIR", userDir)
+			os.Setenv("INFRAGUARD_WORKSPACE_POLICY_DIR", workspaceDir)
+
+			// Load policies
+			loader, err := LoadWithFallback()
+			So(err, ShouldBeNil)
+			So(loader, ShouldNotBeNil)
+
+			Convey("It should return the workspace version of the rule", func() {
+				rule := loader.GetRule("rule:aliyun:test-rule")
+				So(rule, ShouldNotBeNil)
+				So(rule.Name.Get("en"), ShouldEqual, "Workspace Test Rule")
+				So(rule.Severity, ShouldEqual, "high")
+			})
+		})
+
+		Convey("When only user-local policies exist", func() {
+			// Create temp directories
+			userDir, err := os.MkdirTemp("", "user-only-policy-test")
+			So(err, ShouldBeNil)
+			defer os.RemoveAll(userDir)
+
+			emptyDir, err := os.MkdirTemp("", "empty-workspace-test")
+			So(err, ShouldBeNil)
+			defer os.RemoveAll(emptyDir)
+
+			// Create user-local rule
+			userRulesDir := filepath.Join(userDir, "aliyun", "rules")
+			err = os.MkdirAll(userRulesDir, 0755)
+			So(err, ShouldBeNil)
+			userRule := `package infraguard.rules.aliyun.user_only_rule
+
+import rego.v1
+
+rule_meta := {
+	"id": "rule:aliyun:user-only-rule",
+	"name": {"en": "User Only Rule", "zh": "仅用户规则"},
+	"severity": "low",
+	"description": {"en": "User only description", "zh": "仅用户描述"},
+	"reason": {"en": "User only reason", "zh": "仅用户原因"},
+	"recommendation": {"en": "User only recommendation", "zh": "仅用户建议"},
+	"resource_types": ["ALIYUN::ECS::Instance"],
+}
+
+deny contains result if {
+	false
+	result := {"id": rule_meta.id, "resource_id": "test", "violation_path": [], "meta": {"severity": rule_meta.severity, "reason": rule_meta.reason, "recommendation": rule_meta.recommendation}}
+}
+`
+			err = os.WriteFile(filepath.Join(userRulesDir, "user-only-rule.rego"), []byte(userRule), 0644)
+			So(err, ShouldBeNil)
+
+			// Set env vars (workspace dir doesn't contain policies subdirectory)
+			os.Setenv("INFRAGUARD_POLICY_DIR", userDir)
+			os.Setenv("INFRAGUARD_WORKSPACE_POLICY_DIR", emptyDir)
+
+			// Load policies
+			loader, err := LoadWithFallback()
+			So(err, ShouldBeNil)
+			So(loader, ShouldNotBeNil)
+
+			Convey("It should return the user-local rule", func() {
+				rule := loader.GetRule("rule:aliyun:user-only-rule")
+				So(rule, ShouldNotBeNil)
+				So(rule.Name.Get("en"), ShouldEqual, "User Only Rule")
+			})
+		})
+
+		Convey("When policies from multiple sources are merged", func() {
+			// Create temp directories
+			userDir, err := os.MkdirTemp("", "user-merge-test")
+			So(err, ShouldBeNil)
+			defer os.RemoveAll(userDir)
+
+			workspaceDir, err := os.MkdirTemp("", "workspace-merge-test")
+			So(err, ShouldBeNil)
+			defer os.RemoveAll(workspaceDir)
+
+			// Create user-local rule A
+			userRulesDir := filepath.Join(userDir, "aliyun", "rules")
+			err = os.MkdirAll(userRulesDir, 0755)
+			So(err, ShouldBeNil)
+			userRuleA := `package infraguard.rules.aliyun.rule_a
+
+import rego.v1
+
+rule_meta := {
+	"id": "rule:aliyun:rule-a",
+	"name": {"en": "Rule A from User", "zh": "规则A来自用户"},
+	"severity": "medium",
+	"description": {"en": "Rule A", "zh": "规则A"},
+	"reason": {"en": "Reason A", "zh": "原因A"},
+	"recommendation": {"en": "Recommendation A", "zh": "建议A"},
+	"resource_types": ["ALIYUN::ECS::Instance"],
+}
+
+deny contains result if {
+	false
+	result := {"id": rule_meta.id, "resource_id": "test", "violation_path": [], "meta": {"severity": rule_meta.severity, "reason": rule_meta.reason, "recommendation": rule_meta.recommendation}}
+}
+`
+			err = os.WriteFile(filepath.Join(userRulesDir, "rule-a.rego"), []byte(userRuleA), 0644)
+			So(err, ShouldBeNil)
+
+			// Create workspace rule B
+			workspaceRulesDir := filepath.Join(workspaceDir, "aliyun", "rules")
+			err = os.MkdirAll(workspaceRulesDir, 0755)
+			So(err, ShouldBeNil)
+			workspaceRuleB := `package infraguard.rules.aliyun.rule_b
+
+import rego.v1
+
+rule_meta := {
+	"id": "rule:aliyun:rule-b",
+	"name": {"en": "Rule B from Workspace", "zh": "规则B来自工作区"},
+	"severity": "high",
+	"description": {"en": "Rule B", "zh": "规则B"},
+	"reason": {"en": "Reason B", "zh": "原因B"},
+	"recommendation": {"en": "Recommendation B", "zh": "建议B"},
+	"resource_types": ["ALIYUN::ECS::Instance"],
+}
+
+deny contains result if {
+	false
+	result := {"id": rule_meta.id, "resource_id": "test", "violation_path": [], "meta": {"severity": rule_meta.severity, "reason": rule_meta.reason, "recommendation": rule_meta.recommendation}}
+}
+`
+			err = os.WriteFile(filepath.Join(workspaceRulesDir, "rule-b.rego"), []byte(workspaceRuleB), 0644)
+			So(err, ShouldBeNil)
+
+			// Set env vars
+			os.Setenv("INFRAGUARD_POLICY_DIR", userDir)
+			os.Setenv("INFRAGUARD_WORKSPACE_POLICY_DIR", workspaceDir)
+
+			// Load policies
+			loader, err := LoadWithFallback()
+			So(err, ShouldBeNil)
+			So(loader, ShouldNotBeNil)
+
+			Convey("It should include rules from both sources", func() {
+				ruleA := loader.GetRule("rule:aliyun:rule-a")
+				So(ruleA, ShouldNotBeNil)
+				So(ruleA.Name.Get("en"), ShouldEqual, "Rule A from User")
+
+				ruleB := loader.GetRule("rule:aliyun:rule-b")
+				So(ruleB, ShouldNotBeNil)
+				So(ruleB.Name.Get("en"), ShouldEqual, "Rule B from Workspace")
+			})
+
+			Convey("It should have correct total rule count", func() {
+				// Should have rules from both sources (plus any embedded if present)
+				rules := loader.GetAllRules()
+				So(len(rules), ShouldBeGreaterThanOrEqualTo, 2)
+			})
+		})
+	})
+}

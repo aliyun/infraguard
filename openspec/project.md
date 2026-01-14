@@ -380,8 +380,11 @@ Text fields (`name`, `description`, `reason`, `recommendation`) can be either:
 
 ### Policy Loading Priority
 
-1. User-local: `~/.infraguard/policies/` (highest priority)
-2. Embedded: Compiled into binary (fallback)
+1. Workspace-local: `.infraguard/policies/` (highest priority, relative to current working directory)
+2. User-local: `~/.infraguard/policies/`
+3. Embedded: Compiled into binary (fallback)
+
+Policies with the same ID from higher-priority sources override lower-priority ones.
 
 ## Development
 

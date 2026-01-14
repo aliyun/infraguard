@@ -10,9 +10,13 @@ import (
 	"github.com/aliyun/infraguard/pkg/models"
 )
 
-// LoadWithFallback loads policies by merging embedded and user-local policies.
-// User-local policies from ~/.infraguard/policies take priority over embedded policies.
-// Both sources are loaded and merged, with user-local policies overriding same-ID embedded ones.
+// LoadWithFallback loads policies by merging embedded, user-local, and workspace-local policies.
+// Policy loading priority (highest to lowest):
+//  1. Workspace-local policies: .infraguard/policies/ (current working directory)
+//  2. User-local policies: ~/.infraguard/policies/
+//  3. Embedded policies: compiled into the binary
+//
+// Policies with the same ID from higher-priority sources override lower-priority ones.
 func LoadWithFallback() (*Loader, error) {
 	loader := &Loader{
 		index: &models.PolicyIndex{
@@ -23,37 +27,25 @@ func LoadWithFallback() (*Loader, error) {
 		},
 	}
 
-	// First, load embedded policies as the base
+	// First, load embedded policies as the base (lowest priority)
 	if err := loader.LoadEmbedded(); err != nil {
 		// Embedded policies failing is not fatal, log and continue
 		// This allows the tool to work even if embedded policies have issues
 	}
 
+	// Build extra modules from embedded helpers for parsing rules that depend on them
+	extraModules := buildExtraModulesFromLoader(loader)
+
 	// Then, load user-local policies (will override embedded ones with same ID)
 	userPolicyDir := DefaultPolicyDir()
 	if dirExists(userPolicyDir) {
-		userLoader := &Loader{
-			policyDir: userPolicyDir,
-			index: &models.PolicyIndex{
-				Rules:    make(map[string]*models.Rule),
-				Packs:    make(map[string]*models.Pack),
-				RuleList: make([]*models.Rule, 0),
-				PackList: make([]*models.Pack, 0),
-			},
-		}
-		if err := userLoader.Load(); err == nil {
-			// Merge user policies into main loader (user policies take priority)
-			for _, rule := range userLoader.GetAllRules() {
-				loader.index.Rules[rule.ID] = rule
-				// Update RuleList: remove existing rule with same ID and add new one
-				loader.index.RuleList = replaceOrAppendRule(loader.index.RuleList, rule)
-			}
-			for _, pack := range userLoader.GetAllPacks() {
-				loader.index.Packs[pack.ID] = pack
-				// Update PackList: remove existing pack with same ID and add new one
-				loader.index.PackList = replaceOrAppendPack(loader.index.PackList, pack)
-			}
-		}
+		mergePoliciesFromDir(loader, userPolicyDir, extraModules)
+	}
+
+	// Finally, load workspace-local policies (highest priority, will override user-local and embedded)
+	workspacePolicyDir := WorkspacePolicyDir()
+	if dirExists(workspacePolicyDir) {
+		mergePoliciesFromDir(loader, workspacePolicyDir, extraModules)
 	}
 
 	// If no policies loaded at all, return error
@@ -63,6 +55,45 @@ func LoadWithFallback() (*Loader, error) {
 	}
 
 	return loader, nil
+}
+
+// mergePoliciesFromDir loads policies from a directory and merges them into the loader.
+// Policies from this directory will override existing ones with the same ID.
+// The extraModules parameter provides helper libraries (e.g., embedded helpers) for parsing rules.
+func mergePoliciesFromDir(loader *Loader, policyDir string, extraModules []RegoModule) {
+	dirLoader := &Loader{
+		policyDir:    policyDir,
+		extraModules: extraModules,
+		index: &models.PolicyIndex{
+			Rules:    make(map[string]*models.Rule),
+			Packs:    make(map[string]*models.Pack),
+			RuleList: make([]*models.Rule, 0),
+			PackList: make([]*models.Pack, 0),
+		},
+	}
+	if err := dirLoader.Load(); err == nil {
+		// Merge policies into main loader (higher priority overrides)
+		for _, rule := range dirLoader.GetAllRules() {
+			loader.index.Rules[rule.ID] = rule
+			// Update RuleList: remove existing rule with same ID and add new one
+			loader.index.RuleList = replaceOrAppendRule(loader.index.RuleList, rule)
+		}
+		for _, pack := range dirLoader.GetAllPacks() {
+			loader.index.Packs[pack.ID] = pack
+			// Update PackList: remove existing pack with same ID and add new one
+			loader.index.PackList = replaceOrAppendPack(loader.index.PackList, pack)
+		}
+	}
+}
+
+// buildExtraModulesFromLoader builds a slice of RegoModules from the loader's LibModules.
+// This allows user/workspace policies to use embedded helper libraries.
+func buildExtraModulesFromLoader(loader *Loader) []RegoModule {
+	var modules []RegoModule
+	for path, content := range loader.GetLibModules() {
+		modules = append(modules, RegoModule{Path: path, Content: content})
+	}
+	return modules
 }
 
 // replaceOrAppendRule replaces a rule with the same ID or appends it.

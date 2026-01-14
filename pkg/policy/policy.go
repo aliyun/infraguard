@@ -16,7 +16,7 @@ import (
 // DefaultRepo is the default policy repository.
 const DefaultRepo = "github.com/aliyun/infraguard"
 
-// DefaultPolicyDir returns the default policy storage directory.
+// DefaultPolicyDir returns the default user-level policy storage directory (~/.infraguard/policies).
 func DefaultPolicyDir() string {
 	home, err := os.UserHomeDir()
 	if err != nil {
@@ -29,16 +29,33 @@ func DefaultPolicyDir() string {
 	return filepath.Join(home, ".infraguard", "policies")
 }
 
+// WorkspacePolicyDir returns the workspace-local policy directory (.infraguard/policies)
+// relative to the current working directory.
+func WorkspacePolicyDir() string {
+	// Allow override via environment variable for testing
+	if dir := os.Getenv("INFRAGUARD_WORKSPACE_POLICY_DIR"); dir != "" {
+		return dir
+	}
+	cwd, err := os.Getwd()
+	if err != nil {
+		return ".infraguard/policies"
+	}
+	return filepath.Join(cwd, ".infraguard", "policies")
+}
+
 // Loader handles policy loading with priority and indexing.
 type Loader struct {
-	policyDir string
-	index     *models.PolicyIndex
+	policyDir    string
+	index        *models.PolicyIndex
+	extraModules []RegoModule // Extra helper modules for parsing rules
 }
 
 // Load discovers and loads all rules and packs from the policy directory.
-// Supports provider-first directory structure: {provider}/rules/, {provider}/packs/, {provider}/lib/
+// Supports two directory structures:
+//  1. Provider-first: {provider}/rules/, {provider}/packs/, {provider}/lib/
+//  2. Flat: {name}/*.rego (rules directly in subdirectory)
 func (l *Loader) Load() error {
-	// Iterate through provider directories
+	// Iterate through subdirectories
 	msg := i18n.Msg()
 	entries, err := os.ReadDir(l.policyDir)
 	if err != nil {
@@ -50,35 +67,75 @@ func (l *Loader) Load() error {
 			continue
 		}
 
-		provider := entry.Name()
-		providerDir := filepath.Join(l.policyDir, provider)
+		subDir := entry.Name()
+		subDirPath := filepath.Join(l.policyDir, subDir)
 
-		// Load rules from {provider}/rules/
-		rulesDir := filepath.Join(providerDir, "rules")
-		if dirExists(rulesDir) {
-			rules, err := DiscoverRules(rulesDir)
-			if err != nil {
-				return fmt.Errorf(msg.Errors.DiscoverRulesForProvider, provider, err)
-			}
-			for _, rule := range rules {
-				l.index.AddRule(rule)
-			}
-		}
+		// Check if it's provider-first structure: {provider}/rules/ or {provider}/packs/
+		rulesDir := filepath.Join(subDirPath, "rules")
+		packsDir := filepath.Join(subDirPath, "packs")
+		hasRulesDir := dirExists(rulesDir)
+		hasPacksDir := dirExists(packsDir)
 
-		// Load packs from {provider}/packs/
-		packsDir := filepath.Join(providerDir, "packs")
-		if dirExists(packsDir) {
-			packs, err := DiscoverPacks(packsDir)
-			if err != nil {
-				return fmt.Errorf(msg.Errors.DiscoverPacksForProvider, provider, err)
+		if hasRulesDir || hasPacksDir {
+			// Provider-first structure: load from {provider}/rules/ and {provider}/packs/
+			if hasRulesDir {
+				rules, err := DiscoverRulesWithExtraModules(rulesDir, l.extraModules)
+				if err != nil {
+					return fmt.Errorf(msg.Errors.DiscoverRulesForProvider, subDir, err)
+				}
+				for _, rule := range rules {
+					l.index.AddRule(rule)
+				}
 			}
-			for _, pack := range packs {
-				l.index.AddPack(pack)
+
+			if hasPacksDir {
+				packs, err := DiscoverPacks(packsDir)
+				if err != nil {
+					return fmt.Errorf(msg.Errors.DiscoverPacksForProvider, subDir, err)
+				}
+				for _, pack := range packs {
+					l.index.AddPack(pack)
+				}
+			}
+		} else {
+			// Flat structure: load .rego files directly from subdirectory
+			// Check if directory contains .rego files
+			if hasRegoFiles(subDirPath) {
+				rules, err := DiscoverRulesWithExtraModules(subDirPath, l.extraModules)
+				if err != nil {
+					return fmt.Errorf(msg.Errors.DiscoverRulesForProvider, subDir, err)
+				}
+				for _, rule := range rules {
+					l.index.AddRule(rule)
+				}
+
+				// Also try to discover packs in the same directory
+				packs, err := DiscoverPacks(subDirPath)
+				if err != nil {
+					return fmt.Errorf(msg.Errors.DiscoverPacksForProvider, subDir, err)
+				}
+				for _, pack := range packs {
+					l.index.AddPack(pack)
+				}
 			}
 		}
 	}
 
 	return nil
+}
+
+// hasRegoFiles checks if a directory contains any .rego files.
+func hasRegoFiles(path string) bool {
+	entries, err := os.ReadDir(path)
+	if err != nil {
+		return false
+	}
+	for _, entry := range entries {
+		if !entry.IsDir() && strings.HasSuffix(entry.Name(), ".rego") {
+			return true
+		}
+	}
+	return false
 }
 
 // GetIndex returns the loaded policy index.

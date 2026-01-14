@@ -68,8 +68,16 @@ infraguard policy update
 
 ### 策略加载优先级
 
-1. **用户本地策略**：`~/.infraguard/policies/`（最高优先级）
-2. **嵌入式策略**：内置到二进制文件中（后备）
+InfraGuard 按以下优先级（从高到低）从三个来源加载策略：
+
+1. **工作区本地策略**：`.infraguard/policies/`（相对于当前工作目录）
+2. **用户本地策略**：`~/.infraguard/policies/`
+3. **嵌入式策略**：内置到二进制文件中（后备）
+
+同一 ID 的策略，高优先级来源会覆盖低优先级来源。这样可以实现：
+- **项目专属策略**：在 `.infraguard/policies/` 中定义与项目一起版本控制的自定义规则
+- **用户自定义**：通过 `~/.infraguard/policies/` 全局覆盖嵌入式策略
+- **无缝后备**：内置策略开箱即用
 
 ## 验证自定义策略
 
@@ -123,7 +131,18 @@ infraguard policy format rule.rego --diff
 
 ### 自定义策略
 
-将自定义策略存储在：
+#### 工作区本地策略（项目专属）
+
+将项目专属策略存储在项目目录中：
+- `.infraguard/policies/<provider>/rules/` - 项目专属规则
+- `.infraguard/policies/<provider>/packs/` - 项目专属包
+- `.infraguard/policies/<provider>/lib/` - 项目专属辅助库
+
+这些策略在项目目录内运行 InfraGuard 命令时会自动加载，可以与 IaC 模板一起进行版本控制。
+
+#### 用户本地策略（全局）
+
+将全局自定义策略存储在用户主目录中：
 - `~/.infraguard/policies/<provider>/rules/` - 自定义规则
 - `~/.infraguard/policies/<provider>/packs/` - 自定义包
 - `~/.infraguard/policies/<provider>/lib/` - 自定义辅助库
