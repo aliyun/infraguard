@@ -579,6 +579,187 @@ deny contains result if {
 	})
 }
 
+func TestGenerateIDPrefix(t *testing.T) {
+	Convey("Given the GenerateIDPrefix function", t, func() {
+		Convey("When file is directly in baseDir (provider-first structure)", func() {
+			tests := []struct {
+				name     string
+				filePath string
+				baseDir  string
+				idType   string
+				expected string
+			}{
+				{
+					name:     "rule in policies/aliyun/rules/",
+					filePath: "policies/aliyun/rules/ecs-public-ip.rego",
+					baseDir:  "policies/aliyun/rules",
+					idType:   "rule",
+					expected: "rule:aliyun:",
+				},
+				{
+					name:     "pack in policies/aliyun/packs/",
+					filePath: "policies/aliyun/packs/security-group-best-practice.rego",
+					baseDir:  "policies/aliyun/packs",
+					idType:   "pack",
+					expected: "pack:aliyun:",
+				},
+				{
+					name:     "rule in aliyun/rules/ (embedded path)",
+					filePath: "aliyun/rules/ecs-public-ip.rego",
+					baseDir:  "aliyun/rules",
+					idType:   "rule",
+					expected: "rule:aliyun:",
+				},
+				{
+					name:     "pack in aliyun/packs/ (embedded path)",
+					filePath: "aliyun/packs/security-baseline.rego",
+					baseDir:  "aliyun/packs",
+					idType:   "pack",
+					expected: "pack:aliyun:",
+				},
+			}
+
+			for _, tc := range tests {
+				Convey("When "+tc.name, func() {
+					result := GenerateIDPrefix(tc.filePath, tc.baseDir, tc.idType)
+
+					Convey("It should return correct prefix", func() {
+						So(result, ShouldEqual, tc.expected)
+					})
+				})
+			}
+		})
+
+		Convey("When file is in subdirectory of baseDir", func() {
+			tests := []struct {
+				name     string
+				filePath string
+				baseDir  string
+				idType   string
+				expected string
+			}{
+				{
+					name:     "rule in subdirectory",
+					filePath: "policies/aliyun/rules/ecs/public-ip.rego",
+					baseDir:  "policies/aliyun/rules",
+					idType:   "rule",
+					expected: "rule:aliyun:ecs:",
+				},
+				{
+					name:     "pack in subdirectory",
+					filePath: "policies/aliyun/packs/security/baseline.rego",
+					baseDir:  "policies/aliyun/packs",
+					idType:   "pack",
+					expected: "pack:aliyun:security:",
+				},
+			}
+
+			for _, tc := range tests {
+				Convey("When "+tc.name, func() {
+					result := GenerateIDPrefix(tc.filePath, tc.baseDir, tc.idType)
+
+					Convey("It should return correct prefix", func() {
+						So(result, ShouldEqual, tc.expected)
+					})
+				})
+			}
+		})
+
+		Convey("When baseDir is just provider name", func() {
+			result := GenerateIDPrefix("custom/my-rule.rego", "custom", "rule")
+
+			Convey("It should use provider as prefix", func() {
+				So(result, ShouldEqual, "rule:custom:")
+			})
+		})
+	})
+}
+
+func TestGenerateRuleID(t *testing.T) {
+	Convey("Given the GenerateRuleID function", t, func() {
+		Convey("When generating rule ID from provider-first structure", func() {
+			tests := []struct {
+				name     string
+				filePath string
+				baseDir  string
+				ruleName string
+				expected string
+			}{
+				{
+					name:     "standard rule in policies/aliyun/rules/",
+					filePath: "policies/aliyun/rules/ecs-public-ip.rego",
+					baseDir:  "policies/aliyun/rules",
+					ruleName: "ecs-public-ip",
+					expected: "rule:aliyun:ecs-public-ip",
+				},
+				{
+					name:     "rule with embedded path",
+					filePath: "aliyun/rules/rds-instance-multi-zone.rego",
+					baseDir:  "aliyun/rules",
+					ruleName: "rds-instance-multi-zone",
+					expected: "rule:aliyun:rds-instance-multi-zone",
+				},
+			}
+
+			for _, tc := range tests {
+				Convey("When "+tc.name, func() {
+					result := GenerateRuleID(tc.filePath, tc.baseDir, tc.ruleName)
+
+					Convey("It should return correct rule ID", func() {
+						So(result, ShouldEqual, tc.expected)
+					})
+				})
+			}
+		})
+	})
+}
+
+func TestGeneratePackID(t *testing.T) {
+	Convey("Given the GeneratePackID function", t, func() {
+		Convey("When generating pack ID from provider-first structure", func() {
+			tests := []struct {
+				name     string
+				filePath string
+				baseDir  string
+				packName string
+				expected string
+			}{
+				{
+					name:     "standard pack in policies/aliyun/packs/",
+					filePath: "policies/aliyun/packs/security-group-best-practice.rego",
+					baseDir:  "policies/aliyun/packs",
+					packName: "security-group-best-practice",
+					expected: "pack:aliyun:security-group-best-practice",
+				},
+				{
+					name:     "pack with embedded path",
+					filePath: "aliyun/packs/ecs-best-practice.rego",
+					baseDir:  "aliyun/packs",
+					packName: "ecs-best-practice",
+					expected: "pack:aliyun:ecs-best-practice",
+				},
+				{
+					name:     "pack with multi-part name",
+					filePath: "policies/aliyun/packs/mlps-level-3-pre-check-compliance-pack.rego",
+					baseDir:  "policies/aliyun/packs",
+					packName: "mlps-level-3-pre-check-compliance-pack",
+					expected: "pack:aliyun:mlps-level-3-pre-check-compliance-pack",
+				},
+			}
+
+			for _, tc := range tests {
+				Convey("When "+tc.name, func() {
+					result := GeneratePackID(tc.filePath, tc.baseDir, tc.packName)
+
+					Convey("It should return correct pack ID", func() {
+						So(result, ShouldEqual, tc.expected)
+					})
+				})
+			}
+		})
+	})
+}
+
 func TestLoadWithFallbackPriority(t *testing.T) {
 	Convey("Given LoadWithFallback with multiple policy sources", t, func() {
 		// Save original env vars

@@ -158,11 +158,21 @@ func GenerateIDPrefix(filePath, baseDir, idType string) string {
 	dir := filepath.Dir(relPath)
 	if dir == "." {
 		// File is directly in baseDir, extract provider from baseDir
-		// baseDir format: {provider}/rules or {provider}/packs
+		// baseDir format: policies/{provider}/rules or policies/{provider}/packs
+		// or {provider}/rules or {provider}/packs
 		parts := strings.Split(baseDir, string(filepath.Separator))
+		// Find "rules" or "packs" directory and the element before it is the provider
+		for i := len(parts) - 1; i > 0; i-- {
+			if parts[i] == "rules" || parts[i] == "packs" {
+				return idType + ":" + parts[i-1] + ":"
+			}
+		}
+		// Fallback: if no rules/packs found, use the first non-"policies" part
+		if len(parts) >= 2 && parts[0] == "policies" {
+			return idType + ":" + parts[1] + ":"
+		}
 		if len(parts) >= 1 {
-			provider := parts[0]
-			return idType + ":" + provider + ":"
+			return idType + ":" + parts[0] + ":"
 		}
 		return idType + ":"
 	}
