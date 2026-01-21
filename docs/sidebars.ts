@@ -79,6 +79,7 @@ const sidebars: SidebarsConfig = {
         'development/writing-rules',
         'development/writing-packs',
         'development/policy-validation',
+        'development/policy-directory',
         'development/helper-functions',
       ],
     },

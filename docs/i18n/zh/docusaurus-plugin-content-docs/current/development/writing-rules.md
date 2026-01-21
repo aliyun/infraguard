@@ -100,7 +100,8 @@ infraguard policy validate my-rule.rego
 
 ## 下一步
 
-- 探索[辅助函数](./helper-functions)
-- 学习[编写包](./writing-packs)
 - 查看[策略验证](./policy-validation)
+- 学习[编写包](./writing-packs)
+- 了解[策略目录结构](./policy-directory)
+- 探索[辅助函数](./helper-functions)
 

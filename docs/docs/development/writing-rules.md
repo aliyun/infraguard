@@ -100,7 +100,8 @@ infraguard policy validate my-rule.rego
 
 ## Next Steps
 
-- Explore [Helper Functions](./helper-functions)
-- Learn to [Write Packs](./writing-packs)
 - See [Policy Validation](./policy-validation)
+- Learn to [Write Packs](./writing-packs)
+- Learn about [Policy Directory Structure](./policy-directory)
+- Explore [Helper Functions](./helper-functions)
 

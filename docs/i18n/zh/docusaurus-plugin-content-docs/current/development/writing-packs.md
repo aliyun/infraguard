@@ -37,5 +37,16 @@ pack_meta := {
 - 使用短规则 ID（不带 `rule:<provider>:` 前缀）
 - 为名称和描述提供 i18n
 
-有关更多详细信息，请参阅[项目文档](https://github.com/aliyun/infraguard)。
+## 位置
 
+包可以放置在：
+- 工作区本地：`.infraguard/policies/{provider}/packs/`
+- 用户本地：`~/.infraguard/policies/{provider}/packs/`
+
+有关策略加载优先级的详细信息，请参阅[策略目录结构](./policy-directory)。
+
+## 下一步
+
+- 查看[策略验证](./policy-validation)
+- 了解[策略目录结构](./policy-directory)
+- 探索[辅助函数](./helper-functions)

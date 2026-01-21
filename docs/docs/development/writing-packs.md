@@ -37,5 +37,17 @@ pack_meta := {
 - Use short rule IDs (without `rule:<provider>:` prefix)
 - Provide i18n for name and description
 
-For more details, see the [project documentation](https://github.com/aliyun/infraguard).
+## Location
+
+Packs can be placed in:
+- Workspace-local: `.infraguard/policies/{provider}/packs/`
+- User-local: `~/.infraguard/policies/{provider}/packs/`
+
+See [Policy Directory Structure](./policy-directory) for details on policy loading priority.
+
+## Next Steps
+
+- See [Policy Validation](./policy-validation)
+- Learn about [Policy Directory Structure](./policy-directory)
+- Explore [Helper Functions](./helper-functions)
 
