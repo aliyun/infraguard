@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:ack-cluster-rrsa-enabled",
+	"id": "ack-cluster-rrsa-enabled",
 	"name": {
 		"en": "ACK Cluster RRSA Enabled",
 		"zh": "ACK 集群开启 RRSA",

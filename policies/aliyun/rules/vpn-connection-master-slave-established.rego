@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:vpn-connection-master-slave-established",
+	"id": "vpn-connection-master-slave-established",
 	"name": {
 		"en": "VPN Connection Dual Tunnel Established",
 		"zh": "双隧道 VPN 网关主备隧道都已建立连接",

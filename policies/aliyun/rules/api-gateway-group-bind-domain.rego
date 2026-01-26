@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:api-gateway-group-bind-domain",
+	"id": "api-gateway-group-bind-domain",
 	"name": {
 		"en": "API Gateway Group Bind Domain",
 		"zh": "API 网关中 API 分组绑定自定义域名"

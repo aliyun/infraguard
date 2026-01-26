@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:nas-filesystem-mount-target-access-group-check",
+	"id": "nas-filesystem-mount-target-access-group-check",
 	"name": {
 		"en": "NAS Mount Target Access Group Check",
 		"zh": "NAS 挂载点禁用默认权限组"

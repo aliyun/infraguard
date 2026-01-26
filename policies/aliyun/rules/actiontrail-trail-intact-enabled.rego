@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:actiontrail-trail-intact-enabled",
+	"id": "actiontrail-trail-intact-enabled",
 	"name": {
 		"en": "ActionTrail Trail Intact Enabled",
 		"zh": "开启操作审计全量日志跟踪",

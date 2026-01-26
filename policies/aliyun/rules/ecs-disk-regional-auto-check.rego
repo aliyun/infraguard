@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:ecs-disk-regional-auto-check",
+	"id": "ecs-disk-regional-auto-check",
 	"name": {
 		"en": "ECS Disk Zone-Redundant ESSD Storage",
 		"zh": "使用同城冗余类型的 ESSD 数据盘",

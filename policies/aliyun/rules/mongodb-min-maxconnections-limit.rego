@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:mongodb-min-maxconnections-limit",
+	"id": "mongodb-min-maxconnections-limit",
 	"name": {
 		"en": "MongoDB Meets Minimum Connection Requirements",
 		"zh": "MongoDB 满足指定连接数要求",

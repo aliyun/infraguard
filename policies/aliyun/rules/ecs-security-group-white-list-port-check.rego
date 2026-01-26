@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata with i18n support
 rule_meta := {
-	"id": "rule:aliyun:ecs-security-group-white-list-port-check",
+	"id": "ecs-security-group-white-list-port-check",
 	"name": {
 		"en": "Security Group Non-Whitelist Port Ingress Check",
 		"zh": "安全组非白名单端口入网设置有效",

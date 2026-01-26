@@ -5,6 +5,7 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/aliyun/infraguard/pkg/engine"
@@ -75,6 +76,19 @@ func getRuleFile(provider, ruleName string) string {
 // getPackFile returns the path to the pack file based on provider and pack name
 func getPackFile(provider, packName string) string {
 	return filepath.Join(policiesDir, provider, "packs", packName+".rego")
+}
+
+// extractShortRuleID extracts the short ID from a full rule ID.
+// e.g., "rule:aliyun:rds-instance-enabled-tde" -> "rds-instance-enabled-tde"
+func extractShortRuleID(fullID string) string {
+	if !strings.HasPrefix(fullID, "rule:") && !strings.HasPrefix(fullID, "pack:") {
+		return fullID // Already a short ID
+	}
+	parts := strings.Split(fullID, ":")
+	if len(parts) >= 3 {
+		return parts[len(parts)-1]
+	}
+	return fullID
 }
 
 func TestPolicyRules(t *testing.T) {
@@ -221,6 +235,15 @@ func TestPolicyPacks(t *testing.T) {
 	}
 	libModules := loader.GetLibModules()
 
+	// Build ID mapping for short IDs to full IDs
+	idMapping := make(map[string]string)
+	for _, rule := range loader.GetAllRules() {
+		shortID := extractShortRuleID(rule.ID)
+		if shortID != rule.ID {
+			idMapping[shortID] = rule.ID
+		}
+	}
+
 	for _, testDir := range testDirs {
 		// Extract provider and pack name from path
 		// testDir: testdata/aliyun/packs/pack-name
@@ -257,6 +280,7 @@ func TestPolicyPacks(t *testing.T) {
 					opts := &engine.EvalOptions{
 						RuleIDs:    pack.RuleIDs,
 						LibModules: libModules,
+						IDMapping:  idMapping,
 					}
 					// Add rule contents from index if available
 					opts.Modules = make(map[string]string)
@@ -301,6 +325,7 @@ func TestPolicyPacks(t *testing.T) {
 					opts := &engine.EvalOptions{
 						RuleIDs:    pack.RuleIDs,
 						LibModules: libModules,
+						IDMapping:  idMapping,
 					}
 					// Add rule contents from index if available
 					opts.Modules = make(map[string]string)

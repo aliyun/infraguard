@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:ram-user-no-product-admin-access",
+	"id": "ram-user-no-product-admin-access",
 	"name": {
 		"en": "RAM User No Product Administrative Access",
 		"zh": "RAM 用户没有产品管理权限",

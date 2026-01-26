@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:ecs-instance-image-expired-check",
+	"id": "ecs-instance-image-expired-check",
 	"name": {
 		"en": "ECS Instance Image Expired Check",
 		"zh": "ECS 实例镜像过期检测",
@@ -24,11 +24,11 @@ rule_meta := {
 		"en": "Update the ECS instance to use a supported, non-expired image.",
 		"zh": "更新 ECS 实例以使用受支持、未过期的镜像。",
 	},
-	"resource_types": ["ALIYUN::ECS::Instance"],
+	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"],
 }
 
 deny contains result if {
-	some name, resource in helpers.resources_by_type("ALIYUN::ECS::Instance")
+	some name, resource in helpers.resources_by_types(["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"])
 
 	# Conceptual check
 	helpers.has_property(resource, "ImageId")

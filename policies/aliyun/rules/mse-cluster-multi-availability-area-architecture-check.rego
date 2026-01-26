@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:mse-cluster-multi-availability-area-architecture-check",
+	"id": "mse-cluster-multi-availability-area-architecture-check",
 	"name": {
 		"en": "MSE Cluster High-Availability Configuration",
 		"zh": "使用高可用版本的 MSE 注册配置中心",

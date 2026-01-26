@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:ram-user-last-login-expired-check",
+	"id": "ram-user-last-login-expired-check",
 	"name": {
 		"en": "RAM User Last Login Check",
 		"zh": "RAM 用户最后登录时间核查"

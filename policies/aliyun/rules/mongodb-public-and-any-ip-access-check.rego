@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:mongodb-public-and-any-ip-access-check",
+	"id": "mongodb-public-and-any-ip-access-check",
 	"name": {
 		"en": "MongoDB Public and Any IP Access Check",
 		"zh": "MongoDB 实例不开启公网或安全白名单不设置为允许任意来源访问",

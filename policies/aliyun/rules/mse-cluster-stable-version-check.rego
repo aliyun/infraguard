@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:mse-cluster-stable-version-check",
+	"id": "mse-cluster-stable-version-check",
 	"name": {
 		"en": "MSE Cluster Uses Stable Version",
 		"zh": "MSE 注册配置中心引擎版本检测",

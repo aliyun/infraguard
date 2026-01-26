@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:hbase-cluster-multi-zone",
+	"id": "hbase-cluster-multi-zone",
 	"name": {
 		"en": "HBase Cluster Multi-Zone Deployment",
 		"zh": "使用多可用区的 HBase 集群",

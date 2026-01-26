@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata with i18n support
 rule_meta := {
-	"id": "rule:aliyun:kafka-instance-disk-encrypted",
+	"id": "kafka-instance-disk-encrypted",
 	"name": {
 		"en": "Kafka Instance Disk Encrypted",
 		"zh": "Kafka 实例部署时启用了云盘加密",

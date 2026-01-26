@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:polardb-cluster-enabled-ssl",
+	"id": "polardb-cluster-enabled-ssl",
 	"name": {
 		"en": "PolarDB Cluster SSL Enabled",
 		"zh": "PolarDB 集群开启 SSL 加密"

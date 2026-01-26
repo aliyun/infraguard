@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:firewall-asset-open-protect",
+	"id": "firewall-asset-open-protect",
 	"name": {
 		"en": "Cloud Firewall Asset Protection Enabled",
 		"zh": "云防火墙资产开启保护"

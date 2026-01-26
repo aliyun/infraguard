@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:slb-acl-public-access-check",
+	"id": "slb-acl-public-access-check",
 	"name": {
 		"en": "SLB ACL Public Access Check",
 		"zh": "CLB 访问控制列表不配置所有地址段",

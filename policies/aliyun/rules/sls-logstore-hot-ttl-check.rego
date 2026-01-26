@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:sls-logstore-hot-ttl-check",
+	"id": "sls-logstore-hot-ttl-check",
 	"name": {
 		"en": "SLS Logstore Smart Tier Storage Enabled",
 		"zh": "SLS 日志库开启智能冷热分层存储"

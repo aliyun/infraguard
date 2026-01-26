@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata with i18n support
 rule_meta := {
-	"id": "rule:aliyun:ecs-security-group-description-check",
+	"id": "ecs-security-group-description-check",
 	"name": {
 		"en": "Security Group Description Not Empty",
 		"zh": "安全组描述信息不能为空",

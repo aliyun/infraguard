@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:rds-multi-az-support",
+	"id": "rds-multi-az-support",
 	"name": {
 		"en": "RDS Instance Multi-AZ Deployment",
 		"zh": "RDS 实例多可用区部署",

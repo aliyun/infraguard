@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:mse-gateway-architecture-check",
+	"id": "mse-gateway-architecture-check",
 	"name": {
 		"en": "MSE Gateway Has Multiple Nodes",
 		"zh": "MSE 云原生网关多节点检测",

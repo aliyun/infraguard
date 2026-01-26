@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-disk-all-encrypted-by-kms",
+	"id": "ecs-disk-all-encrypted-by-kms",
 	"name": {
 		"en": "ECS disk with KMS encryption enabled",
 		"zh": "ECS 磁盘开启 KMS 加密",

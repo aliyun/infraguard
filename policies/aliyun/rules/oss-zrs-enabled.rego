@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:oss-zrs-enabled",
+	"id": "oss-zrs-enabled",
 	"name": {
 		"en": "OSS Bucket Zone-Redundant Storage Enabled",
 		"zh": "OSS 桶启用同城冗余存储",

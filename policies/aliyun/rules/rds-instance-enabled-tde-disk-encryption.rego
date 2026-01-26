@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata with i18n support
 rule_meta := {
-	"id": "rule:aliyun:rds-instance-enabled-tde-disk-encryption",
+	"id": "rds-instance-enabled-tde-disk-encryption",
 	"name": {
 		"en": "RDS Instance Enabled TDE or Disk Encryption",
 		"zh": "RDS 实例开启 TDE 或者数据盘加密",

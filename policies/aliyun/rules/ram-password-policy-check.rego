@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:ram-password-policy-check",
+	"id": "ram-password-policy-check",
 	"name": {
 		"en": "RAM Password Policy Check",
 		"zh": "RAM 密码策略检测",

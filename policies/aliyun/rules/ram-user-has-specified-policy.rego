@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:ram-user-has-specified-policy",
+	"id": "ram-user-has-specified-policy",
 	"name": {
 		"en": "RAM User Has Specified Policy",
 		"zh": "RAM 用户及所属用户组绑定指定条件的权限策略"

@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:dcdn-domain-multiple-origin-servers",
+	"id": "dcdn-domain-multiple-origin-servers",
 	"name": {
 		"en": "DCDN Domain Multiple Origin Servers",
 		"zh": "DCDN 域名配置多个源站",

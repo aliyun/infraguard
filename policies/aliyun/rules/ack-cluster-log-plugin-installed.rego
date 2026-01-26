@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:ack-cluster-log-plugin-installed",
+	"id": "ack-cluster-log-plugin-installed",
 	"name": {
 		"en": "ACK Cluster Log Plugin Installed",
 		"zh": "ACK 集群安装日志插件"

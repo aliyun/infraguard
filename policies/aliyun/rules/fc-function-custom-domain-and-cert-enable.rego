@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:fc-function-custom-domain-and-cert-enable",
+	"id": "fc-function-custom-domain-and-cert-enable",
 	"name": {
 		"en": "FC Function Custom Domain Certificate Check",
 		"zh": "函数计算函数绑定到自定义域名且上传证书",

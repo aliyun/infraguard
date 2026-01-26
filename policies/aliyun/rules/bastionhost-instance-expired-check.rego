@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:bastionhost-instance-expired-check",
+	"id": "bastionhost-instance-expired-check",
 	"name": {
 		"en": "BastionHost Instance Expiration Check",
 		"zh": "堡垒机实例到期检查",

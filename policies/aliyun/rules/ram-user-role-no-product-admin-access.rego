@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:ram-user-role-no-product-admin-access",
+	"id": "ram-user-role-no-product-admin-access",
 	"name": {
 		"en": "RAM User Role No Product Admin Access",
 		"zh": "ram 用户定义的角色不包括产品管理权限"

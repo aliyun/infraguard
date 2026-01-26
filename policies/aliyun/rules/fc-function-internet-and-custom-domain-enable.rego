@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:fc-function-internet-and-custom-domain-enable",
+	"id": "fc-function-internet-and-custom-domain-enable",
 	"name": {
 		"en": "FC Service Internet Access with Custom Domain",
 		"zh": "函数计算服务允许访问公网且绑定到自定义域名",

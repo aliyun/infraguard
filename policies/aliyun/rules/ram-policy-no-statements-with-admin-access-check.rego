@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:ram-policy-no-statements-with-admin-access-check",
+	"id": "ram-policy-no-statements-with-admin-access-check",
 	"name": {
 		"en": "RAM Policy No Admin Access",
 		"zh": "禁止 RAM 策略包含管理员权限"

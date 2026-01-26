@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata with i18n support
 rule_meta := {
-	"id": "rule:aliyun:ecs-security-group-egress-not-all-access",
+	"id": "ecs-security-group-egress-not-all-access",
 	"name": {
 		"en": "Security Group Egress Not Set to All Access",
 		"zh": "安全组出方向未设置为全通",

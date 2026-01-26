@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:oss-bucket-tls-version-check",
+	"id": "oss-bucket-tls-version-check",
 	"name": {
 		"en": "OSS Bucket TLS Version Check",
 		"zh": "OSS 存储桶 TLS 版本检测",

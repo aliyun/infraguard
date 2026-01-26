@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:root-ak-check",
+	"id": "root-ak-check",
 	"name": {
 		"en": "Root User AccessKey Check",
 		"zh": "主账号 AccessKey 检测",

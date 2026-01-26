@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:api-gateway-api-auth-jwt",
+	"id": "api-gateway-api-auth-jwt",
 	"name": {
 		"en": "API Gateway API Auth JWT",
 		"zh": "API 网关中 API 安全认证设置为 JWT 方式"

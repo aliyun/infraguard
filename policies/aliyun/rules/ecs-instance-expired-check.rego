@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-instance-expired-check",
+	"id": "ecs-instance-expired-check",
 	"name": {
 		"en": "ECS Prepaid Instance Expiration Check",
 		"zh": "ECS 预付费实例到期检查",

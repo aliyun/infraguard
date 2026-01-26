@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:vpc-network-acl-not-empty",
+	"id": "vpc-network-acl-not-empty",
 	"name": {
 		"en": "VPC Network ACL Not Empty",
 		"zh": "专有网络 ACL 不为空条目"

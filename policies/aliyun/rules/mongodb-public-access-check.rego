@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:mongodb-public-access-check",
+	"id": "mongodb-public-access-check",
 	"name": {
 		"en": "MongoDB Whitelist Internet Restriction",
 		"zh": "MongoDB 白名单禁用公网开放"

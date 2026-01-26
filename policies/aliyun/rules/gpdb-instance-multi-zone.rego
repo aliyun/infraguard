@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:gpdb-instance-multi-zone",
+	"id": "gpdb-instance-multi-zone",
 	"name": {
 		"en": "GPDB Instance Multi-Zone Deployment",
 		"zh": "使用多可用区的云原生数据仓库 AnalyticDB 实例",

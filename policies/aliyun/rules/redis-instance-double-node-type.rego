@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:redis-instance-double-node-type",
+	"id": "redis-instance-double-node-type",
 	"name": {
 		"en": "Redis Instance Double Node Type",
 		"zh": "Redis 实例节点类型为双副本"

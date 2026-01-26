@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:mse-cluster-config-auth-enabled",
+	"id": "mse-cluster-config-auth-enabled",
 	"name": {
 		"en": "MSE Cluster Config Auth Enabled",
 		"zh": "MSE 集群配置中心开启鉴权",

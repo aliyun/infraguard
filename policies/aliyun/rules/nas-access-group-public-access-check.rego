@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:nas-access-group-public-access-check",
+	"id": "nas-access-group-public-access-check",
 	"name": {
 		"en": "NAS Access Group IP Restriction",
 		"zh": "NAS 权限组禁用公网授权"

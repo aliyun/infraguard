@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:rds-instance-enabled-log-backup",
+	"id": "rds-instance-enabled-log-backup",
 	"name": {
 		"en": "RDS Instance Log Backup Enabled",
 		"zh": "RDS 实例开启日志备份"

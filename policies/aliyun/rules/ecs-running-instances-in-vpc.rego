@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-running-instances-in-vpc",
+	"id": "ecs-running-instances-in-vpc",
 	"name": {
 		"en": "Running ECS instances are in VPC",
 		"zh": "运行中的 ECS 实例在专有网络",
@@ -15,7 +15,7 @@ rule_meta := {
 		"zh": "阿里云推荐购买的 ECS 放在 VPC 里面。如果 ECS 有归属 VPC 则视为合规。",
 	},
 	"severity": "medium",
-	"resource_types": ["ALIYUN::ECS::Instance"],
+	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"],
 	"reason": {
 		"en": "ECS instance is not deployed in VPC (Classic network)",
 		"zh": "ECS 实例未部署在专有网络（经典网络）",
@@ -27,7 +27,7 @@ rule_meta := {
 }
 
 deny contains result if {
-	some name, resource in helpers.resources_by_type("ALIYUN::ECS::Instance")
+	some name, resource in helpers.resources_by_types(["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"])
 
 	# Check if instance is in classic network (no VPC specified)
 	vpc_id := helpers.get_property(resource, "VpcId", "")

@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-launch-template-version-image-type-check",
+	"id": "ecs-launch-template-version-image-type-check",
 	"name": {
 		"en": "Launch Template Image Type Check",
 		"zh": "启动模板镜像来源核查"

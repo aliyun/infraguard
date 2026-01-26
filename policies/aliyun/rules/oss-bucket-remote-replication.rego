@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:oss-bucket-remote-replication",
+	"id": "oss-bucket-remote-replication",
 	"name": {
 		"en": "OSS Bucket Remote Replication Enabled",
 		"zh": "OSS 存储桶开启跨区域复制",

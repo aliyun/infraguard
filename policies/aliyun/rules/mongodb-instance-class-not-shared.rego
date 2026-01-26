@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:mongodb-instance-class-not-shared",
+	"id": "mongodb-instance-class-not-shared",
 	"name": {
 		"en": "MongoDB Instance Uses Dedicated Class",
 		"zh": "MongoDB 使用独享型或专属型规格实例",

@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:elasticsearch-instance-enabled-kibana-public-check",
+	"id": "elasticsearch-instance-enabled-kibana-public-check",
 	"name": {
 		"en": "Elasticsearch Instance Kibana Does Not Enable Public Access",
 		"zh": "Elasticsearch 实例 Kibana 未开启公网访问",

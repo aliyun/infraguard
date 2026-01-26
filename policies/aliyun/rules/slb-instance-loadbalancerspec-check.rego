@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:slb-instance-loadbalancerspec-check",
+	"id": "slb-instance-loadbalancerspec-check",
 	"name": {
 		"en": "SLB Instance Spec Check",
 		"zh": "SLB 规格合规性检查"

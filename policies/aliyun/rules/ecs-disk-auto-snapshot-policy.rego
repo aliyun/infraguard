@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-disk-auto-snapshot-policy",
+	"id": "ecs-disk-auto-snapshot-policy",
 	"name": {
 		"en": "ECS disk has auto snapshot policy configured",
 		"zh": "ECS 磁盘设置自动快照策略",

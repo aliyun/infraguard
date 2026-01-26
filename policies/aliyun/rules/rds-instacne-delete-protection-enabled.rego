@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:rds-instacne-delete-protection-enabled",
+	"id": "rds-instacne-delete-protection-enabled",
 	"name": {
 		"en": "RDS Instance Deletion Protection Enabled",
 		"zh": "RDS 实例开启删除保护",

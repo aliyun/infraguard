@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:slb-listener-https-enabled",
+	"id": "slb-listener-https-enabled",
 	"name": {
 		"en": "SLB Listener HTTPS Enabled",
 		"zh": "SLB 监听开启 HTTPS"

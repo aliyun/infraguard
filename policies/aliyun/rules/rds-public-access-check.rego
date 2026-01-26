@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:rds-public-access-check",
+	"id": "rds-public-access-check",
 	"name": {
 		"en": "RDS Instance Public Access Check",
 		"zh": "RDS 实例不配置公网地址",

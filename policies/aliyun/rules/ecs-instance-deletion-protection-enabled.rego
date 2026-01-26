@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-instance-deletion-protection-enabled",
+	"id": "ecs-instance-deletion-protection-enabled",
 	"name": {
 		"en": "ECS Instance Deletion Protection Enabled",
 		"zh": "ECS 实例开启释放保护",
@@ -23,7 +23,7 @@ rule_meta := {
 		"en": "Enable deletion protection for the ECS instance.",
 		"zh": "为 ECS 实例开启释放保护功能。",
 	},
-	"resource_types": ["ALIYUN::ECS::Instance"],
+	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"],
 }
 
 is_compliant(resource) if {
@@ -31,7 +31,7 @@ is_compliant(resource) if {
 }
 
 deny contains result if {
-	some name, resource in helpers.resources_by_type("ALIYUN::ECS::Instance")
+	some name, resource in helpers.resources_by_types(["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"])
 	not is_compliant(resource)
 	result := {
 		"id": rule_meta.id,

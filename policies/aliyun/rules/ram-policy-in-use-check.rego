@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:ram-policy-in-use-check",
+	"id": "ram-policy-in-use-check",
 	"name": {
 		"en": "RAM Policy In Use Check",
 		"zh": "RAM 权限策略使用检测"

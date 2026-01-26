@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:sg-risky-ports-check",
+	"id": "sg-risky-ports-check",
 	"name": {
 		"en": "Security group does not open risky ports to 0.0.0.0/0",
 		"zh": "安全组不允许对全部网段开启风险端口",

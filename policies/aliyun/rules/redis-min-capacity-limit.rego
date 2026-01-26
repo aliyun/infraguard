@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:redis-min-capacity-limit",
+	"id": "redis-min-capacity-limit",
 	"name": {
 		"en": "Redis Min Capacity Limit",
 		"zh": "Redis 实例满足指定内存容量要求"

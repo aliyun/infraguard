@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:root-has-specified-role",
+	"id": "root-has-specified-role",
 	"name": {
 		"en": "Root Account Has Specified Role",
 		"zh": "主账号具有指定的角色",

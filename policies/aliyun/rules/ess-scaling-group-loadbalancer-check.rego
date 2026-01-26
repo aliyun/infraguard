@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:ess-scaling-group-loadbalancer-check",
+	"id": "ess-scaling-group-loadbalancer-check",
 	"name": {
 		"en": "ESS Scaling Group Load Balancer Existence Check",
 		"zh": "弹性伸缩组关联负载均衡存在性检测",

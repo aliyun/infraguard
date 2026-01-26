@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:slb-all-listener-enabled-acl",
+	"id": "slb-all-listener-enabled-acl",
 	"name": {
 		"en": "SLB All Listeners Have Access Control",
 		"zh": "SLB 实例所有运行中的监听都设置访问控制"

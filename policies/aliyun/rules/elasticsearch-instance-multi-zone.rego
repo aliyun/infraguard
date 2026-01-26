@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:elasticsearch-instance-multi-zone",
+	"id": "elasticsearch-instance-multi-zone",
 	"name": {
 		"en": "Elasticsearch Instance Multi-Zone Deployment",
 		"zh": "Elasticsearch 实例多可用区部署",

@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:slb-backendserver-weight-check",
+	"id": "slb-backendserver-weight-check",
 	"name": {
 		"en": "SLB Backend Server Weight Check",
 		"zh": "SLB 后端服务器权重配置核查"

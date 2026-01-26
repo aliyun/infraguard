@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:ram-user-specified-permission-bound",
+	"id": "ram-user-specified-permission-bound",
 	"name": {
 		"en": "RAM User Specified Permission Bound",
 		"zh": "RAM 用户未绑定指定的高危权限"

@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:vpn-gateway-multi-zone",
+	"id": "vpn-gateway-multi-zone",
 	"name": {
 		"en": "VPN Gateway Multi-Zone Deployment",
 		"zh": "使用多可用区的 VPN 网关",

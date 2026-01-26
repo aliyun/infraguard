@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:polardb-cluster-expired-check",
+	"id": "polardb-cluster-expired-check",
 	"name": {
 		"en": "PolarDB Cluster Expiration Check",
 		"zh": "PolarDB 集群到期检查",

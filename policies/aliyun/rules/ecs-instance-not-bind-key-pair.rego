@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:ecs-instance-not-bind-key-pair",
+	"id": "ecs-instance-not-bind-key-pair",
 	"name": {
 		"en": "ECS Instance Not Bound to Key Pair",
 		"zh": "ECS 实例未绑定密钥对检测",
@@ -24,11 +24,11 @@ rule_meta := {
 		"en": "Bind a key pair to the ECS instance and disable password authentication.",
 		"zh": "为 ECS 实例绑定密钥对，并禁用密码身份验证。",
 	},
-	"resource_types": ["ALIYUN::ECS::Instance"],
+	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"],
 }
 
 deny contains result if {
-	some name, resource in helpers.resources_by_type("ALIYUN::ECS::Instance")
+	some name, resource in helpers.resources_by_types(["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"])
 	not helpers.has_property(resource, "KeyPairName")
 	result := {
 		"id": rule_meta.id,

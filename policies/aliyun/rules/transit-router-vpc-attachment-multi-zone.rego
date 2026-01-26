@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:transit-router-vpc-attachment-multi-zone",
+	"id": "transit-router-vpc-attachment-multi-zone",
 	"name": {
 		"en": "Transit Router VPC Attachment Multi-Zone Configuration",
 		"zh": "为转发路由器 VPC 连接设置多个可用区",

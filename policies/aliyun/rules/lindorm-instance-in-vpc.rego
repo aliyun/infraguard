@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:lindorm-instance-in-vpc",
+	"id": "lindorm-instance-in-vpc",
 	"name": {
 		"en": "Lindorm in VPC Check",
 		"zh": "Lindorm 实例强制 VPC 部署"

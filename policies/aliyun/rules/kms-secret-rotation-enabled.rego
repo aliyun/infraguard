@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:kms-secret-rotation-enabled",
+	"id": "kms-secret-rotation-enabled",
 	"name": {
 		"en": "KMS secret automatic rotation enabled",
 		"zh": "密钥管理服务设置凭据自动轮转",

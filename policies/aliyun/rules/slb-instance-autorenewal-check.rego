@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:slb-instance-autorenewal-check",
+	"id": "slb-instance-autorenewal-check",
 	"name": {
 		"en": "SLB Instance Auto-Renewal Check",
 		"zh": "SLB 实例包年包月开启自动续费"

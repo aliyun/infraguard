@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:mongodb-min-maxiops-limit",
+	"id": "mongodb-min-maxiops-limit",
 	"name": {
 		"en": "MongoDB Meets Minimum IOPS Requirements",
 		"zh": "MongoDB 实例满足指定读写次数要求",

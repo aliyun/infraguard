@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-snapshot-policy-timepoints-check",
+	"id": "ecs-snapshot-policy-timepoints-check",
 	"name": {
 		"en": "ECS auto snapshot policy timepoints configured reasonably",
 		"zh": "为自动快照策略设置合理的创建时间点",

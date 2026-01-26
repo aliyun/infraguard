@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:maxcompute-project-ip-whitelist-enabled",
+	"id": "maxcompute-project-ip-whitelist-enabled",
 	"name": {
 		"en": "MaxCompute Project IP Whitelist Enabled",
 		"zh": "MaxCompute 项目开启 IP 白名单"

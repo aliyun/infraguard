@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:fc-service-vpc-binding",
+	"id": "fc-service-vpc-binding",
 	"name": {
 		"en": "FC Service VPC Binding Enabled",
 		"zh": "FC 服务绑定 VPC",

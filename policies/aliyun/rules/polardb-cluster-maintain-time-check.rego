@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:polardb-cluster-maintain-time-check",
+	"id": "polardb-cluster-maintain-time-check",
 	"name": {
 		"en": "PolarDB Cluster Maintenance Window Check",
 		"zh": "PolarDB 集群维护时间检测",

@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:mongodb-instance-release-protection",
+	"id": "mongodb-instance-release-protection",
 	"name": {
 		"en": "MongoDB Instance Release Protection Enabled",
 		"zh": "MongoDB 实例开启释放保护",

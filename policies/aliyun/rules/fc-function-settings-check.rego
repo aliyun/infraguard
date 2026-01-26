@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:fc-function-settings-check",
+	"id": "fc-function-settings-check",
 	"name": {
 		"en": "FC Function Settings Check",
 		"zh": "函数计算中函数设置满足参数指定要求",
@@ -33,7 +33,7 @@ deny contains result if {
 	handler := helpers.get_property(resource, "Handler", "")
 	handler == ""
 	result := {
-		"id": "rule:aliyun:fc-function-settings-check",
+		"id": "fc-function-settings-check",
 		"resource_id": name,
 		"violation_path": ["Properties", "Handler"],
 		"meta": {

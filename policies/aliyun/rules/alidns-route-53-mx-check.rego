@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:alidns-route-53-mx-check",
+	"id": "alidns-route-53-mx-check",
 	"name": {
 		"en": "DNS MX Record Has Valid SPF in Associated TXT Record",
 		"zh": "DNS 域名 MX 记录关联的 TXT 记录包含有效的 SPF 值",

@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata with i18n support
 rule_meta := {
-	"id": "rule:aliyun:sg-public-access-check",
+	"id": "sg-public-access-check",
 	"name": {
 		"en": "Security Group Ingress Valid",
 		"zh": "安全组入网设置有效",

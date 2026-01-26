@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:ess-group-health-check",
+	"id": "ess-group-health-check",
 	"name": {
 		"en": "ESS Scaling Group Health Check",
 		"zh": "弹性伸缩组开启 ECS 实例健康检查",

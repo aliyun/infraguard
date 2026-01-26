@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-instance-attached-security-group",
+	"id": "ecs-instance-attached-security-group",
 	"name": {
 		"en": "ECS Instance Attached Security Group",
 		"zh": "ECS 实例绑定安全组",

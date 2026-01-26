@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:redis-instance-no-public-ip",
+	"id": "redis-instance-no-public-ip",
 	"name": {
 		"en": "Redis Instance No Public IP",
 		"zh": "Redis 实例未设置公网 IP"

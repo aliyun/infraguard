@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:redis-instance-in-vpc",
+	"id": "redis-instance-in-vpc",
 	"name": {
 		"en": "Redis Instance in VPC",
 		"zh": "使用专有网络类型的 Redis 实例"

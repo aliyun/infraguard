@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:hbase-cluster-deletion-protection",
+	"id": "hbase-cluster-deletion-protection",
 	"name": {
 		"en": "HBase Cluster Deletion Protection Enabled",
 		"zh": "HBase 集群开启删除保护",

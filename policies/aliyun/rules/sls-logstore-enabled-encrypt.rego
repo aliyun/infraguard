@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:sls-logstore-enabled-encrypt",
+	"id": "sls-logstore-enabled-encrypt",
 	"name": {
 		"en": "SLS Logstore Encryption Enabled",
 		"zh": "SLS 日志库开启数据加密"

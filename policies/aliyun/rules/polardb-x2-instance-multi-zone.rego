@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:polardb-x2-instance-multi-zone",
+	"id": "polardb-x2-instance-multi-zone",
 	"name": {
 		"en": "PolarDB-X 2.0 Instance Multi-Zone Deployment",
 		"zh": "PolarDB-X 2.0 实例多可用区部署",

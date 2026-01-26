@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:oss-bucket-server-side-encryption-enabled",
+	"id": "oss-bucket-server-side-encryption-enabled",
 	"name": {
 		"en": "OSS Bucket Server-Side Encryption Enabled",
 		"zh": "OSS 存储空间开启服务端加密",

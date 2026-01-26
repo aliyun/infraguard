@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:eci-containergroup-environment-no-specified-keys",
+	"id": "eci-containergroup-environment-no-specified-keys",
 	"name": {
 		"en": "ECI Container Group Does Not Contain Sensitive Environment Variables",
 		"zh": "ECI 容器组不包含敏感环境变量",

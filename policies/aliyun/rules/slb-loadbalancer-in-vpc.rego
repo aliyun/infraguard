@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:slb-loadbalancer-in-vpc",
+	"id": "slb-loadbalancer-in-vpc",
 	"name": {
 		"en": "SLB in VPC Check",
 		"zh": "强制 SLB 部署在 VPC 环境中"

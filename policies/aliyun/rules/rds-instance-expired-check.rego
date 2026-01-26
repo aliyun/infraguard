@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:rds-instance-expired-check",
+	"id": "rds-instance-expired-check",
 	"name": {
 		"en": "RDS Prepaid Instance Expiration Check",
 		"zh": "RDS 预付费实例到期检查",

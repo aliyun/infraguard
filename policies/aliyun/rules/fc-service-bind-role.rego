@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:fc-service-bind-role",
+	"id": "fc-service-bind-role",
 	"name": {
 		"en": "FC Service Bound to RAM Role",
 		"zh": "FC 服务绑定角色",

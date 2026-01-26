@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-instance-type-family-not-deprecated",
+	"id": "ecs-instance-type-family-not-deprecated",
 	"name": {
 		"en": "ECS Instance Type Not Deprecated",
 		"zh": "ECS 弃用规格族预警"

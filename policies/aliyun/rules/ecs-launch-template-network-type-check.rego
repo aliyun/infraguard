@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-launch-template-network-type-check",
+	"id": "ecs-launch-template-network-type-check",
 	"name": {
 		"en": "ECS launch template uses VPC network type",
 		"zh": "ECS 启动模版配置不应设置公网访问",

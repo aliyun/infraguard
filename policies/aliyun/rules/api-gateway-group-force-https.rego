@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:api-gateway-group-force-https",
+	"id": "api-gateway-group-force-https",
 	"name": {
 		"en": "API Gateway Group Force HTTPS",
 		"zh": "API 分组绑定独立域名并开启 Https 强制跳转"

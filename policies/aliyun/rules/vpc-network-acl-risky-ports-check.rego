@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:vpc-network-acl-risky-ports-check",
+	"id": "vpc-network-acl-risky-ports-check",
 	"name": {
 		"en": "VPC Network ACL Risky Ports Check",
 		"zh": "VPC 网络 ACL 禁用高风险端口"

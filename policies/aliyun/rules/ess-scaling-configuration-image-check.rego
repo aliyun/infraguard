@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:ess-scaling-configuration-image-check",
+	"id": "ess-scaling-configuration-image-check",
 	"name": {
 		"en": "ESS Scaling Configuration Image Check",
 		"zh": "弹性伸缩配置镜像检测",

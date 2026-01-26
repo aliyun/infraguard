@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:slb-instance-log-enabled",
+	"id": "slb-instance-log-enabled",
 	"name": {
 		"en": "SLB Instance Logging Enabled",
 		"zh": "SLB 实例开启访问日志",

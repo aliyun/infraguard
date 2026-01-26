@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:ram-user-group-membership-check",
+	"id": "ram-user-group-membership-check",
 	"name": {
 		"en": "RAM User Group Membership Check",
 		"zh": "RAM 用户组归属检测",

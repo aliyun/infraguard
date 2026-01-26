@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:nlb-server-group-multi-zone",
+	"id": "nlb-server-group-multi-zone",
 	"name": {
 		"en": "NLB Server Group Multi-Zone Distribution",
 		"zh": "NLB 负载均衡服务器组添加多个可用区资源",

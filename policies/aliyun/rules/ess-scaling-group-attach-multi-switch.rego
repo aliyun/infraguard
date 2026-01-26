@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:ess-scaling-group-attach-multi-switch",
+	"id": "ess-scaling-group-attach-multi-switch",
 	"name": {
 		"en": "ESS Scaling Group Multi-VSwitch",
 		"zh": "弹性伸缩组关联至少两个交换机",

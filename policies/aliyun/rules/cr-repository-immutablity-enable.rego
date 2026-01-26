@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:cr-repository-immutablity-enable",
+	"id": "cr-repository-immutablity-enable",
 	"name": {
 		"en": "Container Registry repository image version is immutable",
 		"zh": "容器镜像服务镜像版本为不可变",

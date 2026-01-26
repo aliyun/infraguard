@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:slb-default-server-group-multi-server",
+	"id": "slb-default-server-group-multi-server",
 	"name": {
 		"en": "SLB Default Server Group Has Multiple Servers",
 		"zh": "SLB 实例默认服务器组包含至少两台服务器"

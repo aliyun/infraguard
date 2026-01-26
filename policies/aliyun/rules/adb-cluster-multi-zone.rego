@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:adb-cluster-multi-zone",
+	"id": "adb-cluster-multi-zone",
 	"name": {
 		"en": "ADB Cluster Multi-Zone Deployment",
 		"zh": "ADB 集群部署模式为多可用区",

@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:mse-cluster-architecture-check",
+	"id": "mse-cluster-architecture-check",
 	"name": {
 		"en": "MSE Cluster Has Multiple Nodes",
 		"zh": "MSE 注册配置中心多节点检测",

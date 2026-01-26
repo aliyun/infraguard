@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:kafka-instance-public-access-check",
+	"id": "kafka-instance-public-access-check",
 	"name": {
 		"en": "Kafka Public Access Disabled",
 		"zh": "Kafka 实例禁用公网访问"

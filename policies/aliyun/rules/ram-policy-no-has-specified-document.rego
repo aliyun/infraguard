@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:ram-policy-no-has-specified-document",
+	"id": "ram-policy-no-has-specified-document",
 	"name": {
 		"en": "RAM Policy No Specified Document",
 		"zh": "自定义 RAM 策略不包含指定权限配置"

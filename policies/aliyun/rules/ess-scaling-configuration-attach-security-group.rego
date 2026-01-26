@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:ess-scaling-configuration-attach-security-group",
+	"id": "ess-scaling-configuration-attach-security-group",
 	"name": {
 		"en": "ESS Scaling Configuration Security Group",
 		"zh": "弹性伸缩配置中为实例设置关联安全组",

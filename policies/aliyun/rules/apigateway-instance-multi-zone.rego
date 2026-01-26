@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:apigateway-instance-multi-zone",
+	"id": "apigateway-instance-multi-zone",
 	"name": {
 		"en": "API Gateway Instance Multi-Zone Deployment",
 		"zh": "使用多可用区的 API 网关实例",

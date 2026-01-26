@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:rds-instance-storage-autoscale-enable",
+	"id": "rds-instance-storage-autoscale-enable",
 	"name": {
 		"en": "RDS Storage Autoscale Enabled",
 		"zh": "RDS 开启存储自动扩容"

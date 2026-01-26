@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:redis-instance-backup-time-check",
+	"id": "redis-instance-backup-time-check",
 	"name": {
 		"en": "Redis Instance Backup Window Check",
 		"zh": "Redis 实例备份时间检测",

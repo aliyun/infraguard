@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:internet-nat-gateway-in-specified-vpc",
+	"id": "internet-nat-gateway-in-specified-vpc",
 	"name": {
 		"en": "Internet NAT Gateway in Specified VPC",
 		"zh": "公网 NAT 网关创建在指定专有网络内"

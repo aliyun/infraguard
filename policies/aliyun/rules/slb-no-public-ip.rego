@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:slb-no-public-ip",
+	"id": "slb-no-public-ip",
 	"name": {
 		"en": "SLB Instance No Public IP",
 		"zh": "SLB 实例未开启公网访问"

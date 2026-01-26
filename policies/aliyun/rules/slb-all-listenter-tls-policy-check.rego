@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:slb-all-listenter-tls-policy-check",
+	"id": "slb-all-listenter-tls-policy-check",
 	"name": {
 		"en": "SLB Listener TLS Policy Check",
 		"zh": "SLB 监听使用安全 TLS 策略"

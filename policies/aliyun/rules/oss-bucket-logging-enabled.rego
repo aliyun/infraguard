@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:oss-bucket-logging-enabled",
+	"id": "oss-bucket-logging-enabled",
 	"name": {
 		"en": "OSS Bucket Logging Enabled",
 		"zh": "OSS 存储空间开启日志转存",

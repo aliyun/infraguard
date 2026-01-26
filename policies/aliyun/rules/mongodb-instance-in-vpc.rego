@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:mongodb-instance-in-vpc",
+	"id": "mongodb-instance-in-vpc",
 	"name": {
 		"en": "MongoDB Instance Uses VPC Network",
 		"zh": "使用专有网络类型的 MongoDB 实例",

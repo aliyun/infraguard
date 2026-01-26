@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-instance-auto-renewal-enabled",
+	"id": "ecs-instance-auto-renewal-enabled",
 	"name": {
 		"en": "ECS subscription instance has auto-renewal enabled",
 		"zh": "ECS 包年包月实例开启自动续费",
@@ -15,7 +15,7 @@ rule_meta := {
 		"zh": "ECS 包年包月的实例开启自动续费，视为合规。按量付费的实例不适用本规则。",
 	},
 	"severity": "medium",
-	"resource_types": ["ALIYUN::ECS::Instance"],
+	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"],
 	"reason": {
 		"en": "ECS subscription instance does not have auto-renewal enabled",
 		"zh": "ECS 包年包月实例未开启自动续费",
@@ -27,7 +27,7 @@ rule_meta := {
 }
 
 deny contains result if {
-	some name, resource in helpers.resources_by_type("ALIYUN::ECS::Instance")
+	some name, resource in helpers.resources_by_types(["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"])
 
 	# Only check subscription instances
 	instance_charge_type := helpers.get_property(resource, "InstanceChargeType", "Postpaid")

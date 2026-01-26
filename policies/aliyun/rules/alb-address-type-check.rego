@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:alb-address-type-check",
+	"id": "alb-address-type-check",
 	"name": {
 		"en": "ALB Address Type Check",
 		"zh": "ALB 网络类型核查"

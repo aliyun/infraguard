@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:ess-scaling-configuration-data-disk-encrypted",
+	"id": "ess-scaling-configuration-data-disk-encrypted",
 	"name": {
 		"en": "ESS Scaling Configuration Data Disk Encryption",
 		"zh": "弹性伸缩配置中设置数据磁盘加密",

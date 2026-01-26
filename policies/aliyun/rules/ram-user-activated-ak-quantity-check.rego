@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:ram-user-activated-ak-quantity-check",
+	"id": "ram-user-activated-ak-quantity-check",
 	"name": {
 		"en": "RAM User Active AK Quantity Check",
 		"zh": "RAM 用户激活 AccessKey 数量核查"

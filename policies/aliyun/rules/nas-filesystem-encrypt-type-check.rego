@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:nas-filesystem-encrypt-type-check",
+	"id": "nas-filesystem-encrypt-type-check",
 	"name": {
 		"en": "NAS file system encryption configured",
 		"zh": "NAS 文件系统设置了加密",

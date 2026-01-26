@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:cr-instance-any-ip-access-check",
+	"id": "cr-instance-any-ip-access-check",
 	"name": {
 		"en": "CR Instance No Any IP Access",
 		"zh": "容器镜像服务实例白名单检测"

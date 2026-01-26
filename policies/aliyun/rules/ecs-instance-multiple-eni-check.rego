@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-instance-multiple-eni-check",
+	"id": "ecs-instance-multiple-eni-check",
 	"name": {
 		"en": "ECS instance is bound to only one elastic network interface",
 		"zh": "ECS 实例仅绑定一个弹性网卡",

@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:slb-listener-risk-ports-check",
+	"id": "slb-listener-risk-ports-check",
 	"name": {
 		"en": "SLB Listener Risk Ports Check",
 		"zh": "SLB 监听禁用高风险端口"

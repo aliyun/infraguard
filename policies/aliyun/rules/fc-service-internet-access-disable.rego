@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:fc-service-internet-access-disable",
+	"id": "fc-service-internet-access-disable",
 	"name": {
 		"en": "FC Service Internet Access Disabled",
 		"zh": "FC 服务禁用公网访问",

@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:mongodb-instance-encryption-byok-check",
+	"id": "mongodb-instance-encryption-byok-check",
 	"name": {
 		"en": "MongoDB Instance Uses Custom Key for TDE",
 		"zh": "使用自定义密钥为 MongoDB 设置透明数据加密 TDE",

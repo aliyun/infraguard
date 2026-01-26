@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata with i18n support
 rule_meta := {
-	"id": "rule:aliyun:ecs-security-group-not-open-all-port",
+	"id": "ecs-security-group-not-open-all-port",
 	"name": {
 		"en": "Security Group Ingress Not Open All Ports",
 		"zh": "安全组入网设置中不能有对所有端口开放的访问规则",

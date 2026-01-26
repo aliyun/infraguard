@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata with i18n support
 rule_meta := {
-	"id": "rule:aliyun:ecs-security-group-risky-ports-check-with-protocol",
+	"id": "ecs-security-group-risky-ports-check-with-protocol",
 	"name": {
 		"en": "Security Group Risky Ports Check with Protocol",
 		"zh": "安全组指定协议不允许对全部网段开启风险端口",

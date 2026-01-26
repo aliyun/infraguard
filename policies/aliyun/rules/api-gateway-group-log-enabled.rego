@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:api-gateway-group-log-enabled",
+	"id": "api-gateway-group-log-enabled",
 	"name": {
 		"en": "API Gateway Group Log Enabled",
 		"zh": "为 API 分组设置调用日志存储"

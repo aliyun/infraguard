@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:hbase-cluster-ha-check",
+	"id": "hbase-cluster-ha-check",
 	"name": {
 		"en": "HBase Cluster HA Enabled",
 		"zh": "HBase 集群强制开启高可用"

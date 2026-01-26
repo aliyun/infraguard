@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:elasticsearch-public-and-any-ip-access-check",
+	"id": "elasticsearch-public-and-any-ip-access-check",
 	"name": {
 		"en": "Elasticsearch Public and Any IP Access Check",
 		"zh": "Elasticsearch 实例未开启公网或不允许任意 IP 访问",

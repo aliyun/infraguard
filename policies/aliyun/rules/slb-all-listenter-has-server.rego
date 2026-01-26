@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:slb-all-listenter-has-server",
+	"id": "slb-all-listenter-has-server",
 	"name": {
 		"en": "SLB All Listeners Have Backend Servers",
 		"zh": "SLB 负载均衡的所有监听都至少添加了指定数量的后端服务器"

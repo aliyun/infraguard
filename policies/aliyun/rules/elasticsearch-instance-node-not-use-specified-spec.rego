@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:elasticsearch-instance-node-not-use-specified-spec",
+	"id": "elasticsearch-instance-node-not-use-specified-spec",
 	"name": {
 		"en": "Elasticsearch Instance Does Not Use Deprecated Spec",
 		"zh": "未使用不推荐的 Elasticsearch 实例",

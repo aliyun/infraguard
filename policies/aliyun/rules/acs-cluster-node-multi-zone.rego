@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:acs-cluster-node-multi-zone",
+	"id": "acs-cluster-node-multi-zone",
 	"name": {
 		"en": "ACS Cluster Node Multi-Zone Deployment",
 		"zh": "使用区域级多可用区 ACS 集群",

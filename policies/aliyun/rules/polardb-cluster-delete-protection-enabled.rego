@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:polardb-cluster-delete-protection-enabled",
+	"id": "polardb-cluster-delete-protection-enabled",
 	"name": {
 		"en": "PolarDB Cluster Deletion Protection Enabled",
 		"zh": "PolarDB 集群开启删除保护",

@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:mse-cluster-internet-check",
+	"id": "mse-cluster-internet-check",
 	"name": {
 		"en": "MSE Cluster Has No Public Internet Access",
 		"zh": "MSE 集群公网检测",

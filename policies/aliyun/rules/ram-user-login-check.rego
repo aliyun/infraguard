@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:ram-user-login-check",
+	"id": "ram-user-login-check",
 	"name": {
 		"en": "RAM User Login Enabled Check",
 		"zh": "RAM 用户登录启用检测",

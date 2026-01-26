@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:ots-instance-network-not-normal",
+	"id": "ots-instance-network-not-normal",
 	"name": {
 		"en": "OTS Restricted Network Type",
 		"zh": "OTS 实例限制网络类型"

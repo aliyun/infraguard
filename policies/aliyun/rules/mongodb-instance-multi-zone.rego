@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:mongodb-instance-multi-zone",
+	"id": "mongodb-instance-multi-zone",
 	"name": {
 		"en": "MongoDB Instance Multi-Zone Deployment",
 		"zh": "MongoDB 实例多可用区部署",

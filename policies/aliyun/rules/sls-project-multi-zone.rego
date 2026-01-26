@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:sls-project-multi-zone",
+	"id": "sls-project-multi-zone",
 	"name": {
 		"en": "SLS Project Zone-Redundant Storage",
 		"zh": "SLS 项目使用同城冗余存储",

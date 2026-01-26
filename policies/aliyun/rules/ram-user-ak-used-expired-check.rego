@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:ram-user-ak-used-expired-check",
+	"id": "ram-user-ak-used-expired-check",
 	"name": {
 		"en": "RAM User AccessKey Last Used Date Check",
 		"zh": "RAM 用户 AccessKey 最后使用时间检测",

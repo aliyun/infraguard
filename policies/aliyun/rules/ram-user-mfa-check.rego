@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:ram-user-mfa-check",
+	"id": "ram-user-mfa-check",
 	"name": {
 		"en": "RAM User MFA Enabled",
 		"zh": "RAM 用户开启 MFA",

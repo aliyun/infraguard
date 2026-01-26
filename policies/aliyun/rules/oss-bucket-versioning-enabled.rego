@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:oss-bucket-versioning-enabled",
+	"id": "oss-bucket-versioning-enabled",
 	"name": {
 		"en": "OSS Bucket Versioning Enabled",
 		"zh": "OSS 存储桶开启版本控制",

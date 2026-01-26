@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-instance-chargetype-check",
+	"id": "ecs-instance-chargetype-check",
 	"name": {
 		"en": "ECS Instance Charge Type Check",
 		"zh": "ECS 实例付费类型核查"

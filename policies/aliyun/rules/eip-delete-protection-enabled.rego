@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:eip-delete-protection-enabled",
+	"id": "eip-delete-protection-enabled",
 	"name": {
 		"en": "EIP Deletion Protection Enabled",
 		"zh": "弹性公网 IP 开启删除保护",

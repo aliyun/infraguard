@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:cen-cross-region-bandwidth-check",
+	"id": "cen-cross-region-bandwidth-check",
 	"name": {
 		"en": "CEN Cross-Region Bandwidth Check",
 		"zh": "CEN 实例中的跨地域连接带宽分配满足指定要求"

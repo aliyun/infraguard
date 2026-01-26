@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:fc-trigger-http-not-anonymous",
+	"id": "fc-trigger-http-not-anonymous",
 	"name": {
 		"en": "FC HTTP Trigger Authentication Check",
 		"zh": "函数 HTTP 触发器设置为需要身份验证",

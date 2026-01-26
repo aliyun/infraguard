@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-instances-in-vpc",
+	"id": "ecs-instances-in-vpc",
 	"name": {
 		"en": "ECS Instances in VPC",
 		"zh": "使用专有网络类型的 ECS 实例",

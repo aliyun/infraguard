@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:polardb-cluster-default-time-zone-not-system",
+	"id": "polardb-cluster-default-time-zone-not-system",
 	"name": {
 		"en": "PolarDB Cluster Default Time Zone Not System",
 		"zh": "PolarDB 集群默认时区参数值非 SYSTEM"

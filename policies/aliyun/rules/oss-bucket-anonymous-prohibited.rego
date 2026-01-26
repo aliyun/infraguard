@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:oss-bucket-anonymous-prohibited",
+	"id": "oss-bucket-anonymous-prohibited",
 	"name": {
 		"en": "OSS Bucket Anonymous Access Prohibited",
 		"zh": "OSS 存储桶禁用匿名访问",

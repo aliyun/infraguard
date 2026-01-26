@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:privatelink-server-endpoint-multi-zone",
+	"id": "privatelink-server-endpoint-multi-zone",
 	"name": {
 		"en": "PrivateLink VPC Endpoint Service Multi-Zone Deployment",
 		"zh": "PrivateLink 服务终端节点部署在多可用区",

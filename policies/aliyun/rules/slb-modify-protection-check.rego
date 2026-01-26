@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:slb-modify-protection-check",
+	"id": "slb-modify-protection-check",
 	"name": {
 		"en": "SLB Modification Protection Enabled",
 		"zh": "SLB 实例开启配置修改保护",

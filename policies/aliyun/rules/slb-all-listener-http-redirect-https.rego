@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:slb-all-listener-http-redirect-https",
+	"id": "slb-all-listener-http-redirect-https",
 	"name": {
 		"en": "SLB HTTP Redirect to HTTPS Enabled",
 		"zh": "SLB 监听强制跳转 HTTPS"

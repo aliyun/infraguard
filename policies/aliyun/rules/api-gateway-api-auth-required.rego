@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:api-gateway-api-auth-required",
+	"id": "api-gateway-api-auth-required",
 	"name": {
 		"en": "API Gateway API Auth Required",
 		"zh": "API 网关中配置 API 安全认证"

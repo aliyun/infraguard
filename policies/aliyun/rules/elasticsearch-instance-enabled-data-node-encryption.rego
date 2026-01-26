@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:elasticsearch-instance-enabled-data-node-encryption",
+	"id": "elasticsearch-instance-enabled-data-node-encryption",
 	"name": {
 		"en": "Elasticsearch Data Node Encryption Enabled",
 		"zh": "Elasticsearch 数据节点开启加密",

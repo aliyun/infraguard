@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:rds-instances-in-vpc",
+	"id": "rds-instances-in-vpc",
 	"name": {
 		"en": "RDS Instance in VPC",
 		"zh": "RDS 实例在 VPC 内",

@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-instance-image-type-check",
+	"id": "ecs-instance-image-type-check",
 	"name": {
 		"en": "ECS Instance Image Type Check",
 		"zh": "ECS 实例镜像来源核查"
@@ -22,7 +22,7 @@ rule_meta := {
 		"en": "Specify an authorized ImageId for the ECS instance.",
 		"zh": "为 ECS 实例指定授权的镜像 ID。"
 	},
-	"resource_types": ["ALIYUN::ECS::Instance"],
+	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"],
 }
 
 is_compliant(resource) if {
@@ -32,7 +32,7 @@ is_compliant(resource) if {
 }
 
 deny contains result if {
-	some name, resource in helpers.resources_by_type("ALIYUN::ECS::Instance")
+	some name, resource in helpers.resources_by_types(["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"])
 	not is_compliant(resource)
 	result := {
 		"id": rule_meta.id,

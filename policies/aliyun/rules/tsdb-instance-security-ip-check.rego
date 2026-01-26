@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:tsdb-instance-security-ip-check",
+	"id": "tsdb-instance-security-ip-check",
 	"name": {
 		"en": "TSDB Instance Does Not Allow Any IP Access",
 		"zh": "TSDB 实例安全白名单检测",

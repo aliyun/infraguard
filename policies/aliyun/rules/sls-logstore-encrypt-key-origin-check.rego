@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:sls-logstore-encrypt-key-origin-check",
+	"id": "sls-logstore-encrypt-key-origin-check",
 	"name": {
 		"en": "SLS Logstore Encryption Key Origin Check",
 		"zh": "日志服务日志库加密使用的主密钥材料来源为用户自行导入"

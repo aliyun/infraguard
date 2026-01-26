@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:vpc-flow-logs-enabled",
+	"id": "vpc-flow-logs-enabled",
 	"name": {
 		"en": "VPC Flow Logs Enabled",
 		"zh": "VPC 开启流日志"

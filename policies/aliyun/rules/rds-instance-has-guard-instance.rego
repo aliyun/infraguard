@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:rds-instance-has-guard-instance",
+	"id": "rds-instance-has-guard-instance",
 	"name": {
 		"en": "RDS Instance Has Guard Instance",
 		"zh": "RDS 关键实例配置灾备实例"

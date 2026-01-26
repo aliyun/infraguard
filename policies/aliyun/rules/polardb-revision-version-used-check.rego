@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:polardb-revision-version-used-check",
+	"id": "polardb-revision-version-used-check",
 	"name": {
 		"en": "PolarDB Revision Version Used Check",
 		"zh": "使用稳定内核版本的 PolarDB 集群"

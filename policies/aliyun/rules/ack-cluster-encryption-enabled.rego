@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:ack-cluster-encryption-enabled",
+	"id": "ack-cluster-encryption-enabled",
 	"name": {
 		"en": "ACK Cluster Secret Encryption Enabled",
 		"zh": "ACK 集群配置 Secret 的落盘加密",

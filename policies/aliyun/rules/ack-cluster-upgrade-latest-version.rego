@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:ack-cluster-upgrade-latest-version",
+	"id": "ack-cluster-upgrade-latest-version",
 	"name": {
 		"en": "ACK Cluster Upgraded to Latest Version",
 		"zh": "ACK 集群已升级至最新版本",

@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:eci-container-group-volumn-mounts",
+	"id": "eci-container-group-volumn-mounts",
 	"name": {
 		"en": "ECI Volume Mounting Check",
 		"zh": "ECI 容器组挂载卷核查"

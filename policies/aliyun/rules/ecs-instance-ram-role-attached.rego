@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:ecs-instance-ram-role-attached",
+	"id": "ecs-instance-ram-role-attached",
 	"name": {
 		"en": "ECS Instance RAM Role Attached",
 		"zh": "ECS 实例被授予实例 RAM 角色",
@@ -24,7 +24,7 @@ rule_meta := {
 		"en": "Attach a RAM role to the ECS instance.",
 		"zh": "为 ECS 实例授予 RAM 角色。",
 	},
-	"resource_types": ["ALIYUN::ECS::Instance"],
+	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"],
 }
 
 # Check if instance has RAM role attached
@@ -36,7 +36,7 @@ has_ram_role(resource) if {
 
 # Deny rule: ECS instances should have RAM role attached
 deny contains result if {
-	some name, resource in helpers.resources_by_type("ALIYUN::ECS::Instance")
+	some name, resource in helpers.resources_by_types(["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"])
 	not has_ram_role(resource)
 	result := {
 		"id": rule_meta.id,

@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-instance-no-public-ip",
+	"id": "ecs-instance-no-public-ip",
 	"name": {
 		"en": "ECS instance should not bind public IP",
 		"zh": "ECS 实例禁止绑定公网地址",

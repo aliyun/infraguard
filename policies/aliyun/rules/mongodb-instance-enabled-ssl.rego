@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:mongodb-instance-enabled-ssl",
+	"id": "mongodb-instance-enabled-ssl",
 	"name": {
 		"en": "MongoDB Instance SSL Enabled",
 		"zh": "MongoDB 实例开启 SSL 加密"

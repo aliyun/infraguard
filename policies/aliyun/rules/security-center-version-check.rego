@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:security-center-version-check",
+	"id": "security-center-version-check",
 	"name": {
 		"en": "Security Center Version Check",
 		"zh": "云安全中心版本检测",

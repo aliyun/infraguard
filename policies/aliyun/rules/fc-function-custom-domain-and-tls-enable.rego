@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:fc-function-custom-domain-and-tls-enable",
+	"id": "fc-function-custom-domain-and-tls-enable",
 	"name": {
 		"en": "FC Function Custom Domain and TLS Enabled",
 		"zh": "FC 函数自定义域名及 TLS 开启",

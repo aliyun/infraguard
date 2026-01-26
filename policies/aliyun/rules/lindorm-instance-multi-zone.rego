@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:lindorm-instance-multi-zone",
+	"id": "lindorm-instance-multi-zone",
 	"name": {
 		"en": "Lindorm Instance Multi-Zone Deployment",
 		"zh": "使用多可用区的云原生多模数据库 Lindorm 实例",

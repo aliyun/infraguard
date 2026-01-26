@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:kms-key-delete-protection-enabled",
+	"id": "kms-key-delete-protection-enabled",
 	"name": {
 		"en": "KMS key deletion protection enabled",
 		"zh": "KMS 主密钥开启删除保护",

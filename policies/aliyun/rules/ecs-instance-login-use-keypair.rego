@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:ecs-instance-login-use-keypair",
+	"id": "ecs-instance-login-use-keypair",
 	"name": {
 		"en": "ECS Instance Login Using Key Pair",
 		"zh": "ECS 实例登录使用密钥对",
@@ -24,11 +24,11 @@ rule_meta := {
 		"en": "Configure key pair login for the ECS instance and disable password login.",
 		"zh": "为 ECS 实例配置密钥对登录，并禁用密码登录。",
 	},
-	"resource_types": ["ALIYUN::ECS::Instance"],
+	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"],
 }
 
 deny contains result if {
-	some name, resource in helpers.resources_by_type("ALIYUN::ECS::Instance")
+	some name, resource in helpers.resources_by_types(["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"])
 	not helpers.has_property(resource, "KeyPairName")
 	result := {
 		"id": rule_meta.id,

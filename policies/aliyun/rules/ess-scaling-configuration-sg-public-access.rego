@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:ess-scaling-configuration-sg-public-access",
+	"id": "ess-scaling-configuration-sg-public-access",
 	"name": {
 		"en": "ESS Scaling Configuration Security Group Public Access",
 		"zh": "ESS 伸缩组配置的安全组不应设置为 0.0.0.0/0",

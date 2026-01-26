@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:hbase-cluster-expired-check",
+	"id": "hbase-cluster-expired-check",
 	"name": {
 		"en": "HBase Cluster Expiration Check",
 		"zh": "HBase 集群到期检查",

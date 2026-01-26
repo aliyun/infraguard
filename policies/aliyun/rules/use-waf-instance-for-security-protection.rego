@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:use-waf-instance-for-security-protection",
+	"id": "use-waf-instance-for-security-protection",
 	"name": {
 		"en": "Use WAF for Security Protection",
 		"zh": "使用 WEB 防火墙对网站或 APP 进行安全防护",

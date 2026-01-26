@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:rds-white-list-internet-ip-access-check",
+	"id": "rds-white-list-internet-ip-access-check",
 	"name": {
 		"en": "RDS Whitelist Internet Restriction",
 		"zh": "RDS 白名单禁用公网开放"

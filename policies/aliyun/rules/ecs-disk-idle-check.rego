@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:ecs-disk-idle-check",
+	"id": "ecs-disk-idle-check",
 	"name": {
 		"en": "ECS Disk Idle Check",
 		"zh": "ECS 磁盘闲置检测",

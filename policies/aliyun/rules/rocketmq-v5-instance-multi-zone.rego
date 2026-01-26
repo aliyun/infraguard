@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:rocketmq-v5-instance-multi-zone",
+	"id": "rocketmq-v5-instance-multi-zone",
 	"name": {
 		"en": "RocketMQ 5.0 Instance Multi-Zone Deployment",
 		"zh": "使用多可用区的消息队列 RocketMQ 5.0 版实例",

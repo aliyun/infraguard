@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:polardb-public-and-any-ip-access-check",
+	"id": "polardb-public-and-any-ip-access-check",
 	"name": {
 		"en": "PolarDB Public and Any IP Access Check",
 		"zh": "PolarDB 公网及全网 IP 访问检测",

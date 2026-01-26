@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:natgateway-eip-used-check",
+	"id": "natgateway-eip-used-check",
 	"name": {
 		"en": "NAT Gateway EIP Usage Check",
 		"zh": "NAT 网关中 SNAT 和 DNAT 未使用同一个 EIP"

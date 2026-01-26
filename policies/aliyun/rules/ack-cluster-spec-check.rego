@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:ack-cluster-spec-check",
+	"id": "ack-cluster-spec-check",
 	"name": {
 		"en": "ACK Cluster Spec Check",
 		"zh": "ACK 集群规格核查"

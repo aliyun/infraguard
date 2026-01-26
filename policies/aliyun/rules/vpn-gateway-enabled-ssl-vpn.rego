@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:vpn-gateway-enabled-ssl-vpn",
+	"id": "vpn-gateway-enabled-ssl-vpn",
 	"name": {
 		"en": "VPN Gateway SSL-VPN Enabled",
 		"zh": "VPN 网关开启 SSL-VPN"

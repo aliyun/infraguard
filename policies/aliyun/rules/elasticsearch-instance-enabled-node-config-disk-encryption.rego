@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:elasticsearch-instance-enabled-node-config-disk-encryption",
+	"id": "elasticsearch-instance-enabled-node-config-disk-encryption",
 	"name": {
 		"en": "ES Node Config Disk Encryption",
 		"zh": "ES 弹性节点磁盘加密核查"

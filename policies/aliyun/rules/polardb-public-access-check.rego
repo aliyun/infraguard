@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:polardb-public-access-check",
+	"id": "polardb-public-access-check",
 	"name": {
 		"en": "PolarDB Public Access Check",
 		"zh": "PolarDB 实例 IP 白名单禁止设置为全网段"

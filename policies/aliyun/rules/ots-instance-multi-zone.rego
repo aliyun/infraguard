@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:ots-instance-multi-zone",
+	"id": "ots-instance-multi-zone",
 	"name": {
 		"en": "OTS Instance Zone-Redundant Storage",
 		"zh": "使用同城冗余的 OTS 实例"

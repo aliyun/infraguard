@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:mongodb-instance-multi-node",
+	"id": "mongodb-instance-multi-node",
 	"name": {
 		"en": "MongoDB Instance Uses Multiple Nodes",
 		"zh": "使用多节点的 MongoDB 实例",

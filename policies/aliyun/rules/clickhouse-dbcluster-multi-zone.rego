@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:clickhouse-dbcluster-multi-zone",
+	"id": "clickhouse-dbcluster-multi-zone",
 	"name": {
 		"en": "ClickHouse DBCluster Multi-Zone Deployment",
 		"zh": "使用多可用区的 ClickHouse 集群实例",

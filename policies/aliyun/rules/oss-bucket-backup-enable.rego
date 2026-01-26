@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:oss-bucket-backup-enable",
+	"id": "oss-bucket-backup-enable",
 	"name": {
 		"en": "OSS Backup Enabled",
 		"zh": "OSS 开启备份"

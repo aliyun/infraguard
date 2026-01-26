@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:pai-eas-instances-multi-zone",
+	"id": "pai-eas-instances-multi-zone",
 	"name": {
 		"en": "PAI EAS Instance Multi-Zone Deployment",
 		"zh": "PAI EAS 实例多可用区部署",

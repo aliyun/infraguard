@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:slb-all-listener-health-check-enabled",
+	"id": "slb-all-listener-health-check-enabled",
 	"name": {
 		"en": "SLB All Listeners Health Check Enabled",
 		"zh": "SLB 所有监听开启健康检查"

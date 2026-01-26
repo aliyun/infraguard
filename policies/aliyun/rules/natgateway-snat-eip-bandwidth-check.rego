@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:natgateway-snat-eip-bandwidth-check",
+	"id": "natgateway-snat-eip-bandwidth-check",
 	"name": {
 		"en": "NAT Gateway SNAT EIP Bandwidth Consistency",
 		"zh": "NAT 网关 SNAT 条目绑定多个 EIP 时带宽峰值设置一致"

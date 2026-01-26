@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:cr-repository-image-scanning-enabled",
+	"id": "cr-repository-image-scanning-enabled",
 	"name": {
 		"en": "CR Instance Image Scanning Enabled",
 		"zh": "为容器镜像实例开启安全扫描"

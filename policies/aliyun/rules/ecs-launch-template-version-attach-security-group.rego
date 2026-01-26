@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-launch-template-version-attach-security-group",
+	"id": "ecs-launch-template-version-attach-security-group",
 	"name": {
 		"en": "ECS launch template version attaches security groups",
 		"zh": "ECS 启动模版版本中设置加入的安全组",

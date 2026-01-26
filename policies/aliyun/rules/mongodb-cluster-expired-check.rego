@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:mongodb-cluster-expired-check",
+	"id": "mongodb-cluster-expired-check",
 	"name": {
 		"en": "MongoDB Instance Expiration Check",
 		"zh": "MongoDB 实例到期检查",

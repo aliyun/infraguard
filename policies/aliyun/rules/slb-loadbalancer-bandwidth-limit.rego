@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:slb-loadbalancer-bandwidth-limit",
+	"id": "slb-loadbalancer-bandwidth-limit",
 	"name": {
 		"en": "SLB Bandwidth Limit",
 		"zh": "SLB 带宽上限核查"

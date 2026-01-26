@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:api-gateway-api-visibility-private",
+	"id": "api-gateway-api-visibility-private",
 	"name": {
 		"en": "API Gateway API Visibility Private",
 		"zh": "API 网关中的 API 设置为私有"

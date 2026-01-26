@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:redis-architecturetype-cluster-check",
+	"id": "redis-architecturetype-cluster-check",
 	"name": {
 		"en": "Redis Architecture Type Cluster Check",
 		"zh": "使用集群版的 Redis 实例"

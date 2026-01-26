@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:eip-attached",
+	"id": "eip-attached",
 	"name": {
 		"en": "EIP Attached",
 		"zh": "EIP 必须处于绑定状态"

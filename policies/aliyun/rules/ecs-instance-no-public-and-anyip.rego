@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-instance-no-public-and-anyip",
+	"id": "ecs-instance-no-public-and-anyip",
 	"name": {
 		"en": "ECS Instance Should Not Bind Public IP or Allow Any IP Access",
 		"zh": "ECS 实例禁止绑定公网地址和开放任意 ip",
@@ -15,7 +15,7 @@ rule_meta := {
 		"zh": "ECS 实例没有直接绑定 IPv4 公网 IP 或弹性公网 IP，或关联的安全组未开放 0.0.0.0/0，视为合规。",
 	},
 	"severity": "medium",
-	"resource_types": ["ALIYUN::ECS::Instance"],
+	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"],
 	"reason": {
 		"en": "ECS instance has public IP allocation enabled or uses unrestricted internet bandwidth",
 		"zh": "ECS 实例启用了公网 IP 分配或使用了不受限制的互联网带宽",
@@ -28,8 +28,8 @@ rule_meta := {
 
 # Check if instance has public IP allocated
 has_public_ip(resource) if {
-	helpers.has_property(resource, "AllocatePublicIP")
-	helpers.is_true(resource.Properties.AllocatePublicIP)
+	print("public_ip", helpers.get_property(resource, "AllocatePublicIP", false))
+	helpers.get_property(resource, "AllocatePublicIP", false) == true
 }
 
 # Check if instance has internet bandwidth (which implies public IP access)
@@ -39,7 +39,7 @@ has_internet_bandwidth(resource) if {
 }
 
 deny contains result if {
-	some name, resource in helpers.resources_by_type("ALIYUN::ECS::Instance")
+	some name, resource in helpers.resources_by_types(["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"])
 	has_public_ip(resource)
 	result := {
 		"id": rule_meta.id,
@@ -54,7 +54,7 @@ deny contains result if {
 }
 
 deny contains result if {
-	some name, resource in helpers.resources_by_type("ALIYUN::ECS::Instance")
+	some name, resource in helpers.resources_by_types(["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"])
 	has_internet_bandwidth(resource)
 	not has_public_ip(resource) # Only report if not already reported by AllocatePublicIP check
 	result := {

@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:waf3-defense-resource-logging-enabled",
+	"id": "waf3-defense-resource-logging-enabled",
 	"name": {
 		"en": "WAF 3.0 Logging Enabled",
 		"zh": "WAF 3.0 防护资源开启日志审计"

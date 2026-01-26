@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:slb-vserver-group-multi-zone",
+	"id": "slb-vserver-group-multi-zone",
 	"name": {
 		"en": "SLB VServer Group Multi-Zone Deployment",
 		"zh": "SLB 虚拟服务器组多可用区部署",

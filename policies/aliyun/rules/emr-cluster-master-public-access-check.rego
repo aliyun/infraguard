@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata with i18n support
 rule_meta := {
-	"id": "rule:aliyun:emr-cluster-master-public-access-check",
+	"id": "emr-cluster-master-public-access-check",
 	"name": {
 		"en": "EMR Cluster Master Node Public Access Check",
 		"zh": "EMR 集群 Master 节点公网开启检测",

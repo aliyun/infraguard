@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:redis-instance-enabled-ssl",
+	"id": "redis-instance-enabled-ssl",
 	"name": {
 		"en": "Redis Instance SSL Enabled",
 		"zh": "Redis 实例开启 SSL 加密"

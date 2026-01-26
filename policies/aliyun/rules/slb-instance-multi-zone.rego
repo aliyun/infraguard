@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:slb-instance-multi-zone",
+	"id": "slb-instance-multi-zone",
 	"name": {
 		"en": "SLB Instance Multi-Zone Deployment",
 		"zh": "SLB 实例多可用区部署",

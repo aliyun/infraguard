@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:nlb-loadbalancer-multi-zone",
+	"id": "nlb-loadbalancer-multi-zone",
 	"name": {
 		"en": "NLB LoadBalancer Multi-Zone Deployment",
 		"zh": "使用多可用区的网络负载均衡实例",

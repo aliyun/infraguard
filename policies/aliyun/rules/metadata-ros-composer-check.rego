@@ -4,7 +4,7 @@ import rego.v1
 
 # Rule metadata with i18n support
 rule_meta := {
-	"id": "rule:aliyun:metadata-ros-composer-check",
+	"id": "metadata-ros-composer-check",
 	"name": {
 		"en": "Template Metadata ALIYUN::ROS::Composer Check",
 		"zh": "模板 Metadata ALIYUN::ROS::Composer 检查",

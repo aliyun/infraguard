@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:redis-instance-enabled-byok-tde",
+	"id": "redis-instance-enabled-byok-tde",
 	"name": {
 		"en": "Redis Instance BYOK TDE Enabled",
 		"zh": "Redis 实例开启 BYOK TDE 加密",

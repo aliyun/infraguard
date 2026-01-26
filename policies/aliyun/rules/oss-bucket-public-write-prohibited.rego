@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:oss-bucket-public-write-prohibited",
+	"id": "oss-bucket-public-write-prohibited",
 	"name": {
 		"en": "OSS Bucket Public Write Prohibited",
 		"zh": "OSS 存储空间 ACL 不开启公共读写",

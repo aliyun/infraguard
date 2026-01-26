@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:eip-bandwidth-limit",
+	"id": "eip-bandwidth-limit",
 	"name": {
 		"en": "EIP Bandwidth Limit",
 		"zh": "EIP 带宽上限核查"

@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:cr-repository-type-private",
+	"id": "cr-repository-type-private",
 	"name": {
 		"en": "CR Repository Type Private",
 		"zh": "容器镜像服务镜像仓库类型为私有",

@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:api-gateway-group-enabled-ssl",
+	"id": "api-gateway-group-enabled-ssl",
 	"name": {
 		"en": "API Gateway Group SSL Enabled",
 		"zh": "API 网关分组开启 SSL",

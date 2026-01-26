@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:bastionhost-instance-spec-check",
+	"id": "bastionhost-instance-spec-check",
 	"name": {
 		"en": "BastionHost Instance Multi-Zone Spec Check",
 		"zh": "使用多可用区部署的堡垒机版本",

@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:fc-service-tracing-enable",
+	"id": "fc-service-tracing-enable",
 	"name": {
 		"en": "FC Service Tracing Enable",
 		"zh": "函数计算服务启用链路追踪",

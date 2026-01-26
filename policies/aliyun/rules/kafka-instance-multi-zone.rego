@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:kafka-instance-multi-zone",
+	"id": "kafka-instance-multi-zone",
 	"name": {
 		"en": "Kafka Instance Multi-Zone Deployment",
 		"zh": "使用多可用区的消息队列 Kafka 版实例",

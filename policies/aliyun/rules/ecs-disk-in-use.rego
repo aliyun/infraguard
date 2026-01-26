@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-disk-in-use",
+	"id": "ecs-disk-in-use",
 	"name": {
 		"en": "ECS disk is in use",
 		"zh": "ECS 磁盘正在使用中",

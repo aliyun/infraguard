@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata with i18n support
 rule_meta := {
-	"id": "rule:aliyun:ecs-security-group-type-not-normal",
+	"id": "ecs-security-group-type-not-normal",
 	"name": {
 		"en": "Use Enterprise Security Group Type",
 		"zh": "使用企业类型安全组",

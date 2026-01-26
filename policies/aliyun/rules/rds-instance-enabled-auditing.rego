@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:rds-instance-enabled-auditing",
+	"id": "rds-instance-enabled-auditing",
 	"name": {
 		"en": "RDS Instance Auditing Enabled",
 		"zh": "RDS 实例开启 SQL 审计"

@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:alb-all-listenter-has-server",
+	"id": "alb-all-listenter-has-server",
 	"name": {
 		"en": "ALB Listener Has Backend Server",
 		"zh": "ALB 监听绑定后端服务器"

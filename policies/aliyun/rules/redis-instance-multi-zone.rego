@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:redis-instance-multi-zone",
+	"id": "redis-instance-multi-zone",
 	"name": {
 		"en": "Redis Instance Multi-Zone Deployment",
 		"zh": "Redis 实例多可用区部署",

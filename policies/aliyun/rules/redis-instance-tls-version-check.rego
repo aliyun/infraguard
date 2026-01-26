@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:redis-instance-tls-version-check",
+	"id": "redis-instance-tls-version-check",
 	"name": {
 		"en": "Redis Instance TLS Version Check",
 		"zh": "Redis 实例开启 SSL 并使用指定的 TLS 版本"

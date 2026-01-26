@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:ack-cluster-node-multi-zone",
+	"id": "ack-cluster-node-multi-zone",
 	"name": {
 		"en": "ACK Cluster Multi-Zone Deployment",
 		"zh": "使用区域级多可用区 ACK 集群",

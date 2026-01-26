@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:mse-gateway-multi-availability-area-architecture-check",
+	"id": "mse-gateway-multi-availability-area-architecture-check",
 	"name": {
 		"en": "MSE Gateway Multi-Availability Zone Deployment",
 		"zh": "MSE 云原生网关部署在多可用区",

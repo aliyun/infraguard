@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-internetmaxbandwidth-check",
+	"id": "ecs-internetmaxbandwidth-check",
 	"name": {
 		"en": "ECS Internet Max Bandwidth Check",
 		"zh": "ECS 公网出口带宽检查"

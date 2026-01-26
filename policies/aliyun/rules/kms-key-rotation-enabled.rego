@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:kms-key-rotation-enabled",
+	"id": "kms-key-rotation-enabled",
 	"name": {
 		"en": "KMS key automatic rotation enabled",
 		"zh": "密钥管理服务设置主密钥自动轮转",

@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:ess-scaling-group-attach-slb",
+	"id": "ess-scaling-group-attach-slb",
 	"name": {
 		"en": "ESS Scaling Group Attach SLB",
 		"zh": "弹性伸缩组设置关联负载均衡",

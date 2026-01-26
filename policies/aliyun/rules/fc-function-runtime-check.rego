@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:fc-function-runtime-check",
+	"id": "fc-function-runtime-check",
 	"name": {
 		"en": "FC Function Runtime Check",
 		"zh": "FC 未使用废弃的运行时",
@@ -44,7 +44,7 @@ deny contains result if {
 	runtime := helpers.get_property(resource, "Runtime", "")
 	deprecated_runtimes[runtime]
 	result := {
-		"id": "rule:aliyun:fc-function-runtime-check",
+		"id": "fc-function-runtime-check",
 		"resource_id": name,
 		"violation_path": ["Properties", "Runtime"],
 		"meta": {

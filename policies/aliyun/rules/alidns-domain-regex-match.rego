@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:alidns-domain-regex-match",
+	"id": "alidns-domain-regex-match",
 	"name": {
 		"en": "Alibaba Cloud DNS Domain Names Match Naming Convention",
 		"zh": "阿里云解析域名符合命名规范",

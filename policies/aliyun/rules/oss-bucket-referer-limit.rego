@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:oss-bucket-referer-limit",
+	"id": "oss-bucket-referer-limit",
 	"name": {
 		"en": "OSS bucket referer hotlink protection configured",
 		"zh": "OSS 存储空间 Referer 在指定的防盗链白名单中",

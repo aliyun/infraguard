@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:redis-instance-open-auth-mode",
+	"id": "redis-instance-open-auth-mode",
 	"name": {
 		"en": "Redis Authentication Mode Enabled",
 		"zh": "Redis 强制开启认证模式"

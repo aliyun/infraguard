@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:polardb-dbcluster-in-vpc",
+	"id": "polardb-dbcluster-in-vpc",
 	"name": {
 		"en": "PolarDB Cluster in VPC",
 		"zh": "推荐使用专有网络类型的 PolarDB 实例"

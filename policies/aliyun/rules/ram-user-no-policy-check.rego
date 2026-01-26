@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:ram-user-no-policy-check",
+	"id": "ram-user-no-policy-check",
 	"name": {
 		"en": "RAM User Has Policy",
 		"zh": "识别未挂载任何策略的 RAM 用户"

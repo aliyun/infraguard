@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:redis-instance-release-protection",
+	"id": "redis-instance-release-protection",
 	"name": {
 		"en": "Redis Instance Release Protection Enabled",
 		"zh": "Redis 实例开启释放保护",

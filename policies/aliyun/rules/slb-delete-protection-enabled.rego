@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:slb-delete-protection-enabled",
+	"id": "slb-delete-protection-enabled",
 	"name": {
 		"en": "SLB Instance Deletion Protection Enabled",
 		"zh": "SLB 实例开启释放保护",

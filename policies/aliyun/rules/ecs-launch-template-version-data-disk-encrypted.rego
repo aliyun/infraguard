@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-launch-template-version-data-disk-encrypted",
+	"id": "ecs-launch-template-version-data-disk-encrypted",
 	"name": {
 		"en": "ECS launch template version enables data disk encryption",
 		"zh": "ECS 启动模版版本中设置数据磁盘加密",

@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:oss-encryption-byok-check",
+	"id": "oss-encryption-byok-check",
 	"name": {
 		"en": "OSS Bucket BYOK Encryption Check",
 		"zh": "OSS 存储空间使用自定义 KMS 密钥加密",

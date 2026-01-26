@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:alb-instance-waf-enabled",
+	"id": "alb-instance-waf-enabled",
 	"name": {
 		"en": "ALB Instance Has WAF Protection",
 		"zh": "ALB 实例开启 WEB 应用防火墙防护",

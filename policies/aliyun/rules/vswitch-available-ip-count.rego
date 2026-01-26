@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:vswitch-available-ip-count",
+	"id": "vswitch-available-ip-count",
 	"name": {
 		"en": "VSwitch Available IP Count Check",
 		"zh": "VSwitch 可用 IP 数量检测",

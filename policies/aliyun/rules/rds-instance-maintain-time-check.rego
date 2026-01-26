@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:rds-instance-maintain-time-check",
+	"id": "rds-instance-maintain-time-check",
 	"name": {
 		"en": "RDS Instance Maintenance Window Check",
 		"zh": "RDS 实例维护时间检测",

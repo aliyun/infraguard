@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:cr-instance-multi-zone",
+	"id": "cr-instance-multi-zone",
 	"name": {
 		"en": "CR Instance with Zone-Redundant OSS Bucket",
 		"zh": "关联同城冗余的 oss 桶的容器镜像实例",

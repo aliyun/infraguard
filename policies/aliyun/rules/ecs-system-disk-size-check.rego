@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-system-disk-size-check",
+	"id": "ecs-system-disk-size-check",
 	"name": {
 		"en": "ECS System Disk Size Check",
 		"zh": "ECS 系统盘大小检查"

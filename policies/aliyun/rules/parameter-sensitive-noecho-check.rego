@@ -4,7 +4,7 @@ import rego.v1
 
 # Rule metadata with i18n support
 rule_meta := {
-	"id": "rule:aliyun:parameter-sensitive-noecho-check",
+	"id": "parameter-sensitive-noecho-check",
 	"name": {
 		"en": "Sensitive Parameters Must Have NoEcho",
 		"zh": "敏感参数必须配置 NoEcho",

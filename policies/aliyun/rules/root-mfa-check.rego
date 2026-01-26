@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:root-mfa-check",
+	"id": "root-mfa-check",
 	"name": {
 		"en": "Root User MFA Check",
 		"zh": "主账号 MFA 检测",

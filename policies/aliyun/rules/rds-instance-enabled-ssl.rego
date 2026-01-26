@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:rds-instance-enabled-ssl",
+	"id": "rds-instance-enabled-ssl",
 	"name": {
 		"en": "RDS Instance SSL Enabled",
 		"zh": "RDS 实例开启 SSL 加密"

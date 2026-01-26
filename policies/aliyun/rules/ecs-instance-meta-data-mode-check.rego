@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-instance-meta-data-mode-check",
+	"id": "ecs-instance-meta-data-mode-check",
 	"name": {
 		"en": "ECS instance metadata access uses security-enhanced mode (IMDSv2)",
 		"zh": "访问 ECS 实例元数据时强制使用加固模式",
@@ -15,7 +15,7 @@ rule_meta := {
 		"zh": "访问 ECS 实例元数据时强制使用加固模式，视为合规。ACK 集群关联的实例视为不适用。",
 	},
 	"severity": "medium",
-	"resource_types": ["ALIYUN::ECS::Instance"],
+	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"],
 	"reason": {
 		"en": "ECS instance metadata is accessible without security-enhanced mode (IMDSv1)",
 		"zh": "ECS 实例元数据可在未启用加固模式(IMDSv1)的情况下访问",
@@ -27,7 +27,7 @@ rule_meta := {
 }
 
 deny contains result if {
-	some name, resource in helpers.resources_by_type("ALIYUN::ECS::Instance")
+	some name, resource in helpers.resources_by_types(["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"])
 
 	# Check if metadata endpoint is enabled
 	http_endpoint := helpers.get_property(resource, "HttpEndpoint", "enabled")
@@ -48,7 +48,7 @@ deny contains result if {
 }
 
 deny contains result if {
-	some name, resource in helpers.resources_by_type("ALIYUN::ECS::Instance")
+	some name, resource in helpers.resources_by_types(["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"])
 
 	# If endpoint is not disabled, check if tokens are required (IMDSv2)
 	http_endpoint := helpers.get_property(resource, "HttpEndpoint", "enabled")

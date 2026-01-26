@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:ess-scaling-configuration-enabled-internet-check",
+	"id": "ess-scaling-configuration-enabled-internet-check",
 	"name": {
 		"en": "ESS Scaling Configuration Internet Access Check",
 		"zh": "ESS 伸缩配置公网访问检测",

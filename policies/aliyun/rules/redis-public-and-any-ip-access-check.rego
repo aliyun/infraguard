@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:redis-public-and-any-ip-access-check",
+	"id": "redis-public-and-any-ip-access-check",
 	"name": {
 		"en": "Redis Public and Any IP Access Check",
 		"zh": "Redis 实例不开启公网或安全白名单不设置为允许任意来源访问",

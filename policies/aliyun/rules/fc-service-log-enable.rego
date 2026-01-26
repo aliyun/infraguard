@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:fc-service-log-enable",
+	"id": "fc-service-log-enable",
 	"name": {
 		"en": "FC Service Log Enable",
 		"zh": "函数计算服务启用日志功能",

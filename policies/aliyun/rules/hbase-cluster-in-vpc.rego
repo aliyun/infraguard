@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:hbase-cluster-in-vpc",
+	"id": "hbase-cluster-in-vpc",
 	"name": {
 		"en": "HBase Cluster in VPC",
 		"zh": "HBase 集群在 VPC 内",

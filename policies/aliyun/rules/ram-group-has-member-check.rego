@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:ram-group-has-member-check",
+	"id": "ram-group-has-member-check",
 	"name": {
 		"en": "RAM Group Has Member",
 		"zh": "识别无成员的空 RAM 用户组"

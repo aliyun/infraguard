@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:slb-all-listener-http-disabled",
+	"id": "slb-all-listener-http-disabled",
 	"name": {
 		"en": "SLB All Listeners HTTP Disabled",
 		"zh": "SLB 禁用 HTTP 监听"

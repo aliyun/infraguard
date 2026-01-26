@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-snapshot-retention-days",
+	"id": "ecs-snapshot-retention-days",
 	"name": {
 		"en": "ECS auto snapshot retention days meets requirements",
 		"zh": "ECS 自动快照保留天数满足指定要求",

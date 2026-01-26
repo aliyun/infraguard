@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-in-use-disk-encrypted",
+	"id": "ecs-in-use-disk-encrypted",
 	"name": {
 		"en": "ECS In-Use Disk Encryption",
 		"zh": "使用中的 ECS 数据磁盘开启加密",

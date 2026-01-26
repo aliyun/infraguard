@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:alb-server-group-multi-zone",
+	"id": "alb-server-group-multi-zone",
 	"name": {
 		"en": "ALB Server Group Multi-Zone Distribution",
 		"zh": "ALB 负载均衡服务器组添加多个可用区资源",

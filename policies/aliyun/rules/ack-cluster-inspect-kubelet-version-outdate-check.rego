@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:ack-cluster-inspect-kubelet-version-outdate-check",
+	"id": "ack-cluster-inspect-kubelet-version-outdate-check",
 	"name": {
 		"en": "ACK Kubelet Version Check",
 		"zh": "ACK 巡检：Kubelet 版本过时检测"

@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:oss-bucket-authorize-specified-ip",
+	"id": "oss-bucket-authorize-specified-ip",
 	"name": {
 		"en": "OSS Bucket Authorize Specified IP",
 		"zh": "OSS 存储桶策略授权特定 IP"

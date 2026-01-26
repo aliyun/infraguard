@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:api-gateway-group-https-policy-check",
+	"id": "api-gateway-group-https-policy-check",
 	"name": {
 		"en": "API Gateway Group HTTPS Policy Check",
 		"zh": "API 网关中 API 分组的 HTTPS 安全策略满足要求"

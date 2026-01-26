@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:rds-public-connection-and-any-ip-access-check",
+	"id": "rds-public-connection-and-any-ip-access-check",
 	"name": {
 		"en": "RDS Public Connection and Any IP Access Check",
 		"zh": "开启公网 IP 的 RDS 实例白名单未对所有来源开放",

@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:hbase-cluster-type-check",
+	"id": "hbase-cluster-type-check",
 	"name": {
 		"en": "HBase Cluster Type Check",
 		"zh": "HBase 集群实例类型检测",

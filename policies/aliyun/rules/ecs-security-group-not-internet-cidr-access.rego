@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata with i18n support
 rule_meta := {
-	"id": "rule:aliyun:ecs-security-group-not-internet-cidr-access",
+	"id": "ecs-security-group-not-internet-cidr-access",
 	"name": {
 		"en": "Security Group Ingress Source IP Not Include Public IP",
 		"zh": "安全组入网设置允许的来源 IP 不包含公网 IP",

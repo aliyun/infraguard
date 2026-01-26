@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:api-gateway-api-internet-request-https",
+	"id": "api-gateway-api-internet-request-https",
 	"name": {
 		"en": "API Gateway Internet Request HTTPS Enabled",
 		"zh": "API 网关公网请求开启 HTTPS",

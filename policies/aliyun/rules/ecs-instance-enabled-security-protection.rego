@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-instance-enabled-security-protection",
+	"id": "ecs-instance-enabled-security-protection",
 	"name": {
 		"en": "ECS Instance Enabled Security Protection",
 		"zh": "运行中的 ECS 实例开启云安全中心防护",
@@ -23,7 +23,7 @@ rule_meta := {
 		"en": "Enable security enhancement strategy for the ECS instance by setting SecurityEnhancementStrategy to 'Active'.",
 		"zh": "通过将 SecurityEnhancementStrategy 设置为 'Active' 为 ECS 实例开启安全增强策略。",
 	},
-	"resource_types": ["ALIYUN::ECS::Instance"],
+	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"],
 }
 
 is_compliant(resource) if {
@@ -31,7 +31,7 @@ is_compliant(resource) if {
 }
 
 deny contains result if {
-	some name, resource in helpers.resources_by_type("ALIYUN::ECS::Instance")
+	some name, resource in helpers.resources_by_types(["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"])
 	not is_compliant(resource)
 	result := {
 		"id": rule_meta.id,

@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:maxcompute-project-encryption-enabled",
+	"id": "maxcompute-project-encryption-enabled",
 	"name": {
 		"en": "MaxCompute Project Encryption Enabled",
 		"zh": "MaxCompute 项目开启加密"

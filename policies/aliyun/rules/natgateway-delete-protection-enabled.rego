@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:natgateway-delete-protection-enabled",
+	"id": "natgateway-delete-protection-enabled",
 	"name": {
 		"en": "NAT Gateway Deletion Protection Enabled",
 		"zh": "NAT 网关启用释放保护",

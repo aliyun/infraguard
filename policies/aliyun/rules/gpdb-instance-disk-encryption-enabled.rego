@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:gpdb-instance-disk-encryption-enabled",
+	"id": "gpdb-instance-disk-encryption-enabled",
 	"name": {
 		"en": "GPDB Disk Encryption Enabled",
 		"zh": "GPDB 开启磁盘加密"

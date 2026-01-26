@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:mongodb-instance-log-audit",
+	"id": "mongodb-instance-log-audit",
 	"name": {
 		"en": "MongoDB Instance Log Audit Enabled",
 		"zh": "MongoDB 实例开启操作日志审计"

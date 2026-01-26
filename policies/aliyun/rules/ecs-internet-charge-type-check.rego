@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:ecs-internet-charge-type-check",
+	"id": "ecs-internet-charge-type-check",
 	"name": {
 		"en": "ECS Internet Charge Type Check",
 		"zh": "ECS 公网带宽计费方式核查"

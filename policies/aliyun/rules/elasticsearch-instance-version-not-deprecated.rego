@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:elasticsearch-instance-version-not-deprecated",
+	"id": "elasticsearch-instance-version-not-deprecated",
 	"name": {
 		"en": "Elasticsearch Instance Does Not Use Deprecated Version",
 		"zh": "未使用不推荐的 Elasticsearch 实例版本",

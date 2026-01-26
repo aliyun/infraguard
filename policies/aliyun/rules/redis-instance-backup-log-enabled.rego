@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:redis-instance-backup-log-enabled",
+	"id": "redis-instance-backup-log-enabled",
 	"name": {
 		"en": "Redis Instance Backup Log Enabled",
 		"zh": "Redis 实例开启日志备份",

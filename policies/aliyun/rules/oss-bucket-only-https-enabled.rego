@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:oss-bucket-only-https-enabled",
+	"id": "oss-bucket-only-https-enabled",
 	"name": {
 		"en": "OSS Bucket Only HTTPS Enabled",
 		"zh": "OSS 存储桶开启仅允许 HTTPS 访问",

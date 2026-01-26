@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:slb-instance-default-server-group-multi-zone",
+	"id": "slb-instance-default-server-group-multi-zone",
 	"name": {
 		"en": "SLB Default Server Group Multi-Zone",
 		"zh": "SLB 负载均衡默认服务器组添加多个可用区资源"

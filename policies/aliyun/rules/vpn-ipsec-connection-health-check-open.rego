@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:vpn-ipsec-connection-health-check-open",
+	"id": "vpn-ipsec-connection-health-check-open",
 	"name": {
 		"en": "VPN IPsec Health Check Enabled",
 		"zh": "VPN IPsec 连接开启健康检查"

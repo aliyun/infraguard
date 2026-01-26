@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:ess-scaling-configuration-image-type-check",
+	"id": "ess-scaling-configuration-image-type-check",
 	"name": {
 		"en": "ESS Scaling Configuration Image Type Check",
 		"zh": "弹性伸缩配置中使用指定来源的镜像",

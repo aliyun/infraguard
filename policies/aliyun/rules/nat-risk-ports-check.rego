@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:nat-risk-ports-check",
+	"id": "nat-risk-ports-check",
 	"name": {
 		"en": "NAT Gateway Risk Ports Check",
 		"zh": "NAT 网关不允许映射指定的风险端口"

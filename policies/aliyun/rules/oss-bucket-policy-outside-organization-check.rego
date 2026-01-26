@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:oss-bucket-policy-outside-organization-check",
+	"id": "oss-bucket-policy-outside-organization-check",
 	"name": {
 		"en": "OSS Bucket Policy No Outside Organization Access",
 		"zh": "OSS 存储桶策略未给组织外授权"

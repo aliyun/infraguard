@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:oss-bucket-policy-no-any-anonymous",
+	"id": "oss-bucket-policy-no-any-anonymous",
 	"name": {
 		"en": "OSS bucket policy does not grant permissions to anonymous users",
 		"zh": "OSS 存储空间不能为匿名账号授予任何权限",

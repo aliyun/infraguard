@@ -5,7 +5,7 @@ import rego.v1
 import data.infraguard.helpers
 
 rule_meta := {
-	"id": "rule:aliyun:redis-instance-expired-check",
+	"id": "redis-instance-expired-check",
 	"name": {
 		"en": "Redis Prepaid Instance Expiration Check",
 		"zh": "Redis 预付费实例到期检查",

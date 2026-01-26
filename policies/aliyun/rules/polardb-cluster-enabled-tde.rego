@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:polardb-cluster-enabled-tde",
+	"id": "polardb-cluster-enabled-tde",
 	"name": {
 		"en": "PolarDB Cluster TDE Enabled",
 		"zh": "PolarDB 集群开启 TDE"

@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:waf-instance-logging-enabled",
+	"id": "waf-instance-logging-enabled",
 	"name": {
 		"en": "WAF Instance Logging Enabled",
 		"zh": "WAF 实例开启日志",

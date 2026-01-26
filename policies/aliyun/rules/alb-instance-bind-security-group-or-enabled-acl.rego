@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata with i18n support
 rule_meta := {
-	"id": "rule:aliyun:alb-instance-bind-security-group-or-enabled-acl",
+	"id": "alb-instance-bind-security-group-or-enabled-acl",
 	"name": {
 		"en": "ALB Instance Bind Security Group or Enable ACL",
 		"zh": "ALB 实例关联安全组或者为所有监听设置访问控制",

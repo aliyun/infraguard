@@ -6,7 +6,7 @@ import data.infraguard.helpers
 
 # Rule metadata
 rule_meta := {
-	"id": "rule:aliyun:ack-cluster-public-endpoint-check",
+	"id": "ack-cluster-public-endpoint-check",
 	"name": {
 		"en": "ACK Cluster Public Endpoint Check",
 		"zh": "ACK 集群未设置公网连接端点",

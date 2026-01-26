@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:apig-group-custom-trace-enabled",
+	"id": "apig-group-custom-trace-enabled",
 	"name": {
 		"en": "API Gateway Group Custom Trace Enabled",
 		"zh": "API 分组自定义追踪启用"

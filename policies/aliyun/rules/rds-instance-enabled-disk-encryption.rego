@@ -4,7 +4,7 @@ import data.infraguard.helpers
 import rego.v1
 
 rule_meta := {
-	"id": "rule:aliyun:rds-instance-enabled-disk-encryption",
+	"id": "rds-instance-enabled-disk-encryption",
 	"name": {
 		"en": "RDS Instance Disk Encryption Enabled",
 		"zh": "RDS 实例开启磁盘加密"
