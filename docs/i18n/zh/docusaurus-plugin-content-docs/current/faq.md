@@ -30,7 +30,7 @@ infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack
 
 ### 我可以在一次扫描中使用多个策略吗？
 
-可以！使用多个 `-p` 标志：
+可以！使用多个 `-p` 选项：
 
 ```bash
 infraguard scan template.yaml -p rule:aliyun:ecs-instance-no-public-ip -p pack:aliyun:quick-start-compliance-pack
@@ -45,7 +45,7 @@ InfraGuard 支持三种格式：
 
 ### 如何更改语言？
 
-使用 `--lang` 标志或永久设置：
+使用 `--lang` 选项或永久设置：
 
 ```bash
 infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack --lang zh

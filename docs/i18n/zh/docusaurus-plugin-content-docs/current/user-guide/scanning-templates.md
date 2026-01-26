@@ -16,11 +16,11 @@ infraguard scan <template> -p <policy>
 
 - `<template>`: ROS 模板文件路径（YAML 或 JSON）- 位置参数
 
-### 必需标志
+### 必需选项
 
 - `-p, --policy <id>`: 要应用的策略（可多次使用）
 
-### 可选标志
+### 可选选项
 
 - `--format <format>`: 输出格式（`table`、`json` 或 `html`）
 - `-o, --output <file>`: 输出文件路径（用于 HTML 和 JSON 格式）
@@ -204,7 +204,7 @@ infraguard scan "${TEMPLATE_FILE}" \
 1. **从快速入门包开始**：使用 `pack:aliyun:quick-start-compliance-pack` 进行基本检查
 2. **使用多个包**：组合多个包以获得全面覆盖
 3. **保存报告**：使用 HTML 格式用于利益相关者报告，JSON 用于自动化
-4. **一次性设置语言**：使用 `infraguard config set lang zh` 避免重复使用 `--lang` 标志
+4. **一次性设置语言**：使用 `infraguard config set lang zh` 避免重复使用 `--lang` 选项
 
 ## 下一步
 

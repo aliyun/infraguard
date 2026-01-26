@@ -18,10 +18,12 @@ infraguard scan <template> -p <policy> [flags]
 
 ## Flags
 
-- `-p, --policy <id>`: Policy to apply (can be used multiple times, required)
-- `--format <format>`: Output format (`table`, `json`, `html`)
-- `-o, --output <file>`: Output file path
-- `--lang <lang>`: Output language (`en` or `zh`)
+| Flag | Type | Description |
+|------|------|-------------|
+| `-p, --policy <id>` | string | Policy to apply (can be used multiple times, required) |
+| `--format <format>` | string | Output format (`table`, `json`, `html`) |
+| `-o, --output <file>` | string | Output file path |
+| `--lang <lang>` | string | Output language (`en` or `zh`) |
 
 ## Examples
 

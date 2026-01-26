@@ -92,6 +92,7 @@ const sidebars: SidebarsConfig = {
         'cli/scan',
         'cli/policy',
         'cli/config',
+        'cli/update',
       ],
     },
     {

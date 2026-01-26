@@ -9,19 +9,21 @@ title: infraguard scan
 ## 概要
 
 ```bash
-infraguard scan <template> -p <policy> [flags]
+infraguard scan <template> -p <policy> [选项]
 ```
 
 ## 参数
 
 - `<template>`: ROS 模板文件路径（必需，位置参数）
 
-## 标志
+## 选项
 
-- `-p, --policy <id>`: 要应用的策略（可多次使用，必需）
-- `--format <format>`: 输出格式（`table`、`json`、`html`）
-- `-o, --output <file>`: 输出文件路径
-- `--lang <lang>`: 输出语言（`en` 或 `zh`）
+| 选项 | 类型 | 说明 |
+|------|------|-------------|
+| `-p, --policy <id>` | 字符串 | 要应用的策略（可多次使用，必需） |
+| `--format <format>` | 字符串 | 输出格式（`table`、`json`、`html`） |
+| `-o, --output <file>` | 字符串 | 输出文件路径 |
+| `--lang <lang>` | 字符串 | 输出语言（`en` 或 `zh`） |
 
 ## 示例
 
