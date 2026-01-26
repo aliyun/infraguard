@@ -254,12 +254,18 @@ func (u *Updater) downloadAsset(asset *Asset) (string, error) {
 		return "", fmt.Errorf("download failed with status %d", resp.StatusCode)
 	}
 
-	// Create temporary file
-	tmpFile, err := os.CreateTemp("", "infraguard-update-*.tar.gz")
+	// Create temporary file (binary, not archive)
+	tmpFile, err := os.CreateTemp("", "infraguard-update-*")
 	if err != nil {
 		return "", err
 	}
 	defer tmpFile.Close()
+
+	// Set executable permissions on the temporary file
+	if err := os.Chmod(tmpFile.Name(), 0755); err != nil {
+		os.Remove(tmpFile.Name())
+		return "", fmt.Errorf("failed to set executable permissions: %w", err)
+	}
 
 	// Download with progress tracking
 	var downloaded int64
