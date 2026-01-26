@@ -9,7 +9,7 @@ import (
 )
 
 // Version is set at build time via -ldflags
-var Version = "0.2.0"
+var Version = "0.3.0"
 
 var versionCmd = &cobra.Command{
 	Use:   "version",
@@ -20,4 +20,10 @@ var versionCmd = &cobra.Command{
 		fmt.Printf("%s: %s\n", msg.Version.InfraGuard, Version)
 		fmt.Printf("%s: %s\n", msg.Version.OPA, version.Version)
 	},
+}
+
+// updateVersionCommandDescriptions updates the version command descriptions with i18n
+func updateVersionCommandDescriptions() {
+	versionCmd.Short = i18n.Get(func(m *i18n.Messages) string { return m.Version.Short })
+	versionCmd.Long = i18n.Get(func(m *i18n.Messages) string { return m.Version.Long })
 }

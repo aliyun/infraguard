@@ -64,6 +64,7 @@ func init() {
 	rootCmd.AddCommand(policyCmd)
 	rootCmd.AddCommand(scanCmd)
 	rootCmd.AddCommand(versionCmd)
+	rootCmd.AddCommand(updateCmd)
 	rootCmd.AddCommand(configCmd)
 }
 
@@ -104,8 +105,10 @@ func updateCommandDescriptions() {
 	scanCmd.Long = strings.TrimSpace(i18n.Get(func(m *i18n.Messages) string { return m.Scan.Long }))
 
 	// Version command
-	versionCmd.Short = i18n.Get(func(m *i18n.Messages) string { return m.Version.Short })
-	versionCmd.Long = strings.TrimSpace(i18n.Get(func(m *i18n.Messages) string { return m.Version.Long }))
+	updateVersionCommandDescriptions()
+
+	// Update command
+	updateUpdateCommandDescriptions()
 
 	// Update flag descriptions
 	if langFlag := rootCmd.PersistentFlags().Lookup("lang"); langFlag != nil {

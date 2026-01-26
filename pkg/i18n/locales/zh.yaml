@@ -168,6 +168,47 @@ policy_format:
   success_prefix: "✓ "
   needs_format_prefix: "✗ "
 
+# Update command
+update:
+  short: "更新 InfraGuard CLI 到最新版本"
+  long: |
+    将 InfraGuard CLI 更新到最新版本或指定版本。
+    从 GitHub Releases 下载并安装二进制文件。
+
+    示例：
+      infraguard update              # 更新到最新版本
+      infraguard update --check      # 仅检查更新
+      infraguard update --force      # 强制重新安装当前版本
+      infraguard update --version 0.3.0  # 更新到指定版本
+  check_flag: "仅检查更新而不安装"
+  force_flag: "即使版本是最新也强制更新"
+  version_flag: "更新到指定版本"
+  checking: "正在检查更新..."
+  current_version: "当前版本：%s"
+  latest_version: "最新版本：%s"
+  already_latest: "您已经在使用最新版本。"
+  update_available: "有新版本可用：%s"
+  downloading: "正在下载版本 %s..."
+  download_progress: "已下载 %s / %s (%.1f%%)"
+  extracting: "正在解压二进制文件..."
+  installing: "正在安装新版本..."
+  backup_created: "已创建备份"
+  success: "成功更新到版本 %s！"
+  success_windows: "成功更新到版本 %s！（注意：旧版本文件 '.old' 可以安全删除）"
+  restart_required: "请重启终端以使用新版本。"
+  restart_required_unix: "请重启终端或运行 'hash -r'（bash/zsh）以使用新版本。"
+  errors:
+    fetch_latest: "获取最新版本失败：%v"
+    fetch_specific: "获取版本 %s 失败：%v"
+    compare_versions: "比较版本失败：%v"
+    no_update_needed: "无需更新（当前：%s，目标：%s）"
+    download_failed: "下载失败：%v"
+    install_failed: "安装失败：%v"
+    permission_denied: "权限被拒绝。请尝试使用 sudo 运行或安装到用户可写的位置。"
+    unsupported_platform: "不支持的平台：%s/%s"
+    network_error: "网络错误：%v。请检查您的网络连接。"
+    rate_limit: "GitHub API 速率限制已超出。请稍后再试。"
+
 # Config command
 config:
   short: "管理 CLI 配置"

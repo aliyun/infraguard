@@ -169,6 +169,47 @@ policy_format:
   success_prefix: "✓ "
   needs_format_prefix: "✗ "
 
+# Update command
+update:
+  short: "Update InfraGuard CLI to the latest version"
+  long: |
+    Update InfraGuard CLI to the latest version or a specific version.
+    Downloads and installs the binary from GitHub Releases.
+
+    Examples:
+      infraguard update              # Update to latest version
+      infraguard update --check      # Check for updates only
+      infraguard update --force      # Force reinstall current version
+      infraguard update --version 0.3.0  # Update to specific version
+  check_flag: "Check for updates without installing"
+  force_flag: "Force update even if version is current"
+  version_flag: "Update to specific version"
+  checking: "Checking for updates..."
+  current_version: "Current version: %s"
+  latest_version: "Latest version: %s"
+  already_latest: "You are already using the latest version."
+  update_available: "A new version is available: %s"
+  downloading: "Downloading version %s..."
+  download_progress: "Downloaded %s / %s (%.1f%%)"
+  extracting: "Extracting binary..."
+  installing: "Installing new version..."
+  backup_created: "Backup created"
+  success: "Successfully updated to version %s!"
+  success_windows: "Successfully updated to version %s! (Note: The old version file '.old' can be safely deleted)"
+  restart_required: "Please restart your terminal to use the new version."
+  restart_required_unix: "Please restart your terminal or run 'hash -r' (bash/zsh) to use the new version."
+  errors:
+    fetch_latest: "Failed to fetch latest version: %v"
+    fetch_specific: "Failed to fetch version %s: %v"
+    compare_versions: "Failed to compare versions: %v"
+    no_update_needed: "No update needed (current: %s, target: %s)"
+    download_failed: "Download failed: %v"
+    install_failed: "Installation failed: %v"
+    permission_denied: "Permission denied. Try running with sudo or install to a user-writable location."
+    unsupported_platform: "Unsupported platform: %s/%s"
+    network_error: "Network error: %v. Please check your internet connection."
+    rate_limit: "GitHub API rate limit exceeded. Please try again later."
+
 # Config command
 config:
   short: "Manage CLI configuration"
