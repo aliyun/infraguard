@@ -75,6 +75,31 @@ Yes! Policies are written in Rego (Open Policy Agent language). See the [Develop
 infraguard policy validate my-rule.rego
 ```
 
+### How do I debug my policies?
+
+There are two ways:
+
+**1. Using Print Statements:**
+
+```rego
+deny contains result if {
+    print("Checking resource:", name)
+    print("Properties:", object.keys(resource.Properties))
+    # Your policy logic
+}
+```
+
+The output appears in stderr with file location.
+
+**2. Using VSCode Debugger:**
+
+- Install [OPA](https://www.openpolicyagent.org/docs#1-download-opa), [Regal](https://www.openpolicyagent.org/projects/regal#download-regal), and [VSCode OPA extension](https://marketplace.visualstudio.com/items?itemName=tsandall.opa)
+- Create `input.json` with your test data
+- Set breakpoints by clicking on line numbers
+- Press F5 to start debugging
+
+See [Debugging Policies](./development/debugging-policies) for complete guide.
+
 ## Troubleshooting
 
 ### Command not found: infraguard

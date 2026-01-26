@@ -75,6 +75,31 @@ infraguard policy update
 infraguard policy validate my-rule.rego
 ```
 
+### 如何调试我的策略？
+
+有两种方式：
+
+**1. 使用 Print 语句：**
+
+```rego
+deny contains result if {
+    print("检查资源:", name)
+    print("属性:", object.keys(resource.Properties))
+    # 您的策略逻辑
+}
+```
+
+输出将显示在标准错误流（stderr）中并包含文件位置。
+
+**2. 使用 VSCode 调试器：**
+
+- 安装 [OPA](https://www.openpolicyagent.org/docs#1-download-opa)、[Regal](https://www.openpolicyagent.org/projects/regal#download-regal) 和 [VSCode OPA 插件](https://marketplace.visualstudio.com/items?itemName=tsandall.opa)
+- 创建 `input.json` 测试数据文件
+- 点击行号设置断点
+- 按 F5 开始调试
+
+有关完整指南，请参阅[调试策略](./development/debugging-policies)。
+
 ## 故障排除
 
 ### 命令未找到：infraguard

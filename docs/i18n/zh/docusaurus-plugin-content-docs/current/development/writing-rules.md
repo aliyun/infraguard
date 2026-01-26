@@ -98,8 +98,23 @@ is_compliant(resource) if {
 infraguard policy validate my-rule.rego
 ```
 
+## 调试规则
+
+在开发过程中使用 print 语句调试规则：
+
+```rego
+deny contains result if {
+    print("检查资源:", name)
+    print("资源属性:", object.keys(resource.Properties))
+    # 您的逻辑
+}
+```
+
+有关全面的调试技术，请参阅[调试策略](./debugging-policies)。
+
 ## 下一步
 
+- 学习[调试策略](./debugging-policies)
 - 查看[策略验证](./policy-validation)
 - 学习[编写包](./writing-packs)
 - 了解[策略目录结构](./policy-directory)

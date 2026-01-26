@@ -80,6 +80,7 @@ const sidebars: SidebarsConfig = {
         'development/writing-packs',
         'development/policy-validation',
         'development/policy-directory',
+        'development/debugging-policies',
         'development/helper-functions',
       ],
     },

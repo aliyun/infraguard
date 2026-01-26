@@ -98,8 +98,23 @@ Always validate your rules:
 infraguard policy validate my-rule.rego
 ```
 
+## Debugging Rules
+
+Use print statements to debug your rules during development:
+
+```rego
+deny contains result if {
+    print("Checking resource:", name)
+    print("Resource properties:", object.keys(resource.Properties))
+    # Your logic here
+}
+```
+
+See [Debugging Policies](./debugging-policies) for comprehensive debugging techniques.
+
 ## Next Steps
 
+- Learn [Debugging Policies](./debugging-policies)
 - See [Policy Validation](./policy-validation)
 - Learn to [Write Packs](./writing-packs)
 - Learn about [Policy Directory Structure](./policy-directory)
