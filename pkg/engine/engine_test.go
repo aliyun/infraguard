@@ -1,11 +1,16 @@
 package engine
 
 import (
+	"bytes"
+	"context"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/aliyun/infraguard/pkg/models"
+	"github.com/open-policy-agent/opa/v1/ast"
+	"github.com/open-policy-agent/opa/v1/topdown/print"
 	. "github.com/smartystreets/goconvey/convey"
 )
 
@@ -431,6 +436,260 @@ func TestParseViolation(t *testing.T) {
 				So(err, ShouldBeNil)
 				So(len(v.ViolationPath), ShouldEqual, 3)
 				So(v.Meta.Recommendation, ShouldEqual, "Fix it")
+			})
+		})
+	})
+}
+
+func TestPrintHook(t *testing.T) {
+	Convey("Given the printHook implementation", t, func() {
+		hook := &printHook{}
+
+		Convey("When capturing print output with location", func() {
+			// Redirect stderr to capture output
+			oldStderr := os.Stderr
+			r, w, _ := os.Pipe()
+			os.Stderr = w
+
+			// Create a real print context with location
+			location := ast.NewLocation([]byte("test"), "/path/to/policy.rego", 42, 10)
+			ctx := print.Context{
+				Context:  context.Background(),
+				Location: location,
+			}
+
+			err := hook.Print(ctx, "test message")
+
+			// Restore stderr and read captured output
+			w.Close()
+			os.Stderr = oldStderr
+			var buf bytes.Buffer
+			buf.ReadFrom(r)
+			output := buf.String()
+
+			Convey("It should not return an error", func() {
+				So(err, ShouldBeNil)
+			})
+
+			Convey("It should include location and message", func() {
+				So(output, ShouldContainSubstring, "/path/to/policy.rego")
+				So(output, ShouldContainSubstring, "42")
+				So(output, ShouldContainSubstring, "test message")
+			})
+		})
+
+		Convey("When capturing print output without location", func() {
+			// Redirect stderr to capture output
+			oldStderr := os.Stderr
+			r, w, _ := os.Pipe()
+			os.Stderr = w
+
+			// Create a print context without location
+			ctx := print.Context{
+				Context:  context.Background(),
+				Location: nil,
+			}
+
+			err := hook.Print(ctx, "message without location")
+
+			// Restore stderr and read captured output
+			w.Close()
+			os.Stderr = oldStderr
+			var buf bytes.Buffer
+			buf.ReadFrom(r)
+			output := buf.String()
+
+			Convey("It should not return an error", func() {
+				So(err, ShouldBeNil)
+			})
+
+			Convey("It should output message without location prefix", func() {
+				So(output, ShouldEqual, "message without location\n")
+			})
+		})
+	})
+}
+
+func TestPrintStatementsIntegration(t *testing.T) {
+	Convey("Given a policy with print statements", t, func() {
+		tmpDir, err := os.MkdirTemp("", "engine-test-print")
+		So(err, ShouldBeNil)
+		defer os.RemoveAll(tmpDir)
+
+		// Create a policy with print statements
+		rulesDir := filepath.Join(tmpDir, "infraguard", "rules", "test", "print")
+		err = os.MkdirAll(rulesDir, 0755)
+		So(err, ShouldBeNil)
+
+		printPolicy := `package infraguard.rules.test.print
+
+deny contains violation if {
+    print("=== Starting evaluation ===")
+    input.test == true
+    print("Found test value:", input.test)
+    print("Creating violation")
+    
+    violation := {
+        "id": "PRINT-001",
+        "resource_id": "test",
+        "violation_path": ["test"],
+        "meta": {
+            "severity": "Low",
+            "reason": "Test with print"
+        }
+    }
+}
+`
+		err = os.WriteFile(filepath.Join(rulesDir, "print_test.rego"), []byte(printPolicy), 0644)
+		So(err, ShouldBeNil)
+
+		Convey("When evaluating with print statements enabled", func() {
+			// Redirect stderr to capture print output
+			oldStderr := os.Stderr
+			r, w, _ := os.Pipe()
+			os.Stderr = w
+
+			input := map[string]interface{}{"test": true}
+			violations, err := Evaluate(tmpDir, input)
+
+			// Restore stderr and read captured output
+			w.Close()
+			os.Stderr = oldStderr
+			var buf bytes.Buffer
+			buf.ReadFrom(r)
+			output := buf.String()
+
+			Convey("It should return violations", func() {
+				So(err, ShouldBeNil)
+				So(len(violations), ShouldEqual, 1)
+				So(violations[0].ID, ShouldEqual, "PRINT-001")
+			})
+
+			Convey("It should capture print output", func() {
+				So(output, ShouldContainSubstring, "Starting evaluation")
+				So(output, ShouldContainSubstring, "Found test value:")
+				So(output, ShouldContainSubstring, "Creating violation")
+			})
+
+			Convey("Print output should include file location", func() {
+				So(output, ShouldContainSubstring, "print_test.rego")
+			})
+		})
+
+		Convey("When evaluating with non-matching input", func() {
+			// Redirect stderr to capture print output
+			oldStderr := os.Stderr
+			r, w, _ := os.Pipe()
+			os.Stderr = w
+
+			input := map[string]interface{}{"test": false}
+			violations, err := Evaluate(tmpDir, input)
+
+			// Restore stderr and read captured output
+			w.Close()
+			os.Stderr = oldStderr
+			var buf bytes.Buffer
+			buf.ReadFrom(r)
+			output := buf.String()
+
+			Convey("It should return no violations", func() {
+				So(err, ShouldBeNil)
+				So(len(violations), ShouldEqual, 0)
+			})
+
+			Convey("It should still capture initial print output", func() {
+				So(output, ShouldContainSubstring, "Starting evaluation")
+			})
+
+			Convey("It should not capture prints after failed condition", func() {
+				So(output, ShouldNotContainSubstring, "Creating violation")
+			})
+		})
+	})
+}
+
+func TestPrintWithComplexData(t *testing.T) {
+	Convey("Given a policy that prints complex data structures", t, func() {
+		tmpDir, err := os.MkdirTemp("", "engine-test-print-complex")
+		So(err, ShouldBeNil)
+		defer os.RemoveAll(tmpDir)
+
+		rulesDir := filepath.Join(tmpDir, "infraguard", "rules", "test", "complex")
+		err = os.MkdirAll(rulesDir, 0755)
+		So(err, ShouldBeNil)
+
+		complexPolicy := `package infraguard.rules.test.complex
+
+deny contains violation if {
+    print("Input keys:", object.keys(input))
+    some key, value in input.resources
+    print("Resource:", key, "Type:", value.type)
+    
+    value.type == "OSS::Bucket"
+    
+    violation := {
+        "id": "COMPLEX-001",
+        "resource_id": key,
+        "violation_path": ["resources", key],
+        "meta": {
+            "severity": "Medium",
+            "reason": "Complex data test"
+        }
+    }
+}
+`
+		err = os.WriteFile(filepath.Join(rulesDir, "complex.rego"), []byte(complexPolicy), 0644)
+		So(err, ShouldBeNil)
+
+		Convey("When printing complex nested structures", func() {
+			// Redirect stderr to capture print output
+			oldStderr := os.Stderr
+			r, w, _ := os.Pipe()
+			os.Stderr = w
+
+			input := map[string]interface{}{
+				"resources": map[string]interface{}{
+					"bucket1": map[string]interface{}{
+						"type": "OSS::Bucket",
+						"name": "my-bucket",
+					},
+					"bucket2": map[string]interface{}{
+						"type": "ECS::Instance",
+						"name": "my-instance",
+					},
+				},
+			}
+
+			violations, err := Evaluate(tmpDir, input)
+
+			// Restore stderr and read captured output
+			w.Close()
+			os.Stderr = oldStderr
+			var buf bytes.Buffer
+			buf.ReadFrom(r)
+			output := buf.String()
+
+			Convey("It should evaluate correctly", func() {
+				So(err, ShouldBeNil)
+				So(len(violations), ShouldEqual, 1)
+			})
+
+			Convey("It should print complex data structures", func() {
+				So(output, ShouldContainSubstring, "Input keys:")
+				So(output, ShouldContainSubstring, "resources")
+				So(output, ShouldContainSubstring, "Resource:")
+			})
+
+			Convey("It should print resource iteration details", func() {
+				lines := strings.Split(output, "\n")
+				resourceLines := 0
+				for _, line := range lines {
+					if strings.Contains(line, "Resource:") {
+						resourceLines++
+					}
+				}
+				// Should iterate through both resources
+				So(resourceLines, ShouldBeGreaterThanOrEqualTo, 1)
 			})
 		})
 	})

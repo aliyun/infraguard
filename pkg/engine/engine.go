@@ -12,6 +12,7 @@ import (
 	"github.com/aliyun/infraguard/pkg/i18n"
 	"github.com/aliyun/infraguard/pkg/models"
 	"github.com/open-policy-agent/opa/v1/rego"
+	"github.com/open-policy-agent/opa/v1/topdown/print"
 )
 
 // Query is the OPA evaluation entry point that collects deny results from all packages.
@@ -20,6 +21,19 @@ const Query = "[v | v := data.infraguard.rules[_][_].deny[_]]"
 
 // RulesQuery is the query for all declared rule IDs.
 const RulesQuery = "[id | id := data.infraguard.rules[_][_].rule_meta.id]"
+
+// printHook implements print.Hook interface to capture print() output from Rego policies.
+type printHook struct{}
+
+// Print implements the print.Hook interface, sending output to stderr.
+func (h *printHook) Print(ctx print.Context, msg string) error {
+	location := ""
+	if ctx.Location != nil {
+		location = ctx.Location.String() + ": "
+	}
+	fmt.Fprintf(os.Stderr, "%s%s\n", location, msg)
+	return nil
+}
 
 // EvalResult contains the evaluation results including violations and rule statistics.
 type EvalResult struct {
@@ -118,10 +132,14 @@ func EvaluateWithOpts(opts *EvalOptions, input map[string]interface{}) (*EvalRes
 	ctx := context.Background()
 
 	// Build module options (shared between queries)
-	moduleOpts := make([]func(*rego.Rego), 0, len(modules))
+	moduleOpts := make([]func(*rego.Rego), 0, len(modules)+2)
 	for name, content := range modules {
 		moduleOpts = append(moduleOpts, rego.Module(name, content))
 	}
+
+	// Enable print output to stderr for debugging
+	moduleOpts = append(moduleOpts, rego.EnablePrintStatements(true))
+	moduleOpts = append(moduleOpts, rego.PrintHook(&printHook{}))
 
 	// Determine targeted query if specific rules are requested
 	evaluationQuery := Query
