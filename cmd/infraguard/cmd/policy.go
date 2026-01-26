@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 	"sort"
@@ -67,9 +68,21 @@ var policyFormatCmd = &cobra.Command{
 	SilenceUsage: true,
 }
 
+var policyCleanCmd = &cobra.Command{
+	Use:          "clean",
+	Short:        "", // Set dynamically
+	Long:         "", // Set dynamically
+	RunE:         runPolicyClean,
+	SilenceUsage: true,
+}
+
 var (
 	formatWrite bool
 	formatDiff  bool
+)
+
+var (
+	cleanForce bool
 )
 
 // Color definitions
@@ -86,6 +99,7 @@ func init() {
 	policyCmd.AddCommand(policyListCmd)
 	policyCmd.AddCommand(policyValidateCmd)
 	policyCmd.AddCommand(policyFormatCmd)
+	policyCmd.AddCommand(policyCleanCmd)
 
 	// Flag descriptions - using English as default since init runs before language detection
 	policyUpdateCmd.Flags().StringVar(&policyRepo, "repo", policy.DefaultRepo,
@@ -98,6 +112,10 @@ func init() {
 		"Write formatted output to files")
 	policyFormatCmd.Flags().BoolVarP(&formatDiff, "diff", "d", false,
 		"Show diff output only")
+
+	// Clean command flags
+	policyCleanCmd.Flags().BoolVarP(&cleanForce, "force", "f", false,
+		"Skip confirmation and clean directly")
 }
 
 func runPolicyUpdate(cmd *cobra.Command, args []string) error {
@@ -603,6 +621,51 @@ func runPolicyFormat(cmd *cobra.Command, args []string) error {
 	// Exit with error if files need formatting and not in write mode
 	if summary.ChangedFiles > 0 && !formatWrite {
 		return fmt.Errorf("%s", msg.PolicyFormat.NeedsFormat)
+	}
+
+	return nil
+}
+
+func runPolicyClean(cmd *cobra.Command, args []string) error {
+	msg := i18n.Msg()
+	policyDir := policy.DefaultPolicyDir()
+
+	// If not using --force, show confirmation prompt
+	if !cleanForce {
+		fmt.Printf(msg.PolicyClean.Confirm, policyDir)
+
+		scanner := bufio.NewScanner(os.Stdin)
+		if !scanner.Scan() {
+			// EOF or error reading input - treat as cancel
+			fmt.Println(msg.PolicyClean.Cancelled)
+			return nil
+		}
+
+		input := strings.ToLower(strings.TrimSpace(scanner.Text()))
+		if input != "y" && input != "yes" {
+			fmt.Println(msg.PolicyClean.Cancelled)
+			return nil
+		}
+	}
+
+	// Perform the clean operation
+	fmt.Println(msg.PolicyClean.Progress)
+
+	pm := policy.NewManager(policyDir)
+	if err := pm.Clean(); err != nil {
+		return err
+	}
+
+	// Check if directory existed (if Clean succeeded but directory is gone, it existed)
+	if _, err := os.Stat(policyDir); os.IsNotExist(err) {
+		// Directory was cleaned or didn't exist
+		if cleanForce {
+			// In force mode, directory might not have existed
+			fmt.Println(msg.PolicyClean.Success)
+		} else {
+			// User confirmed, so directory existed and was cleaned
+			fmt.Println(msg.PolicyClean.Success)
+		}
 	}
 
 	return nil

@@ -3,6 +3,7 @@ package policy
 import (
 	"os"
 	"path/filepath"
+	"runtime"
 	"testing"
 
 	"github.com/aliyun/infraguard/pkg/models"
@@ -986,6 +987,84 @@ deny contains result if {
 				// Should have rules from both sources (plus any embedded if present)
 				rules := loader.GetAllRules()
 				So(len(rules), ShouldBeGreaterThanOrEqualTo, 2)
+			})
+		})
+	})
+}
+
+func TestManager_Clean(t *testing.T) {
+	Convey("Given a Manager instance", t, func() {
+		// Create a temporary directory for testing
+		tmpDir, err := os.MkdirTemp("", "policy-clean-test")
+		So(err, ShouldBeNil)
+		defer os.RemoveAll(tmpDir)
+
+		policyDir := filepath.Join(tmpDir, "policies")
+		manager := NewManager(policyDir)
+
+		Convey("When cleaning a directory that exists", func() {
+			// Create the directory with some files
+			err := os.MkdirAll(filepath.Join(policyDir, "subdir"), 0755)
+			So(err, ShouldBeNil)
+			err = os.WriteFile(filepath.Join(policyDir, "file.txt"), []byte("test"), 0644)
+			So(err, ShouldBeNil)
+
+			err = manager.Clean()
+
+			Convey("It should succeed", func() {
+				So(err, ShouldBeNil)
+			})
+
+			Convey("It should remove the directory", func() {
+				_, statErr := os.Stat(policyDir)
+				So(os.IsNotExist(statErr), ShouldBeTrue)
+			})
+		})
+
+		Convey("When cleaning a directory that does not exist", func() {
+			// Ensure directory doesn't exist
+			os.RemoveAll(policyDir)
+
+			err := manager.Clean()
+
+			Convey("It should succeed without error", func() {
+				So(err, ShouldBeNil)
+			})
+		})
+
+		Convey("When cleaning fails due to permissions", func() {
+			// This test is platform-dependent and may not work on all systems
+			// On Unix-like systems, we can create a read-only parent directory
+			// Skip on Windows as file permissions work differently there
+			if runtime.GOOS == "windows" {
+				SkipConvey("Skipping permission test on Windows", func() {})
+				return
+			}
+
+			// Skip if running as root (permissions won't work as expected)
+			if os.Getuid() == 0 {
+				SkipConvey("Skipping permission test when running as root", func() {})
+				return
+			}
+
+			readOnlyParent := filepath.Join(tmpDir, "readonly")
+			err := os.MkdirAll(readOnlyParent, 0755)
+			So(err, ShouldBeNil)
+
+			protectedDir := filepath.Join(readOnlyParent, "protected")
+			err = os.MkdirAll(protectedDir, 0755)
+			So(err, ShouldBeNil)
+
+			// Make parent read-only
+			err = os.Chmod(readOnlyParent, 0555)
+			So(err, ShouldBeNil)
+			defer os.Chmod(readOnlyParent, 0755) // Restore permissions for cleanup
+
+			protectedManager := NewManager(protectedDir)
+			err = protectedManager.Clean()
+
+			Convey("It should return an error", func() {
+				So(err, ShouldNotBeNil)
 			})
 		})
 	})

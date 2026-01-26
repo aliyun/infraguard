@@ -66,6 +66,30 @@ infraguard policy update
 
 这将下载策略到 `~/.infraguard/policies/`，优先于嵌入式策略。
 
+## 清理策略
+
+要从用户目录中删除已下载的策略：
+
+```bash
+infraguard policy clean
+```
+
+此命令：
+- 删除 `~/.infraguard/policies/` 中的所有策略
+- 默认情况下提示确认
+- 不影响嵌入式策略（它们仍然可用）
+- 不影响 `.infraguard/policies/` 中的工作区策略
+
+### 强制清理（无需确认）
+
+对于脚本或非交互式环境：
+
+```bash
+infraguard policy clean --force
+# 或
+infraguard policy clean -f
+```
+
 ### 策略加载优先级
 
 InfraGuard 按以下优先级（从高到低）从三个来源加载策略：

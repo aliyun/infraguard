@@ -139,5 +139,18 @@ func TestPolicyCommand(t *testing.T) {
 				So(versionFlag, ShouldNotBeNil)
 			})
 		})
+
+		Convey("When checking policy clean command", func() {
+			Convey("Command structure should be correct", func() {
+				So(policyCleanCmd.Use, ShouldEqual, "clean")
+				So(policyCleanCmd.RunE, ShouldNotBeNil)
+			})
+
+			Convey("Command flags should be defined", func() {
+				forceFlag := policyCleanCmd.Flags().Lookup("force")
+				So(forceFlag, ShouldNotBeNil)
+				So(forceFlag.Shorthand, ShouldEqual, "f")
+			})
+		})
 	})
 }

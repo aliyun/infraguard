@@ -249,6 +249,25 @@ func (m *Manager) Update(repo, version string) error {
 	return nil
 }
 
+// Clean removes the policy directory and all its contents.
+// If the directory doesn't exist, this is not considered an error.
+func (m *Manager) Clean() error {
+	msg := i18n.Msg()
+
+	// Check if directory exists
+	if _, err := os.Stat(m.policyDir); os.IsNotExist(err) {
+		// Directory doesn't exist - this is fine
+		return nil
+	}
+
+	// Remove the directory and all contents
+	if err := os.RemoveAll(m.policyDir); err != nil {
+		return fmt.Errorf(msg.Errors.CleanPolicyDirectory, err)
+	}
+
+	return nil
+}
+
 // buildGetterURL constructs a go-getter compatible URL from various repo formats.
 // Supported formats:
 // - host/path (e.g., github.com/aliyun/infraguard)

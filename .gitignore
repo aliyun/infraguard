@@ -54,8 +54,7 @@ __pycache__
 # Others
 .cursor
 .gemini
-openspec/changes
-openspec/specs
+openspec
 
 # infraguard
 /report.html

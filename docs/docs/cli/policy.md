@@ -47,5 +47,16 @@ infraguard policy format rule.rego --write
 infraguard policy format rule.rego --diff
 ```
 
+### clean
+
+Clean user policy directory:
+```bash
+infraguard policy clean              # Interactive mode with confirmation
+infraguard policy clean --force      # Skip confirmation
+infraguard policy clean -f           # Short flag
+```
+
+Removes all policies from `~/.infraguard/policies/`. Does not affect embedded policies or workspace policies.
+
 For more details, see [Managing Policies](../user-guide/managing-policies).
 

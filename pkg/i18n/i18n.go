@@ -126,6 +126,18 @@ type Messages struct {
 		NeedsFormatPrefix string `yaml:"needs_format_prefix"`
 	} `yaml:"policy_format"`
 
+	// Policy clean command
+	PolicyClean struct {
+		Short        string `yaml:"short"`
+		Long         string `yaml:"long"`
+		ForceFlag    string `yaml:"force_flag"`
+		Confirm      string `yaml:"confirm"`
+		Progress     string `yaml:"progress"`
+		Success      string `yaml:"success"`
+		AlreadyClean string `yaml:"already_clean"`
+		Cancelled    string `yaml:"cancelled"`
+	} `yaml:"policy_clean"`
+
 	// Update command
 	Update struct {
 		Short               string `yaml:"short"`

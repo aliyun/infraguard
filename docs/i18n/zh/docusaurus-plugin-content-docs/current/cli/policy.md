@@ -47,5 +47,16 @@ infraguard policy format rule.rego --write
 infraguard policy format rule.rego --diff
 ```
 
+### clean
+
+清理用户策略目录：
+```bash
+infraguard policy clean              # 交互式模式，需要确认
+infraguard policy clean --force      # 跳过确认
+infraguard policy clean -f           # 短标志
+```
+
+删除 `~/.infraguard/policies/` 中的所有策略。不会影响内嵌策略或工作区策略。
+
 有关更多详细信息，请参阅[管理策略](../user-guide/managing-policies)。
 

@@ -169,6 +169,28 @@ policy_format:
   success_prefix: "✓ "
   needs_format_prefix: "✗ "
 
+# Policy clean command
+policy_clean:
+  short: "Clean user policy directory"
+  long: |
+    Remove all policies from the user policy directory (~/.infraguard/policies/).
+    This does not affect embedded policies or workspace policies.
+
+    By default, asks for confirmation before deleting.
+    Use --force to skip confirmation (useful in scripts).
+
+    Examples:
+      infraguard policy clean        # Interactive mode with confirmation
+      infraguard policy clean -f     # Force clean without confirmation
+  force_flag: "Skip confirmation and clean directly"
+  confirm: |
+    Warning: This will delete all policies in: %s
+    Are you sure you want to continue? (y/yes to confirm): 
+  progress: "Cleaning policy directory..."
+  success: "Policy directory cleaned successfully."
+  already_clean: "Policy directory is already clean or does not exist."
+  cancelled: "Operation cancelled."
+
 # Update command
 update:
   short: "Update InfraGuard CLI to the latest version"

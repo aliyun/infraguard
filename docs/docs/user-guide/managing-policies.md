@@ -66,6 +66,30 @@ infraguard policy update
 
 This downloads policies to `~/.infraguard/policies/`, which takes precedence over embedded policies.
 
+## Cleaning Policies
+
+To remove downloaded policies from your user directory:
+
+```bash
+infraguard policy clean
+```
+
+This command:
+- Removes all policies from `~/.infraguard/policies/`
+- Prompts for confirmation by default
+- Does not affect embedded policies (they remain available)
+- Does not affect workspace policies in `.infraguard/policies/`
+
+### Force Clean (No Confirmation)
+
+For scripts or non-interactive environments:
+
+```bash
+infraguard policy clean --force
+# or
+infraguard policy clean -f
+```
+
 ### Policy Loading Priority
 
 InfraGuard loads policies from three sources with the following priority (highest to lowest):
