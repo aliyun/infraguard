@@ -31,9 +31,18 @@ func TestLoadCredentials(t *testing.T) {
 			So(err, ShouldBeNil)
 			defer os.RemoveAll(tmpDir)
 
+			// Ensure tmpDir is absolute path
+			tmpDir, err = filepath.Abs(tmpDir)
+			So(err, ShouldBeNil)
+
 			oldHome := os.Getenv("HOME")
-			defer os.Setenv("HOME", oldHome)
+			oldUserProfile := os.Getenv("USERPROFILE")
+			defer func() {
+				os.Setenv("HOME", oldHome)
+				os.Setenv("USERPROFILE", oldUserProfile)
+			}()
 			os.Setenv("HOME", tmpDir)
+			os.Setenv("USERPROFILE", tmpDir)
 
 			_, err = LoadCredentials()
 
@@ -46,6 +55,10 @@ func TestLoadCredentials(t *testing.T) {
 			tmpDir, err := os.MkdirTemp("", "aliyun-config-test")
 			So(err, ShouldBeNil)
 			defer os.RemoveAll(tmpDir)
+
+			// Ensure tmpDir is absolute path
+			tmpDir, err = filepath.Abs(tmpDir)
+			So(err, ShouldBeNil)
 
 			aliyunDir := filepath.Join(tmpDir, ".aliyun")
 			err = os.MkdirAll(aliyunDir, 0755)
@@ -70,8 +83,13 @@ func TestLoadCredentials(t *testing.T) {
 			So(err, ShouldBeNil)
 
 			oldHome := os.Getenv("HOME")
-			defer os.Setenv("HOME", oldHome)
+			oldUserProfile := os.Getenv("USERPROFILE")
+			defer func() {
+				os.Setenv("HOME", oldHome)
+				os.Setenv("USERPROFILE", oldUserProfile)
+			}()
 			os.Setenv("HOME", tmpDir)
+			os.Setenv("USERPROFILE", tmpDir)
 
 			creds, err := LoadCredentials()
 
@@ -88,6 +106,10 @@ func TestLoadCredentials(t *testing.T) {
 			So(err, ShouldBeNil)
 			defer os.RemoveAll(tmpDir)
 
+			// Ensure tmpDir is absolute path
+			tmpDir, err = filepath.Abs(tmpDir)
+			So(err, ShouldBeNil)
+
 			aliyunDir := filepath.Join(tmpDir, ".aliyun")
 			err = os.MkdirAll(aliyunDir, 0755)
 			So(err, ShouldBeNil)
@@ -97,8 +119,13 @@ func TestLoadCredentials(t *testing.T) {
 			So(err, ShouldBeNil)
 
 			oldHome := os.Getenv("HOME")
-			defer os.Setenv("HOME", oldHome)
+			oldUserProfile := os.Getenv("USERPROFILE")
+			defer func() {
+				os.Setenv("HOME", oldHome)
+				os.Setenv("USERPROFILE", oldUserProfile)
+			}()
 			os.Setenv("HOME", tmpDir)
+			os.Setenv("USERPROFILE", tmpDir)
 
 			_, err = LoadCredentials()
 
@@ -111,6 +138,10 @@ func TestLoadCredentials(t *testing.T) {
 			tmpDir, err := os.MkdirTemp("", "aliyun-config-test")
 			So(err, ShouldBeNil)
 			defer os.RemoveAll(tmpDir)
+
+			// Ensure tmpDir is absolute path
+			tmpDir, err = filepath.Abs(tmpDir)
+			So(err, ShouldBeNil)
 
 			aliyunDir := filepath.Join(tmpDir, ".aliyun")
 			err = os.MkdirAll(aliyunDir, 0755)
@@ -134,8 +165,13 @@ func TestLoadCredentials(t *testing.T) {
 			So(err, ShouldBeNil)
 
 			oldHome := os.Getenv("HOME")
-			defer os.Setenv("HOME", oldHome)
+			oldUserProfile := os.Getenv("USERPROFILE")
+			defer func() {
+				os.Setenv("HOME", oldHome)
+				os.Setenv("USERPROFILE", oldUserProfile)
+			}()
 			os.Setenv("HOME", tmpDir)
+			os.Setenv("USERPROFILE", tmpDir)
 
 			_, err = LoadCredentials()
 
@@ -148,6 +184,10 @@ func TestLoadCredentials(t *testing.T) {
 			tmpDir, err := os.MkdirTemp("", "aliyun-config-test")
 			So(err, ShouldBeNil)
 			defer os.RemoveAll(tmpDir)
+
+			// Ensure tmpDir is absolute path
+			tmpDir, err = filepath.Abs(tmpDir)
+			So(err, ShouldBeNil)
 
 			aliyunDir := filepath.Join(tmpDir, ".aliyun")
 			err = os.MkdirAll(aliyunDir, 0755)
@@ -171,8 +211,13 @@ func TestLoadCredentials(t *testing.T) {
 			So(err, ShouldBeNil)
 
 			oldHome := os.Getenv("HOME")
-			defer os.Setenv("HOME", oldHome)
+			oldUserProfile := os.Getenv("USERPROFILE")
+			defer func() {
+				os.Setenv("HOME", oldHome)
+				os.Setenv("USERPROFILE", oldUserProfile)
+			}()
 			os.Setenv("HOME", tmpDir)
+			os.Setenv("USERPROFILE", tmpDir)
 
 			_, err = LoadCredentials()
 

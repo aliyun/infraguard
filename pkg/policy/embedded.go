@@ -148,19 +148,25 @@ func (l *Loader) LoadEmbedded() error {
 // Supports provider-first structure: "policies/aliyun/rules/ecs_public_ip.rego" with base "policies/aliyun/rules" -> "rule:aliyun"
 // For embedded FS paths: "aliyun/rules/ecs_public_ip.rego" with base "aliyun/rules" -> "rule:aliyun"
 func GenerateIDPrefix(filePath, baseDir, idType string) string {
+	// Normalize paths to use forward slashes for cross-platform consistency
+	filePath = filepath.ToSlash(filePath)
+	baseDir = filepath.ToSlash(baseDir)
+
 	// Get relative path from base directory
-	relPath, err := filepath.Rel(baseDir, filePath)
+	relPath, err := filepath.Rel(filepath.FromSlash(baseDir), filepath.FromSlash(filePath))
 	if err != nil {
 		return idType + ":"
 	}
+	relPath = filepath.ToSlash(relPath)
 
 	// Get directory part (without filename)
-	dir := filepath.Dir(relPath)
+	dir := filepath.Dir(filepath.FromSlash(relPath))
+	dir = filepath.ToSlash(dir)
 	if dir == "." {
 		// File is directly in baseDir, extract provider from baseDir
 		// baseDir format: policies/{provider}/rules or policies/{provider}/packs
 		// or {provider}/rules or {provider}/packs
-		parts := strings.Split(baseDir, string(filepath.Separator))
+		parts := strings.Split(baseDir, "/")
 		// Find "rules" or "packs" directory and the element before it is the provider
 		for i := len(parts) - 1; i > 0; i-- {
 			if parts[i] == "rules" || parts[i] == "packs" {
@@ -178,13 +184,13 @@ func GenerateIDPrefix(filePath, baseDir, idType string) string {
 	}
 
 	// Convert directory separators to colons
-	parts := strings.Split(dir, string(filepath.Separator))
+	parts := strings.Split(dir, "/")
 	if len(parts) == 0 {
 		return idType + ":"
 	}
 
 	// Extract provider from baseDir: {provider}/rules or {provider}/packs
-	baseParts := strings.Split(baseDir, string(filepath.Separator))
+	baseParts := strings.Split(baseDir, "/")
 	var provider string
 	// Find "rules" or "packs" directory and the element before it is the provider
 	for i := len(baseParts) - 1; i > 0; i-- {

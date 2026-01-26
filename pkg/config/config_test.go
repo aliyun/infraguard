@@ -17,8 +17,17 @@ func TestConfig(t *testing.T) {
 
 		// Override home directory for testing
 		origHome := os.Getenv("HOME")
+		origUserProfile := os.Getenv("USERPROFILE")
 		os.Setenv("HOME", tempDir)
-		defer os.Setenv("HOME", origHome)
+		os.Setenv("USERPROFILE", tempDir)
+		defer func() {
+			os.Setenv("HOME", origHome)
+			os.Setenv("USERPROFILE", origUserProfile)
+		}()
+
+		// Ensure config directory and file are clean at the start
+		configDir := filepath.Join(tempDir, ".infraguard")
+		os.RemoveAll(configDir)
 
 		Convey("DefaultConfigDir should return correct path", func() {
 			dir, err := DefaultConfigDir()

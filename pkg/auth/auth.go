@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"runtime"
 
 	"github.com/aliyun/infraguard/pkg/i18n"
 )
@@ -35,15 +34,9 @@ type AliyunProfile struct {
 
 // aliyunConfigPath returns the path to Aliyun CLI config file.
 func aliyunConfigPath() string {
-	var home string
-	if runtime.GOOS == "windows" {
-		home = os.Getenv("HOMEPATH")
-	} else {
-		var err error
-		home, err = os.UserHomeDir()
-		if err != nil {
-			return ""
-		}
+	home, err := os.UserHomeDir()
+	if err != nil {
+		return ""
 	}
 	return filepath.Join(home, ".aliyun", "config.json")
 }
