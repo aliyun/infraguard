@@ -15,6 +15,17 @@ Evaluate your ROS YAML/JSON templates against security and compliance policies *
 
 InfraGuard is a command-line tool that helps you ensure your infrastructure code meets security and compliance standards before deploying to production. It uses Open Policy Agent (OPA) and Rego policies to evaluate your templates.
 
+## Policy as Code
+
+InfraGuard embraces the **Policy as Code** approach - treating compliance policies as first-class code artifacts that can be versioned, tested, and automated.
+
+- **Version Control** - Store policies in Git alongside your infrastructure code. Track changes, review history, and roll back when needed.
+- **Automated Testing** - Write unit tests for your policies using sample templates. Ensure policies work correctly before applying them to production.
+- **Code Review** - Apply the same peer review process to policy changes as you do for application code. Catch issues early through collaboration.
+- **CI/CD Integration** - Integrate policy checks into your CI/CD pipeline. Automatically validate every infrastructure change against compliance requirements.
+- **Reusability** - Compose individual rules into compliance packs. Share policies across teams and projects to maintain consistency.
+- **Declarative** - Define *what* compliance means using Rego's declarative syntax, not *how* to check it. Focus on the outcome, not the implementation.
+
 ## Key Features
 
 - **Pre-deployment Validation** - Catch compliance issues before they reach production

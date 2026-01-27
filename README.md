@@ -8,6 +8,8 @@
 
 **Infrastructure as Code (IaC) compliance pre-check CLI** for Alibaba Cloud ROS templates. Evaluate your ROS YAML/JSON templates against security and compliance policies **before deployment**.
 
+> 💡 InfraGuard embraces **Policy as Code** - treating compliance policies as versioned, testable, and reusable code artifacts.
+
 **Language**: English | [中文](README.zh.md)
 
 ## ✨ Features
