@@ -14,6 +14,7 @@ import (
 	"github.com/aliyun/infraguard/pkg/models"
 	"github.com/aliyun/infraguard/pkg/policy"
 	"github.com/aliyun/infraguard/pkg/reporter"
+	"github.com/aliyun/infraguard/pkg/resolver"
 	"github.com/spf13/cobra"
 )
 
@@ -178,6 +179,10 @@ func runScan(cmd *cobra.Command, args []string) error {
 		if err != nil {
 			return fmt.Errorf(msg.Scan.FileError, templatePath, err)
 		}
+
+		// Resolve intrinsic functions (Ref, Fn::Join, Fn::Sub, etc.)
+		// This happens after parameter resolution and before policy evaluation
+		resolvedTemplate = resolver.ResolveFunctions(resolvedTemplate, nil)
 
 		// Load and evaluate policies
 		// We reuse evalOpts which contains loaded policies

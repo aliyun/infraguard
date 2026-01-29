@@ -6,6 +6,7 @@ require (
 	github.com/Xuanwo/go-locale v1.1.2
 	github.com/fatih/color v1.18.0
 	github.com/hashicorp/go-getter v1.8.3
+	github.com/hashicorp/go-version v1.6.0
 	github.com/olekukonko/tablewriter v1.1.2
 	github.com/open-policy-agent/opa v1.12.1
 	github.com/smartystreets/goconvey v1.8.1
@@ -60,7 +61,6 @@ require (
 	github.com/gopherjs/gopherjs v1.17.2 // indirect
 	github.com/hashicorp/aws-sdk-go-base/v2 v2.0.0-beta.65 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
-	github.com/hashicorp/go-version v1.6.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jtolds/gls v4.20.0+incompatible // indirect
 	github.com/klauspost/compress v1.18.1 // indirect

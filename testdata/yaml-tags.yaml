@@ -1,0 +1,70 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Test template with YAML tags for ROS intrinsic functions
+
+Parameters:
+  Environment:
+    Type: String
+    Default: production
+  AppName:
+    Type: String
+    Default: myapp
+  InstanceType:
+    Type: String
+    Default: ecs.c6.large
+
+Resources:
+  MyVpc:
+    Type: ALIYUN::ECS::VPC
+    Properties:
+      VpcName: !Join ["-", [!Ref Environment, "vpc"]]
+      CidrBlock: 10.0.0.0/16
+      Description: !Sub "VPC for ${AppName} in ${Environment}"
+
+  MySecurityGroup:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName: !Join ["-", [!Ref AppName, "sg"]]
+      VpcId: !Ref MyVpc
+      Description: !Sub "Security group for ${AppName}"
+
+  MyInstance:
+    Type: ALIYUN::ECS::InstanceGroup
+    Properties:
+      InstanceName: !Join ["-", [!Ref Environment, !Ref AppName, "server"]]
+      InstanceType: !Ref InstanceType
+      VpcId: !Ref MyVpc
+      SecurityGroupId: !Ref MySecurityGroup
+      ImageId: ubuntu_18_04_64_20G_alibase_20190624.vhd
+      UserData: !Base64Encode |
+        #!/bin/bash
+        echo "App: ${AppName}"
+        echo "Environment: ${Environment}"
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Application
+          Value: !Ref AppName
+
+  MyDB:
+    Type: ALIYUN::RDS::DBInstance
+    Properties:
+      DBInstanceClass: rds.mysql.s1.small
+      Engine: MySQL
+      EngineVersion: "8.0"
+
+Outputs:
+  VpcId:
+    Value: !Ref MyVpc
+    Description: VPC ID
+  
+  InstanceEndpoint:
+    Value: !GetAtt [MyInstance, PublicIp]
+    Description: Instance public IP (should be preserved as GetAtt)
+  
+  DBConnectionString:
+    Value: !GetAtt [MyDB, ConnectionString]
+    Description: Database connection string (should be preserved as GetAtt)
+  
+  InstanceName:
+    Value: !Join ["-", [!Ref Environment, !Ref AppName, "server"]]
+    Description: Full instance name

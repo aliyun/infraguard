@@ -105,19 +105,43 @@ func TestResolveParameters(t *testing.T) {
 		t.Fatalf("ResolveParameters() error = %v", err)
 	}
 
+	// Check that parameters are resolved in the Parameters section
+	params := got["Parameters"].(map[string]interface{})
+	instanceTypeParam := params["InstanceType"].(map[string]interface{})
+	if instanceTypeParam["ResolvedValue"] != "ecs.t5-lc1m1.small" {
+		t.Errorf("InstanceType not resolved correctly in Parameters: got %v", instanceTypeParam["ResolvedValue"])
+	}
+
+	vpcIdParam := params["VpcId"].(map[string]interface{})
+	if vpcIdParam["ResolvedValue"] != "vpc-12345" {
+		t.Errorf("VpcId not resolved correctly in Parameters: got %v", vpcIdParam["ResolvedValue"])
+	}
+
+	amountParam := params["Amount"].(map[string]interface{})
+	resolvedAmount := amountParam["ResolvedValue"]
+	if resolvedAmount != 2.0 && resolvedAmount != 2 {
+		t.Errorf("Amount not resolved or typed correctly in Parameters: got %v (%T)", resolvedAmount, resolvedAmount)
+	}
+
+	// Check that Resources section still contains Ref (not resolved)
 	resources := got["Resources"].(map[string]interface{})
 	myInstance := resources["MyInstance"].(map[string]interface{})
 	properties := myInstance["Properties"].(map[string]interface{})
 
-	if properties["InstanceType"] != "ecs.t5-lc1m1.small" {
-		t.Errorf("InstanceType not resolved correctly: got %v", properties["InstanceType"])
+	// Ref should NOT be resolved - should remain as {"Ref": "..."}
+	instanceTypeRef, ok := properties["InstanceType"].(map[string]interface{})
+	if !ok || instanceTypeRef["Ref"] != "InstanceType" {
+		t.Errorf("InstanceType Ref should be preserved: got %v", properties["InstanceType"])
 	}
-	if properties["VpcId"] != "vpc-12345" {
-		t.Errorf("VpcId not resolved correctly: got %v", properties["VpcId"])
+
+	vpcIdRef, ok := properties["VpcId"].(map[string]interface{})
+	if !ok || vpcIdRef["Ref"] != "VpcId" {
+		t.Errorf("VpcId Ref should be preserved: got %v", properties["VpcId"])
 	}
-	// "2" should be converted to float64 (or int) by validateParamType
-	if properties["Amount"] != 2.0 && properties["Amount"] != 2 {
-		t.Errorf("Amount not resolved or typed correctly: got %v (%T)", properties["Amount"], properties["Amount"])
+
+	amountRef, ok := properties["Amount"].(map[string]interface{})
+	if !ok || amountRef["Ref"] != "Amount" {
+		t.Errorf("Amount Ref should be preserved: got %v", properties["Amount"])
 	}
 }
 
@@ -159,9 +183,10 @@ func TestResolveParameters_DefaultNull(t *testing.T) {
 	properties := myResource["Properties"].(map[string]interface{})
 
 	// When Default is null, parameter is added to resolvedParams with nil value
-	// Ref should be resolved to nil (not remain as Ref)
-	if properties["TraceSampling"] != nil {
-		t.Errorf("TraceSampling should be resolved to nil when Default is null and no input provided, got %v (%T)", properties["TraceSampling"], properties["TraceSampling"])
+	// Ref should NOT be resolved - should remain as Ref in Resources
+	traceSamplingRef, ok := properties["TraceSampling"].(map[string]interface{})
+	if !ok || traceSamplingRef["Ref"] != "TraceSampling" {
+		t.Errorf("TraceSampling Ref should be preserved when Default is null and no input provided, got %v (%T)", properties["TraceSampling"], properties["TraceSampling"])
 	}
 
 	// Test with explicit input parameter (should validate type)
@@ -177,9 +202,10 @@ func TestResolveParameters_DefaultNull(t *testing.T) {
 	myResource2 := resources2["MyResource"].(map[string]interface{})
 	properties2 := myResource2["Properties"].(map[string]interface{})
 
-	// Should be resolved to a number (0.5)
-	if properties2["TraceSampling"] != 0.5 && properties2["TraceSampling"] != float64(0.5) {
-		t.Errorf("TraceSampling should be resolved to 0.5, got %v (%T)", properties2["TraceSampling"], properties2["TraceSampling"])
+	// Ref should NOT be resolved - should remain as Ref in Resources
+	traceSamplingRef2, ok := properties2["TraceSampling"].(map[string]interface{})
+	if !ok || traceSamplingRef2["Ref"] != "TraceSampling" {
+		t.Errorf("TraceSampling Ref should be preserved, got %v (%T)", properties2["TraceSampling"], properties2["TraceSampling"])
 	}
 }
 
@@ -217,9 +243,10 @@ func TestResolveParameters_RefPrecedence(t *testing.T) {
 	myInstance := resources["MyInstance"].(map[string]interface{})
 	properties := myInstance["Properties"].(map[string]interface{})
 
-	// Should resolve to parameter value because it exists in Parameters
-	if properties["Prop"] != "ParamValue" {
-		t.Errorf("Precedence fail: got %v, want ParamValue", properties["Prop"])
+	// Ref should NOT be resolved - should remain as Ref structure
+	propRef, ok := properties["Prop"].(map[string]interface{})
+	if !ok || propRef["Ref"] != "MyName" {
+		t.Errorf("Prop Ref should be preserved: got %v", properties["Prop"])
 	}
 
 	// Should NOT resolve because it only exists in Resources

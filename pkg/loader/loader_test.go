@@ -607,3 +607,290 @@ Outputs:
 		})
 	})
 }
+
+func TestYAMLTagParsing(t *testing.T) {
+	Convey("Given the LoadLocal function with YAML tags", t, func() {
+		Convey("When loading YAML with !Ref tag", func() {
+			tmpDir, err := os.MkdirTemp("", "loader-test")
+			So(err, ShouldBeNil)
+			defer os.RemoveAll(tmpDir)
+
+			yamlContent := `ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  WebServer:
+    Type: ALIYUN::ECS::InstanceGroup
+    Properties:
+      InstanceType: !Ref MyParameter
+`
+
+			yamlPath := filepath.Join(tmpDir, "ref-test.yaml")
+			err = os.WriteFile(yamlPath, []byte(yamlContent), 0644)
+			So(err, ShouldBeNil)
+
+			_, data, err := LoadLocal(yamlPath)
+
+			Convey("It should parse successfully", func() {
+				So(err, ShouldBeNil)
+			})
+
+			Convey("It should convert !Ref to map format", func() {
+				resources := data["Resources"].(map[string]interface{})
+				webServer := resources["WebServer"].(map[string]interface{})
+				props := webServer["Properties"].(map[string]interface{})
+				instanceType := props["InstanceType"].(map[string]interface{})
+				So(instanceType["Ref"], ShouldEqual, "MyParameter")
+			})
+		})
+
+		Convey("When loading YAML with !Join tag", func() {
+			tmpDir, err := os.MkdirTemp("", "loader-test")
+			So(err, ShouldBeNil)
+			defer os.RemoveAll(tmpDir)
+
+			yamlContent := `ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  WebServer:
+    Type: ALIYUN::ECS::InstanceGroup
+    Properties:
+      InstanceName: !Join ["-", ["web", "server", "prod"]]
+`
+
+			yamlPath := filepath.Join(tmpDir, "join-test.yaml")
+			err = os.WriteFile(yamlPath, []byte(yamlContent), 0644)
+			So(err, ShouldBeNil)
+
+			_, data, err := LoadLocal(yamlPath)
+
+			Convey("It should parse successfully", func() {
+				So(err, ShouldBeNil)
+			})
+
+			Convey("It should convert !Join to Fn::Join format", func() {
+				resources := data["Resources"].(map[string]interface{})
+				webServer := resources["WebServer"].(map[string]interface{})
+				props := webServer["Properties"].(map[string]interface{})
+				instanceName := props["InstanceName"].(map[string]interface{})
+				joinFunc := instanceName["Fn::Join"].([]interface{})
+				So(joinFunc[0], ShouldEqual, "-")
+				parts := joinFunc[1].([]interface{})
+				So(len(parts), ShouldEqual, 3)
+				So(parts[0], ShouldEqual, "web")
+			})
+		})
+
+		Convey("When loading YAML with !Sub tag", func() {
+			tmpDir, err := os.MkdirTemp("", "loader-test")
+			So(err, ShouldBeNil)
+			defer os.RemoveAll(tmpDir)
+
+			yamlContent := `ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  WebServer:
+    Type: ALIYUN::ECS::InstanceGroup
+    Properties:
+      UserData: !Sub "Hello ${Name}"
+`
+
+			yamlPath := filepath.Join(tmpDir, "sub-test.yaml")
+			err = os.WriteFile(yamlPath, []byte(yamlContent), 0644)
+			So(err, ShouldBeNil)
+
+			_, data, err := LoadLocal(yamlPath)
+
+			Convey("It should parse successfully", func() {
+				So(err, ShouldBeNil)
+			})
+
+			Convey("It should convert !Sub to Fn::Sub format", func() {
+				resources := data["Resources"].(map[string]interface{})
+				webServer := resources["WebServer"].(map[string]interface{})
+				props := webServer["Properties"].(map[string]interface{})
+				userData := props["UserData"].(map[string]interface{})
+				So(userData["Fn::Sub"], ShouldEqual, "Hello ${Name}")
+			})
+		})
+
+		Convey("When loading YAML with !Base64Encode tag", func() {
+			tmpDir, err := os.MkdirTemp("", "loader-test")
+			So(err, ShouldBeNil)
+			defer os.RemoveAll(tmpDir)
+
+			yamlContent := `ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  WebServer:
+    Type: ALIYUN::ECS::InstanceGroup
+    Properties:
+      UserData: !Base64Encode "hello world"
+`
+
+			yamlPath := filepath.Join(tmpDir, "base64-test.yaml")
+			err = os.WriteFile(yamlPath, []byte(yamlContent), 0644)
+			So(err, ShouldBeNil)
+
+			_, data, err := LoadLocal(yamlPath)
+
+			Convey("It should parse successfully", func() {
+				So(err, ShouldBeNil)
+			})
+
+			Convey("It should convert !Base64Encode to Fn::Base64Encode format", func() {
+				resources := data["Resources"].(map[string]interface{})
+				webServer := resources["WebServer"].(map[string]interface{})
+				props := webServer["Properties"].(map[string]interface{})
+				userData := props["UserData"].(map[string]interface{})
+				So(userData["Fn::Base64Encode"], ShouldEqual, "hello world")
+			})
+		})
+
+		Convey("When loading YAML with !GetAtt tag", func() {
+			tmpDir, err := os.MkdirTemp("", "loader-test")
+			So(err, ShouldBeNil)
+			defer os.RemoveAll(tmpDir)
+
+			yamlContent := `ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  WebServer:
+    Type: ALIYUN::ECS::InstanceGroup
+    Properties:
+      Endpoint: !GetAtt [MyDB, ConnectionString]
+`
+
+			yamlPath := filepath.Join(tmpDir, "getatt-test.yaml")
+			err = os.WriteFile(yamlPath, []byte(yamlContent), 0644)
+			So(err, ShouldBeNil)
+
+			_, data, err := LoadLocal(yamlPath)
+
+			Convey("It should parse successfully", func() {
+				So(err, ShouldBeNil)
+			})
+
+			Convey("It should convert !GetAtt to Fn::GetAtt format", func() {
+				resources := data["Resources"].(map[string]interface{})
+				webServer := resources["WebServer"].(map[string]interface{})
+				props := webServer["Properties"].(map[string]interface{})
+				endpoint := props["Endpoint"].(map[string]interface{})
+				getAtt := endpoint["Fn::GetAtt"].([]interface{})
+				So(len(getAtt), ShouldEqual, 2)
+				So(getAtt[0], ShouldEqual, "MyDB")
+				So(getAtt[1], ShouldEqual, "ConnectionString")
+			})
+		})
+
+		Convey("When loading YAML with nested tags", func() {
+			tmpDir, err := os.MkdirTemp("", "loader-test")
+			So(err, ShouldBeNil)
+			defer os.RemoveAll(tmpDir)
+
+			yamlContent := `ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  WebServer:
+    Type: ALIYUN::ECS::InstanceGroup
+    Properties:
+      InstanceName: !Join ["-", [!Ref Prefix, "suffix"]]
+`
+
+			yamlPath := filepath.Join(tmpDir, "nested-test.yaml")
+			err = os.WriteFile(yamlPath, []byte(yamlContent), 0644)
+			So(err, ShouldBeNil)
+
+			_, data, err := LoadLocal(yamlPath)
+
+			Convey("It should parse successfully", func() {
+				So(err, ShouldBeNil)
+			})
+
+			Convey("It should convert nested tags correctly", func() {
+				resources := data["Resources"].(map[string]interface{})
+				webServer := resources["WebServer"].(map[string]interface{})
+				props := webServer["Properties"].(map[string]interface{})
+				instanceName := props["InstanceName"].(map[string]interface{})
+				joinFunc := instanceName["Fn::Join"].([]interface{})
+				parts := joinFunc[1].([]interface{})
+				So(len(parts), ShouldEqual, 2)
+
+				// First element should be a Ref
+				ref := parts[0].(map[string]interface{})
+				So(ref["Ref"], ShouldEqual, "Prefix")
+
+				// Second element should be a string
+				So(parts[1], ShouldEqual, "suffix")
+			})
+		})
+
+		Convey("When loading JSON format with Ref", func() {
+			tmpDir, err := os.MkdirTemp("", "loader-test")
+			So(err, ShouldBeNil)
+			defer os.RemoveAll(tmpDir)
+
+			jsonContent := `{
+  "ROSTemplateFormatVersion": "2015-09-01",
+  "Resources": {
+    "WebServer": {
+      "Type": "ALIYUN::ECS::InstanceGroup",
+      "Properties": {
+        "InstanceType": {"Ref": "MyParameter"}
+      }
+    }
+  }
+}`
+
+			jsonPath := filepath.Join(tmpDir, "json-ref-test.json")
+			err = os.WriteFile(jsonPath, []byte(jsonContent), 0644)
+			So(err, ShouldBeNil)
+
+			_, data, err := LoadLocal(jsonPath)
+
+			Convey("It should parse successfully", func() {
+				So(err, ShouldBeNil)
+			})
+
+			Convey("It should have the same structure as YAML !Ref", func() {
+				resources := data["Resources"].(map[string]interface{})
+				webServer := resources["WebServer"].(map[string]interface{})
+				props := webServer["Properties"].(map[string]interface{})
+				instanceType := props["InstanceType"].(map[string]interface{})
+				So(instanceType["Ref"], ShouldEqual, "MyParameter")
+			})
+		})
+
+		Convey("When loading JSON format with Fn::Join", func() {
+			tmpDir, err := os.MkdirTemp("", "loader-test")
+			So(err, ShouldBeNil)
+			defer os.RemoveAll(tmpDir)
+
+			jsonContent := `{
+  "ROSTemplateFormatVersion": "2015-09-01",
+  "Resources": {
+    "WebServer": {
+      "Type": "ALIYUN::ECS::InstanceGroup",
+      "Properties": {
+        "InstanceName": {"Fn::Join": ["-", ["web", "server"]]}
+      }
+    }
+  }
+}`
+
+			jsonPath := filepath.Join(tmpDir, "json-join-test.json")
+			err = os.WriteFile(jsonPath, []byte(jsonContent), 0644)
+			So(err, ShouldBeNil)
+
+			_, data, err := LoadLocal(jsonPath)
+
+			Convey("It should parse successfully", func() {
+				So(err, ShouldBeNil)
+			})
+
+			Convey("It should have the same structure as YAML !Join", func() {
+				resources := data["Resources"].(map[string]interface{})
+				webServer := resources["WebServer"].(map[string]interface{})
+				props := webServer["Properties"].(map[string]interface{})
+				instanceName := props["InstanceName"].(map[string]interface{})
+				joinFunc := instanceName["Fn::Join"].([]interface{})
+				So(joinFunc[0], ShouldEqual, "-")
+				parts := joinFunc[1].([]interface{})
+				So(len(parts), ShouldEqual, 2)
+			})
+		})
+	})
+}

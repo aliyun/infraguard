@@ -1,0 +1,101 @@
+{
+  "ROSTemplateFormatVersion": "2015-09-01",
+  "Description": "Test template with JSON format for ROS intrinsic functions",
+  "Parameters": {
+    "Environment": {
+      "Type": "String",
+      "Default": "production"
+    },
+    "AppName": {
+      "Type": "String",
+      "Default": "myapp"
+    },
+    "InstanceType": {
+      "Type": "String",
+      "Default": "ecs.c6.large"
+    }
+  },
+  "Resources": {
+    "MyVpc": {
+      "Type": "ALIYUN::ECS::VPC",
+      "Properties": {
+        "VpcName": {
+          "Fn::Join": ["-", [{"Ref": "Environment"}, "vpc"]]
+        },
+        "CidrBlock": "10.0.0.0/16",
+        "Description": {
+          "Fn::Sub": "VPC for ${AppName} in ${Environment}"
+        }
+      }
+    },
+    "MySecurityGroup": {
+      "Type": "ALIYUN::ECS::SecurityGroup",
+      "Properties": {
+        "SecurityGroupName": {
+          "Fn::Join": ["-", [{"Ref": "AppName"}, "sg"]]
+        },
+        "VpcId": {"Ref": "MyVpc"},
+        "Description": {
+          "Fn::Sub": "Security group for ${AppName}"
+        }
+      }
+    },
+    "MyInstance": {
+      "Type": "ALIYUN::ECS::InstanceGroup",
+      "Properties": {
+        "InstanceName": {
+          "Fn::Join": ["-", [{"Ref": "Environment"}, {"Ref": "AppName"}, "server"]]
+        },
+        "InstanceType": {"Ref": "InstanceType"},
+        "VpcId": {"Ref": "MyVpc"},
+        "SecurityGroupId": {"Ref": "MySecurityGroup"},
+        "ImageId": "ubuntu_18_04_64_20G_alibase_20190624.vhd",
+        "UserData": {
+          "Fn::Base64Encode": "#!/bin/bash\necho \"App: ${AppName}\"\necho \"Environment: ${Environment}\"\n"
+        },
+        "Tags": [
+          {
+            "Key": "Environment",
+            "Value": {"Ref": "Environment"}
+          },
+          {
+            "Key": "Application",
+            "Value": {"Ref": "AppName"}
+          }
+        ]
+      }
+    },
+    "MyDB": {
+      "Type": "ALIYUN::RDS::DBInstance",
+      "Properties": {
+        "DBInstanceClass": "rds.mysql.s1.small",
+        "Engine": "MySQL",
+        "EngineVersion": "8.0"
+      }
+    }
+  },
+  "Outputs": {
+    "VpcId": {
+      "Value": {"Ref": "MyVpc"},
+      "Description": "VPC ID"
+    },
+    "InstanceEndpoint": {
+      "Value": {
+        "Fn::GetAtt": ["MyInstance", "PublicIp"]
+      },
+      "Description": "Instance public IP (should be preserved as GetAtt)"
+    },
+    "DBConnectionString": {
+      "Value": {
+        "Fn::GetAtt": ["MyDB", "ConnectionString"]
+      },
+      "Description": "Database connection string (should be preserved as GetAtt)"
+    },
+    "InstanceName": {
+      "Value": {
+        "Fn::Join": ["-", [{"Ref": "Environment"}, {"Ref": "AppName"}, "server"]]
+      },
+      "Description": "Full instance name"
+    }
+  }
+}

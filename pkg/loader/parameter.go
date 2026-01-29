@@ -189,12 +189,12 @@ func ValidateInputParameters(template map[string]interface{}, inputParams models
 }
 
 // ResolveParameters resolves parameters in the template using provided input values and defaults.
+// Note: This function only handles parameter resolution (CLI inputs and defaults).
 func ResolveParameters(template map[string]interface{}, inputParams models.TemplateParams) (map[string]interface{}, error) {
 	// 1. Extract Parameters definition
 	paramsDef, ok := template["Parameters"].(map[string]interface{})
 	if !ok {
-		// No parameters defined, nothing to resolve (unless we want to support Ref to things not in Parameters?)
-		// But according to design, we only resolve Ref if it exists in Parameters.
+		// No parameters defined, nothing to resolve
 		return template, nil
 	}
 
@@ -220,7 +220,7 @@ func ResolveParameters(template map[string]interface{}, inputParams models.Templ
 		}
 
 		if found {
-			// Type validation (Task 1.3.4)
+			// Type validation
 			validatedVal, err := validateParamType(paramName, val, paramDef)
 			if err != nil {
 				return nil, err
@@ -229,94 +229,35 @@ func ResolveParameters(template map[string]interface{}, inputParams models.Templ
 		}
 	}
 
-	// 3. Resolve Ref in Resources
-	resources, ok := template["Resources"].(map[string]interface{})
-	if !ok {
-		return template, nil
-	}
-
-	// Deep copy resources to avoid modifying the original data
-	resolvedResources := deepCopyMap(resources)
-	resolveRefs(resolvedResources, resolvedParams)
-
-	// Create a new template map with resolved resources
+	// Store resolved parameters back in the template
+	// (Function resolution will be handled separately in the resource processing stage)
 	resolvedTemplate := make(map[string]interface{})
 	for k, v := range template {
-		if k == "Resources" {
-			resolvedTemplate[k] = resolvedResources
-		} else {
-			resolvedTemplate[k] = v
+		resolvedTemplate[k] = v
+	}
+
+	// Update Parameters section with resolved values
+	if len(resolvedParams) > 0 {
+		updatedParamsDef := make(map[string]interface{})
+		for paramName, paramDef := range paramsDef {
+			if resolvedVal, ok := resolvedParams[paramName]; ok {
+				// Update the parameter definition with the resolved value
+				defCopy := make(map[string]interface{})
+				if pd, ok := paramDef.(map[string]interface{}); ok {
+					for k, v := range pd {
+						defCopy[k] = v
+					}
+					defCopy["ResolvedValue"] = resolvedVal
+				}
+				updatedParamsDef[paramName] = defCopy
+			} else {
+				updatedParamsDef[paramName] = paramDef
+			}
 		}
+		resolvedTemplate["Parameters"] = updatedParamsDef
 	}
 
 	return resolvedTemplate, nil
-}
-
-func resolveRefs(data interface{}, params map[string]interface{}) {
-	switch v := data.(type) {
-	case map[string]interface{}:
-		for key, val := range v {
-			if isRef(val, params) {
-				v[key] = getRefValue(val, params)
-			} else {
-				resolveRefs(val, params)
-			}
-		}
-	case []interface{}:
-		for i, val := range v {
-			if isRef(val, params) {
-				v[i] = getRefValue(val, params)
-			} else {
-				resolveRefs(val, params)
-			}
-		}
-	}
-}
-
-func isRef(data interface{}, params map[string]interface{}) bool {
-	m, ok := data.(map[string]interface{})
-	if !ok || len(m) != 1 {
-		return false
-	}
-	refVal, ok := m["Ref"]
-	if !ok {
-		return false
-	}
-	refName, ok := refVal.(string)
-	if !ok {
-		return false
-	}
-	_, exists := params[refName]
-	return exists
-}
-
-func getRefValue(data interface{}, params map[string]interface{}) interface{} {
-	m := data.(map[string]interface{})
-	refName := m["Ref"].(string)
-	return params[refName]
-}
-
-func deepCopyMap(m map[string]interface{}) map[string]interface{} {
-	cp := make(map[string]interface{})
-	for k, v := range m {
-		cp[k] = deepCopyValue(v)
-	}
-	return cp
-}
-
-func deepCopyValue(v interface{}) interface{} {
-	switch v := v.(type) {
-	case map[string]interface{}:
-		return deepCopyMap(v)
-	case []interface{}:
-		cp := make([]interface{}, len(v))
-		for i, val := range v {
-			cp[i] = deepCopyValue(val)
-		}
-		return cp
-	default:
-		return v
-	}
 }
 
 func validateParamType(name string, val interface{}, def map[string]interface{}) (interface{}, error) {
