@@ -31,6 +31,7 @@ const sidebars: SidebarsConfig = {
         'user-guide/managing-policies',
         'user-guide/output-formats',
         'user-guide/configuration',
+        'user-guide/ros-features',
       ],
     },
     {
@@ -80,7 +81,6 @@ const sidebars: SidebarsConfig = {
         'development/writing-packs',
         'development/policy-validation',
         'development/policy-directory',
-        'development/debugging-policies',
         'development/helper-functions',
       ],
     },
@@ -92,7 +92,6 @@ const sidebars: SidebarsConfig = {
         'cli/scan',
         'cli/policy',
         'cli/config',
-        'cli/update',
       ],
     },
     {
