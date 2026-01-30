@@ -69,9 +69,6 @@ InfraGuard fully supports the [ROS Conditions](https://www.alibabacloud.com/help
 InfraGuard supports the YAML short syntax (tag notation) for ROS functions:
 
 - `!Ref` - Short form of `Ref`
-- `!Join` - Short form of `Fn::Join`
-- `!Sub` - Short form of `Fn::Sub`
-- `!Base64Encode` - Short form of `Fn::Base64Encode`
 - `!GetAtt` - Short form of `Fn::GetAtt`
 - All other `Fn::*` functions can be written as `!FunctionName`
 

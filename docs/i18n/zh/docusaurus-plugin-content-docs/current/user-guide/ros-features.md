@@ -69,9 +69,6 @@ InfraGuard 完全支持 [ROS 条件](https://help.aliyun.com/zh/ros/user-guide/c
 InfraGuard 支持 ROS 函数的 YAML 短语法（标签表示法）：
 
 - `!Ref` - `Ref` 的简写形式
-- `!Join` - `Fn::Join` 的简写形式
-- `!Sub` - `Fn::Sub` 的简写形式
-- `!Base64Encode` - `Fn::Base64Encode` 的简写形式
 - `!GetAtt` - `Fn::GetAtt` 的简写形式
 - 所有其他 `Fn::*` 函数都可以写作 `!FunctionName`
 
