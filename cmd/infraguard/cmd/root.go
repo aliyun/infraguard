@@ -215,6 +215,9 @@ func updateScanFlagDescriptions() {
 	if f := flags.Lookup("output"); f != nil {
 		f.Usage = msg.Scan.OutputFlag
 	}
+	if f := flags.Lookup("mode"); f != nil {
+		f.Usage = msg.Scan.ModeFlag
+	}
 }
 
 // updatePolicyUpdateFlagDescriptions updates policy update command flag descriptions.
