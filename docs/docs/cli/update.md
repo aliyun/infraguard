@@ -54,7 +54,6 @@ Latest version: 0.3.0
 → Downloading version 0.3.0...
 Downloaded 5.2 MiB / 5.2 MiB (100.0%)
 ✓ Successfully updated to version 0.3.0!
-⚠ Please restart your terminal or run 'hash -r' to use the new version.
 ```
 
 ### Update to Specific Version

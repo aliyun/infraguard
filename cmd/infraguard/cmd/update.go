@@ -128,10 +128,8 @@ func runUpdate(cmd *cobra.Command, args []string) error {
 	// Platform-specific success message
 	if runtime.GOOS == "windows" {
 		fmt.Println(color.GreenString("✓ ") + fmt.Sprintf(msg.Update.SuccessWindows, versionToInstall))
-		fmt.Println(color.YellowString("⚠ ") + msg.Update.RestartRequired)
 	} else {
 		fmt.Println(color.GreenString("✓ ") + fmt.Sprintf(msg.Update.Success, versionToInstall))
-		fmt.Println(color.YellowString("⚠ ") + msg.Update.RestartRequiredUnix)
 	}
 
 	return nil

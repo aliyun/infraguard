@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
@@ -326,7 +327,18 @@ func replaceBinary(newBinaryPath string) error {
 	}
 
 	// Unix-like systems: direct replacement
-	return replaceUnixBinary(newBinaryPath, currentPath)
+	if err := replaceUnixBinary(newBinaryPath, currentPath); err != nil {
+		return err
+	}
+
+	// On macOS, remove quarantine attributes to prevent Gatekeeper from blocking execution
+	if runtime.GOOS == "darwin" {
+		if err := removeQuarantineAttributes(currentPath); err != nil {
+			return fmt.Errorf("failed to prepare binary for execution: %w", err)
+		}
+	}
+
+	return nil
 }
 
 // replaceUnixBinary handles binary replacement on Unix-like systems
@@ -417,4 +429,35 @@ func copyFile(src, dst string) error {
 	}
 
 	return os.Chmod(dst, sourceInfo.Mode())
+}
+
+// removeQuarantineAttributes removes macOS quarantine attributes from a file
+// and re-signs it to prevent Gatekeeper from blocking execution.
+//
+// This function is necessary because:
+//  1. Files downloaded via HTTP (even through Go's http.Client) get automatically
+//     tagged with com.apple.provenance extended attribute by macOS
+//  2. GitHub releases binaries are not code-signed, so Gatekeeper rejects them
+//  3. go install works because it compiles locally and Go automatically signs
+//     the binary with an ad-hoc signature
+//
+// By clearing extended attributes and re-signing with ad-hoc signature, we
+// make downloaded binaries behave like locally compiled ones.
+func removeQuarantineAttributes(path string) error {
+	// Step 1: Clear all extended attributes (quarantine, provenance, etc.)
+	// This removes the "downloaded from internet" marker that macOS adds
+	cmd := exec.Command("xattr", "-c", path)
+	if err := cmd.Run(); err != nil {
+		// If xattr command fails, try individual attributes
+		_ = exec.Command("xattr", "-d", "com.apple.quarantine", path).Run()
+	}
+
+	// Step 2: Re-sign the binary with ad-hoc signature
+	// This is critical on macOS to prevent the system from killing the process
+	cmd = exec.Command("codesign", "--force", "--deep", "--sign", "-", path)
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("failed to re-sign binary: %w", err)
+	}
+
+	return nil
 }

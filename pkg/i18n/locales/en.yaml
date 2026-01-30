@@ -218,8 +218,6 @@ update:
   backup_created: "Backup created"
   success: "Successfully updated to version %s!"
   success_windows: "Successfully updated to version %s! (Note: The old version file '.old' can be safely deleted)"
-  restart_required: "Please restart your terminal to use the new version."
-  restart_required_unix: "Please restart your terminal or run 'hash -r' (bash/zsh) to use the new version."
   errors:
     fetch_latest: "Failed to fetch latest version: %v"
     fetch_specific: "Failed to fetch version %s: %v"

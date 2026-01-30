@@ -140,26 +140,24 @@ type Messages struct {
 
 	// Update command
 	Update struct {
-		Short               string `yaml:"short"`
-		Long                string `yaml:"long"`
-		CheckFlag           string `yaml:"check_flag"`
-		ForceFlag           string `yaml:"force_flag"`
-		VersionFlag         string `yaml:"version_flag"`
-		Checking            string `yaml:"checking"`
-		CurrentVersion      string `yaml:"current_version"`
-		LatestVersion       string `yaml:"latest_version"`
-		AlreadyLatest       string `yaml:"already_latest"`
-		UpdateAvailable     string `yaml:"update_available"`
-		Downloading         string `yaml:"downloading"`
-		DownloadProgress    string `yaml:"download_progress"`
-		Extracting          string `yaml:"extracting"`
-		Installing          string `yaml:"installing"`
-		BackupCreated       string `yaml:"backup_created"`
-		Success             string `yaml:"success"`
-		SuccessWindows      string `yaml:"success_windows"`
-		RestartRequired     string `yaml:"restart_required"`
-		RestartRequiredUnix string `yaml:"restart_required_unix"`
-		Errors              struct {
+		Short            string `yaml:"short"`
+		Long             string `yaml:"long"`
+		CheckFlag        string `yaml:"check_flag"`
+		ForceFlag        string `yaml:"force_flag"`
+		VersionFlag      string `yaml:"version_flag"`
+		Checking         string `yaml:"checking"`
+		CurrentVersion   string `yaml:"current_version"`
+		LatestVersion    string `yaml:"latest_version"`
+		AlreadyLatest    string `yaml:"already_latest"`
+		UpdateAvailable  string `yaml:"update_available"`
+		Downloading      string `yaml:"downloading"`
+		DownloadProgress string `yaml:"download_progress"`
+		Extracting       string `yaml:"extracting"`
+		Installing       string `yaml:"installing"`
+		BackupCreated    string `yaml:"backup_created"`
+		Success          string `yaml:"success"`
+		SuccessWindows   string `yaml:"success_windows"`
+		Errors           struct {
 			FetchLatest         string `yaml:"fetch_latest"`
 			FetchSpecific       string `yaml:"fetch_specific"`
 			CompareVersions     string `yaml:"compare_versions"`
