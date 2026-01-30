@@ -104,10 +104,15 @@ func TestLoadFromCLIConfig(t *testing.T) {
 	os.Mkdir(configDir, 0755)
 	configPath := filepath.Join(configDir, "config.json")
 
-	// Override home directory for testing
+	// Override home directory for testing (support both Unix and Windows)
 	originalHome := os.Getenv("HOME")
+	originalUserProfile := os.Getenv("USERPROFILE")
 	os.Setenv("HOME", tmpDir)
-	defer os.Setenv("HOME", originalHome)
+	os.Setenv("USERPROFILE", tmpDir)
+	defer func() {
+		os.Setenv("HOME", originalHome)
+		os.Setenv("USERPROFILE", originalUserProfile)
+	}()
 
 	tests := []struct {
 		name         string
@@ -273,9 +278,15 @@ func TestLoadCredentials_Priority(t *testing.T) {
 	data, _ := json.MarshalIndent(config, "", "  ")
 	os.WriteFile(configPath, data, 0600)
 
+	// Override home directory for testing (support both Unix and Windows)
 	originalHome := os.Getenv("HOME")
+	originalUserProfile := os.Getenv("USERPROFILE")
 	os.Setenv("HOME", tmpDir)
-	defer os.Setenv("HOME", originalHome)
+	os.Setenv("USERPROFILE", tmpDir)
+	defer func() {
+		os.Setenv("HOME", originalHome)
+		os.Setenv("USERPROFILE", originalUserProfile)
+	}()
 
 	t.Run("env vars take precedence for credentials", func(t *testing.T) {
 		// Test: environment variables should take precedence
