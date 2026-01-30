@@ -1,16 +1,15 @@
-// Package resolver handles ROS intrinsic function resolution.
 package resolver
 
 import (
-	"encoding/base64"
-	"fmt"
-	"regexp"
 	"strings"
+
+	"github.com/aliyun/infraguard/pkg/resolver/funcs"
 )
 
 // ResolveFunctions resolves ROS intrinsic functions in the template.
 // It resolves functions that can be statically evaluated (Ref to parameters, Join, Sub, etc.)
 // and leaves functions that require runtime information (GetAtt, GetAZs, conditional functions) unchanged.
+// Errors during resolution are logged but do not prevent the template from being returned.
 func ResolveFunctions(template map[string]interface{}, params map[string]interface{}) map[string]interface{} {
 	// Deep copy template to avoid modifying the original
 	result := deepCopy(template).(map[string]interface{})
@@ -30,9 +29,15 @@ func ResolveFunctions(template map[string]interface{}, params map[string]interfa
 	}
 
 	// Resolve functions in the template
-	resolveValue(result, allParams, result)
+	// In lenient mode, errors are ignored and original values are kept
+	resolved, err := resolveValue(result, allParams, result)
+	if err != nil {
+		// Log error but continue with original template
+		// In future, this could be controlled by a mode flag (strict vs lenient)
+		return result
+	}
 
-	return result
+	return resolved.(map[string]interface{})
 }
 
 // extractResolvedParams extracts resolved parameter values from the Parameters section
@@ -53,7 +58,7 @@ func extractResolvedParams(template map[string]interface{}) map[string]interface
 }
 
 // resolveValue recursively resolves functions in a value
-func resolveValue(value interface{}, params map[string]interface{}, template map[string]interface{}) interface{} {
+func resolveValue(value interface{}, params map[string]interface{}, template map[string]interface{}) (interface{}, error) {
 	switch v := value.(type) {
 	case map[string]interface{}:
 		// Check if this is a function call
@@ -69,277 +74,124 @@ func resolveValue(value interface{}, params map[string]interface{}, template map
 
 		// Not a function, recurse into the map
 		for key, val := range v {
-			v[key] = resolveValue(val, params, template)
+			resolved, err := resolveValue(val, params, template)
+			if err != nil {
+				return nil, err
+			}
+			v[key] = resolved
 		}
-		return v
+		return v, nil
 
 	case []interface{}:
 		// Recurse into array
 		for i, val := range v {
-			v[i] = resolveValue(val, params, template)
+			resolved, err := resolveValue(val, params, template)
+			if err != nil {
+				return nil, err
+			}
+			v[i] = resolved
 		}
-		return v
+		return v, nil
 
 	default:
 		// Scalar value, return as-is
-		return v
+		return v, nil
 	}
 }
 
 // resolveRef resolves a Ref function
-func resolveRef(refValue interface{}, params map[string]interface{}, template map[string]interface{}) interface{} {
+func resolveRef(refValue interface{}, params map[string]interface{}, template map[string]interface{}) (interface{}, error) {
 	refName, ok := refValue.(string)
 	if !ok {
-		// Invalid Ref, return as-is
-		return map[string]interface{}{"Ref": refValue}
+		// Invalid Ref, return as-is (not an error, just can't resolve)
+		return map[string]interface{}{"Ref": refValue}, nil
 	}
 
 	// Check if it's a parameter reference
 	if paramVal, exists := params[refName]; exists {
-		return paramVal
+		return paramVal, nil
 	}
 
 	// Check if it's a resource reference (keep as-is, will be handled by resource processing)
 	if resources, ok := template["Resources"].(map[string]interface{}); ok {
 		if _, exists := resources[refName]; exists {
 			// Keep resource references unchanged
-			return map[string]interface{}{"Ref": refName}
+			return map[string]interface{}{"Ref": refName}, nil
 		}
 	}
 
-	// Unknown reference, keep as-is
-	return map[string]interface{}{"Ref": refName}
+	// Unknown reference, keep as-is (not an error, just can't resolve statically)
+	return map[string]interface{}{"Ref": refName}, nil
 }
 
 // resolveFunction resolves a Fn::* function
-func resolveFunction(funcName string, funcValue interface{}, params map[string]interface{}, template map[string]interface{}) interface{} {
+func resolveFunction(funcName string, funcValue interface{}, params map[string]interface{}, template map[string]interface{}) (interface{}, error) {
 	switch funcName {
 	case "Fn::Join":
-		return resolveFnJoin(funcValue, params, template)
+		return funcs.FnJoin(funcValue, params, template, resolveValue, isFunction)
 	case "Fn::Sub":
-		return resolveFnSub(funcValue, params, template)
+		return funcs.FnSub(funcValue, params, template, resolveValue, isFunction)
 	case "Fn::Base64Encode":
-		return resolveFnBase64Encode(funcValue, params, template)
+		return funcs.FnBase64Encode(funcValue, params, template, resolveValue, isFunction)
+	case "Fn::Base64Decode":
+		return funcs.FnBase64Decode(funcValue, params, template, resolveValue, isFunction)
 	case "Fn::Select":
-		return resolveFnSelect(funcValue, params, template)
+		return funcs.FnSelect(funcValue, params, template, resolveValue, isFunction)
 	case "Fn::Split":
-		return resolveFnSplit(funcValue, params, template)
+		return funcs.FnSplit(funcValue, params, template, resolveValue, isFunction)
+	case "Fn::Str":
+		return funcs.FnStr(funcValue, params, template, resolveValue, isFunction)
+	case "Fn::Indent":
+		return funcs.FnIndent(funcValue, params, template, resolveValue, isFunction)
+	case "Fn::Replace":
+		return funcs.FnReplace(funcValue, params, template, resolveValue, isFunction)
+	case "Fn::Index":
+		return funcs.FnIndex(funcValue, params, template, resolveValue, isFunction)
+	case "Fn::Length":
+		return funcs.FnLength(funcValue, params, template, resolveValue, isFunction)
+	case "Fn::ListMerge":
+		return funcs.FnListMerge(funcValue, params, template, resolveValue, isFunction)
+	case "Fn::SelectMapList":
+		return funcs.FnSelectMapList(funcValue, params, template, resolveValue, isFunction)
+	case "Fn::Add":
+		return funcs.FnAdd(funcValue, params, template, resolveValue, isFunction)
+	case "Fn::Avg":
+		return funcs.FnAvg(funcValue, params, template, resolveValue, isFunction)
+	case "Fn::Max":
+		return funcs.FnMax(funcValue, params, template, resolveValue, isFunction)
+	case "Fn::Min":
+		return funcs.FnMin(funcValue, params, template, resolveValue, isFunction)
+	case "Fn::Calculate":
+		return funcs.FnCalculate(funcValue, params, template, resolveValue, isFunction)
+	case "Fn::Equals":
+		return funcs.FnEquals(funcValue, params, template, resolveValue, isFunction)
+	case "Fn::And":
+		return funcs.FnAnd(funcValue, params, template, resolveValue, isFunction)
+	case "Fn::Or":
+		return funcs.FnOr(funcValue, params, template, resolveValue, isFunction)
+	case "Fn::Not":
+		return funcs.FnNot(funcValue, params, template, resolveValue, isFunction)
+	case "Fn::Contains":
+		return funcs.FnContains(funcValue, params, template, resolveValue, isFunction)
+	case "Fn::Any":
+		return funcs.FnAny(funcValue, params, template, resolveValue, isFunction)
+	case "Fn::EachMemberIn":
+		return funcs.FnEachMemberIn(funcValue, params, template, resolveValue, isFunction)
+	case "Fn::MatchPattern":
+		return funcs.FnMatchPattern(funcValue, params, template, resolveValue, isFunction)
+	case "Fn::If":
+		return funcs.FnIf(funcValue, params, template, resolveValue, isFunction)
+	case "Fn::FindInMap":
+		return funcs.FnFindInMap(funcValue, params, template, resolveValue, isFunction)
+	case "Fn::GetJsonValue":
+		return funcs.FnGetJsonValue(funcValue, params, template, resolveValue, isFunction)
+	case "Fn::MergeMapToList":
+		return funcs.FnMergeMapToList(funcValue, params, template, resolveValue, isFunction)
 
 	default:
-		// Unknown/UnSupport function, keep as-is
-		return map[string]interface{}{funcName: funcValue}
+		// Unknown/Unsupported function, keep as-is (not an error)
+		return map[string]interface{}{funcName: funcValue}, nil
 	}
-}
-
-// resolveFnJoin resolves Fn::Join - joins a list of strings with a delimiter
-func resolveFnJoin(value interface{}, params map[string]interface{}, template map[string]interface{}) interface{} {
-	arr, ok := value.([]interface{})
-	if !ok || len(arr) != 2 {
-		// Invalid format, return as-is
-		return map[string]interface{}{"Fn::Join": value}
-	}
-
-	delimiter, ok := arr[0].(string)
-	if !ok {
-		// Delimiter is not a string, might need resolution
-		delimiter = fmt.Sprintf("%v", resolveValue(arr[0], params, template))
-	}
-
-	parts, ok := arr[1].([]interface{})
-	if !ok {
-		// Invalid parts array, return as-is
-		return map[string]interface{}{"Fn::Join": value}
-	}
-
-	// Resolve each part
-	resolvedParts := make([]string, 0, len(parts))
-	for _, part := range parts {
-		resolved := resolveValue(part, params, template)
-
-		// If the resolved value is still a function, we can't join it
-		if isFunction(resolved) {
-			// Return the original Join with partially resolved parts
-			return map[string]interface{}{"Fn::Join": value}
-		}
-
-		resolvedParts = append(resolvedParts, fmt.Sprintf("%v", resolved))
-	}
-
-	return strings.Join(resolvedParts, delimiter)
-}
-
-// resolveFnSub resolves Fn::Sub - substitutes variables in a string
-func resolveFnSub(value interface{}, params map[string]interface{}, template map[string]interface{}) interface{} {
-	// Fn::Sub can be either a string or [string, {vars}]
-	switch v := value.(type) {
-	case string:
-		// Simple format: Fn::Sub: "string with ${VarName}"
-		return substituteVariables(v, params, template)
-
-	case []interface{}:
-		// Array format: Fn::Sub: ["string", {var: value}]
-		if len(v) < 1 {
-			return map[string]interface{}{"Fn::Sub": value}
-		}
-
-		str, ok := v[0].(string)
-		if !ok {
-			return map[string]interface{}{"Fn::Sub": value}
-		}
-
-		// Merge provided variables with params
-		vars := make(map[string]interface{})
-		for k, v := range params {
-			vars[k] = v
-		}
-
-		if len(v) >= 2 {
-			if varMap, ok := v[1].(map[string]interface{}); ok {
-				for k, val := range varMap {
-					vars[k] = resolveValue(val, params, template)
-				}
-			}
-		}
-
-		return substituteVariables(str, vars, template)
-
-	default:
-		return map[string]interface{}{"Fn::Sub": value}
-	}
-}
-
-// substituteVariables substitutes ${VarName} patterns in a string
-func substituteVariables(str string, vars map[string]interface{}, template map[string]interface{}) interface{} {
-	// Pattern to match ${VarName} or ${!Literal}
-	re := regexp.MustCompile(`\$\{(!?)([^}]+)\}`)
-
-	// Check if all variables can be resolved
-	canResolve := true
-	result := re.ReplaceAllStringFunc(str, func(match string) string {
-		matches := re.FindStringSubmatch(match)
-		if len(matches) < 3 {
-			return match
-		}
-
-		literal := matches[1]
-		varName := matches[2]
-
-		// Handle literal (${!Literal} -> ${Literal})
-		if literal == "!" {
-			return "${" + varName + "}"
-		}
-
-		// Try to resolve the variable
-		if val, exists := vars[varName]; exists {
-			return fmt.Sprintf("%v", val)
-		}
-
-		// Check for pseudo parameters (ALIYUN::StackId, ALIYUN::Region, etc.)
-		if strings.HasPrefix(varName, "ALIYUN::") {
-			// Cannot resolve pseudo parameters statically
-			canResolve = false
-			return match
-		}
-
-		// Check for resource attributes (Resource.Attribute)
-		if strings.Contains(varName, ".") {
-			// Cannot resolve resource attributes statically
-			canResolve = false
-			return match
-		}
-
-		// Unknown variable
-		canResolve = false
-		return match
-	})
-
-	if !canResolve {
-		// Cannot fully resolve, return as-is
-		return map[string]interface{}{"Fn::Sub": str}
-	}
-
-	return result
-}
-
-// resolveFnBase64Encode resolves Fn::Base64Encode
-func resolveFnBase64Encode(value interface{}, params map[string]interface{}, template map[string]interface{}) interface{} {
-	resolved := resolveValue(value, params, template)
-
-	// If still a function, can't encode
-	if isFunction(resolved) {
-		return map[string]interface{}{"Fn::Base64Encode": value}
-	}
-
-	str := fmt.Sprintf("%v", resolved)
-	return base64.StdEncoding.EncodeToString([]byte(str))
-}
-
-// resolveFnSelect resolves Fn::Select - selects an element from a list
-func resolveFnSelect(value interface{}, params map[string]interface{}, template map[string]interface{}) interface{} {
-	arr, ok := value.([]interface{})
-	if !ok || len(arr) != 2 {
-		return map[string]interface{}{"Fn::Select": value}
-	}
-
-	// Resolve the index
-	indexResolved := resolveValue(arr[0], params, template)
-
-	// Try to convert to int
-	var index int
-	switch v := indexResolved.(type) {
-	case int:
-		index = v
-	case float64:
-		index = int(v)
-	case string:
-		fmt.Sscanf(v, "%d", &index)
-	default:
-		return map[string]interface{}{"Fn::Select": value}
-	}
-
-	// Resolve the list
-	listResolved := resolveValue(arr[1], params, template)
-	list, ok := listResolved.([]interface{})
-	if !ok {
-		return map[string]interface{}{"Fn::Select": value}
-	}
-
-	// Check bounds
-	if index < 0 || index >= len(list) {
-		return map[string]interface{}{"Fn::Select": value}
-	}
-
-	return list[index]
-}
-
-// resolveFnSplit resolves Fn::Split - splits a string by delimiter
-func resolveFnSplit(value interface{}, params map[string]interface{}, template map[string]interface{}) interface{} {
-	arr, ok := value.([]interface{})
-	if !ok || len(arr) != 2 {
-		return map[string]interface{}{"Fn::Split": value}
-	}
-
-	delimiter, ok := arr[0].(string)
-	if !ok {
-		return map[string]interface{}{"Fn::Split": value}
-	}
-
-	resolved := resolveValue(arr[1], params, template)
-
-	// If still a function, can't split
-	if isFunction(resolved) {
-		return map[string]interface{}{"Fn::Split": value}
-	}
-
-	str := fmt.Sprintf("%v", resolved)
-	parts := strings.Split(str, delimiter)
-
-	result := make([]interface{}, len(parts))
-	for i, part := range parts {
-		result[i] = part
-	}
-
-	return result
 }
 
 // isFunction checks if a value is a function call

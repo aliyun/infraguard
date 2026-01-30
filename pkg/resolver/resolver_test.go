@@ -588,32 +588,78 @@ func TestIsFunction(t *testing.T) {
 
 func TestSubstituteVariables_Literal(t *testing.T) {
 	// Test ${!Literal} which should become ${Literal}
-	result := substituteVariables("Path: ${!Literal}/data", map[string]interface{}{}, map[string]interface{}{})
+	template := map[string]interface{}{
+		"Resources": map[string]interface{}{
+			"MyResource": map[string]interface{}{
+				"Properties": map[string]interface{}{
+					"Value": map[string]interface{}{
+						"Fn::Sub": "Path: ${!Literal}/data",
+					},
+				},
+			},
+		},
+	}
 
-	if result != "Path: ${Literal}/data" {
-		t.Errorf("Expected ${!Literal} to become ${Literal}, got %v", result)
+	result := ResolveFunctions(template, map[string]interface{}{})
+	resources := result["Resources"].(map[string]interface{})
+	resource := resources["MyResource"].(map[string]interface{})
+	props := resource["Properties"].(map[string]interface{})
+
+	expected := "Path: ${Literal}/data"
+	if props["Value"] != expected {
+		t.Errorf("Expected ${!Literal} to become ${Literal}, got %v", props["Value"])
 	}
 }
 
 func TestSubstituteVariables_PseudoParameter(t *testing.T) {
 	// Pseudo parameters cannot be resolved statically
-	result := substituteVariables("Stack: ${ALIYUN::StackId}", map[string]interface{}{}, map[string]interface{}{})
+	template := map[string]interface{}{
+		"Resources": map[string]interface{}{
+			"MyResource": map[string]interface{}{
+				"Properties": map[string]interface{}{
+					"Value": map[string]interface{}{
+						"Fn::Sub": "Stack: ${ALIYUN::StackId}",
+					},
+				},
+			},
+		},
+	}
+
+	result := ResolveFunctions(template, map[string]interface{}{})
+	resources := result["Resources"].(map[string]interface{})
+	resource := resources["MyResource"].(map[string]interface{})
+	props := resource["Properties"].(map[string]interface{})
 
 	// Should return as-is (wrapped in Fn::Sub)
-	subMap, ok := result.(map[string]interface{})
+	subMap, ok := props["Value"].(map[string]interface{})
 	if !ok || subMap["Fn::Sub"] != "Stack: ${ALIYUN::StackId}" {
-		t.Errorf("Expected pseudo parameter to be preserved, got %v", result)
+		t.Errorf("Expected pseudo parameter to be preserved, got %v", props["Value"])
 	}
 }
 
 func TestSubstituteVariables_ResourceAttribute(t *testing.T) {
 	// Resource attributes cannot be resolved statically
-	result := substituteVariables("ARN: ${MyResource.Arn}", map[string]interface{}{}, map[string]interface{}{})
+	template := map[string]interface{}{
+		"Resources": map[string]interface{}{
+			"MyResource": map[string]interface{}{
+				"Properties": map[string]interface{}{
+					"Value": map[string]interface{}{
+						"Fn::Sub": "ARN: ${MyResource.Arn}",
+					},
+				},
+			},
+		},
+	}
+
+	result := ResolveFunctions(template, map[string]interface{}{})
+	resources := result["Resources"].(map[string]interface{})
+	resource := resources["MyResource"].(map[string]interface{})
+	props := resource["Properties"].(map[string]interface{})
 
 	// Should return as-is (wrapped in Fn::Sub)
-	subMap, ok := result.(map[string]interface{})
+	subMap, ok := props["Value"].(map[string]interface{})
 	if !ok || subMap["Fn::Sub"] != "ARN: ${MyResource.Arn}" {
-		t.Errorf("Expected resource attribute to be preserved, got %v", result)
+		t.Errorf("Expected resource attribute to be preserved, got %v", props["Value"])
 	}
 }
 
@@ -661,9 +707,552 @@ func TestResolveValue_Scalar(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		result := resolveValue(test, map[string]interface{}{}, map[string]interface{}{})
+		result, err := resolveValue(test, map[string]interface{}{}, map[string]interface{}{})
+		if err != nil {
+			t.Fatalf("Unexpected error for %v: %v", test, err)
+		}
 		if !reflect.DeepEqual(result, test) {
 			t.Errorf("Expected scalar %v to be unchanged, got %v", test, result)
 		}
+	}
+}
+
+// Benchmarks
+
+func BenchmarkResolveFunctions(b *testing.B) {
+	template := map[string]interface{}{
+		"Parameters": map[string]interface{}{
+			"Env": map[string]interface{}{
+				"Type":          "String",
+				"ResolvedValue": "prod",
+			},
+			"AppName": map[string]interface{}{
+				"Type":          "String",
+				"ResolvedValue": "web-server",
+			},
+		},
+		"Resources": map[string]interface{}{
+			"MyVpc": map[string]interface{}{
+				"Type": "ALIYUN::ECS::VPC",
+				"Properties": map[string]interface{}{
+					"VpcName": map[string]interface{}{
+						"Fn::Join": []interface{}{
+							"-",
+							[]interface{}{
+								map[string]interface{}{"Ref": "Env"},
+								"vpc",
+							},
+						},
+					},
+				},
+			},
+			"MyInstance": map[string]interface{}{
+				"Type": "ALIYUN::ECS::Instance",
+				"Properties": map[string]interface{}{
+					"InstanceName": map[string]interface{}{
+						"Fn::Join": []interface{}{
+							"-",
+							[]interface{}{
+								map[string]interface{}{"Ref": "Env"},
+								map[string]interface{}{"Ref": "AppName"},
+							},
+						},
+					},
+					"UserData": map[string]interface{}{
+						"Fn::Base64Encode": map[string]interface{}{
+							"Fn::Sub": "#!/bin/bash\necho ${Env}\n",
+						},
+					},
+				},
+			},
+		},
+	}
+
+	params := map[string]interface{}{
+		"Env":     "prod",
+		"AppName": "web-server",
+	}
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = ResolveFunctions(template, params)
+	}
+}
+
+func BenchmarkResolveValue_DeepNesting(b *testing.B) {
+	// Create a deeply nested structure
+	value := map[string]interface{}{
+		"level1": map[string]interface{}{
+			"level2": map[string]interface{}{
+				"level3": map[string]interface{}{
+					"level4": map[string]interface{}{
+						"value": "test",
+					},
+				},
+			},
+		},
+	}
+
+	params := map[string]interface{}{}
+	template := map[string]interface{}{}
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _ = resolveValue(value, params, template)
+	}
+}
+
+func BenchmarkResolveFnJoin(b *testing.B) {
+	template := map[string]interface{}{
+		"Resources": map[string]interface{}{
+			"MyResource": map[string]interface{}{
+				"Properties": map[string]interface{}{
+					"Value": map[string]interface{}{
+						"Fn::Join": []interface{}{
+							"-",
+							[]interface{}{"part1", "part2", "part3"},
+						},
+					},
+				},
+			},
+		},
+	}
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = ResolveFunctions(template, map[string]interface{}{})
+	}
+}
+
+// Test string functions
+
+func TestResolveFnBase64Decode(t *testing.T) {
+	template := map[string]interface{}{
+		"Resources": map[string]interface{}{
+			"MyResource": map[string]interface{}{
+				"Properties": map[string]interface{}{
+					"Value": map[string]interface{}{
+						"Fn::Base64Decode": "SGVsbG8gV29ybGQ=",
+					},
+				},
+			},
+		},
+	}
+
+	result := ResolveFunctions(template, map[string]interface{}{})
+	resources := result["Resources"].(map[string]interface{})
+	resource := resources["MyResource"].(map[string]interface{})
+	props := resource["Properties"].(map[string]interface{})
+
+	expected := "Hello World"
+	if props["Value"] != expected {
+		t.Errorf("Expected Value to be %q, got %v", expected, props["Value"])
+	}
+}
+
+func TestResolveFnStr(t *testing.T) {
+	template := map[string]interface{}{
+		"Resources": map[string]interface{}{
+			"MyResource": map[string]interface{}{
+				"Properties": map[string]interface{}{
+					"Value": map[string]interface{}{
+						"Fn::Str": 42,
+					},
+				},
+			},
+		},
+	}
+
+	result := ResolveFunctions(template, map[string]interface{}{})
+	resources := result["Resources"].(map[string]interface{})
+	resource := resources["MyResource"].(map[string]interface{})
+	props := resource["Properties"].(map[string]interface{})
+
+	expected := "42"
+	if props["Value"] != expected {
+		t.Errorf("Expected Value to be %q, got %v", expected, props["Value"])
+	}
+}
+
+func TestResolveFnIndent(t *testing.T) {
+	template := map[string]interface{}{
+		"Resources": map[string]interface{}{
+			"MyResource": map[string]interface{}{
+				"Properties": map[string]interface{}{
+					"Value": map[string]interface{}{
+						"Fn::Indent": []interface{}{2, "line1\nline2"},
+					},
+				},
+			},
+		},
+	}
+
+	result := ResolveFunctions(template, map[string]interface{}{})
+	resources := result["Resources"].(map[string]interface{})
+	resource := resources["MyResource"].(map[string]interface{})
+	props := resource["Properties"].(map[string]interface{})
+
+	expected := "  line1\n  line2"
+	if props["Value"] != expected {
+		t.Errorf("Expected Value to be %q, got %q", expected, props["Value"])
+	}
+}
+
+func TestResolveFnReplace(t *testing.T) {
+	template := map[string]interface{}{
+		"Resources": map[string]interface{}{
+			"MyResource": map[string]interface{}{
+				"Properties": map[string]interface{}{
+					"Value": map[string]interface{}{
+						"Fn::Replace": []interface{}{
+							map[string]interface{}{"old": "new"},
+							"old text",
+						},
+					},
+				},
+			},
+		},
+	}
+
+	result := ResolveFunctions(template, map[string]interface{}{})
+	resources := result["Resources"].(map[string]interface{})
+	resource := resources["MyResource"].(map[string]interface{})
+	props := resource["Properties"].(map[string]interface{})
+
+	expected := "new text"
+	if props["Value"] != expected {
+		t.Errorf("Expected Value to be %q, got %v", expected, props["Value"])
+	}
+}
+
+func TestNestedStringFunctions(t *testing.T) {
+	// Test Fn::Base64Decode(Fn::Base64Encode("test"))
+	template := map[string]interface{}{
+		"Resources": map[string]interface{}{
+			"MyResource": map[string]interface{}{
+				"Properties": map[string]interface{}{
+					"Value": map[string]interface{}{
+						"Fn::Base64Decode": map[string]interface{}{
+							"Fn::Base64Encode": "test",
+						},
+					},
+				},
+			},
+		},
+	}
+
+	result := ResolveFunctions(template, map[string]interface{}{})
+	resources := result["Resources"].(map[string]interface{})
+	resource := resources["MyResource"].(map[string]interface{})
+	props := resource["Properties"].(map[string]interface{})
+
+	expected := "test"
+	if props["Value"] != expected {
+		t.Errorf("Expected nested Base64 functions to return %q, got %v", expected, props["Value"])
+	}
+}
+
+// Test list functions
+
+func TestResolveFnIndex(t *testing.T) {
+	template := map[string]interface{}{
+		"Resources": map[string]interface{}{
+			"MyResource": map[string]interface{}{
+				"Properties": map[string]interface{}{
+					"Index": map[string]interface{}{
+						"Fn::Index": []interface{}{
+							[]interface{}{"a", "b", "c"},
+							"b",
+						},
+					},
+				},
+			},
+		},
+	}
+
+	result := ResolveFunctions(template, map[string]interface{}{})
+	resources := result["Resources"].(map[string]interface{})
+	resource := resources["MyResource"].(map[string]interface{})
+	props := resource["Properties"].(map[string]interface{})
+
+	expected := 1
+	if props["Index"] != expected {
+		t.Errorf("Expected Index to be %v, got %v", expected, props["Index"])
+	}
+}
+
+func TestResolveFnLength(t *testing.T) {
+	tests := []struct {
+		name     string
+		value    interface{}
+		expected int
+	}{
+		{
+			name:     "string length",
+			value:    []interface{}{"hello"},
+			expected: 5,
+		},
+		{
+			name:     "list length",
+			value:    []interface{}{[]interface{}{1, 2, 3}},
+			expected: 3,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			template := map[string]interface{}{
+				"Resources": map[string]interface{}{
+					"MyResource": map[string]interface{}{
+						"Properties": map[string]interface{}{
+							"Length": map[string]interface{}{
+								"Fn::Length": tt.value,
+							},
+						},
+					},
+				},
+			}
+
+			result := ResolveFunctions(template, map[string]interface{}{})
+			resources := result["Resources"].(map[string]interface{})
+			resource := resources["MyResource"].(map[string]interface{})
+			props := resource["Properties"].(map[string]interface{})
+
+			if props["Length"] != tt.expected {
+				t.Errorf("Expected Length to be %v, got %v", tt.expected, props["Length"])
+			}
+		})
+	}
+}
+
+func TestResolveFnListMerge(t *testing.T) {
+	template := map[string]interface{}{
+		"Resources": map[string]interface{}{
+			"MyResource": map[string]interface{}{
+				"Properties": map[string]interface{}{
+					"List": map[string]interface{}{
+						"Fn::ListMerge": []interface{}{
+							[]interface{}{"a", "b"},
+							[]interface{}{"c", "d"},
+						},
+					},
+				},
+			},
+		},
+	}
+
+	result := ResolveFunctions(template, map[string]interface{}{})
+	resources := result["Resources"].(map[string]interface{})
+	resource := resources["MyResource"].(map[string]interface{})
+	props := resource["Properties"].(map[string]interface{})
+
+	expected := []interface{}{"a", "b", "c", "d"}
+	actual, ok := props["List"].([]interface{})
+	if !ok {
+		t.Fatalf("Expected List to be a slice, got %T", props["List"])
+	}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Expected List length %v, got %v", len(expected), len(actual))
+	}
+
+	for i, v := range actual {
+		if v != expected[i] {
+			t.Errorf("Expected List[%d] to be %v, got %v", i, expected[i], v)
+		}
+	}
+}
+
+func TestResolveFnSelectMapList(t *testing.T) {
+	template := map[string]interface{}{
+		"Resources": map[string]interface{}{
+			"MyResource": map[string]interface{}{
+				"Properties": map[string]interface{}{
+					"Values": map[string]interface{}{
+						"Fn::SelectMapList": []interface{}{
+							"key",
+							[]interface{}{
+								map[string]interface{}{"key": "v1", "other": "x"},
+								map[string]interface{}{"key": "v2", "other": "y"},
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+
+	result := ResolveFunctions(template, map[string]interface{}{})
+	resources := result["Resources"].(map[string]interface{})
+	resource := resources["MyResource"].(map[string]interface{})
+	props := resource["Properties"].(map[string]interface{})
+
+	expected := []interface{}{"v1", "v2"}
+	actual, ok := props["Values"].([]interface{})
+	if !ok {
+		t.Fatalf("Expected Values to be a slice, got %T", props["Values"])
+	}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Expected Values length %v, got %v", len(expected), len(actual))
+	}
+
+	for i, v := range actual {
+		if v != expected[i] {
+			t.Errorf("Expected Values[%d] to be %v, got %v", i, expected[i], v)
+		}
+	}
+}
+
+func TestListFunctionsBoundary(t *testing.T) {
+	tests := []struct {
+		name     string
+		function string
+		value    interface{}
+	}{
+		{
+			name:     "empty list in Index",
+			function: "Fn::Index",
+			value:    []interface{}{[]interface{}{}, "x"},
+		},
+		{
+			name:     "empty list in ListMerge",
+			function: "Fn::ListMerge",
+			value:    []interface{}{[]interface{}{}, []interface{}{}},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			template := map[string]interface{}{
+				"Resources": map[string]interface{}{
+					"MyResource": map[string]interface{}{
+						"Properties": map[string]interface{}{
+							"Value": map[string]interface{}{
+								tt.function: tt.value,
+							},
+						},
+					},
+				},
+			}
+
+			// Should not panic or error
+			result := ResolveFunctions(template, map[string]interface{}{})
+			if result == nil {
+				t.Error("Expected result to not be nil")
+			}
+		})
+	}
+}
+
+// Test map functions
+
+func TestResolveFnFindInMap(t *testing.T) {
+	template := map[string]interface{}{
+		"Mappings": map[string]interface{}{
+			"RegionMap": map[string]interface{}{
+				"cn-hangzhou": map[string]interface{}{
+					"AMI": "ami-12345",
+				},
+			},
+		},
+		"Resources": map[string]interface{}{
+			"MyInstance": map[string]interface{}{
+				"Properties": map[string]interface{}{
+					"ImageId": map[string]interface{}{
+						"Fn::FindInMap": []interface{}{"RegionMap", "cn-hangzhou", "AMI"},
+					},
+				},
+			},
+		},
+	}
+
+	result := ResolveFunctions(template, map[string]interface{}{})
+	resources := result["Resources"].(map[string]interface{})
+	instance := resources["MyInstance"].(map[string]interface{})
+	props := instance["Properties"].(map[string]interface{})
+
+	expected := "ami-12345"
+	if props["ImageId"] != expected {
+		t.Errorf("Expected ImageId to be %q, got %v", expected, props["ImageId"])
+	}
+}
+
+func TestResolveFnGetJsonValue(t *testing.T) {
+	template := map[string]interface{}{
+		"Resources": map[string]interface{}{
+			"MyResource": map[string]interface{}{
+				"Properties": map[string]interface{}{
+					"Value": map[string]interface{}{
+						"Fn::GetJsonValue": []interface{}{"key", `{"key": "value", "num": 123}`},
+					},
+				},
+			},
+		},
+	}
+
+	result := ResolveFunctions(template, map[string]interface{}{})
+	resources := result["Resources"].(map[string]interface{})
+	resource := resources["MyResource"].(map[string]interface{})
+	props := resource["Properties"].(map[string]interface{})
+
+	expected := "value"
+	if props["Value"] != expected {
+		t.Errorf("Expected Value to be %q, got %v", expected, props["Value"])
+	}
+}
+
+func TestResolveFnMergeMapToList(t *testing.T) {
+	template := map[string]interface{}{
+		"Resources": map[string]interface{}{
+			"MyResource": map[string]interface{}{
+				"Properties": map[string]interface{}{
+					"List": map[string]interface{}{
+						"Fn::MergeMapToList": []interface{}{
+							[]interface{}{
+								map[string]interface{}{"k1": "v1"},
+								map[string]interface{}{"k1": "v3"},
+							},
+							[]interface{}{
+								map[string]interface{}{"k2": "v2"},
+								map[string]interface{}{"k2": "v4"},
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+
+	result := ResolveFunctions(template, map[string]interface{}{})
+	resources := result["Resources"].(map[string]interface{})
+	resource := resources["MyResource"].(map[string]interface{})
+	props := resource["Properties"].(map[string]interface{})
+
+	resultList, ok := props["List"].([]interface{})
+	if !ok {
+		t.Fatalf("Expected List to be a slice, got %T", props["List"])
+	}
+
+	if len(resultList) != 2 {
+		t.Errorf("Expected List length 2, got %v", len(resultList))
+	}
+
+	// Check first merged map
+	firstMap, ok := resultList[0].(map[string]interface{})
+	if !ok {
+		t.Fatalf("Expected first item to be a map, got %T", resultList[0])
+	}
+	if firstMap["k1"] != "v1" || firstMap["k2"] != "v2" {
+		t.Errorf("First map incorrect: %v", firstMap)
+	}
+
+	// Check second merged map
+	secondMap, ok := resultList[1].(map[string]interface{})
+	if !ok {
+		t.Fatalf("Expected second item to be a map, got %T", resultList[1])
+	}
+	if secondMap["k1"] != "v3" || secondMap["k2"] != "v4" {
+		t.Errorf("Second map incorrect: %v", secondMap)
 	}
 }

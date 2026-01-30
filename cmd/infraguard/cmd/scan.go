@@ -180,9 +180,9 @@ func runScan(cmd *cobra.Command, args []string) error {
 			return fmt.Errorf(msg.Scan.FileError, templatePath, err)
 		}
 
-		// Resolve intrinsic functions (Ref, Fn::Join, Fn::Sub, etc.)
+		// Resolve conditions and intrinsic functions (Ref, Fn::Join, Fn::Sub, Fn::If, etc.)
 		// This happens after parameter resolution and before policy evaluation
-		resolvedTemplate = resolver.ResolveFunctions(resolvedTemplate, nil)
+		resolvedTemplate = resolver.ResolveConditionsAndFunctions(resolvedTemplate, nil)
 
 		// Load and evaluate policies
 		// We reuse evalOpts which contains loaded policies
