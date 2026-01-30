@@ -1,5 +1,5 @@
-// Package loader handles template loading and parsing.
-package loader
+// Package ros implements the ROS (Resource Orchestration Service) provider for InfraGuard.
+package ros
 
 import (
 	"encoding/json"
@@ -221,10 +221,10 @@ func convertMappingNode(node *yaml.Node) (map[string]interface{}, error) {
 	return m, nil
 }
 
-// LoadLocal loads a template file (YAML or JSON) and returns:
+// LoadLocalTemplate loads a ROS template file (YAML or JSON) and returns:
 // - yamlRoot: the yaml.Node AST for source mapping (nil for JSON files)
 // - data: the parsed template as a map for OPA evaluation
-func LoadLocal(path string) (*yaml.Node, map[string]interface{}, error) {
+func LoadLocalTemplate(path string) (*yaml.Node, map[string]interface{}, error) {
 	msg := i18n.Msg()
 	content, err := os.ReadFile(path)
 	if err != nil {

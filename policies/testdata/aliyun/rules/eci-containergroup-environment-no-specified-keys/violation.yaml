@@ -12,4 +12,4 @@ Resources:
             - Key: APP_ENV
               Value: production
             - Key: ACCESS_KEY_ID
-              Value: LTAIxxxxxxxxxxxx
+              Value: xxxxxxxxxxxx

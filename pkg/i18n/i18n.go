@@ -202,20 +202,27 @@ type Messages struct {
 
 	// Scan command
 	Scan struct {
-		Short            string `yaml:"short"`
-		Long             string `yaml:"long"`
-		TemplateFlag     string `yaml:"template_flag"`
-		PolicyFlag       string `yaml:"policy_flag"`
-		InputFlag        string `yaml:"input_flag"`
-		FormatFlag       string `yaml:"format_flag"`
-		OutputFlag       string `yaml:"output_flag"`
-		ReportWritten    string `yaml:"report_written"`
-		NoViolations     string `yaml:"no_violations"`
-		TotalViolations  string `yaml:"total_violations"`
-		FilePrefix       string `yaml:"file_prefix"`
-		NoTemplatesFound string `yaml:"no_templates_found"`
-		SkippedFile      string `yaml:"skipped_file"`
-		FileError        string `yaml:"file_error"`
+		Short                string `yaml:"short"`
+		Long                 string `yaml:"long"`
+		TemplateFlag         string `yaml:"template_flag"`
+		PolicyFlag           string `yaml:"policy_flag"`
+		InputFlag            string `yaml:"input_flag"`
+		FormatFlag           string `yaml:"format_flag"`
+		OutputFlag           string `yaml:"output_flag"`
+		ModeFlag             string `yaml:"mode_flag"`
+		ReportWritten        string `yaml:"report_written"`
+		NoViolations         string `yaml:"no_violations"`
+		TotalViolations      string `yaml:"total_violations"`
+		FilePrefix           string `yaml:"file_prefix"`
+		NoTemplatesFound     string `yaml:"no_templates_found"`
+		NoTemplatesProcessed string `yaml:"no_templates_processed"`
+		SkippedFile          string `yaml:"skipped_file"`
+		FileError            string `yaml:"file_error"`
+		StatusCode           string `yaml:"status_code"`
+		Code                 string `yaml:"code"`
+		Message              string `yaml:"message"`
+		RequestID            string `yaml:"request_id"`
+		CallingPreviewStack  string `yaml:"calling_preview_stack"`
 	} `yaml:"scan"`
 
 	// Report
@@ -338,6 +345,50 @@ type Messages struct {
 		DownloadPolicies                string `yaml:"download_policies"`
 		PolicyPathDoesNotExist          string `yaml:"policy_path_does_not_exist"`
 		NoRegoFilesInPolicyDirectory    string `yaml:"no_rego_files_in_policy_directory"`
+		InvalidMode                     string `yaml:"invalid_mode"`
+
+		// Preview mode errors
+		PreviewOnlyROSSupported string `yaml:"preview_only_ros_supported"`
+		PreviewUnsupportedMode  string `yaml:"preview_unsupported_mode"`
+
+		// ROS provider errors
+		ROSFailedLoadTemplate      string `yaml:"ros_failed_load_template"`
+		ROSInvalidTemplate         string `yaml:"ros_invalid_template"`
+		ROSInvalidParameters       string `yaml:"ros_invalid_parameters"`
+		ROSFailedResolveParameters string `yaml:"ros_failed_resolve_parameters"`
+		ROSFailedLoadCredentials   string `yaml:"ros_failed_load_credentials"`
+		ROSInvalidCredentials      string `yaml:"ros_invalid_credentials"`
+		ROSFailedCreateClient      string `yaml:"ros_failed_create_client"`
+		ROSFailedMarshalTemplate   string `yaml:"ros_failed_marshal_template"`
+		ROSFailedCallAPI           string `yaml:"ros_failed_call_api"`
+		ROSFailedConvertResponse   string `yaml:"ros_failed_convert_response"`
+		ROSClientNil               string `yaml:"ros_client_nil"`
+		ROSFailedMarshalParameter  string `yaml:"ros_failed_marshal_parameter"`
+		ROSEmptyResponse           string `yaml:"ros_empty_response"`
+		ROSNoStackInfo             string `yaml:"ros_no_stack_info"`
+		ROSInvalidPreviewResponse  string `yaml:"ros_invalid_preview_response"`
+
+		// ROS auth errors
+		ROSAuthInvalidAccessKey        string `yaml:"ros_auth_invalid_access_key"`
+		ROSAuthSignatureMismatch       string `yaml:"ros_auth_signature_mismatch"`
+		ROSAuthInsufficientPermissions string `yaml:"ros_auth_insufficient_permissions"`
+		ROSRateLimit                   string `yaml:"ros_rate_limit"`
+		ROSServiceUnavailable          string `yaml:"ros_service_unavailable"`
+		ROSTemplateValidationFailed    string `yaml:"ros_template_validation_failed"`
+		ROSNetworkError                string `yaml:"ros_network_error"`
+		ROSAPIError                    string `yaml:"ros_api_error"`
+
+		// ROS credentials errors
+		ROSFailedGetHomeDir        string `yaml:"ros_failed_get_home_dir"`
+		ROSCredentialsNotFound     string `yaml:"ros_credentials_not_found"`
+		ROSFailedReadConfig        string `yaml:"ros_failed_read_config"`
+		ROSFailedParseConfig       string `yaml:"ros_failed_parse_config"`
+		ROSNoValidProfile          string `yaml:"ros_no_valid_profile"`
+		ROSAccessKeyIDEmpty        string `yaml:"ros_access_key_id_empty"`
+		ROSAccessKeySecretEmpty    string `yaml:"ros_access_key_secret_empty"`
+		ROSAccessKeyIDRequired     string `yaml:"ros_access_key_id_required"`
+		ROSAccessKeySecretRequired string `yaml:"ros_access_key_secret_required"`
+		ROSInvalidAccessKeyFormat  string `yaml:"ros_invalid_access_key_format"`
 	} `yaml:"errors"`
 }
 

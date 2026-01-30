@@ -3,11 +3,15 @@ package cmd
 import (
 	"testing"
 
+	"github.com/aliyun/infraguard/pkg/i18n"
 	. "github.com/smartystreets/goconvey/convey"
 )
 
 func TestVersionCommand(t *testing.T) {
 	Convey("Given the version command", t, func() {
+		i18n.Init()
+		updateCommandDescriptions()
+
 		Convey("When checking command structure", func() {
 			So(versionCmd.Use, ShouldEqual, "version")
 			So(versionCmd.Short, ShouldNotBeEmpty)

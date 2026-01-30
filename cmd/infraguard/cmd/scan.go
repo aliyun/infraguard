@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -13,9 +14,11 @@ import (
 	"github.com/aliyun/infraguard/pkg/mapper"
 	"github.com/aliyun/infraguard/pkg/models"
 	"github.com/aliyun/infraguard/pkg/policy"
+	"github.com/aliyun/infraguard/pkg/providers/ros"
 	"github.com/aliyun/infraguard/pkg/reporter"
-	"github.com/aliyun/infraguard/pkg/resolver"
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
+	"gopkg.in/yaml.v3"
 )
 
 var (
@@ -23,6 +26,13 @@ var (
 	scanFormat   string
 	scanOutput   string
 	scanInput    []string
+	scanMode     string // New: scan mode (static or preview)
+)
+
+// Color functions for error output
+var (
+	errorColor = color.New(color.FgRed, color.Bold)
+	dimColor   = color.New(color.Faint)
 )
 
 var scanCmd = &cobra.Command{
@@ -44,6 +54,8 @@ func init() {
 		"Output file path (default: report.html for html format)")
 	scanCmd.Flags().StringArrayVarP(&scanInput, "input", "i", nil,
 		"Parameter values in key=value, JSON format, or file path (can be specified multiple times)")
+	scanCmd.Flags().StringVarP(&scanMode, "mode", "m", "static",
+		"Scan mode: 'static' for local analysis or 'preview' for ROS PreviewStack API (default: static)")
 
 	scanCmd.MarkFlagRequired("policy")
 }
@@ -113,6 +125,12 @@ func runScan(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf(msg.Errors.InvalidFormat, scanFormat)
 	}
 
+	// Validate mode
+	validModes := map[string]bool{"static": true, "preview": true}
+	if !validModes[scanMode] {
+		return fmt.Errorf(msg.Errors.InvalidMode, scanMode)
+	}
+
 	// Validate global language flag if provided
 	if globalLang != "" && globalLang != "zh" && globalLang != "en" {
 		return fmt.Errorf(msg.Errors.InvalidLang, globalLang)
@@ -152,41 +170,28 @@ func runScan(cmd *cobra.Command, args []string) error {
 
 	// Process each template
 	for _, templatePath := range templateFiles {
-		// Load template
-		yamlRoot, templateData, err := loader.LoadLocal(templatePath)
+		// Load template based on mode
+		var yamlRoot *yaml.Node
+		var templateData map[string]interface{}
+		var err error
+
+		// Use unified loading logic for both static and preview modes
+		yamlRoot, templateData, err = loadTemplateWithMode(templatePath, inputParams, scanMode)
 		if err != nil {
-			// Log warning and skip
-			fmt.Fprintf(os.Stderr, msg.Scan.SkippedFile+"\n", templatePath, err)
+			// Format and display error with color
+			formatAndPrintError(templatePath, err, msg)
+
+			// Skip this file and continue processing other files
+			// This applies to both static and preview modes
 			continue
 		}
 
-		// Validate ROS template structure
-		if err := loader.ValidateROSTemplate(templateData); err != nil {
-			// Not a ROS template (missing version or resources) -> Skip silently
-			continue
-		}
-
-		// Validate input parameters against template definition
-		if err := loader.ValidateInputParameters(templateData, inputParams); err != nil {
-			// If validation fails, we probably shouldn't skip silently but error out as it implies valid template but invalid input usage?
-			// But for consistency with "skip invalid ROS templates", this is about input params.
-			// Let's treat input validation failure as error for now, as user explicitly provided inputs.
-			return fmt.Errorf(msg.Scan.FileError, templatePath, err)
-		}
-
-		// Resolve parameters
-		resolvedTemplate, err := loader.ResolveParameters(templateData, inputParams)
-		if err != nil {
-			return fmt.Errorf(msg.Scan.FileError, templatePath, err)
-		}
-
-		// Resolve conditions and intrinsic functions (Ref, Fn::Join, Fn::Sub, Fn::If, etc.)
-		// This happens after parameter resolution and before policy evaluation
-		resolvedTemplate = resolver.ResolveConditionsAndFunctions(resolvedTemplate, nil)
+		// At this point, templateData is ready for policy evaluation
+		// (parameters resolved, conditions evaluated, intrinsic functions processed)
 
 		// Load and evaluate policies
 		// We reuse evalOpts which contains loaded policies
-		evalResult, err := engine.EvaluateWithOpts(evalOpts, resolvedTemplate)
+		evalResult, err := engine.EvaluateWithOpts(evalOpts, templateData)
 		if err != nil {
 			return fmt.Errorf(msg.Scan.FileError, templatePath, fmt.Errorf(msg.Errors.EvaluatePolicies, err))
 		}
@@ -214,6 +219,12 @@ func runScan(cmd *cobra.Command, args []string) error {
 			File:       templatePath,
 			Violations: richViolations,
 		})
+	}
+
+	// If no templates were successfully processed, return error
+	// This prevents showing "No violations found" when all templates failed validation
+	if len(results) == 0 {
+		return fmt.Errorf("%s", msg.Scan.NoTemplatesProcessed)
 	}
 
 	// Determine output writer
@@ -504,4 +515,76 @@ func contains(slice []string, value string) bool {
 		}
 	}
 	return false
+}
+
+// formatAndPrintError formats and prints error messages with color support
+func formatAndPrintError(templatePath string, err error, msg *i18n.Messages) {
+	// Check if output is a TTY for color support
+	isTTY := false
+	if stat, err := os.Stderr.Stat(); err == nil {
+		isTTY = (stat.Mode() & os.ModeCharDevice) != 0
+	}
+
+	// Try to extract FormattedAPIError from error chain using errors.As
+	var formattedErr *ros.FormattedAPIError
+	if errors.As(err, &formattedErr) {
+		// Found FormattedAPIError in error chain
+		if isTTY {
+			// Format error with color - skip the prefix since we'll format it ourselves
+			errorColor.Fprintf(os.Stderr, msg.Scan.SkippedFile+"\n", templatePath, "")
+			fmt.Fprintf(os.Stderr, "  ")
+			errorColor.Fprintf(os.Stderr, msg.Scan.StatusCode+"\n", formattedErr.StatusCode)
+			fmt.Fprintf(os.Stderr, "  ")
+			errorColor.Fprintf(os.Stderr, msg.Scan.Code+"\n", formattedErr.Code)
+			fmt.Fprintf(os.Stderr, "  ")
+			errorColor.Fprintf(os.Stderr, msg.Scan.Message+"\n", formattedErr.Message)
+			if formattedErr.RequestID != "" {
+				fmt.Fprintf(os.Stderr, "  ")
+				dimColor.Fprintf(os.Stderr, msg.Scan.RequestID+"\n", formattedErr.RequestID)
+			}
+		} else {
+			// No color support, use simple format
+			fmt.Fprintf(os.Stderr, msg.Scan.SkippedFile+"\n", templatePath, formattedErr)
+		}
+	} else {
+		// Fallback to simple error format
+		if isTTY {
+			errorColor.Fprintf(os.Stderr, msg.Scan.SkippedFile+"\n", templatePath, err)
+		} else {
+			fmt.Fprintf(os.Stderr, msg.Scan.SkippedFile+"\n", templatePath, err)
+		}
+	}
+}
+
+// loadTemplateWithMode loads a template using the specified mode (static or preview)
+func loadTemplateWithMode(templatePath string, inputParams map[string]interface{}, mode string) (*yaml.Node, map[string]interface{}, error) {
+	msg := i18n.Msg()
+
+	// Detect template type - for now we only support ROS templates
+	// In the future, this could be extended to support other IaC providers
+
+	// Try to load template to check if it's a valid ROS template
+	_, templateData, err := ros.LoadLocalTemplate(templatePath)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	// Check if it's a ROS template
+	if err := ros.ValidateROSTemplate(templateData); err != nil {
+		// Not a ROS template, return error
+		return nil, nil, fmt.Errorf("%s", msg.Errors.PreviewOnlyROSSupported)
+	}
+
+	// Use ROS provider
+	var rosMode ros.Mode
+	switch mode {
+	case "static":
+		rosMode = ros.ModeStatic
+	case "preview":
+		rosMode = ros.ModePreview
+	default:
+		return nil, nil, fmt.Errorf(msg.Errors.PreviewUnsupportedMode, mode)
+	}
+
+	return ros.Load(rosMode, templatePath, inputParams)
 }

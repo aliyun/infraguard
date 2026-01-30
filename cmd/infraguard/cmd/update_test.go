@@ -3,11 +3,15 @@ package cmd
 import (
 	"testing"
 
+	"github.com/aliyun/infraguard/pkg/i18n"
 	. "github.com/smartystreets/goconvey/convey"
 )
 
 func TestUpdateCommand(t *testing.T) {
 	Convey("Given the update command", t, func() {
+		i18n.Init()
+		updateCommandDescriptions()
+
 		Convey("Should be registered", func() {
 			So(updateCmd, ShouldNotBeNil)
 			So(updateCmd.Use, ShouldEqual, "update")

@@ -15,8 +15,9 @@
 ## ✨ Features
 
 - 🔍 **Pre-deployment Validation** - Catch compliance issues before they reach production
+- 🎯 **Dual Scan Modes** - Static analysis or cloud-based preview validation
 - 📦 **Built-in Rules** - Comprehensive coverage for Aliyun services
-- 🎯 **Compliance Packs** - MLPS, ISO 27001, PCI-DSS, SOC 2, and more
+- 🏆 **Compliance Packs** - MLPS, ISO 27001, PCI-DSS, SOC 2, and more
 - 🌍 **Internationalization** - Full support for English and Chinese
 - 🎨 **Multiple Output Formats** - Table, JSON, and interactive HTML reports
 - 🔧 **Extensible** - Write custom policies in Rego (Open Policy Agent)

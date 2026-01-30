@@ -284,13 +284,20 @@ scan:
   input_flag: "Parameter values in key=value, JSON format, or file path (can be specified multiple times)"
   format_flag: "Output format (table, json, or html)"
   output_flag: "Output file path (default: report.html for html format)"
+  mode_flag: "Scan mode: 'static' for local analysis or 'preview' for ROS PreviewStack API (default: static)"
   report_written: "Report written to %s"
   no_violations: "No violations found."
   total_violations: "Total: %d violation(s)"
   file_prefix: "Scan: "
   no_templates_found: "No template files found."
+  no_templates_processed: "No templates were successfully processed. All templates failed validation."
   skipped_file: "Skipping invalid template %s: %v"
   file_error: "File %s: %v"
+  status_code: "StatusCode: %d"
+  code: "Code: %s"
+  message: "Message: %s"
+  request_id: "RequestId: %s"
+  calling_preview_stack: "Calling PreviewStack API (region: %s)..."
 
 # Report
 report:
@@ -334,6 +341,7 @@ lang_flag: "Output language (en or zh, default: auto-detect)"
 errors:
   invalid_format: "invalid format %q: must be one of table, json, html."
   invalid_lang: "invalid language %q: must be en or zh."
+  invalid_mode: "invalid mode %q: must be static or preview."
   policy_dir: "policy directory error: %v."
   policy_dir_hint: "Run 'infraguard policy update' to download policies."
   load_template: "failed to load template: %v."
@@ -352,6 +360,71 @@ errors:
   invalid_ros_template: "invalid ROS template: %v."
   invalid_input: "invalid input format: %s. Expected key=value, JSON, or file path."
   parse_input_file: "failed to parse input file %s: %v."
+  
+  # Preview mode errors
+  preview_mode_requires_credentials: "Preview mode requires Alibaba Cloud credentials."
+  preview_only_ros_supported: "Preview mode currently only supports ROS templates."
+  preview_unsupported_mode: "unsupported mode: %s"
+  
+  # ROS provider errors
+  ros_failed_load_template: "failed to load template: %w"
+  ros_invalid_template: "invalid ROS template: %w"
+  ros_invalid_parameters: "invalid input parameters: %w"
+  ros_failed_resolve_parameters: "failed to resolve parameters: %w"
+  ros_failed_load_credentials: "failed to load credentials: %w"
+  ros_invalid_credentials: "invalid credentials: %w"
+  ros_failed_create_client: "failed to create ROS client: %w"
+  ros_failed_marshal_template: "failed to marshal template: %w"
+  ros_failed_call_api: "failed to call PreviewStack API: %w"
+  ros_failed_convert_response: "failed to convert preview response: %w"
+  ros_client_nil: "ROS client is nil"
+  ros_failed_marshal_parameter: "failed to marshal parameter %s: %w"
+  ros_empty_response: "empty response from PreviewStack API"
+  ros_no_stack_info: "no stack information in PreviewStack response"
+  ros_invalid_preview_response: "invalid preview response"
+  
+  # ROS auth errors
+  ros_auth_invalid_access_key: "authentication failed: invalid access key ID. Please check your credentials"
+  ros_auth_signature_mismatch: "authentication failed: signature does not match. Please check your access key secret"
+  ros_auth_insufficient_permissions: "authentication failed: insufficient permissions. Please check your RAM policy"
+  ros_rate_limit: "API rate limit exceeded: too many requests. Please try again later"
+  ros_service_unavailable: "ROS service temporarily unavailable: please try again later"
+  ros_template_validation_failed: "template validation failed: %w"
+  ros_network_error: "network error: failed to connect to ROS API. Please check your network connection"
+  ros_api_error: "ROS API error: %w"
+  
+  # ROS credentials errors
+  ros_failed_get_home_dir: "failed to get user home directory: %w"
+  ros_credentials_not_found: |
+    credentials not found: please set environment variables or configure aliyun CLI
+    
+    Environment variables:
+      ALIBABA_CLOUD_ACCESS_KEY_ID
+      ALIBABA_CLOUD_ACCESS_KEY_SECRET
+      ALIBABA_CLOUD_REGION_ID (optional)
+    
+    Or run: aliyun configure
+  ros_failed_read_config: "failed to read CLI config file: %w"
+  ros_failed_parse_config: "failed to parse CLI config file: %w"
+  ros_no_valid_profile: "no valid profile found in CLI config file"
+  ros_access_key_id_empty: "access_key_id is empty in CLI config profile '%s'"
+  ros_access_key_secret_empty: "access_key_secret is empty in CLI config profile '%s'"
+  ros_access_key_id_required: "access key ID is required"
+  ros_access_key_secret_required: "access key secret is required"
+  ros_invalid_access_key_format: "invalid access key ID format"
+  
+  preview_credentials_not_found: |
+    Credentials not found. Please configure credentials using one of the following methods:
+    
+    1. Set environment variables:
+       export ALIBABA_CLOUD_ACCESS_KEY_ID="your-access-key-id"
+       export ALIBABA_CLOUD_ACCESS_KEY_SECRET="your-access-key-secret"
+       export ALIBABA_CLOUD_REGION_ID="cn-hangzhou"  # optional
+    
+    2. Configure aliyun CLI:
+       aliyun configure
+    
+    Configuration file location: ~/.aliyun/config.json
   read_input_file: "failed to read input file %s: %w."
   unable_to_determine_home_dir: "unable to determine home directory."
   aliyun_config_not_found: "Aliyun CLI config not found at %s. Please run 'aliyun configure' first."

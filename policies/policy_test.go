@@ -108,6 +108,11 @@ func TestPolicyRules(t *testing.T) {
 		return
 	}
 
+	// Set environment variable to use the policies directory for testing
+	oldWorkspaceDir := os.Getenv("INFRAGUARD_WORKSPACE_POLICY_DIR")
+	os.Setenv("INFRAGUARD_WORKSPACE_POLICY_DIR", policiesDir)
+	defer os.Setenv("INFRAGUARD_WORKSPACE_POLICY_DIR", oldWorkspaceDir)
+
 	// Load policy index for optimized evaluation
 	loader, err := policy.LoadWithFallback()
 	if err != nil {
@@ -227,6 +232,11 @@ func TestPolicyPacks(t *testing.T) {
 		t.Skip("No pack test directories found")
 		return
 	}
+
+	// Set environment variable to use the policies directory for testing
+	oldWorkspaceDir := os.Getenv("INFRAGUARD_WORKSPACE_POLICY_DIR")
+	os.Setenv("INFRAGUARD_WORKSPACE_POLICY_DIR", policiesDir)
+	defer os.Setenv("INFRAGUARD_WORKSPACE_POLICY_DIR", oldWorkspaceDir)
 
 	// Load policy index for optimized evaluation
 	loader, err := policy.LoadWithFallback()

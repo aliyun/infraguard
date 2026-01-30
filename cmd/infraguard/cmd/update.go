@@ -27,7 +27,7 @@ var updateCmd = &cobra.Command{
 func init() {
 	updateCmd.Flags().BoolVar(&checkOnly, "check", false,
 		"Check for updates without installing")
-	updateCmd.Flags().BoolVar(&forceUpdate, "force", false,
+	updateCmd.Flags().BoolVarP(&forceUpdate, "force", "f", false,
 		"Force update even if version is current")
 	updateCmd.Flags().StringVar(&targetVersion, "version", "",
 		"Update to specific version")
@@ -51,7 +51,9 @@ func runUpdate(cmd *cobra.Command, args []string) error {
 
 	// Check for updates
 	fmt.Println(msg.Update.Checking)
-	fmt.Printf(msg.Update.CurrentVersion+"\n", Version)
+	// Remove 'v' prefix from version for consistent display
+	currentVersionDisplay := strings.TrimPrefix(Version, "v")
+	fmt.Printf(msg.Update.CurrentVersion+"\n", currentVersionDisplay)
 
 	var versionToInstall string
 	if targetVersion != "" {
@@ -81,10 +83,10 @@ func runUpdate(cmd *cobra.Command, args []string) error {
 				return nil
 			}
 			// Not check-only mode, and version is the same
-			return fmt.Errorf(msg.Update.Errors.NoUpdateNeeded, Version, versionToInstall)
+			return fmt.Errorf(msg.Update.Errors.NoUpdateNeeded, currentVersionDisplay, versionToInstall)
 		} else if cmp > 0 {
 			// Current version is newer than target
-			fmt.Println(color.YellowString("⚠ ") + fmt.Sprintf(msg.Update.Errors.NoUpdateNeeded, Version, versionToInstall))
+			fmt.Println(color.YellowString("⚠ ") + fmt.Sprintf(msg.Update.Errors.NoUpdateNeeded, currentVersionDisplay, versionToInstall))
 			return nil
 		}
 	}

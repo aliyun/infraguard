@@ -62,6 +62,11 @@ func (l *Loader) Load() error {
 		return fmt.Errorf(msg.Errors.ReadPolicyDirectory, err)
 	}
 
+	// Initialize LibModules if not already
+	if l.index.LibModules == nil {
+		l.index.LibModules = make(map[string]string)
+	}
+
 	for _, entry := range entries {
 		if !entry.IsDir() {
 			continue
@@ -73,11 +78,19 @@ func (l *Loader) Load() error {
 		// Check if it's provider-first structure: {provider}/rules/ or {provider}/packs/
 		rulesDir := filepath.Join(subDirPath, "rules")
 		packsDir := filepath.Join(subDirPath, "packs")
+		libDir := filepath.Join(subDirPath, "lib")
 		hasRulesDir := dirExists(rulesDir)
 		hasPacksDir := dirExists(packsDir)
+		hasLibDir := dirExists(libDir)
 
 		if hasRulesDir || hasPacksDir {
 			// Provider-first structure: load from {provider}/rules/ and {provider}/packs/
+
+			// Load lib modules first
+			if hasLibDir {
+				l.loadLibModulesFromDir(libDir)
+			}
+
 			if hasRulesDir {
 				rules, err := DiscoverRulesWithExtraModules(rulesDir, l.extraModules)
 				if err != nil {
@@ -101,6 +114,11 @@ func (l *Loader) Load() error {
 			// Flat structure: load .rego files directly from subdirectory
 			// Check if directory contains .rego files
 			if hasRegoFiles(subDirPath) {
+				// Load lib modules if present
+				if hasLibDir {
+					l.loadLibModulesFromDir(libDir)
+				}
+
 				rules, err := DiscoverRulesWithExtraModules(subDirPath, l.extraModules)
 				if err != nil {
 					return fmt.Errorf(msg.Errors.DiscoverRulesForProvider, subDir, err)
@@ -174,6 +192,28 @@ func (l *Loader) GetLibModules() map[string]string {
 		return make(map[string]string)
 	}
 	return l.index.LibModules
+}
+
+// loadLibModulesFromDir loads all helper modules from the lib directory and stores them in the index.
+func (l *Loader) loadLibModulesFromDir(libDir string) {
+	if !dirExists(libDir) {
+		return
+	}
+
+	filepath.WalkDir(libDir, func(path string, d os.DirEntry, err error) error {
+		if err != nil || d.IsDir() || !strings.HasSuffix(path, ".rego") {
+			return nil
+		}
+
+		content, err := os.ReadFile(path)
+		if err != nil {
+			return nil // Skip files that can't be read
+		}
+
+		// Store lib module with its path as key
+		l.index.LibModules[path] = string(content)
+		return nil
+	})
 }
 
 // MatchRules returns all rules matching the given pattern.
