@@ -25,6 +25,8 @@ infraguard scan <template> -p <policy>
 - `--format <format>`: 输出格式（`table`、`json` 或 `html`）
 - `-o, --output <file>`: 输出文件路径（用于 HTML 和 JSON 格式）
 - `--lang <lang>`: 输出语言（`en` 或 `zh`）
+- `-m, --mode <mode>`: 扫描模式（`static` 用于本地分析，`preview` 用于 ROS PreviewStack API，默认：`static`）
+- `-i, --input <value>`: 参数值，格式为 `key=value`、JSON 格式或文件路径（可多次指定）
 
 ## 策略类型
 
@@ -75,6 +77,32 @@ infraguard scan template.yaml -p ./my-custom-rule.rego
 ```bash
 infraguard scan template.yaml -p ./my-policies/
 ```
+
+## 扫描模式
+
+InfraGuard 支持两种扫描模式：
+
+### 静态模式（默认）
+
+在本地对模板进行静态分析，无需访问云服务商：
+
+```bash
+infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack --mode static
+```
+
+此模式在本地分析模板结构和资源配置。速度快且不需要云凭证，但可能不支持所有 ROS 特性（参见 [ROS 特性支持](./ros-features)）。
+
+### 预览模式
+
+使用 ROS PreviewStack API 通过实际的云服务商评估来验证模板：
+
+```bash
+infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack --mode preview
+```
+
+预览模式为需要运行时评估的特性（如 `Fn::GetAtt`、`Fn::GetAZs` 等）提供更准确的分析。此模式需要配置 ROS 凭证。
+
+对于使用静态分析不支持的特性的模板，我们推荐使用 `--mode preview` 以获得更准确的结果。
 
 ## 多个策略
 
@@ -197,6 +225,27 @@ infraguard scan "${TEMPLATE_FILE}" \
   -p pack:aliyun:quick-start-compliance-pack \
   --format json \
   --lang en
+```
+
+### 示例 4：使用参数的预览模式
+
+使用模板参数进行预览模式扫描：
+
+```bash
+infraguard scan template.yaml \
+  -p pack:aliyun:quick-start-compliance-pack \
+  --mode preview \
+  --input InstanceType=ecs.c6.large \
+  --input ImageId=centos_7_9_x64_20G_alibase_20231219.vhd
+```
+
+您也可以从 JSON 文件提供参数：
+
+```bash
+infraguard scan template.yaml \
+  -p pack:aliyun:quick-start-compliance-pack \
+  --mode preview \
+  --input parameters.json
 ```
 
 ## 提示

@@ -76,7 +76,7 @@ The YAML parser automatically converts these short forms to their standard map r
 
 ## Unsupported Features
 
-InfraGuard focuses on static analysis and currently does not support the following features:
+InfraGuard focuses on static analysis and currently does not support the following features in static mode:
 
 ### Runtime Functions
 - `Fn::GetAtt` - Requires actual resource creation to retrieve attributes
@@ -92,7 +92,9 @@ InfraGuard focuses on static analysis and currently does not support the followi
 ### Special References
 - Pseudo parameters (e.g., `ALIYUN::StackId`, `ALIYUN::Region`, etc.) - System-provided parameters
 
-These features will be preserved as-is in the analysis output without evaluation or validation.
+These features will be preserved as-is in the analysis output without evaluation or validation when using static mode.
+
+> **Tip**: For templates that use features not supported by static analysis (such as `Fn::GetAtt`, `Fn::GetAZs`, etc.), we recommend using `--mode preview` to leverage the ROS PreviewStack API for more accurate analysis. Preview mode evaluates templates with actual cloud provider context, enabling support for runtime functions and other dynamic features.
 
 ## Related Resources
 

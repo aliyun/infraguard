@@ -24,6 +24,8 @@ infraguard scan <template> -p <policy> [flags]
 | `--format <format>` | string | Output format (`table`, `json`, `html`) |
 | `-o, --output <file>` | string | Output file path |
 | `--lang <lang>` | string | Output language (`en` or `zh`) |
+| `-m, --mode <mode>` | string | Scan mode: `static` for local analysis or `preview` for ROS PreviewStack API (default: `static`) |
+| `-i, --input <value>` | string | Parameter values in `key=value`, JSON format, or file path (can be specified multiple times) |
 
 ## Examples
 
@@ -42,6 +44,15 @@ infraguard scan template.yaml -p "rule:aliyun:ecs-*"
 
 # Generate HTML report
 infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack --format html -o report.html
+
+# Scan using preview mode
+infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack --mode preview
+
+# Scan with template parameters
+infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack --input InstanceType=ecs.c6.large --input ImageId=centos_7_9_x64_20G_alibase_20231219.vhd
+
+# Preview mode with parameters from JSON file
+infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack --mode preview --input parameters.json
 ```
 
 ## Exit Codes

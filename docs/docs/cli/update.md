@@ -17,7 +17,7 @@ infraguard update [flags]
 | Flag | Type | Description |
 |------|------|-------------|
 | `--check` | boolean | Check for updates without installing |
-| `--force` | boolean | Force update even if version is current |
+| `-f`, `--force` | boolean | Force update even if version is current |
 | `--version` | string | Update to a specific version |
 
 ## Examples
@@ -33,9 +33,9 @@ infraguard update --check
 Output:
 ```
 Checking for updates...
-Current version: 0.2.0
-Latest version: 0.3.0
-✓ A new version is available: 0.3.0
+Current version: 0.4.0
+Latest version: 0.5.0
+✓ A new version is available: 0.5.0
 ```
 
 ### Update to Latest Version
@@ -49,11 +49,11 @@ infraguard update
 Output:
 ```
 Checking for updates...
-Current version: 0.2.0
-Latest version: 0.3.0
-→ Downloading version 0.3.0...
-Downloaded 5.2 MiB / 5.2 MiB (100.0%)
-✓ Successfully updated to version 0.3.0!
+Current version: 0.4.0
+Latest version: 0.5.0
+→ Downloading version 0.5.0...
+Downloaded 39.5 MiB / 39.5 MiB (100.0%)
+✓ Successfully updated to version 0.5.0!
 ```
 
 ### Update to Specific Version
@@ -61,13 +61,15 @@ Downloaded 5.2 MiB / 5.2 MiB (100.0%)
 Install a specific version:
 
 ```bash
-infraguard update --version 0.3.0
+infraguard update --version 0.5.0
 ```
 
 ### Force Reinstall Current Version
 
-Reinstall the current version (useful for fixing corrupted installations):
+Reinstall the current version:
 
 ```bash
 infraguard update --force
+# or
+infraguard update -f
 ```

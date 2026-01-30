@@ -25,6 +25,8 @@ infraguard scan <template> -p <policy>
 - `--format <format>`: Output format (`table`, `json`, or `html`)
 - `-o, --output <file>`: Output file path (for HTML and JSON formats)
 - `--lang <lang>`: Output language (`en` or `zh`)
+- `-m, --mode <mode>`: Scan mode (`static` for local analysis or `preview` for ROS PreviewStack API, default: `static`)
+- `-i, --input <value>`: Parameter values in `key=value`, JSON format, or file path (can be specified multiple times)
 
 ## Policy Types
 
@@ -75,6 +77,32 @@ Scan with all policies in a directory:
 ```bash
 infraguard scan template.yaml -p ./my-policies/
 ```
+
+## Scan Modes
+
+InfraGuard supports two scan modes:
+
+### Static Mode (Default)
+
+Performs local static analysis of the template without requiring cloud provider access:
+
+```bash
+infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack --mode static
+```
+
+This mode analyzes the template structure and resource configurations locally. It's fast and doesn't require cloud credentials, but may not support all ROS features (see [ROS Features Support](./ros-features)).
+
+### Preview Mode
+
+Uses the ROS PreviewStack API to validate templates with actual cloud provider evaluation:
+
+```bash
+infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack --mode preview
+```
+
+Preview mode provides more accurate analysis for features that require runtime evaluation (such as `Fn::GetAtt`, `Fn::GetAZs`, etc.). This mode requires ROS credentials to be configured.
+
+For templates using features not supported by static analysis, we recommend using `--mode preview` for more accurate results.
 
 ## Multiple Policies
 
@@ -197,6 +225,27 @@ infraguard scan "${TEMPLATE_FILE}" \
   -p pack:aliyun:quick-start-compliance-pack \
   --format json \
   --lang en
+```
+
+### Example 4: Preview Mode with Parameters
+
+Scan using preview mode with template parameters:
+
+```bash
+infraguard scan template.yaml \
+  -p pack:aliyun:quick-start-compliance-pack \
+  --mode preview \
+  --input InstanceType=ecs.c6.large \
+  --input ImageId=centos_7_9_x64_20G_alibase_20231219.vhd
+```
+
+You can also provide parameters from a JSON file:
+
+```bash
+infraguard scan template.yaml \
+  -p pack:aliyun:quick-start-compliance-pack \
+  --mode preview \
+  --input parameters.json
 ```
 
 ## Tips
