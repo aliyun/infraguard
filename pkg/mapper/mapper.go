@@ -21,6 +21,11 @@ func MapViolations(violations []models.OPAViolation, yamlRoot interface{}, fileP
 // SnippetContextLines defines how many lines to show before/after the violation line.
 const SnippetContextLines = 2
 
+// MaxPathLength defines the maximum number of elements allowed in a violation path.
+// This prevents potential overflow in capacity calculations and guards against
+// unreasonably large path allocations.
+const MaxPathLength = 1024
+
 // MapViolationsWithLang enriches OPA violations with source file context and i18n support.
 func MapViolationsWithLang(violations []models.OPAViolation, yamlRoot interface{}, filePath string, lang string) []models.RichViolation {
 	var rich []models.RichViolation
@@ -74,7 +79,15 @@ func buildFullPath(resourceID string, violationPath []interface{}) []interface{}
 	}
 
 	// For resource-level checks, add Resources prefix
-	fullPath := make([]interface{}, 0, len(violationPath)+2)
+	// Guard against overflow by capping the path length at MaxPathLength
+	pathLen := len(violationPath)
+	if pathLen > MaxPathLength {
+		pathLen = MaxPathLength
+	}
+
+	// Calculate capacity safely with bounded pathLen
+	capSize := pathLen + 2
+	fullPath := make([]interface{}, 0, capSize)
 	fullPath = append(fullPath, "Resources")
 	fullPath = append(fullPath, resourceID)
 	fullPath = append(fullPath, violationPath...)
