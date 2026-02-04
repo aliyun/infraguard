@@ -25,7 +25,7 @@ MAIN_PATH := ./cmd/infraguard
 # Default target
 .DEFAULT_GOAL := help
 
-.PHONY: all build run clean test test-policy test-all test-web test-coverage format lint tidy deps help install doc-gen doc-dev doc-serve doc-build doc-clean validate-translations
+.PHONY: all build run clean test test-policy test-all test-web test-coverage format lint tidy deps help install doc-gen doc-dev doc-serve doc-build doc-clean validate-translations validate-doc-translations
 
 ## Build targets
 
@@ -137,6 +137,11 @@ install: ## Install development dependencies (Node.js packages for documentation
 
 ## Documentation targets
 
+
+validate-doc-translations: ## Validate documentation translations for all languages
+	@echo "Validating documentation translations..."
+	$(GORUN) scripts/validate-doc-translations.go
+
 doc-gen: ## Generate policy documentation from .rego files
 	@echo "Generating policy documentation..."
 	$(GORUN) scripts/generate-policy-docs.go
@@ -149,7 +154,7 @@ doc-serve: doc-build ## Serve the production build locally (supports multiple lo
 	@echo "Serving production build..."
 	cd $(DOCS_DIR) && $(NPM) run serve
 
-doc-build: doc-gen ## Build static documentation site
+doc-build: doc-gen validate-doc-translations ## Build static documentation site
 	@echo "Building documentation site..."
 	cd $(DOCS_DIR) && $(NPM) run build
 
