@@ -597,8 +597,7 @@ func runPolicyFormat(cmd *cobra.Command, args []string) error {
 			if formatWrite {
 				greenColor.Printf(msg.PolicyFormat.SuccessPrefix+"%s: %s\n", msg.PolicyFormat.Formatted, result.FilePath)
 			} else if formatDiff {
-				diff := policy.GenerateDiff(result.Original, result.Formatted, result.FilePath)
-				fmt.Println(diff)
+				fmt.Print(policy.GenerateDiff(result.Original, result.Formatted, result.FilePath))
 			} else {
 				yellowColor.Printf(msg.PolicyFormat.NeedsFormatPrefix+"%s: %s\n", msg.PolicyFormat.NeedsFormatting, result.FilePath)
 			}

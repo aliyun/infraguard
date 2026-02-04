@@ -3,6 +3,7 @@ package policy
 import (
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	. "github.com/smartystreets/goconvey/convey"
@@ -231,6 +232,108 @@ func TestFormatInlineI18nDict(t *testing.T) {
 
 			Convey("It should not modify the content", func() {
 				So(string(result), ShouldEqual, string(input))
+			})
+		})
+	})
+}
+
+func TestSortI18nLanguages(t *testing.T) {
+	Convey("Given the sortI18nLanguages function", t, func() {
+		Convey("When sorting rule_meta multiline i18n dict with unordered languages", func() {
+			input := []byte(`rule_meta := {
+	"name": {
+		"pt": "Test Portuguese",
+		"en": "Test English",
+		"zh": "测试中文",
+		"de": "Test German",
+		"ja": "テスト日本語",
+		"fr": "Test Français",
+		"es": "Test Español"
+	},
+	"description": {
+		"es": "Test Español",
+		"zh": "测试中文",
+		"en": "Test English"
+	})
+}`)
+			result := sortI18nLanguages(input)
+
+			Convey("It should sort languages in standard order", func() {
+				resultStr := string(result)
+				// Check that all languages are present
+				So(resultStr, ShouldContainSubstring, `"en"`)
+				So(resultStr, ShouldContainSubstring, `"zh"`)
+				So(resultStr, ShouldContainSubstring, `"ja"`)
+				So(resultStr, ShouldContainSubstring, `"de"`)
+				So(resultStr, ShouldContainSubstring, `"es"`)
+				So(resultStr, ShouldContainSubstring, `"fr"`)
+				So(resultStr, ShouldContainSubstring, `"pt"`)
+
+				// Check that en comes before zh in name field
+				enIndex := strings.Index(resultStr, `"en": "Test English"`)
+				zhIndex := strings.Index(resultStr, `"zh": "测试中文"`)
+				So(enIndex, ShouldBeGreaterThan, 0)
+				So(zhIndex, ShouldBeGreaterThan, enIndex)
+			})
+		})
+
+		Convey("When sorting pack_meta multiline i18n dict", func() {
+			input := []byte(`pack_meta := {
+	"name": {
+		"fr": "Test Français",
+		"en": "Test English",
+		"de": "Test German"
+	},
+	"description": {
+		"de": "Test German",
+		"zh": "测试中文",
+		"en": "Test English"
+	}
+}`)
+			result := sortI18nLanguages(input)
+
+			Convey("It should sort languages in standard order", func() {
+				resultStr := string(result)
+				// Check en comes before zh, and zh comes before de in description
+				enPos := strings.Index(resultStr, `"en": "Test English"`)
+				zhPos := strings.LastIndex(resultStr, `"zh": "测试中文"`)
+				dePos := strings.LastIndex(resultStr, `"de": "Test German"`)
+				So(enPos, ShouldBeLessThan, zhPos)
+				So(zhPos, ShouldBeLessThan, dePos)
+			})
+		})
+
+		Convey("When input has no multiline i18n dict", func() {
+			input := []byte(`rule_meta := {
+	"id": "test",
+	"severity": "high"
+}`)
+			result := sortI18nLanguages(input)
+
+			Convey("It should not modify the content", func() {
+				So(string(result), ShouldEqual, string(input))
+			})
+		})
+
+		Convey("When sorting reason and recommendation fields", func() {
+			input := []byte(`	"reason": {
+		"pt": "Razão",
+		"en": "Reason",
+		"zh": "原因"
+	},
+	"recommendation": {
+		"zh": "建议",
+		"ja": "推奨",
+		"en": "Recommendation"
+	}`)
+			result := sortI18nLanguages(input)
+
+			Convey("It should sort both fields", func() {
+				resultStr := string(result)
+				// Check reason field order
+				So(resultStr, ShouldContainSubstring, `"reason":`)
+				// Check recommendation field order
+				So(resultStr, ShouldContainSubstring, `"recommendation":`)
 			})
 		})
 	})

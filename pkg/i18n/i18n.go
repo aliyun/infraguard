@@ -269,18 +269,18 @@ type Messages struct {
 
 	// Error messages
 	Errors struct {
-		InvalidFormat                   string `yaml:"invalid_format"`
-		InvalidLang                     string `yaml:"invalid_lang"`
-		InvalidMode                     string `yaml:"invalid_mode"`
-		
+		InvalidFormat string `yaml:"invalid_format"`
+		InvalidLang   string `yaml:"invalid_lang"`
+		InvalidMode   string `yaml:"invalid_mode"`
+
 		// Language tag validation errors
-		InvalidLangTagSeparator  string `yaml:"invalid_lang_tag_separator"`
-		InvalidLangTagFormat     string `yaml:"invalid_lang_tag_format"`
-		InvalidLangCodeLength    string `yaml:"invalid_lang_code_length"`
-		InvalidLangCodeChars     string `yaml:"invalid_lang_code_chars"`
-		InvalidRegionCodeLength  string `yaml:"invalid_region_code_length"`
-		InvalidRegionCodeFormat  string `yaml:"invalid_region_code_format"`
-		
+		InvalidLangTagSeparator string `yaml:"invalid_lang_tag_separator"`
+		InvalidLangTagFormat    string `yaml:"invalid_lang_tag_format"`
+		InvalidLangCodeLength   string `yaml:"invalid_lang_code_length"`
+		InvalidLangCodeChars    string `yaml:"invalid_lang_code_chars"`
+		InvalidRegionCodeLength string `yaml:"invalid_region_code_length"`
+		InvalidRegionCodeFormat string `yaml:"invalid_region_code_format"`
+
 		PolicyDir                       string `yaml:"policy_dir"`
 		PolicyDirHint                   string `yaml:"policy_dir_hint"`
 		LoadTemplate                    string `yaml:"load_template"`
@@ -408,6 +408,20 @@ var (
 	englishMessages *Messages // Fallback
 	loadedMessages  = make(map[string]*Messages)
 )
+
+// LanguageOrder defines the standard order for displaying languages in i18n dictionaries.
+// This order is used for formatting policy files to maintain consistency.
+var LanguageOrder = []string{"en", "zh", "ja", "de", "es", "fr", "pt"}
+
+// GetLanguageOrderMap returns a map of language code to its display order.
+// Lower numbers appear first in sorted output.
+func GetLanguageOrderMap() map[string]int {
+	langOrderMap := make(map[string]int)
+	for i, lang := range LanguageOrder {
+		langOrderMap[lang] = i
+	}
+	return langOrderMap
+}
 
 func init() {
 	// Load English as required fallback

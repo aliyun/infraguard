@@ -6,6 +6,37 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 )
 
+func TestLanguageOrder(t *testing.T) {
+	Convey("Given the LanguageOrder constant", t, func() {
+		Convey("It should contain all supported languages in correct order", func() {
+			So(len(LanguageOrder), ShouldEqual, 7)
+			So(LanguageOrder[0], ShouldEqual, "en")
+			So(LanguageOrder[1], ShouldEqual, "zh")
+			So(LanguageOrder[2], ShouldEqual, "ja")
+			So(LanguageOrder[3], ShouldEqual, "de")
+			So(LanguageOrder[4], ShouldEqual, "es")
+			So(LanguageOrder[5], ShouldEqual, "fr")
+			So(LanguageOrder[6], ShouldEqual, "pt")
+		})
+	})
+}
+
+func TestGetLanguageOrderMap(t *testing.T) {
+	Convey("Given the GetLanguageOrderMap function", t, func() {
+		Convey("It should return correct order mapping", func() {
+			orderMap := GetLanguageOrderMap()
+			So(len(orderMap), ShouldEqual, 7)
+			So(orderMap["en"], ShouldEqual, 0)
+			So(orderMap["zh"], ShouldEqual, 1)
+			So(orderMap["ja"], ShouldEqual, 2)
+			So(orderMap["de"], ShouldEqual, 3)
+			So(orderMap["es"], ShouldEqual, 4)
+			So(orderMap["fr"], ShouldEqual, 5)
+			So(orderMap["pt"], ShouldEqual, 6)
+		})
+	})
+}
+
 func TestSetLanguage(t *testing.T) {
 	Convey("Given the SetLanguage function", t, func() {
 		Convey("When setting to Chinese", func() {
