@@ -1,0 +1,493 @@
+# Deutsche Lokalisierung für InfraGuard CLI
+# Diese Datei dient als deutsche Übersetzung
+
+# Cobra-Template-Strings
+usage: "Verwendung"
+available_commands: "Verfügbare Befehle"
+additional_commands: "Zusätzliche Befehle"
+flags: "Flags"
+global_flags: "Globale Flags"
+additional_help: "Verwenden Sie \"{{.CommandPath}} [Befehl] --help\" für weitere Informationen zu einem Befehl."
+aliases: "Aliase"
+examples: "Beispiele"
+
+# Integrierte Befehle
+completion:
+  short: "Generiere das Autovervollständigungsskript für die angegebene Shell"
+help:
+  short: "Hilfe zu jedem Befehl"
+  long: "Help bietet Hilfe für jeden Befehl in der Anwendung.\nGeben Sie einfach {{.Name}} help [Pfad zum Befehl] ein für vollständige Details."
+
+# Version-Befehl
+version:
+  short: "Versionsinformationen anzeigen"
+  long: "Versionsinformationen für InfraGuard und OPA anzeigen."
+  infraguard: "InfraGuard"
+  opa: "OPA"
+
+# Root-Befehl
+root:
+  short: "InfraGuard - IaC Compliance Pre-Check CLI"
+  long: |
+    InfraGuard ist ein IaC (Infrastructure as Code) Compliance Pre-Check CLI-Tool.
+    Es scannt IaC-Templates (derzeit Aliyun ROS-Templates unterstützend) gegen
+    OPA/Rego-Richtlinien vor dem Deployment und hilft, Sicherheitsprobleme und
+    nicht konforme Konfigurationen frühzeitig zu identifizieren.
+
+# Policy-Befehl
+policy:
+  short: "Compliance-Richtlinien verwalten"
+  long: "Befehle zur Verwaltung von Compliance-Richtlinien, einschließlich Herunterladen und Aktualisieren von Richtlinienbibliotheken."
+
+# Policy update-Befehl
+policy_update:
+  short: "Richtlinienbibliothek aus Repository herunterladen/aktualisieren"
+  long: |
+    Laden Sie die Richtlinienbibliothek aus einem Git-Repository herunter.
+    Das Unterverzeichnis policies/ wird heruntergeladen und lokal gespeichert.
+
+    Unterstützte Repository-Formate:
+      - Host/Pfad (z.B. github.com/aliyun/infraguard)
+      - HTTPS-URL (z.B. https://github.com/aliyun/infraguard.git)
+      - SSH-URL (z.B. ssh://git@github.com/aliyun/infraguard.git)
+      - SCP-ähnlich (z.B. git@github.com:aliyun/infraguard.git)
+  repo_flag: "Git-Repository-URL oder -Pfad"
+  version_flag: "Git-Branch, Tag oder Commit zum Herunterladen"
+  progress: "Aktualisiere Richtlinien von %s (Version: %s)..."
+  success: "Richtlinien erfolgreich aktualisiert."
+
+# Policy get-Befehl
+policy_get:
+  short: "Details einer Regel oder eines Packs abrufen"
+  long: |
+    Detaillierte Informationen über eine Compliance-Regel oder ein Pack anzeigen.
+    Der Typ (Regel/Pack) wird automatisch aus dem ID-Präfix erkannt.
+
+    Beispiele:
+      infraguard policy get rule:aliyun:ecs-public-ip
+      infraguard policy get pack:aliyun:security-baseline
+  not_found_rule: "Regel nicht gefunden: %s."
+  not_found_pack: "Pack nicht gefunden: %s."
+  no_rules_loaded: "Keine Regeln geladen. Führen Sie zuerst 'infraguard policy update' aus."
+  no_packs_loaded: "Keine Packs geladen. Führen Sie zuerst 'infraguard policy update' aus."
+  rule_details: "Regel-Details"
+  pack_details: "Pack-Details"
+  included_rules: "Enthaltene Regeln"
+  included_rules_format: "%s: %s"
+  name: "Name"
+  description: "Beschreibung"
+  resource_types: "Ressourcentypen"
+  pack_id: "Pack-ID"
+
+# Policy list-Befehl
+policy_list:
+  short: "Alle verfügbaren Regeln und Packs auflisten"
+  long: |
+    Alle verfügbaren Compliance-Regeln und -Packs auflisten.
+    Zeigt Regel/Pack-ID, Name und zusätzliche Informationen.
+  rules: "Regeln"
+  packs: "Packs"
+
+# Policy validate-Befehl
+policy_validate:
+  short: "Richtliniendateien für InfraGuard-Konformität validieren"
+  long: |
+    Rego-Richtliniendateien gegen InfraGuard-Schema-Anforderungen validieren.
+    Nur Dateien mit package infraguard.rules.* oder infraguard.packs.* werden validiert.
+    Überprüft rule_meta, pack_meta und deny-Regelformat.
+
+    Beispiele:
+      infraguard policy validate ./policies/aliyun/rules/
+      infraguard policy validate ./my-rule.rego
+  no_files_found: "Keine Richtliniendateien gefunden (Dateien müssen package infraguard.rules.* oder infraguard.packs.* deklarieren)."
+  passed: "Validierung bestanden: %d Datei(en) validiert"
+  failed: "Validierung fehlgeschlagen."
+  summary: "Validierung: %d gesamt, %d bestanden, %d fehlgeschlagen"
+  skipped_summary: "%d Datei(en) übersprungen (keine InfraGuard-Richtliniendateien):"
+  suggestion: "Vorschlag"
+  file_type_rule: "Regel"
+  file_type_pack: "Pack"
+  file_type_unknown: "unbekannt"
+  skipped_prefix: "  - "
+  error_prefix: "  ✗ "
+  suggestion_prefix: "    → "
+  errors:
+    SYNTAX_ERROR: "Syntaxfehler."
+    SYNTAX_ERROR_suggestion: "Beheben Sie die Rego-Syntaxfehler vor der Validierung."
+    READ_ERROR: "Fehler beim Lesen der Datei."
+    READ_ERROR_suggestion: "Stellen Sie sicher, dass die Datei existiert und lesbar ist."
+    RULE_MISSING_META: "rule_meta ist erforderlich, wurde aber nicht gefunden oder enthält Fehler."
+    RULE_MISSING_META_suggestion: "Fügen Sie ein rule_meta-Objekt mit erforderlichen Feldern hinzu: id, name, severity, reason."
+    RULE_MISSING_ID: "rule_meta.id ist erforderlich."
+    RULE_MISSING_ID_suggestion: "Fügen Sie das Feld id zu rule_meta hinzu."
+    RULE_MISSING_NAME: "rule_meta.name ist erforderlich."
+    RULE_MISSING_NAME_suggestion: "Fügen Sie das Feld name mit englischen und chinesischen Übersetzungen hinzu."
+    RULE_MISSING_SEVERITY: "rule_meta.severity ist erforderlich."
+    RULE_MISSING_SEVERITY_suggestion: "Fügen Sie das Feld severity mit Wert hinzu: high, medium oder low."
+    RULE_MISSING_REASON: "rule_meta.reason ist erforderlich."
+    RULE_MISSING_REASON_suggestion: "Fügen Sie das Feld reason hinzu, das erklärt, warum Verstöße auftreten."
+    RULE_INVALID_SEVERITY: "rule_meta.severity muss eines sein von: high, medium, low."
+    RULE_INVALID_SEVERITY_suggestion: "Ändern Sie severity zu einem der gültigen Werte: high, medium, low."
+    RULE_INVALID_FIELD_TYPE: "Das Feld muss ein String oder ein Übersetzungswörterbuch sein."
+    RULE_INVALID_FIELD_TYPE_suggestion: "Ändern Sie das Feld zu einem String oder Objekt wie {\"en\": \"...\", \"zh\": \"...\"}."
+    RULE_MISSING_DENY: "deny-Regel ist erforderlich."
+    RULE_MISSING_DENY_suggestion: "Fügen Sie eine deny-Regel hinzu: deny contains result if { ... } mit result enthaltend id, resource_id, violation_path, meta."
+    RULE_INVALID_DENY_FORMAT: "deny result-Feld ist erforderlich."
+    RULE_INVALID_DENY_FORMAT_suggestion: "Fügen Sie das fehlende Feld zum deny result-Objekt hinzu."
+    PACK_MISSING_META: "pack_meta ist erforderlich, wurde aber nicht gefunden oder enthält Fehler."
+    PACK_MISSING_META_suggestion: "Fügen Sie ein pack_meta-Objekt mit erforderlichen Feldern hinzu: id, name, rules."
+    PACK_MISSING_ID: "pack_meta.id ist erforderlich."
+    PACK_MISSING_ID_suggestion: "Fügen Sie das Feld id zu pack_meta hinzu."
+    PACK_MISSING_NAME: "pack_meta.name ist erforderlich."
+    PACK_MISSING_NAME_suggestion: "Fügen Sie das Feld name mit englischen und chinesischen Übersetzungen hinzu."
+    PACK_MISSING_RULES: "pack_meta.rules ist erforderlich und darf nicht leer sein."
+    PACK_MISSING_RULES_suggestion: "Fügen Sie das Feld rules mit Liste von Regel-IDs hinzu."
+    PACK_INVALID_FIELD_TYPE: "Das Feld muss ein String oder ein Übersetzungswörterbuch sein."
+    PACK_INVALID_FIELD_TYPE_suggestion: "Ändern Sie das Feld zu einem String oder Objekt wie {\"en\": \"...\", \"zh\": \"...\"}."
+
+# Policy format-Befehl
+policy_format:
+  short: "Richtliniendateien mit OPA-Formatter formatieren"
+  long: |
+    Rego-Richtliniendateien mit dem integrierten OPA-Formatter formatieren.
+    Standardmäßig zeigt an, welche Dateien Formatierung benötigen, ohne sie zu ändern.
+
+    Beispiele:
+      infraguard policy format ./policies/       # Format prüfen
+      infraguard policy format ./policies/ -w    # Formatieren und schreiben
+      infraguard policy format ./my-rule.rego -d # Diff anzeigen
+  write_flag: "Formatierte Ausgabe in Dateien schreiben"
+  diff_flag: "Nur Diff-Ausgabe anzeigen"
+  no_files_found: "Keine .rego-Dateien gefunden."
+  formatted: "Formatiert"
+  already_formatted: "Bereits formatiert"
+  needs_formatting: "Benötigt Formatierung"
+  summary_changed: "%d Datei(en) geändert"
+  summary_unchanged: "%d Datei(en) unverändert"
+  needs_format: "Einige Dateien benötigen Formatierung. Mit --write ausführen zum Formatieren."
+  error_prefix: "✗ "
+  success_prefix: "✓ "
+  needs_format_prefix: "✗ "
+
+# Policy clean-Befehl
+policy_clean:
+  short: "Benutzer-Richtlinienverzeichnis bereinigen"
+  long: |
+    Alle Richtlinien aus dem Benutzer-Richtlinienverzeichnis entfernen (~/.infraguard/policies/).
+    Dies betrifft keine eingebetteten Richtlinien oder Workspace-Richtlinien.
+
+    Standardmäßig wird vor dem Löschen um Bestätigung gebeten.
+    Verwenden Sie --force, um Bestätigung zu überspringen (nützlich in Skripten).
+
+    Beispiele:
+      infraguard policy clean        # Interaktiver Modus mit Bestätigung
+      infraguard policy clean -f     # Erzwungene Bereinigung ohne Bestätigung
+  force_flag: "Bestätigung überspringen und direkt bereinigen"
+  confirm: |
+    Warnung: Dies löscht alle Richtlinien in: %s
+    Sind Sie sicher, dass Sie fortfahren möchten? (y/yes zum Bestätigen): 
+  progress: "Bereinige Richtlinienverzeichnis..."
+  success: "Richtlinienverzeichnis erfolgreich bereinigt."
+  already_clean: "Richtlinienverzeichnis ist bereits sauber oder existiert nicht."
+  cancelled: "Vorgang abgebrochen."
+
+# Update-Befehl
+update:
+  short: "InfraGuard CLI auf die neueste Version aktualisieren"
+  long: |
+    InfraGuard CLI auf die neueste Version oder eine spezifische Version aktualisieren.
+    Lädt das Binary von GitHub Releases herunter und installiert es.
+
+    Beispiele:
+      infraguard update              # Auf neueste Version aktualisieren
+      infraguard update --check      # Nur nach Updates suchen
+      infraguard update --force      # Neuinstallation der aktuellen Version erzwingen
+      infraguard update --version 0.3.0  # Auf spezifische Version aktualisieren
+  check_flag: "Nach Updates suchen ohne Installation"
+  force_flag: "Update erzwingen, auch wenn Version aktuell ist"
+  version_flag: "Auf spezifische Version aktualisieren"
+  checking: "Suche nach Updates..."
+  current_version: "Aktuelle Version: %s"
+  latest_version: "Neueste Version: %s"
+  already_latest: "Sie verwenden bereits die neueste Version."
+  update_available: "Eine neue Version ist verfügbar: %s"
+  downloading: "Lade Version %s herunter..."
+  download_progress: "%s / %s heruntergeladen (%.1f%%)"
+  extracting: "Extrahiere Binary..."
+  installing: "Installiere neue Version..."
+  backup_created: "Backup erstellt"
+  success: "Erfolgreich auf Version %s aktualisiert!"
+  success_windows: "Erfolgreich auf Version %s aktualisiert! (Hinweis: Die alte Versionsdatei '.old' kann sicher gelöscht werden)"
+  errors:
+    fetch_latest: "Fehler beim Abrufen der neuesten Version: %v"
+    fetch_specific: "Fehler beim Abrufen der Version %s: %v"
+    compare_versions: "Fehler beim Vergleichen der Versionen: %v"
+    no_update_needed: "Kein Update erforderlich (aktuell: %s, Ziel: %s)"
+    download_failed: "Download fehlgeschlagen: %v"
+    install_failed: "Installation fehlgeschlagen: %v"
+    permission_denied: "Zugriff verweigert. Versuchen Sie, mit sudo auszuführen oder an einem vom Benutzer beschreibbaren Ort zu installieren."
+    unsupported_platform: "Nicht unterstützte Plattform: %s/%s"
+    network_error: "Netzwerkfehler: %v. Bitte überprüfen Sie Ihre Internetverbindung."
+    rate_limit: "GitHub API-Ratenlimit überschritten. Bitte versuchen Sie es später erneut."
+
+# Config-Befehl
+config:
+  short: "CLI-Konfiguration verwalten"
+  long: |
+    InfraGuard CLI-Konfiguration verwalten.
+    Konfiguration wird gespeichert in ~/.infraguard/config.yaml.
+
+    Verfügbare Konfigurationsschlüssel:
+      lang    Ausgabesprache (en oder zh)
+  set_success: "Konfiguration erfolgreich gespeichert."
+  unset_success: "Konfiguration erfolgreich entfernt."
+  list_format: "%s=%s"
+  set:
+    short: "Einen Konfigurationswert setzen"
+    long: |
+      Einen Konfigurationswert setzen.
+
+      Beispiele:
+        infraguard config set lang zh
+        infraguard config set lang en
+  get:
+    short: "Einen Konfigurationswert abrufen"
+    long: |
+      Einen Konfigurationswert abrufen.
+
+      Beispiele:
+        infraguard config get lang
+  unset:
+    short: "Einen Konfigurationswert entfernen"
+    long: |
+      Einen Konfigurationswert entfernen.
+
+      Beispiele:
+        infraguard config unset lang
+  list:
+    short: "Alle Konfigurationswerte auflisten"
+    long: |
+      Alle Konfigurationswerte auflisten.
+
+      Beispiele:
+        infraguard config list
+  errors:
+    unknown_key: "unbekannter Konfigurationsschlüssel: %s (gültige Schlüssel: %s)."
+    invalid_value: "ungültiger Wert für %s: %s (gültige Werte: %s)."
+
+# Scan-Befehl
+scan:
+  short: "IaC-Template auf Compliance-Verstöße scannen"
+  long: |
+    Ein IaC-Template gegen OPA/Rego-Richtlinien scannen.
+  policy_flag: "Richtlinienspezifikation: Regel-ID, Pack-ID, .rego-Datei oder Verzeichnis (kann mehrfach angegeben werden)"
+  input_flag: "Parameterwerte im Format Schlüssel=Wert, JSON oder Dateipfad (kann mehrfach angegeben werden)"
+  format_flag: "Ausgabeformat (table, json oder html)"
+  output_flag: "Ausgabedateipfad (Standard: report.html für html-Format)"
+  mode_flag: "Scan-Modus: 'static' für lokale Analyse oder 'preview' für ROS PreviewStack API (Standard: static)"
+  report_written: "Bericht geschrieben nach %s"
+  no_violations: "Keine Verstöße gefunden."
+  total_violations: "Gesamt: %d Verstoß/Verstöße"
+  file_prefix: "Scannen: "
+  no_templates_found: "Keine Template-Dateien gefunden."
+  no_templates_processed: "Keine Templates wurden erfolgreich verarbeitet. Alle Templates haben die Validierung nicht bestanden."
+  skipped_file: "Überspringe ungültiges Template %s: %v"
+  file_error: "Datei %s: %v"
+  status_code: "StatusCode: %d"
+  code: "Code: %s"
+  message: "Nachricht: %s"
+  request_id: "AnfrageId: %s"
+  calling_preview_stack: "Rufe PreviewStack API auf (Region: %s)..."
+
+# Bericht
+report:
+  title: "InfraGuard Compliance-Bericht"
+  total_violations: "Verstöße gesamt: %d"
+  passed_rules: "Bestandene Regeln: %d"
+  failed_rules: "Fehlgeschlagene Regeln: %d"
+  severity: "Schweregrad"
+  rule_id: "Regel-ID"
+  resource: "Ressource"
+  location: "Ort"
+  line: "Zeile"
+  recommendation: "Lösung"
+  results: "Ergebnisse"
+  count: "Anzahl"
+  type: "Typ"
+  breakdown: "Aufschlüsselung"
+  passed: "Bestanden"
+  failed: "Fehlgeschlagen"
+  total: "Gesamt"
+  no_violations_prefix: "✓ "
+  violation_header_format: "#%d %s"
+  location_format: "%s:%d"
+  line_highlight_prefix: "> %4d"
+  line_normal_prefix: "  %4d"
+  metadata_prefix: "  "
+  metadata_separator: " "
+  summary_prefix: "  "
+  summary_separator: " | "
+
+# Schweregrade
+severity:
+  high: "Hoch"
+  medium: "Mittel"
+  low: "Niedrig"
+
+# Globale Flags
+lang_flag: "Ausgabesprache (en, zh, es, fr, de, ja, pt, Standard: automatische Erkennung)"
+
+# Fehlermeldungen
+errors:
+  invalid_format: "ungültiges Format %q: muss eines sein von table, json, html."
+  invalid_lang: "ungültige Sprache %q: muss en oder zh sein."
+  invalid_mode: "ungültiger Modus %q: muss static oder preview sein."
+  
+  # Sprach-Tag-Validierungsfehler
+  invalid_lang_tag_separator: "ungültiges Sprach-Tag-Format: %s (verwenden Sie '-' als Trennzeichen, z.B. 'zh-CN', 'en-US')"
+  invalid_lang_tag_format: "ungültiges Sprach-Tag-Format: %s (verwenden Sie Format 'language' oder 'language-REGION')"
+  invalid_lang_code_length: "ungültiger Sprachcode: %s (muss 2-3 Buchstaben sein)"
+  invalid_lang_code_chars: "ungültiger Sprachcode: %s (darf nur Buchstaben enthalten)"
+  invalid_region_code_length: "ungültiger Regionscode: %s (muss 2 Buchstaben oder 3 Ziffern sein)"
+  invalid_region_code_format: "ungültiger Regionscode: %s (muss 2 Großbuchstaben sein)"
+  
+  policy_dir: "Richtlinienverzeichnis-Fehler: %v."
+  policy_dir_hint: "Führen Sie 'infraguard policy update' aus, um Richtlinien herunterzuladen."
+  load_template: "Fehler beim Laden des Templates: %v."
+  evaluate_policies: "Fehler beim Auswerten der Richtlinien: %v."
+  render_report: "Fehler beim Rendern des Berichts: %v."
+  update_policies: "Fehler beim Aktualisieren der Richtlinien: %v."
+  invalid_policy_spec: "ungültige Richtlinienspezifikation: %s."
+  no_rego_files: "keine .rego-Dateien gefunden in: %s."
+  no_rego_files_in_dir: "keine .rego-Dateien gefunden im Verzeichnis: %s."
+  policy_not_found: "Richtlinie nicht gefunden: %s."
+  policy_pattern_no_match: "keine Richtlinien entsprechen dem Muster: %s."
+  file_not_found: "Datei nicht gefunden: %s."
+  dir_not_found: "Verzeichnis nicht gefunden: %s."
+  path_not_found: "Pfad nicht gefunden: %s."
+  policy_file_extension: "Richtliniendatei muss .rego-Erweiterung haben: %s."
+  invalid_ros_template: "ungültiges ROS-Template: %v."
+  invalid_input: "ungültiges Eingabeformat: %s. Erwartet Schlüssel=Wert, JSON oder Dateipfad."
+  parse_input_file: "Fehler beim Parsen der Eingabedatei %s: %v."
+  
+  # Preview-Modus-Fehler
+  preview_mode_requires_credentials: "Preview-Modus erfordert Alibaba Cloud-Anmeldeinformationen."
+  preview_only_ros_supported: "Preview-Modus unterstützt derzeit nur ROS-Templates."
+  preview_unsupported_mode: "nicht unterstützter Modus: %s"
+  
+  # ROS-Provider-Fehler
+  ros_failed_load_template: "Fehler beim Laden des Templates: %w"
+  ros_invalid_template: "ungültiges ROS-Template: %w"
+  ros_invalid_parameters: "ungültige Eingabeparameter: %w"
+  ros_failed_resolve_parameters: "Fehler beim Auflösen der Parameter: %w"
+  ros_failed_load_credentials: "Fehler beim Laden der Anmeldeinformationen: %w"
+  ros_invalid_credentials: "ungültige Anmeldeinformationen: %w"
+  ros_failed_create_client: "Fehler beim Erstellen des ROS-Clients: %w"
+  ros_failed_marshal_template: "Fehler beim Serialisieren des Templates: %w"
+  ros_failed_call_api: "Fehler beim Aufrufen der PreviewStack API: %w"
+  ros_failed_convert_response: "Fehler beim Konvertieren der Preview-Antwort: %w"
+  ros_client_nil: "ROS-Client ist nil"
+  ros_failed_marshal_parameter: "Fehler beim Serialisieren des Parameters %s: %w"
+  ros_empty_response: "leere Antwort von PreviewStack API"
+  ros_no_stack_info: "keine Stack-Informationen in PreviewStack-Antwort"
+  ros_invalid_preview_response: "ungültige Preview-Antwort"
+  
+  # ROS-Authentifizierungsfehler
+  ros_auth_invalid_access_key: "Authentifizierung fehlgeschlagen: ungültige Zugriffsschlüssel-ID. Bitte überprüfen Sie Ihre Anmeldeinformationen"
+  ros_auth_signature_mismatch: "Authentifizierung fehlgeschlagen: Signatur stimmt nicht überein. Bitte überprüfen Sie Ihr Zugriffsschlüssel-Secret"
+  ros_auth_insufficient_permissions: "Authentifizierung fehlgeschlagen: unzureichende Berechtigungen. Bitte überprüfen Sie Ihre RAM-Richtlinie"
+  ros_rate_limit: "API-Ratenlimit überschritten: zu viele Anfragen. Bitte versuchen Sie es später erneut"
+  ros_service_unavailable: "ROS-Service vorübergehend nicht verfügbar: bitte versuchen Sie es später erneut"
+  ros_template_validation_failed: "Template-Validierung fehlgeschlagen: %w"
+  ros_network_error: "Netzwerkfehler: Verbindung zur ROS API fehlgeschlagen. Bitte überprüfen Sie Ihre Netzwerkverbindung"
+  ros_api_error: "ROS API-Fehler: %w"
+  
+  # ROS-Anmeldeinformationsfehler
+  ros_failed_get_home_dir: "Fehler beim Abrufen des Benutzer-Home-Verzeichnisses: %w"
+  ros_credentials_not_found: |
+    Anmeldeinformationen nicht gefunden: bitte setzen Sie Umgebungsvariablen oder konfigurieren Sie aliyun CLI
+    
+    Umgebungsvariablen:
+      ALIBABA_CLOUD_ACCESS_KEY_ID
+      ALIBABA_CLOUD_ACCESS_KEY_SECRET
+      ALIBABA_CLOUD_REGION_ID (optional)
+    
+    Oder führen Sie aus: aliyun configure
+  ros_failed_read_config: "Fehler beim Lesen der CLI-Konfigurationsdatei: %w"
+  ros_failed_parse_config: "Fehler beim Parsen der CLI-Konfigurationsdatei: %w"
+  ros_no_valid_profile: "kein gültiges Profil in CLI-Konfigurationsdatei gefunden"
+  ros_access_key_id_empty: "access_key_id ist leer im CLI-Konfigurationsprofil '%s'"
+  ros_access_key_secret_empty: "access_key_secret ist leer im CLI-Konfigurationsprofil '%s'"
+  ros_access_key_id_required: "Zugriffsschlüssel-ID ist erforderlich"
+  ros_access_key_secret_required: "Zugriffsschlüssel-Secret ist erforderlich"
+  ros_invalid_access_key_format: "ungültiges Zugriffsschlüssel-ID-Format"
+  
+  preview_credentials_not_found: |
+    Anmeldeinformationen nicht gefunden. Bitte konfigurieren Sie Anmeldeinformationen mit einer der folgenden Methoden:
+    
+    1. Umgebungsvariablen setzen:
+       export ALIBABA_CLOUD_ACCESS_KEY_ID="ihre-zugriffsschlüssel-id"
+       export ALIBABA_CLOUD_ACCESS_KEY_SECRET="ihr-zugriffsschlüssel-secret"
+       export ALIBABA_CLOUD_REGION_ID="cn-hangzhou"  # optional
+    
+    2. aliyun CLI konfigurieren:
+       aliyun configure
+    
+    Speicherort der Konfigurationsdatei: ~/.aliyun/config.json
+  read_input_file: "Fehler beim Lesen der Eingabedatei %s: %w."
+  unable_to_determine_home_dir: "Home-Verzeichnis kann nicht bestimmt werden."
+  aliyun_config_not_found: "Aliyun CLI-Konfiguration nicht gefunden in %s. Bitte führen Sie zuerst 'aliyun configure' aus."
+  read_aliyun_config: "Fehler beim Lesen der Aliyun CLI-Konfiguration: %w."
+  parse_aliyun_config: "Fehler beim Parsen der Aliyun CLI-Konfiguration: %w."
+  profile_not_found: "aktuelles Profil %q nicht in Aliyun CLI-Konfiguration gefunden."
+  invalid_access_key: "Profil %q hat keine gültigen AccessKey-Anmeldeinformationen."
+  get_home_directory: "Fehler beim Abrufen des Home-Verzeichnisses: %w."
+  read_config_file: "Fehler beim Lesen der Konfigurationsdatei: %w."
+  parse_config_file: "Fehler beim Parsen der Konfigurationsdatei: %w."
+  create_config_dir: "Fehler beim Erstellen des Konfigurationsverzeichnisses: %w."
+  marshal_config: "Fehler beim Serialisieren der Konfiguration: %w."
+  write_config_file: "Fehler beim Schreiben der Konfigurationsdatei: %w."
+  read_template_file: "Fehler beim Lesen der Template-Datei: %w."
+  parse_json_template: "Fehler beim Parsen des JSON-Templates: %w."
+  parse_yaml_template: "Fehler beim Parsen des YAML-Templates: %w."
+  path_does_not_exist: "Pfad existiert nicht: %s."
+  file_must_be_rego: "Datei muss .rego-Erweiterung haben: %s."
+  read_file: "Fehler beim Lesen der Datei: %w."
+  format_file: "Fehler beim Formatieren: %w."
+  write_file: "Fehler beim Schreiben der Datei: %w."
+  no_policy_paths: "keine Richtlinienpfade angegeben."
+  discover_rego_files: "Fehler beim Entdecken von rego-Dateien in %s: %w."
+  no_rego_files_in_paths: "keine .rego-Dateien in den angegebenen Pfaden gefunden."
+  read_rego_file: "Fehler beim Lesen von %s: %w."
+  prepare_rego_query: "Fehler beim Vorbereiten der rego-Abfrage: %w."
+  evaluate_policies_internal: "Fehler beim Auswerten der Richtlinien: %w."
+  parameter_type_mismatch: "Parameter %s: Wert %v ist kein %s."
+  undefined_parameters: "undefinierte Parameter bereitgestellt: %s. Bitte überprüfen Sie Parameternamen im Template-Parameters-Abschnitt."
+  no_parameters_defined: "keine Parameter im Template definiert, aber Eingabeparameter bereitgestellt: %s."
+  unknown_help_topic: "Unbekanntes Hilfethema %#q"
+  read_file_error: "Fehler beim Lesen der Datei: %v."
+  syntax_error_with_detail: "Syntaxfehler: %v."
+  rule_invalid_severity_with_value: "rule_meta.severity muss eines sein von: high, medium, low (erhalten: %s)."
+  deny_rule_evaluation_error: "deny-Regel-Auswertungsfehler: %v."
+  deny_result_field_required: "deny result.%s ist erforderlich."
+  add_field_to_deny_result: "Fügen Sie das Feld %s zum deny result-Objekt hinzu"
+  field_must_be_string_or_dict: "%s muss ein String oder Übersetzungswörterbuch sein."
+  change_field_to_i18n_format: "Ändern Sie %s zu einem String oder Objekt wie {\"en\": \"...\", \"zh\": \"...\"}"
+  rule_meta_field_must_be_string_or_dict: "rule_meta.%s muss ein String oder Übersetzungswörterbuch sein."
+  invalid_ros_template_version: "ungültige Version %q, gültige Versionen: %v."
+  parse_html_template: "Fehler beim Parsen des HTML-Templates: %w."
+  marshal_i18n_data: "Fehler beim Serialisieren der i18n-Daten: %w."
+  parse_rule_meta: "Fehler beim Parsen von rule_meta: %w."
+  parse_pack_meta: "Fehler beim Parsen von pack_meta: %w."
+  no_policies_found: "keine Richtlinien im eingebetteten oder Benutzerverzeichnis gefunden."
+  read_embedded_policies_root: "Fehler beim Lesen des eingebetteten Richtlinien-Roots: %w."
+  load_embedded_rules_for_provider: "Fehler beim Laden eingebetteter Regeln für Provider %s: %w."
+  load_embedded_packs_for_provider: "Fehler beim Laden eingebetteter Packs für Provider %s: %w."
+  read_policy_directory: "Fehler beim Lesen des Richtlinienverzeichnisses: %w."
+  discover_rules_for_provider: "Fehler beim Entdecken von Regeln für Provider %s: %w."
+  discover_packs_for_provider: "Fehler beim Entdecken von Packs für Provider %s: %w."
+  clean_policy_directory: "Fehler beim Bereinigen des Richtlinienverzeichnisses: %w."
+  create_policy_directory: "Fehler beim Erstellen des Richtlinienverzeichnisses: %w."
+  download_policies: "Fehler beim Herunterladen der Richtlinien: %w."
+  policy_path_does_not_exist: "Richtlinienpfad existiert nicht: %s."
+  no_rego_files_in_policy_directory: "keine .rego-Dateien im Richtlinienverzeichnis gefunden: %s."

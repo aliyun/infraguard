@@ -25,7 +25,7 @@ MAIN_PATH := ./cmd/infraguard
 # Default target
 .DEFAULT_GOAL := help
 
-.PHONY: all build run clean test test-policy test-all test-web test-coverage format lint tidy deps help install doc-gen doc-dev doc-serve doc-build doc-clean
+.PHONY: all build run clean test test-policy test-all test-web test-coverage format lint tidy deps help install doc-gen doc-dev doc-serve doc-build doc-clean validate-translations
 
 ## Build targets
 
@@ -35,7 +35,10 @@ gen-policy: ## Generate policy index
 	$(GORUN) cmd/policy-gen/main.go
 	$(GOFMT) pkg/policy/index_gen.go
 
-build: gen-policy ## Build the binary
+validate-translations: ## Validate translation files
+	$(GORUN) scripts/validate-translations.go
+
+build: gen-policy validate-translations ## Build the binary
 	$(GOBUILD) -ldflags "$(LDFLAGS)" -o $(BUILD_DIR)/$(BINARY_NAME) $(MAIN_PATH)
 
 run: ## Run the application

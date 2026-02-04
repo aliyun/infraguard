@@ -309,7 +309,6 @@ report:
   resource: "资源"
   location: "位置"
   line: "行"
-  reason: "原因"
   recommendation: "修复建议"
   results: "检查结果"
   count: "数量"
@@ -335,13 +334,22 @@ severity:
   low: "低"
 
 # Global flags
-lang_flag: "输出语言（zh 或 en，默认：自动检测）"
+lang_flag: "输出语言（en, zh, es, fr, de, ja, pt，默认：自动检测）"
 
 # Error messages
 errors:
   invalid_format: "无效的格式 %q：必须是 table、json 或 html。"
   invalid_lang: "无效的语言 %q：必须是 zh 或 en。"
   invalid_mode: "无效的模式 %q：必须是 static 或 preview。"
+  
+  # 语言标签验证错误
+  invalid_lang_tag_separator: "无效的语言标签格式：%s（请使用 '-' 作为分隔符，例如 'zh-CN'、'en-US'）"
+  invalid_lang_tag_format: "无效的语言标签格式：%s（请使用 'language' 或 'language-REGION' 格式）"
+  invalid_lang_code_length: "无效的语言代码：%s（必须是 2-3 个字母）"
+  invalid_lang_code_chars: "无效的语言代码：%s（只能包含字母）"
+  invalid_region_code_length: "无效的区域代码：%s（必须是 2 个字母或 3 个数字）"
+  invalid_region_code_format: "无效的区域代码：%s（必须是 2 个大写字母）"
+  
   policy_dir: "策略目录错误：%v。"
   policy_dir_hint: "运行 'infraguard policy update' 下载策略。"
   load_template: "加载模板失败：%v。"

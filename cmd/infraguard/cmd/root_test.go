@@ -66,7 +66,7 @@ func TestRootCommand(t *testing.T) {
 				_ = rootCmd.Execute()
 
 				Convey("It should set language to English", func() {
-					So(i18n.GetLanguage(), ShouldEqual, "en")
+					So(i18n.GetLanguage(), ShouldEqual, "en-US")
 				})
 			})
 
@@ -87,7 +87,7 @@ func TestRootCommand(t *testing.T) {
 				})
 
 				Convey("It should set language to Chinese", func() {
-					So(i18n.GetLanguage(), ShouldEqual, "zh")
+					So(i18n.GetLanguage(), ShouldEqual, "zh-CN")
 				})
 			})
 

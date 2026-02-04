@@ -1,0 +1,493 @@
+# 日本語ロケール for InfraGuard CLI
+# このファイルは日本語翻訳として機能します
+
+# Cobraテンプレート文字列
+usage: "使用法"
+available_commands: "利用可能なコマンド"
+additional_commands: "追加のコマンド"
+flags: "フラグ"
+global_flags: "グローバルフラグ"
+additional_help: "コマンドの詳細情報は \"{{.CommandPath}} [command] --help\" を使用してください。"
+aliases: "エイリアス"
+examples: "例"
+
+# 組み込みコマンド
+completion:
+  short: "指定されたシェルの自動補完スクリプトを生成"
+help:
+  short: "任意のコマンドのヘルプ"
+  long: "Helpはアプリケーション内の任意のコマンドのヘルプを提供します。\n詳細については {{.Name}} help [コマンドへのパス] と入力してください。"
+
+# versionコマンド
+version:
+  short: "バージョン情報を表示"
+  long: "InfraGuardとOPAのバージョン情報を表示します。"
+  infraguard: "InfraGuard"
+  opa: "OPA"
+
+# rootコマンド
+root:
+  short: "InfraGuard - IaCコンプライアンス事前チェックCLI"
+  long: |
+    InfraGuardはIaC（Infrastructure as Code）コンプライアンス事前チェックCLIツールです。
+    デプロイ前にIaCテンプレート（現在Aliyun ROSテンプレートをサポート）を
+    OPA/Regoポリシーに対してスキャンし、セキュリティ問題や
+    非準拠の構成を早期に特定するのに役立ちます。
+
+# policyコマンド
+policy:
+  short: "コンプライアンスポリシーを管理"
+  long: "ポリシーライブラリのダウンロードと更新を含む、コンプライアンスポリシーを管理するためのコマンド。"
+
+# policy updateコマンド
+policy_update:
+  short: "リポジトリからポリシーライブラリをダウンロード/更新"
+  long: |
+    Gitリポジトリからポリシーライブラリをダウンロードします。
+    policies/サブディレクトリがダウンロードされ、ローカルに保存されます。
+
+    サポートされているリポジトリ形式:
+      - host/path（例: github.com/aliyun/infraguard）
+      - HTTPS URL（例: https://github.com/aliyun/infraguard.git）
+      - SSH URL（例: ssh://git@github.com/aliyun/infraguard.git）
+      - SCP形式（例: git@github.com:aliyun/infraguard.git）
+  repo_flag: "GitリポジトリのURLまたはパス"
+  version_flag: "ダウンロードするGitブランチ、タグ、またはコミット"
+  progress: "%sからポリシーを更新中（バージョン: %s）..."
+  success: "ポリシーが正常に更新されました。"
+
+# policy getコマンド
+policy_get:
+  short: "ルールまたはパックの詳細を取得"
+  long: |
+    コンプライアンスルールまたはパックの詳細情報を表示します。
+    タイプ（ルール/パック）はIDプレフィックスから自動的に検出されます。
+
+    例:
+      infraguard policy get rule:aliyun:ecs-public-ip
+      infraguard policy get pack:aliyun:security-baseline
+  not_found_rule: "ルールが見つかりません: %s。"
+  not_found_pack: "パックが見つかりません: %s。"
+  no_rules_loaded: "ルールが読み込まれていません。まず 'infraguard policy update' を実行してください。"
+  no_packs_loaded: "パックが読み込まれていません。まず 'infraguard policy update' を実行してください。"
+  rule_details: "ルールの詳細"
+  pack_details: "パックの詳細"
+  included_rules: "含まれるルール"
+  included_rules_format: "%s: %s"
+  name: "名前"
+  description: "説明"
+  resource_types: "リソースタイプ"
+  pack_id: "パックID"
+
+# policy listコマンド
+policy_list:
+  short: "利用可能なすべてのルールとパックをリスト"
+  long: |
+    利用可能なすべてのコンプライアンスルールとパックをリストします。
+    ルール/パックID、名前、および追加情報を表示します。
+  rules: "ルール"
+  packs: "パック"
+
+# policy validateコマンド
+policy_validate:
+  short: "InfraGuardコンプライアンスのポリシーファイルを検証"
+  long: |
+    RegoポリシーファイルをInfraGuardスキーマ要件に対して検証します。
+    package infraguard.rules.*またはinfraguard.packs.*を宣言しているファイルのみが検証されます。
+    rule_meta、pack_meta、およびdenyルール形式をチェックします。
+
+    例:
+      infraguard policy validate ./policies/aliyun/rules/
+      infraguard policy validate ./my-rule.rego
+  no_files_found: "ポリシーファイルが見つかりません（ファイルはpackage infraguard.rules.*またはinfraguard.packs.*を宣言する必要があります）。"
+  passed: "検証成功: %d個のファイルが検証されました"
+  failed: "検証失敗。"
+  summary: "検証: 合計%d、成功%d、失敗%d"
+  skipped_summary: "%d個のファイルがスキップされました（InfraGuardポリシーファイルではありません）:"
+  suggestion: "提案"
+  file_type_rule: "ルール"
+  file_type_pack: "パック"
+  file_type_unknown: "不明"
+  skipped_prefix: "  - "
+  error_prefix: "  ✗ "
+  suggestion_prefix: "    → "
+  errors:
+    SYNTAX_ERROR: "構文エラー。"
+    SYNTAX_ERROR_suggestion: "検証前にRego構文エラーを修正してください。"
+    READ_ERROR: "ファイルの読み取りに失敗しました。"
+    READ_ERROR_suggestion: "ファイルが存在し、読み取り可能であることを確認してください。"
+    RULE_MISSING_META: "rule_metaが必要ですが、見つからないかエラーがあります。"
+    RULE_MISSING_META_suggestion: "必須フィールドを含むrule_metaオブジェクトを追加してください: id, name, severity, reason。"
+    RULE_MISSING_ID: "rule_meta.idが必要です。"
+    RULE_MISSING_ID_suggestion: "rule_metaにidフィールドを追加してください。"
+    RULE_MISSING_NAME: "rule_meta.nameが必要です。"
+    RULE_MISSING_NAME_suggestion: "英語と中国語の翻訳を含むnameフィールドを追加してください。"
+    RULE_MISSING_SEVERITY: "rule_meta.severityが必要です。"
+    RULE_MISSING_SEVERITY_suggestion: "値を含むseverityフィールドを追加してください: high, medium, またはlow。"
+    RULE_MISSING_REASON: "rule_meta.reasonが必要です。"
+    RULE_MISSING_REASON_suggestion: "違反が発生する理由を説明するreasonフィールドを追加してください。"
+    RULE_INVALID_SEVERITY: "rule_meta.severityは次のいずれかである必要があります: high, medium, low。"
+    RULE_INVALID_SEVERITY_suggestion: "severityを有効な値のいずれかに変更してください: high, medium, low。"
+    RULE_INVALID_FIELD_TYPE: "フィールドは文字列または翻訳辞書である必要があります。"
+    RULE_INVALID_FIELD_TYPE_suggestion: "フィールドを文字列または {\"en\": \"...\", \"zh\": \"...\"} のようなオブジェクトに変更してください。"
+    RULE_MISSING_DENY: "denyルールが必要です。"
+    RULE_MISSING_DENY_suggestion: "denyルールを追加してください: deny contains result if { ... } でresultはid, resource_id, violation_path, metaを含みます。"
+    RULE_INVALID_DENY_FORMAT: "deny resultフィールドが必要です。"
+    RULE_INVALID_DENY_FORMAT_suggestion: "deny resultオブジェクトに欠けているフィールドを追加してください。"
+    PACK_MISSING_META: "pack_metaが必要ですが、見つからないかエラーがあります。"
+    PACK_MISSING_META_suggestion: "必須フィールドを含むpack_metaオブジェクトを追加してください: id, name, rules。"
+    PACK_MISSING_ID: "pack_meta.idが必要です。"
+    PACK_MISSING_ID_suggestion: "pack_metaにidフィールドを追加してください。"
+    PACK_MISSING_NAME: "pack_meta.nameが必要です。"
+    PACK_MISSING_NAME_suggestion: "英語と中国語の翻訳を含むnameフィールドを追加してください。"
+    PACK_MISSING_RULES: "pack_meta.rulesが必要で、空であってはなりません。"
+    PACK_MISSING_RULES_suggestion: "ルールIDのリストを含むrulesフィールドを追加してください。"
+    PACK_INVALID_FIELD_TYPE: "フィールドは文字列または翻訳辞書である必要があります。"
+    PACK_INVALID_FIELD_TYPE_suggestion: "フィールドを文字列または {\"en\": \"...\", \"zh\": \"...\"} のようなオブジェクトに変更してください。"
+
+# policy formatコマンド
+policy_format:
+  short: "OPAフォーマッタを使用してポリシーファイルをフォーマット"
+  long: |
+    OPAの組み込みフォーマッタを使用してRegoポリシーファイルをフォーマットします。
+    デフォルトでは、変更せずにフォーマットが必要なファイルを表示します。
+
+    例:
+      infraguard policy format ./policies/       # フォーマットをチェック
+      infraguard policy format ./policies/ -w    # フォーマットして書き込み
+      infraguard policy format ./my-rule.rego -d # diffを表示
+  write_flag: "フォーマットされた出力をファイルに書き込む"
+  diff_flag: "diff出力のみを表示"
+  no_files_found: ".regoファイルが見つかりません。"
+  formatted: "フォーマット済み"
+  already_formatted: "既にフォーマット済み"
+  needs_formatting: "フォーマットが必要"
+  summary_changed: "%d個のファイルが変更されました"
+  summary_unchanged: "%d個のファイルが未変更です"
+  needs_format: "一部のファイルにフォーマットが必要です。--writeオプションを付けて実行してフォーマットしてください。"
+  error_prefix: "✗ "
+  success_prefix: "✓ "
+  needs_format_prefix: "✗ "
+
+# policy cleanコマンド
+policy_clean:
+  short: "ユーザーポリシーディレクトリをクリーン"
+  long: |
+    ユーザーポリシーディレクトリ（~/.infraguard/policies/）からすべてのポリシーを削除します。
+    これは埋め込みポリシーやワークスペースポリシーには影響しません。
+
+    デフォルトでは、削除前に確認を求めます。
+    --forceを使用して確認をスキップします（スクリプトで便利）。
+
+    例:
+      infraguard policy clean        # 確認付きの対話モード
+      infraguard policy clean -f     # 確認なしの強制クリーン
+  force_flag: "確認をスキップして直接クリーン"
+  confirm: |
+    警告: これは次の場所のすべてのポリシーを削除します: %s
+    続行してもよろしいですか？（確認するにはy/yesを入力）: 
+  progress: "ポリシーディレクトリをクリーン中..."
+  success: "ポリシーディレクトリが正常にクリーンされました。"
+  already_clean: "ポリシーディレクトリは既にクリーンされているか、存在しません。"
+  cancelled: "操作がキャンセルされました。"
+
+# updateコマンド
+update:
+  short: "InfraGuard CLIを最新バージョンに更新"
+  long: |
+    InfraGuard CLIを最新バージョンまたは特定のバージョンに更新します。
+    GitHub Releasesからバイナリをダウンロードしてインストールします。
+
+    例:
+      infraguard update              # 最新バージョンに更新
+      infraguard update --check      # 更新のチェックのみ
+      infraguard update --force      # 現在のバージョンを強制再インストール
+      infraguard update --version 0.3.0  # 特定のバージョンに更新
+  check_flag: "インストールせずに更新をチェック"
+  force_flag: "バージョンが最新でも強制的に更新"
+  version_flag: "特定のバージョンに更新"
+  checking: "更新を確認中..."
+  current_version: "現在のバージョン: %s"
+  latest_version: "最新バージョン: %s"
+  already_latest: "既に最新バージョンを使用しています。"
+  update_available: "新しいバージョンが利用可能です: %s"
+  downloading: "バージョン%sをダウンロード中..."
+  download_progress: "%s / %s ダウンロード済み (%.1f%%)"
+  extracting: "バイナリを展開中..."
+  installing: "新しいバージョンをインストール中..."
+  backup_created: "バックアップを作成しました"
+  success: "バージョン%sへの更新が成功しました！"
+  success_windows: "バージョン%sへの更新が成功しました！（注意: 古いバージョンファイル'.old'は安全に削除できます）"
+  errors:
+    fetch_latest: "最新バージョンの取得に失敗しました: %v"
+    fetch_specific: "バージョン%sの取得に失敗しました: %v"
+    compare_versions: "バージョンの比較に失敗しました: %v"
+    no_update_needed: "更新は不要です（現在: %s、ターゲット: %s）"
+    download_failed: "ダウンロードに失敗しました: %v"
+    install_failed: "インストールに失敗しました: %v"
+    permission_denied: "アクセスが拒否されました。sudoで実行するか、ユーザーが書き込み可能な場所にインストールしてください。"
+    unsupported_platform: "サポートされていないプラットフォーム: %s/%s"
+    network_error: "ネットワークエラー: %v。インターネット接続を確認してください。"
+    rate_limit: "GitHub APIレート制限を超えました。後でもう一度お試しください。"
+
+# configコマンド
+config:
+  short: "CLI設定を管理"
+  long: |
+    InfraGuard CLIの設定を管理します。
+    設定は ~/.infraguard/config.yaml に保存されます。
+
+    利用可能な設定キー:
+      lang    出力言語（enまたはzh）
+  set_success: "設定が正常に保存されました。"
+  unset_success: "設定が正常に削除されました。"
+  list_format: "%s=%s"
+  set:
+    short: "設定値を設定"
+    long: |
+      設定値を設定します。
+
+      例:
+        infraguard config set lang zh
+        infraguard config set lang en
+  get:
+    short: "設定値を取得"
+    long: |
+      設定値を取得します。
+
+      例:
+        infraguard config get lang
+  unset:
+    short: "設定値を削除"
+    long: |
+      設定値を削除します。
+
+      例:
+        infraguard config unset lang
+  list:
+    short: "すべての設定値をリスト"
+    long: |
+      すべての設定値をリストします。
+
+      例:
+        infraguard config list
+  errors:
+    unknown_key: "不明な設定キー: %s（有効なキー: %s）。"
+    invalid_value: "%sの無効な値: %s（有効な値: %s）。"
+
+# scanコマンド
+scan:
+  short: "IaCテンプレートのコンプライアンス違反をスキャン"
+  long: |
+    IaCテンプレートをOPA/Regoポリシーに対してスキャンします。
+  policy_flag: "ポリシー仕様: ルールID、パックID、.regoファイル、またはディレクトリ（複数回指定可能）"
+  input_flag: "キー=値、JSON形式、またはファイルパスのパラメータ値（複数回指定可能）"
+  format_flag: "出力形式（table、json、またはhtml）"
+  output_flag: "出力ファイルパス（デフォルト: html形式の場合はreport.html）"
+  mode_flag: "スキャンモード: ローカル分析の場合は'static'、ROS PreviewStack APIの場合は'preview'（デフォルト: static）"
+  report_written: "レポートを%sに書き込みました"
+  no_violations: "違反は見つかりませんでした。"
+  total_violations: "合計: %d件の違反"
+  file_prefix: "スキャン: "
+  no_templates_found: "テンプレートファイルが見つかりません。"
+  no_templates_processed: "テンプレートが正常に処理されませんでした。すべてのテンプレートが検証に失敗しました。"
+  skipped_file: "無効なテンプレート%sをスキップ: %v"
+  file_error: "ファイル%s: %v"
+  status_code: "ステータスコード: %d"
+  code: "コード: %s"
+  message: "メッセージ: %s"
+  request_id: "リクエストID: %s"
+  calling_preview_stack: "PreviewStack APIを呼び出し中（リージョン: %s）..."
+
+# レポート
+report:
+  title: "InfraGuardコンプライアンスレポート"
+  total_violations: "違反総数: %d"
+  passed_rules: "合格したルール: %d"
+  failed_rules: "失敗したルール: %d"
+  severity: "重要度"
+  rule_id: "ルールID"
+  resource: "リソース"
+  location: "場所"
+  line: "行"
+  recommendation: "解決策"
+  results: "結果"
+  count: "カウント"
+  type: "タイプ"
+  breakdown: "内訳"
+  passed: "合格"
+  failed: "失敗"
+  total: "合計"
+  no_violations_prefix: "✓ "
+  violation_header_format: "#%d %s"
+  location_format: "%s:%d"
+  line_highlight_prefix: "> %4d"
+  line_normal_prefix: "  %4d"
+  metadata_prefix: "  "
+  metadata_separator: " "
+  summary_prefix: "  "
+  summary_separator: " | "
+
+# 重要度レベル
+severity:
+  high: "高"
+  medium: "中"
+  low: "低"
+
+# グローバルフラグ
+lang_flag: "出力言語（en, zh, es, fr, de, ja, pt、デフォルト: 自動検出）"
+
+# エラーメッセージ
+errors:
+  invalid_format: "無効な形式%q: table、json、htmlのいずれかである必要があります。"
+  invalid_lang: "無効な言語%q: enまたはzhである必要があります。"
+  invalid_mode: "無効なモード%q: staticまたはpreviewである必要があります。"
+  
+  # 言語タグ検証エラー
+  invalid_lang_tag_separator: "無効な言語タグ形式: %s（区切り文字として'-'を使用してください。例: 'zh-CN', 'en-US'）"
+  invalid_lang_tag_format: "無効な言語タグ形式: %s（'language'または'language-REGION'形式を使用してください）"
+  invalid_lang_code_length: "無効な言語コード: %s（2-3文字である必要があります）"
+  invalid_lang_code_chars: "無効な言語コード: %s（文字のみを含む必要があります）"
+  invalid_region_code_length: "無効な地域コード: %s（2文字または3桁である必要があります）"
+  invalid_region_code_format: "無効な地域コード: %s（2つの大文字である必要があります）"
+  
+  policy_dir: "ポリシーディレクトリエラー: %v。"
+  policy_dir_hint: "'infraguard policy update'を実行してポリシーをダウンロードしてください。"
+  load_template: "テンプレートの読み込みに失敗しました: %v。"
+  evaluate_policies: "ポリシーの評価に失敗しました: %v。"
+  render_report: "レポートのレンダリングに失敗しました: %v。"
+  update_policies: "ポリシーの更新に失敗しました: %v。"
+  invalid_policy_spec: "無効なポリシー仕様: %s。"
+  no_rego_files: ".regoファイルが見つかりません: %s。"
+  no_rego_files_in_dir: "ディレクトリに.regoファイルが見つかりません: %s。"
+  policy_not_found: "ポリシーが見つかりません: %s。"
+  policy_pattern_no_match: "パターンに一致するポリシーがありません: %s。"
+  file_not_found: "ファイルが見つかりません: %s。"
+  dir_not_found: "ディレクトリが見つかりません: %s。"
+  path_not_found: "パスが見つかりません: %s。"
+  policy_file_extension: "ポリシーファイルは.rego拡張子を持つ必要があります: %s。"
+  invalid_ros_template: "無効なROSテンプレート: %v。"
+  invalid_input: "無効な入力形式: %s。キー=値、JSON、またはファイルパスが必要です。"
+  parse_input_file: "入力ファイル%sの解析に失敗しました: %v。"
+  
+  # プレビューモードエラー
+  preview_mode_requires_credentials: "プレビューモードにはAlibaba Cloud認証情報が必要です。"
+  preview_only_ros_supported: "プレビューモードは現在ROSテンプレートのみをサポートしています。"
+  preview_unsupported_mode: "サポートされていないモード: %s"
+  
+  # ROSプロバイダエラー
+  ros_failed_load_template: "テンプレートの読み込みに失敗しました: %w"
+  ros_invalid_template: "無効なROSテンプレート: %w"
+  ros_invalid_parameters: "無効な入力パラメータ: %w"
+  ros_failed_resolve_parameters: "パラメータの解決に失敗しました: %w"
+  ros_failed_load_credentials: "認証情報の読み込みに失敗しました: %w"
+  ros_invalid_credentials: "無効な認証情報: %w"
+  ros_failed_create_client: "ROSクライアントの作成に失敗しました: %w"
+  ros_failed_marshal_template: "テンプレートのマーシャルに失敗しました: %w"
+  ros_failed_call_api: "PreviewStack APIの呼び出しに失敗しました: %w"
+  ros_failed_convert_response: "プレビューレスポンスの変換に失敗しました: %w"
+  ros_client_nil: "ROSクライアントがnilです"
+  ros_failed_marshal_parameter: "パラメータ%sのマーシャルに失敗しました: %w"
+  ros_empty_response: "PreviewStack APIから空のレスポンス"
+  ros_no_stack_info: "PreviewStackレスポンスにスタック情報がありません"
+  ros_invalid_preview_response: "無効なプレビューレスポンス"
+  
+  # ROS認証エラー
+  ros_auth_invalid_access_key: "認証に失敗しました: 無効なアクセスキーID。認証情報を確認してください"
+  ros_auth_signature_mismatch: "認証に失敗しました: 署名が一致しません。アクセスキーシークレットを確認してください"
+  ros_auth_insufficient_permissions: "認証に失敗しました: 権限が不足しています。RAMポリシーを確認してください"
+  ros_rate_limit: "APIレート制限を超えました: リクエストが多すぎます。後でもう一度お試しください"
+  ros_service_unavailable: "ROSサービスが一時的に利用できません: 後でもう一度お試しください"
+  ros_template_validation_failed: "テンプレートの検証に失敗しました: %w"
+  ros_network_error: "ネットワークエラー: ROS APIへの接続に失敗しました。ネットワーク接続を確認してください"
+  ros_api_error: "ROS APIエラー: %w"
+  
+  # ROS認証情報エラー
+  ros_failed_get_home_dir: "ユーザーホームディレクトリの取得に失敗しました: %w"
+  ros_credentials_not_found: |
+    認証情報が見つかりません: 環境変数を設定するか、aliyun CLIを設定してください
+    
+    環境変数:
+      ALIBABA_CLOUD_ACCESS_KEY_ID
+      ALIBABA_CLOUD_ACCESS_KEY_SECRET
+      ALIBABA_CLOUD_REGION_ID（オプション）
+    
+    または実行: aliyun configure
+  ros_failed_read_config: "CLI設定ファイルの読み取りに失敗しました: %w"
+  ros_failed_parse_config: "CLI設定ファイルの解析に失敗しました: %w"
+  ros_no_valid_profile: "CLI設定ファイルに有効なプロファイルが見つかりません"
+  ros_access_key_id_empty: "CLI設定プロファイル'%s'でaccess_key_idが空です"
+  ros_access_key_secret_empty: "CLI設定プロファイル'%s'でaccess_key_secretが空です"
+  ros_access_key_id_required: "アクセスキーIDが必要です"
+  ros_access_key_secret_required: "アクセスキーシークレットが必要です"
+  ros_invalid_access_key_format: "無効なアクセスキーID形式"
+  
+  preview_credentials_not_found: |
+    認証情報が見つかりません。次のいずれかの方法で認証情報を設定してください:
+    
+    1. 環境変数を設定:
+       export ALIBABA_CLOUD_ACCESS_KEY_ID="your-access-key-id"
+       export ALIBABA_CLOUD_ACCESS_KEY_SECRET="your-access-key-secret"
+       export ALIBABA_CLOUD_REGION_ID="cn-hangzhou"  # オプション
+    
+    2. aliyun CLIを設定:
+       aliyun configure
+    
+    設定ファイルの場所: ~/.aliyun/config.json
+  read_input_file: "入力ファイル%sの読み取りに失敗しました: %w。"
+  unable_to_determine_home_dir: "ホームディレクトリを特定できません。"
+  aliyun_config_not_found: "%sでAliyun CLI設定が見つかりません。まず'aliyun configure'を実行してください。"
+  read_aliyun_config: "Aliyun CLI設定の読み取りに失敗しました: %w。"
+  parse_aliyun_config: "Aliyun CLI設定の解析に失敗しました: %w。"
+  profile_not_found: "現在のプロファイル%qがAliyun CLI設定に見つかりません。"
+  invalid_access_key: "プロファイル%qに有効なAccessKey認証情報がありません。"
+  get_home_directory: "ホームディレクトリの取得に失敗しました: %w。"
+  read_config_file: "設定ファイルの読み取りに失敗しました: %w。"
+  parse_config_file: "設定ファイルの解析に失敗しました: %w。"
+  create_config_dir: "設定ディレクトリの作成に失敗しました: %w。"
+  marshal_config: "設定のマーシャルに失敗しました: %w。"
+  write_config_file: "設定ファイルの書き込みに失敗しました: %w。"
+  read_template_file: "テンプレートファイルの読み取りに失敗しました: %w。"
+  parse_json_template: "JSONテンプレートの解析に失敗しました: %w。"
+  parse_yaml_template: "YAMLテンプレートの解析に失敗しました: %w。"
+  path_does_not_exist: "パスが存在しません: %s。"
+  file_must_be_rego: "ファイルは.rego拡張子を持つ必要があります: %s。"
+  read_file: "ファイルの読み取りに失敗しました: %w。"
+  format_file: "フォーマットに失敗しました: %w。"
+  write_file: "ファイルの書き込みに失敗しました: %w。"
+  no_policy_paths: "ポリシーパスが指定されていません。"
+  discover_rego_files: "%sでregoファイルの検出に失敗しました: %w。"
+  no_rego_files_in_paths: "指定されたパスに.regoファイルが見つかりません。"
+  read_rego_file: "%sの読み取りに失敗しました: %w。"
+  prepare_rego_query: "regoクエリの準備に失敗しました: %w。"
+  evaluate_policies_internal: "ポリシーの評価に失敗しました: %w。"
+  parameter_type_mismatch: "パラメータ%s: 値%vは%sではありません。"
+  undefined_parameters: "未定義のパラメータが提供されました: %s。テンプレートのParametersセクションでパラメータ名を確認してください。"
+  no_parameters_defined: "テンプレートにパラメータが定義されていませんが、入力パラメータが提供されました: %s。"
+  unknown_help_topic: "不明なヘルプトピック%#q"
+  read_file_error: "ファイルの読み取りに失敗しました: %v。"
+  syntax_error_with_detail: "構文エラー: %v。"
+  rule_invalid_severity_with_value: "rule_meta.severityは次のいずれかである必要があります: high, medium, low（取得: %s）。"
+  deny_rule_evaluation_error: "denyルールの評価エラー: %v。"
+  deny_result_field_required: "deny result.%sが必要です。"
+  add_field_to_deny_result: "deny resultオブジェクトに%sフィールドを追加してください"
+  field_must_be_string_or_dict: "%sは文字列または翻訳辞書である必要があります。"
+  change_field_to_i18n_format: "%sを文字列または{\"en\": \"...\", \"zh\": \"...\"}のようなオブジェクトに変更してください"
+  rule_meta_field_must_be_string_or_dict: "rule_meta.%sは文字列または翻訳辞書である必要があります。"
+  invalid_ros_template_version: "無効なバージョン%q、有効なバージョン: %v。"
+  parse_html_template: "HTMLテンプレートの解析に失敗しました: %w。"
+  marshal_i18n_data: "i18nデータのマーシャルに失敗しました: %w。"
+  parse_rule_meta: "rule_metaの解析に失敗しました: %w。"
+  parse_pack_meta: "pack_metaの解析に失敗しました: %w。"
+  no_policies_found: "埋め込みまたはユーザーディレクトリにポリシーが見つかりません。"
+  read_embedded_policies_root: "埋め込みポリシールートの読み取りに失敗しました: %w。"
+  load_embedded_rules_for_provider: "プロバイダ%sの埋め込みルールの読み込みに失敗しました: %w。"
+  load_embedded_packs_for_provider: "プロバイダ%sの埋め込みパックの読み込みに失敗しました: %w。"
+  read_policy_directory: "ポリシーディレクトリの読み取りに失敗しました: %w。"
+  discover_rules_for_provider: "プロバイダ%sのルールの検出に失敗しました: %w。"
+  discover_packs_for_provider: "プロバイダ%sのパックの検出に失敗しました: %w。"
+  clean_policy_directory: "ポリシーディレクトリのクリーンに失敗しました: %w。"
+  create_policy_directory: "ポリシーディレクトリの作成に失敗しました: %w。"
+  download_policies: "ポリシーのダウンロードに失敗しました: %w。"
+  policy_path_does_not_exist: "ポリシーパスが存在しません: %s。"
+  no_rego_files_in_policy_directory: "ポリシーディレクトリに.regoファイルが見つかりません: %s。"

@@ -10,7 +10,7 @@
 
 > 💡 InfraGuard embraces **Policy as Code** - treating compliance policies as versioned, testable, and reusable code artifacts.
 
-**Language**: English | [中文](README.zh.md)
+**Language**: English | [中文](readme/README.zh.md) | [Español](readme/README.es.md) | [Français](readme/README.fr.md) | [Deutsch](readme/README.de.md) | [日本語](readme/README.ja.md) | [Português](readme/README.pt.md)
 
 ## ✨ Features
 
@@ -18,7 +18,7 @@
 - 🎯 **Dual Scan Modes** - Static analysis or cloud-based preview validation
 - 📦 **Built-in Rules** - Comprehensive coverage for Aliyun services
 - 🏆 **Compliance Packs** - MLPS, ISO 27001, PCI-DSS, SOC 2, and more
-- 🌍 **Internationalization** - Full support for English and Chinese
+- 🌍 **Multilingual Support** - Available in 7 languages (English, Chinese, Spanish, French, German, Japanese, Portuguese)
 - 🎨 **Multiple Output Formats** - Table, JSON, and interactive HTML reports
 - 🔧 **Extensible** - Write custom policies in Rego (Open Policy Agent)
 - ⚡ **Fast** - Built in Go for speed and efficiency

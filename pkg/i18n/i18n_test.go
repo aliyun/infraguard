@@ -11,16 +11,16 @@ func TestSetLanguage(t *testing.T) {
 		Convey("When setting to Chinese", func() {
 			SetLanguage("zh")
 
-			Convey("It should return zh", func() {
-				So(GetLanguage(), ShouldEqual, "zh")
+			Convey("It should normalize to zh-CN", func() {
+				So(GetLanguage(), ShouldEqual, "zh-CN")
 			})
 		})
 
 		Convey("When setting to English", func() {
 			SetLanguage("en")
 
-			Convey("It should return en", func() {
-				So(GetLanguage(), ShouldEqual, "en")
+			Convey("It should normalize to en-US", func() {
+				So(GetLanguage(), ShouldEqual, "en-US")
 			})
 		})
 
@@ -28,8 +28,8 @@ func TestSetLanguage(t *testing.T) {
 			SetLanguage("en") // Reset first
 			SetLanguage("invalid")
 
-			Convey("It should remain en", func() {
-				So(GetLanguage(), ShouldEqual, "en")
+			Convey("It should remain en-US", func() {
+				So(GetLanguage(), ShouldEqual, "en-US")
 			})
 		})
 
@@ -37,8 +37,8 @@ func TestSetLanguage(t *testing.T) {
 			SetLanguage("")
 			lang := GetLanguage()
 
-			Convey("It should auto-detect and return en or zh", func() {
-				So(lang, ShouldBeIn, []string{"zh", "en"})
+			Convey("It should auto-detect and return a BCP 47 tag", func() {
+				So(lang, ShouldBeIn, []string{"zh-CN", "en-US", "zh", "en"})
 			})
 		})
 	})
@@ -257,8 +257,8 @@ func TestDetectLanguage(t *testing.T) {
 	Convey("Given the DetectLanguage function", t, func() {
 		lang := DetectLanguage()
 
-		Convey("It should return en or zh", func() {
-			So(lang, ShouldBeIn, []string{"zh", "en"})
+		Convey("It should return a BCP 47 language tag", func() {
+			So(lang, ShouldBeIn, []string{"zh-CN", "en-US", "zh", "en", "es-ES", "fr-FR", "de-DE", "ja-JP", "pt-BR"})
 		})
 	})
 }
@@ -271,8 +271,8 @@ func TestInit(t *testing.T) {
 		Init()
 		lang := GetLanguage()
 
-		Convey("It should set language to en or zh", func() {
-			So(lang, ShouldBeIn, []string{"zh", "en"})
+		Convey("It should set language to a BCP 47 tag", func() {
+			So(lang, ShouldBeIn, []string{"zh-CN", "en-US", "zh", "en", "es-ES", "fr-FR", "de-DE", "ja-JP", "pt-BR"})
 		})
 	})
 }
@@ -287,6 +287,207 @@ func TestLoadLocale_Cached(t *testing.T) {
 
 		Convey("It should return the same cached pointer", func() {
 			So(msg1, ShouldEqual, msg2)
+		})
+	})
+}
+
+func TestNormalizeLanguageTag(t *testing.T) {
+	Convey("Given the normalizeLanguageTag function", t, func() {
+		Convey("When normalizing short codes", func() {
+			Convey("zh should normalize to zh-CN", func() {
+				So(normalizeLanguageTag("zh"), ShouldEqual, "zh-CN")
+			})
+
+			Convey("en should normalize to en-US", func() {
+				So(normalizeLanguageTag("en"), ShouldEqual, "en-US")
+			})
+
+			Convey("es should normalize to es-ES", func() {
+				So(normalizeLanguageTag("es"), ShouldEqual, "es-ES")
+			})
+
+			Convey("fr should normalize to fr-FR", func() {
+				So(normalizeLanguageTag("fr"), ShouldEqual, "fr-FR")
+			})
+
+			Convey("de should normalize to de-DE", func() {
+				So(normalizeLanguageTag("de"), ShouldEqual, "de-DE")
+			})
+
+			Convey("ja should normalize to ja-JP", func() {
+				So(normalizeLanguageTag("ja"), ShouldEqual, "ja-JP")
+			})
+
+			Convey("pt should normalize to pt-BR", func() {
+				So(normalizeLanguageTag("pt"), ShouldEqual, "pt-BR")
+			})
+		})
+
+		Convey("When normalizing case", func() {
+			Convey("ZH should normalize to zh-CN", func() {
+				So(normalizeLanguageTag("ZH"), ShouldEqual, "zh-CN")
+			})
+
+			Convey("zh-cn should normalize to zh-CN", func() {
+				So(normalizeLanguageTag("zh-cn"), ShouldEqual, "zh-CN")
+			})
+
+			Convey("EN-us should normalize to en-US", func() {
+				So(normalizeLanguageTag("EN-us"), ShouldEqual, "en-US")
+			})
+		})
+
+		Convey("When tag is already in BCP 47 format", func() {
+			Convey("zh-CN should remain zh-CN", func() {
+				So(normalizeLanguageTag("zh-CN"), ShouldEqual, "zh-CN")
+			})
+
+			Convey("en-US should remain en-US", func() {
+				So(normalizeLanguageTag("en-US"), ShouldEqual, "en-US")
+			})
+		})
+
+		Convey("When tag is empty", func() {
+			So(normalizeLanguageTag(""), ShouldEqual, "")
+		})
+
+		Convey("When tag has region variant", func() {
+			Convey("zh-TW should normalize to zh-TW", func() {
+				So(normalizeLanguageTag("zh-TW"), ShouldEqual, "zh-TW")
+			})
+
+			Convey("en-GB should normalize to en-GB", func() {
+				So(normalizeLanguageTag("en-GB"), ShouldEqual, "en-GB")
+			})
+		})
+	})
+}
+
+func TestValidateLanguageTag(t *testing.T) {
+	Convey("Given the validateLanguageTag function", t, func() {
+		Convey("When validating valid tags", func() {
+			Convey("en should be valid", func() {
+				So(validateLanguageTag("en"), ShouldBeNil)
+			})
+
+			Convey("zh-CN should be valid", func() {
+				So(validateLanguageTag("zh-CN"), ShouldBeNil)
+			})
+
+			Convey("es-ES should be valid", func() {
+				So(validateLanguageTag("es-ES"), ShouldBeNil)
+			})
+
+			Convey("empty string should be valid", func() {
+				So(validateLanguageTag(""), ShouldBeNil)
+			})
+		})
+
+		Convey("When validating invalid separators", func() {
+			Convey("zh_CN should be invalid", func() {
+				err := validateLanguageTag("zh_CN")
+				So(err, ShouldNotBeNil)
+				So(err.Error(), ShouldContainSubstring, "use '-' as separator")
+			})
+
+			Convey("en.US should be invalid", func() {
+				err := validateLanguageTag("en.US")
+				So(err, ShouldNotBeNil)
+				So(err.Error(), ShouldContainSubstring, "use '-' as separator")
+			})
+		})
+
+		Convey("When validating invalid language codes", func() {
+			Convey("x should be invalid (too short)", func() {
+				err := validateLanguageTag("x")
+				So(err, ShouldNotBeNil)
+				So(err.Error(), ShouldContainSubstring, "must be 2-3 letters")
+			})
+
+			Convey("e1 should be invalid (contains digit)", func() {
+				err := validateLanguageTag("e1")
+				So(err, ShouldNotBeNil)
+				So(err.Error(), ShouldContainSubstring, "must contain only letters")
+			})
+		})
+
+		Convey("When validating invalid region codes", func() {
+			Convey("en-U should be invalid (too short)", func() {
+				err := validateLanguageTag("en-U")
+				So(err, ShouldNotBeNil)
+				So(err.Error(), ShouldContainSubstring, "must be 2 letters or 3 digits")
+			})
+
+			Convey("en-USA should be invalid (3 letters)", func() {
+				err := validateLanguageTag("en-USA")
+				So(err, ShouldNotBeNil)
+				So(err.Error(), ShouldContainSubstring, "must be 2 letters or 3 digits")
+			})
+		})
+
+		Convey("When validating too many parts", func() {
+			Convey("en-US-variant should be invalid", func() {
+				err := validateLanguageTag("en-US-variant")
+				So(err, ShouldNotBeNil)
+				So(err.Error(), ShouldContainSubstring, "use 'language' or 'language-REGION' format")
+			})
+		})
+	})
+}
+
+func TestIsSupportedLanguage(t *testing.T) {
+	Convey("Given the isSupportedLanguage function", t, func() {
+		Convey("When checking supported languages", func() {
+			Convey("en should be supported", func() {
+				So(isSupportedLanguage("en"), ShouldBeTrue)
+			})
+
+			Convey("zh should be supported", func() {
+				So(isSupportedLanguage("zh"), ShouldBeTrue)
+			})
+		})
+
+		Convey("When checking with region codes", func() {
+			Convey("en-US should be supported (matches en)", func() {
+				So(isSupportedLanguage("en-US"), ShouldBeTrue)
+			})
+
+			Convey("zh-CN should be supported (matches zh)", func() {
+				So(isSupportedLanguage("zh-CN"), ShouldBeTrue)
+			})
+
+			Convey("zh-TW should be supported (matches zh)", func() {
+				So(isSupportedLanguage("zh-TW"), ShouldBeTrue)
+			})
+		})
+
+		Convey("When checking unsupported languages", func() {
+			Convey("ko should not be supported", func() {
+				So(isSupportedLanguage("ko"), ShouldBeFalse)
+			})
+
+			Convey("ar-SA should not be supported", func() {
+				So(isSupportedLanguage("ar-SA"), ShouldBeFalse)
+			})
+
+			Convey("empty string should not be supported", func() {
+				So(isSupportedLanguage(""), ShouldBeFalse)
+			})
+		})
+	})
+}
+
+func TestGetSupportedLanguages(t *testing.T) {
+	Convey("Given the GetSupportedLanguages function", t, func() {
+		langs := GetSupportedLanguages()
+
+		Convey("It should return at least en and zh", func() {
+			So(langs, ShouldContain, "en")
+			So(langs, ShouldContain, "zh")
+		})
+
+		Convey("It should return non-empty list", func() {
+			So(len(langs), ShouldBeGreaterThan, 0)
 		})
 	})
 }

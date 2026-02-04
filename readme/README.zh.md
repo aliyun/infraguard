@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/logo.png" alt="InfraGuard Logo" width="200"/>
+  <img src="../assets/logo.png" alt="InfraGuard Logo" width="200"/>
 </div>
 
 # InfraGuard
@@ -10,7 +10,7 @@
 
 > 💡 InfraGuard 秉承**策略即代码 (Policy as Code)** 理念 - 将合规策略作为可版本化、可测试、可复用的代码制品来管理。
 
-**语言**: [English](README.md) | 中文
+**语言**: [English](../README.md) | 中文 | [Español](README.es.md) | [Français](README.fr.md) | [Deutsch](README.de.md) | [日本語](README.ja.md) | [Português](README.pt.md)
 
 ## ✨ 特性
 
@@ -18,7 +18,7 @@
 - 🎯 **双重扫描模式** - 静态分析或基于云端的预览验证
 - 📦 **内置规则** - 全面覆盖阿里云服务
 - 🏆 **合规包** - MLPS、ISO 27001、PCI-DSS、SOC 2 等
-- 🌍 **国际化** - 完整支持英文和中文
+- 🌍 **多语言支持** - 支持 7 种语言（中文、英语、西班牙语、法语、德语、日语、葡萄牙语）
 - 🎨 **多种输出格式** - 表格、JSON 和交互式 HTML 报告
 - 🔧 **可扩展** - 使用 Rego (Open Policy Agent) 编写自定义策略
 - ⚡ **快速** - 使用 Go 构建，速度快、效率高

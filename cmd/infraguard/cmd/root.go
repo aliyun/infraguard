@@ -59,7 +59,7 @@ func parseLangFlag() {
 func init() {
 	// Add global --lang flag
 	rootCmd.PersistentFlags().StringVar(&globalLang, "lang", "",
-		"Output language (en or zh, default: auto-detect)")
+		"Output language (en, zh, es, fr, de, ja, pt, default: auto-detect)")
 
 	rootCmd.AddCommand(policyCmd)
 	rootCmd.AddCommand(scanCmd)

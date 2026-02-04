@@ -3,6 +3,7 @@ package i18n
 
 import (
 	"embed"
+	"fmt"
 	"strings"
 
 	"github.com/Xuanwo/go-locale"
@@ -270,6 +271,16 @@ type Messages struct {
 	Errors struct {
 		InvalidFormat                   string `yaml:"invalid_format"`
 		InvalidLang                     string `yaml:"invalid_lang"`
+		InvalidMode                     string `yaml:"invalid_mode"`
+		
+		// Language tag validation errors
+		InvalidLangTagSeparator  string `yaml:"invalid_lang_tag_separator"`
+		InvalidLangTagFormat     string `yaml:"invalid_lang_tag_format"`
+		InvalidLangCodeLength    string `yaml:"invalid_lang_code_length"`
+		InvalidLangCodeChars     string `yaml:"invalid_lang_code_chars"`
+		InvalidRegionCodeLength  string `yaml:"invalid_region_code_length"`
+		InvalidRegionCodeFormat  string `yaml:"invalid_region_code_format"`
+		
 		PolicyDir                       string `yaml:"policy_dir"`
 		PolicyDirHint                   string `yaml:"policy_dir_hint"`
 		LoadTemplate                    string `yaml:"load_template"`
@@ -345,7 +356,6 @@ type Messages struct {
 		DownloadPolicies                string `yaml:"download_policies"`
 		PolicyPathDoesNotExist          string `yaml:"policy_path_does_not_exist"`
 		NoRegoFilesInPolicyDirectory    string `yaml:"no_rego_files_in_policy_directory"`
-		InvalidMode                     string `yaml:"invalid_mode"`
 
 		// Preview mode errors
 		PreviewOnlyROSSupported string `yaml:"preview_only_ros_supported"`
@@ -405,15 +415,162 @@ func init() {
 	currentMessages = englishMessages
 }
 
+// normalizeLanguageTag normalizes a language tag to BCP 47 format.
+// It supports two-level normalization:
+// 1. Short code mapping: zh -> zh-CN, en -> en-US, etc.
+// 2. Language prefix matching: zh-TW -> zh (uses zh translations)
+func normalizeLanguageTag(tag string) string {
+	if tag == "" {
+		return ""
+	}
+
+	// Normalize case: language code lowercase, region code uppercase
+	tag = strings.ToLower(tag)
+	parts := strings.Split(tag, "-")
+	if len(parts) == 2 {
+		tag = parts[0] + "-" + strings.ToUpper(parts[1])
+	} else if len(parts) == 1 {
+		tag = parts[0]
+	}
+
+	// Level 1: Short code to BCP 47 mapping
+	shortToFull := map[string]string{
+		"zh": "zh-CN",
+		"en": "en-US",
+		"es": "es-ES",
+		"fr": "fr-FR",
+		"de": "de-DE",
+		"ja": "ja-JP",
+		"pt": "pt-BR",
+	}
+
+	if full, ok := shortToFull[tag]; ok {
+		return full
+	}
+
+	// If already in full format or has region code, return as-is
+	if len(parts) == 2 {
+		return tag
+	}
+
+	return tag
+}
+
+// validateLanguageTag validates the format of a language tag.
+// Returns an error if the tag contains invalid characters or format.
+// Valid formats: "language" or "language-REGION"
+func validateLanguageTag(tag string) error {
+	if tag == "" {
+		return nil
+	}
+
+	msg := Msg()
+
+	// Check for invalid separators
+	if strings.Contains(tag, "_") || strings.Contains(tag, ".") {
+		return fmt.Errorf(msg.Errors.InvalidLangTagSeparator, tag)
+	}
+
+	parts := strings.Split(tag, "-")
+	if len(parts) > 2 {
+		return fmt.Errorf(msg.Errors.InvalidLangTagFormat, tag)
+	}
+
+	// Validate language code (2-3 lowercase letters)
+	langCode := strings.ToLower(parts[0])
+	if len(langCode) < 2 || len(langCode) > 3 {
+		return fmt.Errorf(msg.Errors.InvalidLangCodeLength, parts[0])
+	}
+	for _, c := range langCode {
+		if c < 'a' || c > 'z' {
+			return fmt.Errorf(msg.Errors.InvalidLangCodeChars, parts[0])
+		}
+	}
+
+	// Validate region code if present (2 uppercase letters or 3 digits)
+	if len(parts) == 2 {
+		region := strings.ToUpper(parts[1])
+		if len(region) != 2 && len(region) != 3 {
+			return fmt.Errorf(msg.Errors.InvalidRegionCodeLength, parts[1])
+		}
+
+		if len(region) == 2 {
+			for _, c := range region {
+				if c < 'A' || c > 'Z' {
+					return fmt.Errorf(msg.Errors.InvalidRegionCodeFormat, parts[1])
+				}
+			}
+		} else if len(region) == 3 {
+			isAllDigits := true
+			for _, c := range region {
+				if c < '0' || c > '9' {
+					isAllDigits = false
+					break
+				}
+			}
+			if !isAllDigits {
+				return fmt.Errorf(msg.Errors.InvalidRegionCodeLength, parts[1])
+			}
+		}
+	}
+
+	return nil
+}
+
+// isSupportedLanguage checks if a language tag is supported.
+// It checks both the full tag and the language code prefix.
+func isSupportedLanguage(tag string) bool {
+	if tag == "" {
+		return false
+	}
+
+	supported := GetSupportedLanguages()
+
+	// Check exact match first
+	for _, lang := range supported {
+		if lang == tag {
+			return true
+		}
+	}
+
+	// Check language prefix match (e.g., zh-TW matches zh)
+	parts := strings.Split(tag, "-")
+	if len(parts) == 2 {
+		langCode := parts[0]
+		for _, lang := range supported {
+			if lang == langCode {
+				return true
+			}
+		}
+	}
+
+	return false
+}
+
 // loadLocale loads a locale from embedded YAML files.
+// Supports BCP 47 tags with fallback:
+// 1. Try full tag (e.g., "zh-CN.yaml")
+// 2. Try language code (e.g., "zh.yaml")
+// 3. Try language prefix for region variants (e.g., "zh-TW" -> "zh.yaml")
 func loadLocale(lang string) *Messages {
 	if cached, ok := loadedMessages[lang]; ok {
 		return cached
 	}
 
+	// Try to load the exact tag first
 	data, err := localesFS.ReadFile("locales/" + lang + ".yaml")
 	if err != nil {
-		return nil
+		// If full tag not found, try language code prefix
+		parts := strings.Split(lang, "-")
+		if len(parts) == 2 {
+			langCode := parts[0]
+			data, err = localesFS.ReadFile("locales/" + langCode + ".yaml")
+			if err != nil {
+				return nil
+			}
+		} else {
+			return nil
+		}
 	}
 
 	var msgs Messages
@@ -425,22 +582,41 @@ func loadLocale(lang string) *Messages {
 	return &msgs
 }
 
-// DetectLanguage detects the system language and returns "zh" or "en".
+// DetectLanguage detects the system language and returns a BCP 47 language tag.
+// Supports: en, zh, es, fr, de, ja, pt
+// Returns normalized BCP 47 tag (e.g., "zh-CN", "en-US")
 func DetectLanguage() string {
 	tag, err := locale.Detect()
 	if err == nil {
 		lang := tag.String()
-		if strings.HasPrefix(lang, "zh") {
-			return "zh"
+		// Normalize to BCP 47 format
+		normalized := normalizeLanguageTag(lang)
+		if isSupportedLanguage(normalized) {
+			return normalized
+		}
+
+		// Try language prefix if full tag not supported
+		parts := strings.Split(lang, "_")
+		if len(parts) > 0 {
+			langCode := strings.ToLower(parts[0])
+			normalized = normalizeLanguageTag(langCode)
+			if isSupportedLanguage(normalized) {
+				return normalized
+			}
 		}
 	}
-	return "en"
+	return "en-US" // Default to US English
 }
 
 // SetLanguage sets the current language.
+// If lang is empty, it auto-detects the system language.
+// The language tag is normalized to BCP 47 format before setting.
 func SetLanguage(lang string) {
 	if lang == "" {
 		lang = DetectLanguage()
+	} else {
+		// Normalize the language tag
+		lang = normalizeLanguageTag(lang)
 	}
 
 	msgs := loadLocale(lang)
@@ -490,9 +666,28 @@ func Init() {
 }
 
 // GetSupportedLanguages returns a list of all supported language codes.
-// This is used for generating i18n data for all languages in HTML reports.
+// This is dynamically read from the locales directory.
 func GetSupportedLanguages() []string {
-	return []string{"en", "zh"}
+	entries, err := localesFS.ReadDir("locales")
+	if err != nil {
+		// Fallback to known languages if reading fails
+		return []string{"en", "zh"}
+	}
+
+	var langs []string
+	for _, entry := range entries {
+		if !entry.IsDir() && strings.HasSuffix(entry.Name(), ".yaml") {
+			lang := strings.TrimSuffix(entry.Name(), ".yaml")
+			langs = append(langs, lang)
+		}
+	}
+
+	// Ensure we have at least English as fallback
+	if len(langs) == 0 {
+		return []string{"en"}
+	}
+
+	return langs
 }
 
 // FormatMessage formats a message based on language.

@@ -335,13 +335,22 @@ severity:
   low: "Low"
 
 # Global flags
-lang_flag: "Output language (en or zh, default: auto-detect)"
+lang_flag: "Output language (en, zh, es, fr, de, ja, pt, default: auto-detect)"
 
 # Error messages
 errors:
   invalid_format: "invalid format %q: must be one of table, json, html."
   invalid_lang: "invalid language %q: must be en or zh."
   invalid_mode: "invalid mode %q: must be static or preview."
+  
+  # Language tag validation errors
+  invalid_lang_tag_separator: "invalid language tag format: %s (use '-' as separator, e.g., 'zh-CN', 'en-US')"
+  invalid_lang_tag_format: "invalid language tag format: %s (use 'language' or 'language-REGION' format)"
+  invalid_lang_code_length: "invalid language code: %s (must be 2-3 letters)"
+  invalid_lang_code_chars: "invalid language code: %s (must contain only letters)"
+  invalid_region_code_length: "invalid region code: %s (must be 2 letters or 3 digits)"
+  invalid_region_code_format: "invalid region code: %s (must be 2 uppercase letters)"
+  
   policy_dir: "policy directory error: %v."
   policy_dir_hint: "Run 'infraguard policy update' to download policies."
   load_template: "failed to load template: %v."
