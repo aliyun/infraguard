@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "polardb-dbcluster-in-vpc",
+	"severity": "medium",
 	"name": {
 		"en": "PolarDB Cluster in VPC",
 		"zh": "推荐使用专有网络类型的 PolarDB 实例",
@@ -15,7 +16,6 @@ rule_meta := {
 		"fr": "Cluster PolarDB dans VPC",
 		"pt": "Cluster PolarDB em VPC"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures PolarDB cluster is deployed in a VPC.",
 		"zh": "确保 PolarDB 实例部署在专有网络中。",
@@ -43,7 +43,7 @@ rule_meta := {
 		"fr": "Déployez le cluster PolarDB dans un VPC.",
 		"pt": "Implante o cluster PolarDB em uma VPC."
 	},
-	"resource_types": ["ALIYUN::POLARDB::DBCluster"],
+	"resource_types": ["ALIYUN::POLARDB::DBCluster"]
 }
 
 is_compliant(resource) if {

@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "hbase-cluster-ha-check",
+	"severity": "high",
 	"name": {
 		"en": "HBase Cluster HA Enabled",
 		"zh": "HBase 集群强制开启高可用",
@@ -14,7 +15,6 @@ rule_meta := {
 		"fr": "HA du Cluster HBase Activé",
 		"pt": "HA do Cluster HBase Habilitado"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures HBase clusters are configured for High Availability (HA).",
 		"zh": "确保 HBase 集群配置为高可用（HA）模式。",
@@ -42,7 +42,7 @@ rule_meta := {
 		"fr": "Assurez-vous que NodeCount est suffisant pour HA (au moins 2 pour basé sur disque, 3 pour disques locaux).",
 		"pt": "Garanta que NodeCount seja suficiente para HA (pelo menos 2 para baseado em disco, 3 para discos locais)."
 	},
-	"resource_types": ["ALIYUN::HBase::Cluster"],
+	"resource_types": ["ALIYUN::HBase::Cluster"]
 }
 
 is_compliant(resource) if {

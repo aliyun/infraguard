@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "nat-risk-ports-check",
+	"severity": "high",
 	"name": {
 		"en": "NAT Gateway Risk Ports Check",
 		"zh": "NAT 网关不允许映射指定的风险端口",
@@ -14,7 +15,6 @@ rule_meta := {
 		"fr": "Vérification des Ports à Risque de la Passerelle NAT",
 		"pt": "Verificação de Portas de Risco do Gateway NAT"
 	},
-	"severity": "high",
 	"description": {
 		"en": "NAT gateway DNAT mappings should not expose risky ports to the internet to prevent security vulnerabilities.",
 		"zh": "NAT 网关 DNAT 映射端口不包含指定的风险端口，视为合规。",
@@ -42,7 +42,7 @@ rule_meta := {
 		"fr": "Évitez de mapper des ports risqués bien connus (par exemple, 22, 3389, 445) via DNAT.",
 		"pt": "Evite mapear portas arriscadas conhecidas (por exemplo, 22, 3389, 445) através de DNAT."
 	},
-	"resource_types": ["ALIYUN::NAT::NatGateway"],
+	"resource_types": ["ALIYUN::NAT::NatGateway"]
 }
 
 # Common risky ports that should not be exposed

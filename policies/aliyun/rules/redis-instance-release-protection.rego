@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "redis-instance-release-protection",
+	"severity": "medium",
 	"name": {
 		"en": "Redis Instance Release Protection Enabled",
 		"zh": "Redis 实例开启释放保护",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "Redis-Instanz Freigabeschutz aktiviert",
 		"es": "Protección contra Liberación de Instancia Redis Habilitada",
 		"fr": "Protection contre la Libération d'Instance Redis Activée",
-		"pt": "Proteção contra Liberação de Instância Redis Habilitada",
+		"pt": "Proteção contra Liberação de Instância Redis Habilitada"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures that Redis instances have release protection enabled.",
 		"zh": "确保 Redis 实例开启了释放保护。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass Redis-Instanzen Freigabeschutz aktiviert haben.",
 		"es": "Garantiza que las instancias Redis tengan protección contra liberación habilitada.",
 		"fr": "Garantit que les instances Redis ont la protection contre la libération activée.",
-		"pt": "Garante que as instâncias Redis tenham proteção contra liberação habilitada.",
+		"pt": "Garante que as instâncias Redis tenham proteção contra liberação habilitada."
 	},
 	"reason": {
 		"en": "If release protection is not enabled, the Redis instance may be released accidentally, causing service interruption.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Wenn der Freigabeschutz nicht aktiviert ist, kann die Redis-Instanz versehentlich freigegeben werden, was zu Dienstunterbrechungen führt.",
 		"es": "Si la protección contra liberación no está habilitada, la instancia Redis puede ser liberada accidentalmente, causando interrupción del servicio.",
 		"fr": "Si la protection contre la libération n'est pas activée, l'instance Redis peut être libérée accidentellement, causant une interruption de service.",
-		"pt": "Se a proteção contra liberação não estiver habilitada, a instância Redis pode ser liberada acidentalmente, causando interrupção do serviço.",
+		"pt": "Se a proteção contra liberação não estiver habilitada, a instância Redis pode ser liberada acidentalmente, causando interrupção do serviço."
 	},
 	"recommendation": {
 		"en": "Enable release protection for the Redis instance.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Aktivieren Sie Freigabeschutz für die Redis-Instanz.",
 		"es": "Habilite protección contra liberación para la instancia Redis.",
 		"fr": "Activez la protection contre la libération pour l'instance Redis.",
-		"pt": "Habilite proteção contra liberação para a instância Redis.",
+		"pt": "Habilite proteção contra liberação para a instância Redis."
 	},
-	"resource_types": ["ALIYUN::REDIS::Instance"],
+	"resource_types": ["ALIYUN::REDIS::Instance"]
 }
 
 is_compliant(resource) if {

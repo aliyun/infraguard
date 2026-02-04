@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "redis-instance-no-public-ip",
+	"severity": "high",
 	"name": {
 		"en": "Redis Instance No Public IP",
 		"zh": "Redis 实例未设置公网 IP",
@@ -15,7 +16,6 @@ rule_meta := {
 		"fr": "Instance Redis Sans IP Publique",
 		"pt": "Instância Redis Sem IP Público"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures Redis instance does not have public IP assigned.",
 		"zh": "确保 Redis 实例未设置公网 IP。",
@@ -43,7 +43,7 @@ rule_meta := {
 		"fr": "Supprimez l'IP publique de l'instance Redis.",
 		"pt": "Remova o IP público da instância Redis."
 	},
-	"resource_types": ["ALIYUN::REDIS::Instance"],
+	"resource_types": ["ALIYUN::REDIS::Instance"]
 }
 
 is_compliant(resource) if {

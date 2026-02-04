@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "ecs-system-disk-size-check",
+	"severity": "low",
 	"name": {
 		"en": "ECS System Disk Size Check",
 		"zh": "ECS 系统盘大小检查",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "ECS-Systemfestplatten-Größenprüfung",
 		"es": "Verificación de Tamaño de Disco del Sistema ECS",
 		"fr": "Vérification de la Taille du Disque Système ECS",
-		"pt": "Verificação de Tamanho do Disco do Sistema ECS",
+		"pt": "Verificação de Tamanho do Disco do Sistema ECS"
 	},
-	"severity": "low",
 	"description": {
 		"en": "Ensures ECS system disks meet the minimum required size.",
 		"zh": "确保 ECS 系统盘满足最低大小要求。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass ECS-Systemfestplatten die Mindestgrößenanforderung erfüllen.",
 		"es": "Garantiza que los discos del sistema ECS cumplan con el tamaño mínimo requerido.",
 		"fr": "Garantit que les disques système ECS répondent à la taille minimale requise.",
-		"pt": "Garante que os discos do sistema ECS atendam ao tamanho mínimo necessário.",
+		"pt": "Garante que os discos do sistema ECS atendam ao tamanho mínimo necessário."
 	},
 	"reason": {
 		"en": "System disks that are too small may run out of space, causing system instability.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Zu kleine Systemfestplatten können keinen Speicherplatz mehr haben, was zu Systeminstabilität führt.",
 		"es": "Los discos del sistema que son demasiado pequeños pueden quedarse sin espacio, causando inestabilidad del sistema.",
 		"fr": "Les disques système trop petits peuvent manquer d'espace, provoquant une instabilité du système.",
-		"pt": "Discos do sistema muito pequenos podem ficar sem espaço, causando instabilidade do sistema.",
+		"pt": "Discos do sistema muito pequenos podem ficar sem espaço, causando instabilidade do sistema."
 	},
 	"recommendation": {
 		"en": "Increase the system disk size to at least 40GB.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Erhöhen Sie die Systemfestplattengröße auf mindestens 40 GB.",
 		"es": "Aumente el tamaño del disco del sistema a al menos 40 GB.",
 		"fr": "Augmentez la taille du disque système à au moins 40 Go.",
-		"pt": "Aumente o tamanho do disco do sistema para pelo menos 40 GB.",
+		"pt": "Aumente o tamanho do disco do sistema para pelo menos 40 GB."
 	},
-	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"],
+	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"]
 }
 
 is_compliant(resource) if {

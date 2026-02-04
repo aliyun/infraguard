@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "api-gateway-group-force-https",
+	"severity": "high",
 	"name": {
 		"en": "API Gateway Group Force HTTPS",
 		"zh": "API 分组绑定独立域名并开启 Https 强制跳转",
@@ -14,7 +15,6 @@ rule_meta := {
 		"fr": "Forcer HTTPS du Groupe API Gateway",
 		"pt": "Forçar HTTPS do Grupo de API Gateway"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures API Gateway groups with public custom domains have HTTPS force redirect enabled.",
 		"zh": "检测网关分组下的所有公网独立域名是否都开启 HTTPS 强制跳转。",
@@ -42,7 +42,7 @@ rule_meta := {
 		"fr": "Activez la redirection HTTPS forcée pour tous les domaines publics.",
 		"pt": "Habilite o redirecionamento forçado HTTPS para todos os domínios públicos."
 	},
-	"resource_types": ["ALIYUN::ApiGateway::Group"],
+	"resource_types": ["ALIYUN::ApiGateway::Group"]
 }
 
 deny contains result if {

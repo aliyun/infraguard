@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "polardb-cluster-enabled-ssl",
+	"severity": "medium",
 	"name": {
 		"en": "PolarDB Cluster SSL Enabled",
 		"zh": "PolarDB 集群开启 SSL 加密",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "PolarDB-Cluster SSL aktiviert",
 		"es": "SSL de Cluster PolarDB Habilitado",
 		"fr": "SSL du Cluster PolarDB Activé",
-		"pt": "SSL de Cluster PolarDB Habilitado",
+		"pt": "SSL de Cluster PolarDB Habilitado"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures PolarDB clusters have SSL encryption enabled.",
 		"zh": "确保 PolarDB 集群开启了 SSL 加密。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass PolarDB-Cluster SSL-Verschlüsselung aktiviert haben.",
 		"es": "Garantiza que los clústeres PolarDB tengan cifrado SSL habilitado.",
 		"fr": "Garantit que les clusters PolarDB ont le chiffrement SSL activé.",
-		"pt": "Garante que os clusters PolarDB tenham criptografia SSL habilitada.",
+		"pt": "Garante que os clusters PolarDB tenham criptografia SSL habilitada."
 	},
 	"reason": {
 		"en": "SSL encryption secures the communication between applications and the database cluster.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "SSL-Verschlüsselung sichert die Kommunikation zwischen Anwendungen und dem Datenbankcluster.",
 		"es": "El cifrado SSL protege la comunicación entre aplicaciones y el clúster de base de datos.",
 		"fr": "Le chiffrement SSL sécurise la communication entre les applications et le cluster de base de données.",
-		"pt": "A criptografia SSL protege a comunicação entre aplicações e o cluster de banco de dados.",
+		"pt": "A criptografia SSL protege a comunicação entre aplicações e o cluster de banco de dados."
 	},
 	"recommendation": {
 		"en": "Enable SSL for the PolarDB cluster.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Aktivieren Sie SSL für den PolarDB-Cluster.",
 		"es": "Habilite SSL para el clúster PolarDB.",
 		"fr": "Activez SSL pour le cluster PolarDB.",
-		"pt": "Habilite SSL para o cluster PolarDB.",
+		"pt": "Habilite SSL para o cluster PolarDB."
 	},
-	"resource_types": ["ALIYUN::POLARDB::DBCluster"],
+	"resource_types": ["ALIYUN::POLARDB::DBCluster"]
 }
 
 is_compliant(resource) if {

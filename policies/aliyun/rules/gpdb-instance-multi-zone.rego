@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "gpdb-instance-multi-zone",
+	"severity": "medium",
 	"name": {
 		"en": "GPDB Instance Multi-Zone Deployment",
 		"zh": "使用多可用区的云原生数据仓库 AnalyticDB 实例",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "GPDB-Instanz Multi-Zone-Bereitstellung",
 		"es": "Despliegue Multi-Zona de Instancia GPDB",
 		"fr": "Déploiement Multi-Zone d'Instance GPDB",
-		"pt": "Implantações Multi-Zona de Instância GPDB",
+		"pt": "Implantações Multi-Zona de Instância GPDB"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "GPDB instances should be deployed with a standby zone for high availability.",
 		"zh": "使用多可用区的云原生数据仓库 AnalyticDB 实例，视为合规。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "GPDB-Instanzen sollten mit einer Standby-Zone für Hochverfügbarkeit bereitgestellt werden.",
 		"es": "Las instancias GPDB deben desplegarse con una zona de espera para alta disponibilidad.",
 		"fr": "Les instances GPDB doivent être déployées avec une zone de secours pour une haute disponibilité.",
-		"pt": "As instâncias GPDB devem ser implantadas com uma zona de espera para alta disponibilidade.",
+		"pt": "As instâncias GPDB devem ser implantadas com uma zona de espera para alta disponibilidade."
 	},
 	"reason": {
 		"en": "The GPDB instance does not have a standby zone configured, which may affect availability.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Die GPDB-Instanz hat keine Standby-Zone konfiguriert, was die Verfügbarkeit beeinträchtigen kann.",
 		"es": "La instancia GPDB no tiene una zona de espera configurada, lo que puede afectar la disponibilidad.",
 		"fr": "L'instance GPDB n'a pas de zone de secours configurée, ce qui peut affecter la disponibilité.",
-		"pt": "A instância GPDB não tem uma zona de espera configurada, o que pode afetar a disponibilidade.",
+		"pt": "A instância GPDB não tem uma zona de espera configurada, o que pode afetar a disponibilidade."
 	},
 	"recommendation": {
 		"en": "Configure a standby zone by setting the StandbyZoneId property to enable multi-zone deployment.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Konfigurieren Sie eine Standby-Zone, indem Sie die StandbyZoneId-Eigenschaft setzen, um Multi-Zone-Bereitstellung zu aktivieren.",
 		"es": "Configure una zona de espera estableciendo la propiedad StandbyZoneId para habilitar el despliegue multi-zona.",
 		"fr": "Configurez une zone de secours en définissant la propriété StandbyZoneId pour activer le déploiement multi-zone.",
-		"pt": "Configure uma zona de espera definindo a propriedade StandbyZoneId para habilitar a implantação multi-zona.",
+		"pt": "Configure uma zona de espera definindo a propriedade StandbyZoneId para habilitar a implantação multi-zona."
 	},
-	"resource_types": ["ALIYUN::GPDB::DBInstance"],
+	"resource_types": ["ALIYUN::GPDB::DBInstance"]
 }
 
 # Check if instance has standby zone

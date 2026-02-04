@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "mongodb-instance-class-not-shared",
+	"severity": "high",
 	"name": {
 		"en": "MongoDB Instance Uses Dedicated Class",
 		"zh": "MongoDB 使用独享型或专属型规格实例",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "MongoDB-Instanz verwendet dedizierte Klasse",
 		"es": "Instancia MongoDB Usa Clase Dedicada",
 		"fr": "L'Instance MongoDB Utilise une Classe Dédiée",
-		"pt": "Instância MongoDB Usa Classe Dedicada",
+		"pt": "Instância MongoDB Usa Classe Dedicada"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures MongoDB instances use dedicated or exclusive instance classes, not shared instances.",
 		"zh": "确保 MongoDB 实例使用独享型或专属型规格实例，而非共享型实例。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass MongoDB-Instanzen dedizierte oder exklusive Instanzklassen verwenden, keine gemeinsam genutzten Instanzen.",
 		"es": "Garantiza que las instancias MongoDB usen clases de instancia dedicadas o exclusivas, no instancias compartidas.",
 		"fr": "Garantit que les instances MongoDB utilisent des classes d'instance dédiées ou exclusives, et non des instances partagées.",
-		"pt": "Garante que as instâncias MongoDB usem classes de instância dedicadas ou exclusivas, não instâncias compartilhadas.",
+		"pt": "Garante que as instâncias MongoDB usem classes de instância dedicadas ou exclusivas, não instâncias compartilhadas."
 	},
 	"reason": {
 		"en": "Shared instance classes may have resource contention issues, affecting database performance and stability.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Gemeinsam genutzte Instanzklassen können Ressourcenkonfliktprobleme haben, die die Datenbankleistung und -stabilität beeinträchtigen.",
 		"es": "Las clases de instancia compartidas pueden tener problemas de contención de recursos, afectando el rendimiento y la estabilidad de la base de datos.",
 		"fr": "Les classes d'instance partagées peuvent avoir des problèmes de contention de ressources, affectant les performances et la stabilité de la base de données.",
-		"pt": "As classes de instância compartilhadas podem ter problemas de contenção de recursos, afetando o desempenho e a estabilidade do banco de dados.",
+		"pt": "As classes de instância compartilhadas podem ter problemas de contenção de recursos, afetando o desempenho e a estabilidade do banco de dados."
 	},
 	"recommendation": {
 		"en": "Use dedicated or exclusive instance classes for MongoDB instances.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Verwenden Sie dedizierte oder exklusive Instanzklassen für MongoDB-Instanzen.",
 		"es": "Use clases de instancia dedicadas o exclusivas para instancias MongoDB.",
 		"fr": "Utilisez des classes d'instance dédiées ou exclusives pour les instances MongoDB.",
-		"pt": "Use classes de instância dedicadas ou exclusivas para instâncias MongoDB.",
+		"pt": "Use classes de instância dedicadas ou exclusivas para instâncias MongoDB."
 	},
-	"resource_types": ["ALIYUN::MONGODB::Instance"],
+	"resource_types": ["ALIYUN::MONGODB::Instance"]
 }
 
 # Shared instance class patterns (these are typically shared types)

@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "ram-role-no-product-admin-access",
+	"severity": "medium",
 	"name": {
 		"en": "RAM Role No Product Admin Access",
 		"zh": "RAM 角色无超级管理员或某个云产品管理员权限",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "RAM-Rolle Kein Produkt-Admin-Zugriff",
 		"es": "El Rol RAM No Tiene Acceso de Administrador de Producto",
 		"fr": "Le Rôle RAM N'a Pas d'Accès Administrateur Produit",
-		"pt": "A Função RAM Não Tem Acesso de Administrador de Produto",
+		"pt": "A Função RAM Não Tem Acesso de Administrador de Produto"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures RAM roles do not have full administrative access or product administrator permissions.",
 		"zh": "确保 RAM 角色未拥有管理员权限或者某个云产品的管理员权限。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass RAM-Rollen keinen vollständigen Administratorzugriff oder Produkt-Administratorberechtigungen haben.",
 		"es": "Garantiza que los roles RAM no tengan acceso administrativo completo o permisos de administrador de producto.",
 		"fr": "Garantit que les rôles RAM n'ont pas d'accès administratif complet ou de permissions d'administrateur de produit.",
-		"pt": "Garante que as funções RAM não tenham acesso administrativo completo ou permissões de administrador de produto.",
+		"pt": "Garante que as funções RAM não tenham acesso administrativo completo ou permissões de administrador de produto."
 	},
 	"reason": {
 		"en": "Granting administrative access increases the risk of accidental or malicious configuration changes.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Die Gewährung von Administratorzugriff erhöht das Risiko versehentlicher oder böswilliger Konfigurationsänderungen.",
 		"es": "Otorgar acceso administrativo aumenta el riesgo de cambios de configuración accidentales o maliciosos.",
 		"fr": "Accorder un accès administratif augmente le risque de modifications de configuration accidentelles ou malveillantes.",
-		"pt": "Conceder acesso administrativo aumenta o risco de alterações de configuração acidentais ou maliciosas.",
+		"pt": "Conceder acesso administrativo aumenta o risco de alterações de configuração acidentais ou maliciosas."
 	},
 	"recommendation": {
 		"en": "Follow the principle of least privilege. Use product-specific read-only permissions where possible.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Folgen Sie dem Prinzip der geringsten Berechtigung. Verwenden Sie nach Möglichkeit produktspezifische schreibgeschützte Berechtigungen.",
 		"es": "Siga el principio de privilegio mínimo. Use permisos de solo lectura específicos del producto cuando sea posible.",
 		"fr": "Suivez le principe du moindre privilège. Utilisez des permissions en lecture seule spécifiques au produit lorsque c'est possible.",
-		"pt": "Siga o princípio do menor privilégio. Use permissões somente leitura específicas do produto quando possível.",
+		"pt": "Siga o princípio do menor privilégio. Use permissões somente leitura específicas do produto quando possível."
 	},
-	"resource_types": ["ALIYUN::RAM::Role"],
+	"resource_types": ["ALIYUN::RAM::Role"]
 }
 
 has_admin_access(resource) if {

@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "api-gateway-api-visibility-private",
+	"severity": "medium",
 	"name": {
 		"en": "API Gateway API Visibility Private",
 		"zh": "API 网关中的 API 设置为私有",
@@ -14,7 +15,6 @@ rule_meta := {
 		"fr": "Visibilité API de l'API Gateway Privée",
 		"pt": "Visibilidade da API do API Gateway Privada"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures API Gateway APIs are set to PRIVATE visibility.",
 		"zh": "确保 API 网关中的 API 设置为私有。",
@@ -42,7 +42,7 @@ rule_meta := {
 		"fr": "Définissez la visibilité de l'API sur PRIVÉE pour les API internes.",
 		"pt": "Defina a visibilidade da API como PRIVADA para APIs internas."
 	},
-	"resource_types": ["ALIYUN::ApiGateway::Api"],
+	"resource_types": ["ALIYUN::ApiGateway::Api"]
 }
 
 deny contains result if {

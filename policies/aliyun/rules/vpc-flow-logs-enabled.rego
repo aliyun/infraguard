@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "vpc-flow-logs-enabled",
+	"severity": "medium",
 	"name": {
 		"en": "VPC Flow Logs Enabled",
 		"zh": "VPC 开启流日志",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "VPC-Flussprotokolle aktiviert",
 		"es": "Registros de Flujo VPC Habilitados",
 		"fr": "Journaux de Flux VPC Activés",
-		"pt": "Logs de Fluxo VPC Habilitados",
+		"pt": "Logs de Fluxo VPC Habilitados"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures VPC flow logs are enabled for monitoring network traffic.",
 		"zh": "确保 VPC 开启了流日志，以便监控网络流量。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass VPC-Flussprotokolle für die Überwachung des Netzwerkverkehrs aktiviert sind.",
 		"es": "Garantiza que los registros de flujo VPC estén habilitados para monitorear el tráfico de red.",
 		"fr": "Garantit que les journaux de flux VPC sont activés pour surveiller le trafic réseau.",
-		"pt": "Garante que os logs de fluxo VPC estejam habilitados para monitorar tráfego de rede.",
+		"pt": "Garante que os logs de fluxo VPC estejam habilitados para monitorar tráfego de rede."
 	},
 	"reason": {
 		"en": "Flow logs provide visibility into network traffic patterns and help in security auditing.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Flussprotokolle bieten Einblicke in Netzwerkverkehrsmuster und helfen bei Sicherheitsaudits.",
 		"es": "Los registros de flujo proporcionan visibilidad sobre los patrones de tráfico de red y ayudan en la auditoría de seguridad.",
 		"fr": "Les journaux de flux fournissent une visibilité sur les modèles de trafic réseau et aident à l'audit de sécurité.",
-		"pt": "Logs de fluxo fornecem visibilidade sobre padrões de tráfego de rede e ajudam na auditoria de segurança.",
+		"pt": "Logs de fluxo fornecem visibilidade sobre padrões de tráfego de rede e ajudam na auditoria de segurança."
 	},
 	"recommendation": {
 		"en": "Add ALIYUN::VPC::FlowLog resource to enable flow logs for the VPC.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Fügen Sie die ALIYUN::VPC::FlowLog-Ressource hinzu, um Flussprotokolle für das VPC zu aktivieren.",
 		"es": "Agregue el recurso ALIYUN::VPC::FlowLog para habilitar los registros de flujo para el VPC.",
 		"fr": "Ajoutez la ressource ALIYUN::VPC::FlowLog pour activer les journaux de flux pour le VPC.",
-		"pt": "Adicione o recurso ALIYUN::VPC::FlowLog para habilitar logs de fluxo para o VPC.",
+		"pt": "Adicione o recurso ALIYUN::VPC::FlowLog para habilitar logs de fluxo para o VPC."
 	},
-	"resource_types": ["ALIYUN::ECS::VPC"],
+	"resource_types": ["ALIYUN::ECS::VPC"]
 }
 
 # Cross-resource check: is there a FlowLog resource for this VPC?

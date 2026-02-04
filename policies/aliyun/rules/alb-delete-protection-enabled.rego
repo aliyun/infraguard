@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "alb-delete-protection-enabled",
+	"severity": "high",
 	"name": {
 		"en": "ALB Instance Deletion Protection Enabled",
 		"zh": "ALB 实例开启释放保护",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "ALB-Instanz Löschschutz aktiviert",
 		"es": "Protección de Eliminación de Instancia ALB Habilitada",
 		"fr": "Protection contre la Suppression d'Instance ALB Activée",
-		"pt": "Proteção contra Exclusão de Instância ALB Habilitada",
+		"pt": "Proteção contra Exclusão de Instância ALB Habilitada"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures that ALB instances have deletion protection enabled.",
 		"zh": "确保 ALB 实例开启了释放保护。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass ALB-Instanzen Löschschutz aktiviert haben.",
 		"es": "Garantiza que las instancias ALB tengan protección contra eliminación habilitada.",
 		"fr": "Garantit que les instances ALB ont la protection contre la suppression activée.",
-		"pt": "Garante que as instâncias ALB tenham proteção contra exclusão habilitada.",
+		"pt": "Garante que as instâncias ALB tenham proteção contra exclusão habilitada."
 	},
 	"reason": {
 		"en": "If deletion protection is not enabled, the ALB instance may be released accidentally, causing service interruption.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Wenn der Löschschutz nicht aktiviert ist, kann die ALB-Instanz versehentlich freigegeben werden, was zu Dienstunterbrechungen führt.",
 		"es": "Si la protección contra eliminación no está habilitada, la instancia ALB puede ser liberada accidentalmente, causando interrupción del servicio.",
 		"fr": "Si la protection contre la suppression n'est pas activée, l'instance ALB peut être libérée accidentellement, entraînant une interruption de service.",
-		"pt": "Se a proteção contra exclusão não estiver habilitada, a instância ALB pode ser liberada acidentalmente, causando interrupção do serviço.",
+		"pt": "Se a proteção contra exclusão não estiver habilitada, a instância ALB pode ser liberada acidentalmente, causando interrupção do serviço."
 	},
 	"recommendation": {
 		"en": "Enable deletion protection for the ALB instance.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Aktivieren Sie den Löschschutz für die ALB-Instanz.",
 		"es": "Habilite la protección contra eliminación para la instancia ALB.",
 		"fr": "Activez la protection contre la suppression pour l'instance ALB.",
-		"pt": "Habilite a proteção contra exclusão para a instância ALB.",
+		"pt": "Habilite a proteção contra exclusão para a instância ALB."
 	},
-	"resource_types": ["ALIYUN::ALB::LoadBalancer"],
+	"resource_types": ["ALIYUN::ALB::LoadBalancer"]
 }
 
 is_compliant(resource) if {

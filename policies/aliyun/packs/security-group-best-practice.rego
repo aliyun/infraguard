@@ -14,7 +14,7 @@ pack_meta := {
 		"de": "Sicherheitsgruppe Best Practices",
 		"es": "Mejores Prácticas de Grupo de Seguridad",
 		"fr": "Meilleures Pratiques de Groupe de Sécurité",
-		"pt": "Melhores Práticas de Grupo de Segurança",
+		"pt": "Melhores Práticas de Grupo de Segurança"
 	},
 	"description": {
 		"en": "Continuously check security group rules for compliance to reduce security risks.",
@@ -23,16 +23,16 @@ pack_meta := {
 		"de": "Kontinuierliche Überprüfung der Sicherheitsgruppen-Regeln auf Compliance, um Sicherheitsrisiken zu reduzieren.",
 		"es": "Verificar continuamente las reglas del grupo de seguridad para cumplimiento y reducir los riesgos de seguridad.",
 		"fr": "Vérifier continuellement les règles du groupe de sécurité pour la conformité et réduire les risques de sécurité.",
-		"pt": "Verificar continuamente as regras do grupo de segurança para conformidade e reduzir riscos de segurança.",
+		"pt": "Verificar continuamente as regras do grupo de segurança para conformidade e reduzir riscos de segurança."
 	},
 	"rules": [
 		"ecs-instance-attached-security-group",
-		"ecs-security-group-white-list-port-check",
-		"sg-public-access-check",
+		"ecs-security-group-egress-not-all-access",
+		"ecs-security-group-not-internet-cidr-access",
 		"ecs-security-group-not-open-all-port",
 		"ecs-security-group-not-open-all-protocol",
-		"ecs-security-group-not-internet-cidr-access",
-		"ecs-security-group-egress-not-all-access",
 		"ecs-security-group-risky-ports-check-with-protocol",
-	],
+		"ecs-security-group-white-list-port-check",
+		"sg-public-access-check"
+	]
 }

@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "ecs-instance-image-expired-check",
+	"severity": "medium",
 	"name": {
 		"en": "ECS Instance Image Expired Check",
 		"zh": "ECS 实例镜像过期检测",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "ECS-Instanz Bild-Ablaufprüfung",
 		"es": "Verificación de Expiración de Imagen de Instancia ECS",
 		"fr": "Vérification d'Expiration d'Image d'Instance ECS",
-		"pt": "Verificação de Expiração de Imagem de Instância ECS",
+		"pt": "Verificação de Expiração de Imagem de Instância ECS"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures that the image used by the ECS instance has not expired.",
 		"zh": "确保 ECS 实例使用的镜像未过期。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass das von der ECS-Instanz verwendete Bild nicht abgelaufen ist.",
 		"es": "Garantiza que la imagen usada por la instancia ECS no haya expirado.",
 		"fr": "Garantit que l'image utilisée par l'instance ECS n'a pas expiré.",
-		"pt": "Garante que a imagem usada pela instância ECS não tenha expirado.",
+		"pt": "Garante que a imagem usada pela instância ECS não tenha expirado."
 	},
 	"reason": {
 		"en": "Using an expired image may lead to security vulnerabilities and lack of support.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Die Verwendung eines abgelaufenen Bildes kann zu Sicherheitslücken und fehlender Unterstützung führen.",
 		"es": "Usar una imagen expirada puede llevar a vulnerabilidades de seguridad y falta de soporte.",
 		"fr": "Utiliser une image expirée peut entraîner des vulnérabilités de sécurité et un manque de support.",
-		"pt": "Usar uma imagem expirada pode levar a vulnerabilidades de segurança e falta de suporte.",
+		"pt": "Usar uma imagem expirada pode levar a vulnerabilidades de segurança e falta de suporte."
 	},
 	"recommendation": {
 		"en": "Update the ECS instance to use a supported, non-expired image.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Aktualisieren Sie die ECS-Instanz, um ein unterstütztes, nicht abgelaufenes Bild zu verwenden.",
 		"es": "Actualice la instancia ECS para usar una imagen compatible y no expirada.",
 		"fr": "Mettez à jour l'instance ECS pour utiliser une image prise en charge et non expirée.",
-		"pt": "Atualize a instância ECS para usar uma imagem suportada e não expirada.",
+		"pt": "Atualize a instância ECS para usar uma imagem suportada e não expirada."
 	},
-	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"],
+	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"]
 }
 
 deny contains result if {

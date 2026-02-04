@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "oss-zrs-enabled",
+	"severity": "medium",
 	"name": {
 		"en": "OSS Bucket Zone-Redundant Storage Enabled",
 		"zh": "OSS 桶启用同城冗余存储",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "OSS-Bucket zonenredundanter Speicher aktiviert",
 		"es": "Almacenamiento con Redundancia de Zona de Bucket OSS Habilitado",
 		"fr": "Stockage Redondant par Zone de Bucket OSS Activé",
-		"pt": "Armazenamento com Redundância de Zona de Bucket OSS Habilitado",
+		"pt": "Armazenamento com Redundância de Zona de Bucket OSS Habilitado"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "OSS buckets should use zone-redundant storage (ZRS) for high availability and data durability.",
 		"zh": "OSS 桶应使用同城冗余存储（ZRS）以实现高可用性和数据持久性。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "OSS-Buckets sollten zonenredundanten Speicher (ZRS) für hohe Verfügbarkeit und Datenbeständigkeit verwenden.",
 		"es": "Los buckets OSS deben usar almacenamiento con redundancia de zona (ZRS) para alta disponibilidad y durabilidad de datos.",
 		"fr": "Les buckets OSS doivent utiliser le stockage redondant par zone (ZRS) pour une haute disponibilité et une durabilité des données.",
-		"pt": "Buckets OSS devem usar armazenamento com redundância de zona (ZRS) para alta disponibilidade e durabilidade de dados.",
+		"pt": "Buckets OSS devem usar armazenamento com redundância de zona (ZRS) para alta disponibilidade e durabilidade de dados."
 	},
 	"reason": {
 		"en": "The OSS bucket does not have zone-redundant storage enabled, which may affect data availability.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Der OSS-Bucket hat keinen zonenredundanten Speicher aktiviert, was die Datenverfügbarkeit beeinträchtigen kann.",
 		"es": "El bucket OSS no tiene almacenamiento con redundancia de zona habilitado, lo que puede afectar la disponibilidad de datos.",
 		"fr": "Le bucket OSS n'a pas le stockage redondant par zone activé, ce qui peut affecter la disponibilité des données.",
-		"pt": "O bucket OSS não tem armazenamento com redundância de zona habilitado, o que pode afetar a disponibilidade de dados.",
+		"pt": "O bucket OSS não tem armazenamento com redundância de zona habilitado, o que pode afetar a disponibilidade de dados."
 	},
 	"recommendation": {
 		"en": "Enable zone-redundant storage by setting RedundancyType to 'ZRS' when creating the bucket.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Aktivieren Sie zonenredundanten Speicher, indem Sie RedundancyType beim Erstellen des Buckets auf 'ZRS' setzen.",
 		"es": "Habilite almacenamiento con redundancia de zona estableciendo RedundancyType en 'ZRS' al crear el bucket.",
 		"fr": "Activez le stockage redondant par zone en définissant RedundancyType sur 'ZRS' lors de la création du bucket.",
-		"pt": "Habilite armazenamento com redundância de zona definindo RedundancyType como 'ZRS' ao criar o bucket.",
+		"pt": "Habilite armazenamento com redundância de zona definindo RedundancyType como 'ZRS' ao criar o bucket."
 	},
-	"resource_types": ["ALIYUN::OSS::Bucket"],
+	"resource_types": ["ALIYUN::OSS::Bucket"]
 }
 
 # Check if bucket has ZRS enabled

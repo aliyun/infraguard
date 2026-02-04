@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata with i18n support
 rule_meta := {
 	"id": "ecs-security-group-egress-not-all-access",
+	"severity": "high",
 	"name": {
 		"en": "Security Group Egress Not Set to All Access",
 		"zh": "安全组出方向未设置为全通",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "Sicherheitsgruppe Egress nicht auf Vollzugriff gesetzt",
 		"es": "Egreso de Grupo de Seguridad No Establecido en Acceso Total",
 		"fr": "Egress du Groupe de Sécurité Non Défini sur Accès Total",
-		"pt": "Egresso de Grupo de Segurança Não Definido como Acesso Total",
+		"pt": "Egresso de Grupo de Segurança Não Definido como Acesso Total"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Security group egress direction should not be set to allow all access (all protocols, all ports, all destinations).",
 		"zh": "安全组出网方向未设置为全通，视为合规。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "Die Egress-Richtung der Sicherheitsgruppe sollte nicht so eingestellt werden, dass sie allen Zugriff erlaubt (alle Protokolle, alle Ports, alle Ziele).",
 		"es": "La dirección de egreso del grupo de seguridad no debe establecerse para permitir todo el acceso (todos los protocolos, todos los puertos, todos los destinos).",
 		"fr": "La direction d'egress du groupe de sécurité ne doit pas être définie pour autoriser tout accès (tous les protocoles, tous les ports, toutes les destinations).",
-		"pt": "A direção de egresso do grupo de segurança não deve ser definida para permitir todo o acesso (todos os protocolos, todas as portas, todos os destinos).",
+		"pt": "A direção de egresso do grupo de segurança não deve ser definida para permitir todo o acesso (todos os protocolos, todas as portas, todos os destinos)."
 	},
 	"reason": {
 		"en": "The security group has an egress rule that allows all access (all protocols to all destinations), which poses a security risk.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Die Sicherheitsgruppe hat eine Egress-Regel, die allen Zugriff erlaubt (alle Protokolle zu allen Zielen), was ein Sicherheitsrisiko darstellt.",
 		"es": "El grupo de seguridad tiene una regla de egreso que permite todo el acceso (todos los protocolos a todos los destinos), lo que plantea un riesgo de seguridad.",
 		"fr": "Le groupe de sécurité a une règle d'egress qui autorise tout accès (tous les protocoles vers toutes les destinations), ce qui pose un risque de sécurité.",
-		"pt": "O grupo de segurança tem uma regra de egresso que permite todo o acesso (todos os protocolos para todos os destinos), o que representa um risco de segurança.",
+		"pt": "O grupo de segurança tem uma regra de egresso que permite todo o acesso (todos os protocolos para todos os destinos), o que representa um risco de segurança."
 	},
 	"recommendation": {
 		"en": "Restrict egress rules to specific protocols, ports, and destination IP ranges based on actual business requirements.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Beschränken Sie Egress-Regeln auf spezifische Protokolle, Ports und Ziel-IP-Bereiche basierend auf tatsächlichen Geschäftsanforderungen.",
 		"es": "Restrinja las reglas de egreso a protocolos, puertos y rangos de IP de destino específicos según los requisitos comerciales reales.",
 		"fr": "Restreignez les règles d'egress à des protocoles, ports et plages d'IP de destination spécifiques en fonction des exigences commerciales réelles.",
-		"pt": "Restrinja as regras de egresso a protocolos, portas e intervalos de IP de destino específicos com base nos requisitos comerciais reais.",
+		"pt": "Restrinja as regras de egresso a protocolos, portas e intervalos de IP de destino específicos com base nos requisitos comerciais reais."
 	},
-	"resource_types": ["ALIYUN::ECS::SecurityGroup", "ALIYUN::ECS::SecurityGroupEgress", "ALIYUN::ECS::SecurityGroupEgresses"],
+	"resource_types": ["ALIYUN::ECS::SecurityGroup", "ALIYUN::ECS::SecurityGroupEgress", "ALIYUN::ECS::SecurityGroupEgresses"]
 }
 
 # Check if an egress rule allows all access

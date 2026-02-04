@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "cen-cross-region-bandwidth-check",
+	"severity": "medium",
 	"name": {
 		"en": "CEN Cross-Region Bandwidth Check",
 		"zh": "CEN 实例中的跨地域连接带宽分配满足指定要求",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "CEN Cross-Region Bandbreitenprüfung",
 		"es": "Verificación de Ancho de Banda Inter-Región CEN",
 		"fr": "Vérification de la Bande Passante Inter-Région CEN",
-		"pt": "Verificação de Largura de Banda Inter-Região CEN",
+		"pt": "Verificação de Largura de Banda Inter-Região CEN"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "CEN instance cross-region connections should have sufficient bandwidth allocation to meet performance requirements.",
 		"zh": "云企业网实例下所有跨地域连接分配的带宽大于参数指定值，视为合规。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "CEN-Instanz Cross-Region-Verbindungen sollten ausreichende Bandbreitenzuweisung haben, um Leistungsanforderungen zu erfüllen.",
 		"es": "Las conexiones inter-región de instancia CEN deben tener asignación de ancho de banda suficiente para cumplir con los requisitos de rendimiento.",
 		"fr": "Les connexions inter-région d'instance CEN doivent avoir une allocation de bande passante suffisante pour répondre aux exigences de performance.",
-		"pt": "As conexões inter-região da instância CEN devem ter alocação de largura de banda suficiente para atender aos requisitos de desempenho.",
+		"pt": "As conexões inter-região da instância CEN devem ter alocação de largura de banda suficiente para atender aos requisitos de desempenho."
 	},
 	"reason": {
 		"en": "Insufficient cross-region bandwidth can lead to performance bottlenecks and degraded application performance.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Unzureichende Cross-Region-Bandbreite kann zu Leistungsengpässen und verschlechterter Anwendungsleistung führen.",
 		"es": "El ancho de banda inter-región insuficiente puede provocar cuellos de botella de rendimiento y degradación del rendimiento de la aplicación.",
 		"fr": "Une bande passante inter-région insuffisante peut entraîner des goulots d'étranglement de performance et une dégradation des performances de l'application.",
-		"pt": "Largura de banda inter-região insuficiente pode levar a gargalos de desempenho e degradação do desempenho da aplicação.",
+		"pt": "Largura de banda inter-região insuficiente pode levar a gargalos de desempenho e degradação do desempenho da aplicação."
 	},
 	"recommendation": {
 		"en": "Ensure cross-region connections have bandwidth allocation above the specified minimum threshold (default: 1Mbps).",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Stellen Sie sicher, dass Cross-Region-Verbindungen eine Bandbreitenzuweisung über dem angegebenen Mindestschwellenwert haben (Standard: 1Mbps).",
 		"es": "Asegúrese de que las conexiones inter-región tengan asignación de ancho de banda por encima del umbral mínimo especificado (predeterminado: 1Mbps).",
 		"fr": "Assurez-vous que les connexions inter-région ont une allocation de bande passante supérieure au seuil minimum spécifié (par défaut : 1Mbps).",
-		"pt": "Garanta que as conexões inter-região tenham alocação de largura de banda acima do limite mínimo especificado (padrão: 1Mbps).",
+		"pt": "Garanta que as conexões inter-região tenham alocação de largura de banda acima do limite mínimo especificado (padrão: 1Mbps)."
 	},
-	"resource_types": ["ALIYUN::CEN::CenInstance"],
+	"resource_types": ["ALIYUN::CEN::CenInstance"]
 }
 
 deny contains result if {

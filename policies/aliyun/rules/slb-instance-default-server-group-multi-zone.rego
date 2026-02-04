@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "slb-instance-default-server-group-multi-zone",
+	"severity": "medium",
 	"name": {
 		"en": "SLB Default Server Group Multi-Zone",
 		"zh": "SLB 负载均衡默认服务器组添加多个可用区资源",
@@ -14,7 +15,6 @@ rule_meta := {
 		"fr": "Groupe de Serveurs par Défaut SLB Multi-Zone",
 		"pt": "Grupo de Servidores Padrão SLB Multi-Zona"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "The default server group of SLB instances should have resources distributed across multiple availability zones.",
 		"zh": "SLB 负载均衡的默认服务器组挂载资源分布在多个可用区，视为合规。默认服务器组无挂载任何资源时不适用本规则，视为不适用。",
@@ -42,7 +42,7 @@ rule_meta := {
 		"fr": "Répartissez les serveurs backend sur plusieurs zones de disponibilité pour une haute disponibilité.",
 		"pt": "Distribua servidores backend em múltiplas zonas de disponibilidade para alta disponibilidade."
 	},
-	"resource_types": ["ALIYUN::SLB::LoadBalancer"],
+	"resource_types": ["ALIYUN::SLB::LoadBalancer"]
 }
 
 has_multi_zone_servers(resource) if {

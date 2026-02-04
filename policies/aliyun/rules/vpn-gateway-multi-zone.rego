@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "vpn-gateway-multi-zone",
+	"severity": "medium",
 	"name": {
 		"en": "VPN Gateway Multi-Zone Deployment",
 		"zh": "使用多可用区的 VPN 网关",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "VPN-Gateway Multi-Zonen-Bereitstellung",
 		"es": "Implementación Multi-Zona de Puerta de Enlace VPN",
 		"fr": "Déploiement Multi-Zone de la Passerelle VPN",
-		"pt": "Implantação Multi-Zona do Gateway VPN",
+		"pt": "Implantação Multi-Zona do Gateway VPN"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "VPN Gateways should be configured with a disaster recovery VSwitch to support multi-zone availability.",
 		"zh": "为 VPN 网关设置两个交换机，保障产品跨可用区的高可用性，视为合规。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "VPN-Gateways sollten mit einem Disaster-Recovery-VSwitch konfiguriert werden, um Multi-Zonen-Verfügbarkeit zu unterstützen.",
 		"es": "Las puertas de enlace VPN deben configurarse con un VSwitch de recuperación ante desastres para admitir disponibilidad multi-zona.",
 		"fr": "Les passerelles VPN doivent être configurées avec un VSwitch de récupération d'urgence pour prendre en charge la disponibilité multi-zone.",
-		"pt": "Os gateways VPN devem ser configurados com um VSwitch de recuperação de desastres para suportar disponibilidade multi-zona.",
+		"pt": "Os gateways VPN devem ser configurados com um VSwitch de recuperação de desastres para suportar disponibilidade multi-zona."
 	},
 	"reason": {
 		"en": "The VPN Gateway is not configured with a disaster recovery VSwitch.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Das VPN-Gateway ist nicht mit einem Disaster-Recovery-VSwitch konfiguriert.",
 		"es": "La puerta de enlace VPN no está configurada con un VSwitch de recuperación ante desastres.",
 		"fr": "La passerelle VPN n'est pas configurée avec un VSwitch de récupération d'urgence.",
-		"pt": "O gateway VPN não está configurado com um VSwitch de recuperação de desastres.",
+		"pt": "O gateway VPN não está configurado com um VSwitch de recuperação de desastres."
 	},
 	"recommendation": {
 		"en": "Configure DisasterRecoveryVSwitchId to enable dual-tunnel/multi-zone mode.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Konfigurieren Sie DisasterRecoveryVSwitchId, um den Dual-Tunnel/Multi-Zonen-Modus zu aktivieren.",
 		"es": "Configure DisasterRecoveryVSwitchId para habilitar el modo de túnel dual/multi-zona.",
 		"fr": "Configurez DisasterRecoveryVSwitchId pour activer le mode tunnel double/multi-zone.",
-		"pt": "Configure DisasterRecoveryVSwitchId para habilitar o modo de túnel duplo/multi-zona.",
+		"pt": "Configure DisasterRecoveryVSwitchId para habilitar o modo de túnel duplo/multi-zona."
 	},
-	"resource_types": ["ALIYUN::VPC::VpnGateway"],
+	"resource_types": ["ALIYUN::VPC::VpnGateway"]
 }
 
 # Check if instance is multi-zone

@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "ram-group-in-use-check",
+	"severity": "low",
 	"name": {
 		"en": "RAM Group In Use Check",
 		"zh": "RAM 用户组使用检测",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "RAM-Gruppe In Verwendung Prüfung",
 		"es": "Verificación de Grupo RAM en Uso",
 		"fr": "Vérification du Groupe RAM en Utilisation",
-		"pt": "Verificação de Grupo RAM em Uso",
+		"pt": "Verificação de Grupo RAM em Uso"
 	},
-	"severity": "low",
 	"description": {
 		"en": "Ensures RAM groups are not idle - must have at least one member and at least one attached policy.",
 		"zh": "确保 RAM 用户组处于使用状态 - 必须至少包含一个成员且绑定了至少一个权限策略。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass RAM-Gruppen nicht im Leerlauf sind - müssen mindestens ein Mitglied und mindestens eine angehängte Richtlinie haben.",
 		"es": "Garantiza que los grupos RAM no estén inactivos - deben tener al menos un miembro y al menos una política adjunta.",
 		"fr": "Garantit que les groupes RAM ne sont pas inactifs - doivent avoir au moins un membre et au moins une politique attachée.",
-		"pt": "Garante que os grupos RAM não estejam ociosos - devem ter pelo menos um membro e pelo menos uma política anexada.",
+		"pt": "Garante que os grupos RAM não estejam ociosos - devem ter pelo menos um membro e pelo menos uma política anexada."
 	},
 	"reason": {
 		"en": "Idle RAM groups increase management complexity and should be removed.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Leerlaufende RAM-Gruppen erhöhen die Verwaltungskomplexität und sollten entfernt werden.",
 		"es": "Los grupos RAM inactivos aumentan la complejidad de gestión y deben eliminarse.",
 		"fr": "Les groupes RAM inactifs augmentent la complexité de gestion et doivent être supprimés.",
-		"pt": "Grupos RAM ociosos aumentam a complexidade de gerenciamento e devem ser removidos.",
+		"pt": "Grupos RAM ociosos aumentam a complexidade de gerenciamento e devem ser removidos."
 	},
 	"recommendation": {
 		"en": "Add members to the group or attach policies, or remove the unused group.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Fügen Sie Mitglieder zur Gruppe hinzu oder hängen Sie Richtlinien an, oder entfernen Sie die ungenutzte Gruppe.",
 		"es": "Agregue miembros al grupo o adjunte políticas, o elimine el grupo no utilizado.",
 		"fr": "Ajoutez des membres au groupe ou attachez des politiques, ou supprimez le groupe non utilisé.",
-		"pt": "Adicione membros ao grupo ou anexe políticas, ou remova o grupo não utilizado.",
+		"pt": "Adicione membros ao grupo ou anexe políticas, ou remova o grupo não utilizado."
 	},
-	"resource_types": ["ALIYUN::RAM::Group"],
+	"resource_types": ["ALIYUN::RAM::Group"]
 }
 
 has_member(group_logical_id, group_resource) if {

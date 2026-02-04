@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "mse-cluster-stable-version-check",
+	"severity": "medium",
 	"name": {
 		"en": "MSE Cluster Uses Stable Version",
 		"zh": "MSE 注册配置中心引擎版本检测",
@@ -15,7 +16,6 @@ rule_meta := {
 		"fr": "Le Cluster MSE Utilise une Version Stable",
 		"pt": "O Cluster MSE Usa Versão Estável"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures that MSE cluster engine version is greater than the minimum stable version.",
 		"zh": "确保 MSE 集群引擎版本大于最小稳定版本。",
@@ -43,7 +43,7 @@ rule_meta := {
 		"fr": "Mettez à niveau le cluster MSE vers une version stable.",
 		"pt": "Atualize o cluster MSE para uma versão estável."
 	},
-	"resource_types": ["ALIYUN::MSE::Cluster"],
+	"resource_types": ["ALIYUN::MSE::Cluster"]
 }
 
 # Default minimum stable version

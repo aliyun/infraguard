@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "sls-project-multi-zone",
+	"severity": "medium",
 	"name": {
 		"en": "SLS Project Zone-Redundant Storage",
 		"zh": "SLS 项目使用同城冗余存储",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "SLS-Projekt Zonenredundanter Speicher",
 		"es": "Almacenamiento Redundante de Zona del Proyecto SLS",
 		"fr": "Stockage Redondant par Zone du Projet SLS",
-		"pt": "Armazenamento Redundante de Zona do Projeto SLS",
+		"pt": "Armazenamento Redundante de Zona do Projeto SLS"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "SLS projects should use zone-redundant storage (ZRS) for high availability and data durability.",
 		"zh": "SLS 项目应使用同城冗余存储（ZRS）以实现高可用性和数据持久性。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "SLS-Projekte sollten zonenredundanten Speicher (ZRS) für Hochverfügbarkeit und Datenbeständigkeit verwenden.",
 		"es": "Los proyectos SLS deben usar almacenamiento redundante de zona (ZRS) para alta disponibilidad y durabilidad de datos.",
 		"fr": "Les projets SLS doivent utiliser un stockage redondant par zone (ZRS) pour une haute disponibilité et une durabilité des données.",
-		"pt": "Os projetos SLS devem usar armazenamento redundante de zona (ZRS) para alta disponibilidade e durabilidade dos dados.",
+		"pt": "Os projetos SLS devem usar armazenamento redundante de zona (ZRS) para alta disponibilidade e durabilidade dos dados."
 	},
 	"reason": {
 		"en": "The SLS project does not use zone-redundant storage, which may affect data availability.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Das SLS-Projekt verwendet keinen zonenredundanten Speicher, was die Datenverfügbarkeit beeinträchtigen kann.",
 		"es": "El proyecto SLS no usa almacenamiento redundante de zona, lo que puede afectar la disponibilidad de datos.",
 		"fr": "Le projet SLS n'utilise pas de stockage redondant par zone, ce qui peut affecter la disponibilité des données.",
-		"pt": "O projeto SLS não usa armazenamento redundante de zona, o que pode afetar a disponibilidade dos dados.",
+		"pt": "O projeto SLS não usa armazenamento redundante de zona, o que pode afetar a disponibilidade dos dados."
 	},
 	"recommendation": {
 		"en": "Enable zone-redundant storage by setting DataRedundancyType to 'ZRS' when creating the project.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Aktivieren Sie zonenredundanten Speicher, indem Sie DataRedundancyType beim Erstellen des Projekts auf 'ZRS' setzen.",
 		"es": "Habilite el almacenamiento redundante de zona estableciendo DataRedundancyType en 'ZRS' al crear el proyecto.",
 		"fr": "Activez le stockage redondant par zone en définissant DataRedundancyType sur 'ZRS' lors de la création du projet.",
-		"pt": "Habilite o armazenamento redundante de zona definindo DataRedundancyType como 'ZRS' ao criar o projeto.",
+		"pt": "Habilite o armazenamento redundante de zona definindo DataRedundancyType como 'ZRS' ao criar o projeto."
 	},
-	"resource_types": ["ALIYUN::SLS::Project"],
+	"resource_types": ["ALIYUN::SLS::Project"]
 }
 
 # Check if project has ZRS enabled

@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "natgateway-delete-protection-enabled",
+	"severity": "medium",
 	"name": {
 		"en": "NAT Gateway Deletion Protection Enabled",
 		"zh": "NAT 网关启用释放保护",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "NAT-Gateway Löschschutz aktiviert",
 		"es": "Protección de Eliminación de Puerta de Enlace NAT Habilitada",
 		"fr": "Protection contre la Suppression de la Passerelle NAT Activée",
-		"pt": "Proteção contra Exclusão do Gateway NAT Habilitada",
+		"pt": "Proteção contra Exclusão do Gateway NAT Habilitada"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures that NAT Gateways have deletion protection enabled.",
 		"zh": "确保 NAT 网关开启了释放保护。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass NAT-Gateways Löschschutz aktiviert haben.",
 		"es": "Garantiza que las puertas de enlace NAT tengan protección contra eliminación habilitada.",
 		"fr": "Garantit que les passerelles NAT ont la protection contre la suppression activée.",
-		"pt": "Garante que os gateways NAT tenham proteção contra exclusão habilitada.",
+		"pt": "Garante que os gateways NAT tenham proteção contra exclusão habilitada."
 	},
 	"reason": {
 		"en": "If deletion protection is not enabled, the NAT Gateway may be released accidentally, causing loss of internet connectivity for resources in the VPC.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Wenn der Löschschutz nicht aktiviert ist, kann das NAT-Gateway versehentlich freigegeben werden, was zu einem Verlust der Internetverbindung für Ressourcen im VPC führt.",
 		"es": "Si la protección contra eliminación no está habilitada, la puerta de enlace NAT puede ser liberada accidentalmente, causando pérdida de conectividad a Internet para recursos en el VPC.",
 		"fr": "Si la protection contre la suppression n'est pas activée, la passerelle NAT peut être libérée accidentellement, entraînant une perte de connectivité Internet pour les ressources dans le VPC.",
-		"pt": "Se a proteção contra exclusão não estiver habilitada, o gateway NAT pode ser liberado acidentalmente, causando perda de conectividade com a Internet para recursos no VPC.",
+		"pt": "Se a proteção contra exclusão não estiver habilitada, o gateway NAT pode ser liberado acidentalmente, causando perda de conectividade com a Internet para recursos no VPC."
 	},
 	"recommendation": {
 		"en": "Enable deletion protection for the NAT Gateway.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Aktivieren Sie den Löschschutz für das NAT-Gateway.",
 		"es": "Habilite la protección contra eliminación para la puerta de enlace NAT.",
 		"fr": "Activez la protection contre la suppression pour la passerelle NAT.",
-		"pt": "Habilite a proteção contra exclusão para o gateway NAT.",
+		"pt": "Habilite a proteção contra exclusão para o gateway NAT."
 	},
-	"resource_types": ["ALIYUN::VPC::NatGateway"],
+	"resource_types": ["ALIYUN::VPC::NatGateway"]
 }
 
 is_compliant(resource) if {

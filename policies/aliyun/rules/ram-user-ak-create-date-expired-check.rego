@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "ram-user-ak-create-date-expired-check",
+	"severity": "medium",
 	"name": {
 		"en": "RAM User AccessKey Creation Date Expired Check",
 		"zh": "RAM 用户 AccessKey 创建时间到期检测",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "RAM-Benutzer AccessKey Erstellungsdatum Ablaufprüfung",
 		"es": "Verificación de Expiración de Fecha de Creación de AccessKey de Usuario RAM",
 		"fr": "Vérification d'Expiration de la Date de Création d'AccessKey d'Utilisateur RAM",
-		"pt": "Verificação de Expiração de Data de Criação de AccessKey de Usuário RAM",
+		"pt": "Verificação de Expiração de Data de Criação de AccessKey de Usuário RAM"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures that RAM user AccessKeys are not older than the specified number of days.",
 		"zh": "确保 RAM 用户 AccessKey 的创建时间未超过指定的天数。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass RAM-Benutzer AccessKeys nicht älter als die angegebene Anzahl von Tagen sind.",
 		"es": "Garantiza que las AccessKeys de usuario RAM no sean más antiguas que el número especificado de días.",
 		"fr": "Garantit que les AccessKeys d'utilisateur RAM ne sont pas plus anciennes que le nombre de jours spécifié.",
-		"pt": "Garante que as AccessKeys de usuário RAM não sejam mais antigas que o número especificado de dias.",
+		"pt": "Garante que as AccessKeys de usuário RAM não sejam mais antigas que o número especificado de dias."
 	},
 	"reason": {
 		"en": "Regularly rotating AccessKeys reduces the risk of long-term credential leakage.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Die regelmäßige Rotation von AccessKeys reduziert das Risiko langfristiger Anmeldeinformationslecks.",
 		"es": "Rotar AccessKeys regularmente reduce el riesgo de fuga de credenciales a largo plazo.",
 		"fr": "La rotation régulière des AccessKeys réduit le risque de fuite d'identifiants à long terme.",
-		"pt": "Rotacionar AccessKeys regularmente reduz o risco de vazamento de credenciais a longo prazo.",
+		"pt": "Rotacionar AccessKeys regularmente reduz o risco de vazamento de credenciais a longo prazo."
 	},
 	"recommendation": {
 		"en": "Rotate RAM user AccessKeys regularly.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Rotieren Sie RAM-Benutzer AccessKeys regelmäßig.",
 		"es": "Rote las AccessKeys de usuario RAM regularmente.",
 		"fr": "Faites tourner régulièrement les AccessKeys d'utilisateur RAM.",
-		"pt": "Rotacione AccessKeys de usuário RAM regularmente.",
+		"pt": "Rotacione AccessKeys de usuário RAM regularmente."
 	},
-	"resource_types": ["ALIYUN::RAM::AccessKey"],
+	"resource_types": ["ALIYUN::RAM::AccessKey"]
 }
 
 # RAM AccessKey CreateDate is not available in ROS templates

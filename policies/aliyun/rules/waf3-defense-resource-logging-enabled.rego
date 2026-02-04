@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "waf3-defense-resource-logging-enabled",
+	"severity": "medium",
 	"name": {
 		"en": "WAF 3.0 Logging Enabled",
 		"zh": "WAF 3.0 防护资源开启日志审计",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "WAF 3.0 Protokollierung aktiviert",
 		"es": "Registro de WAF 3.0 Habilitado",
 		"fr": "Journalisation WAF 3.0 Activée",
-		"pt": "Registro do WAF 3.0 Habilitado",
+		"pt": "Registro do WAF 3.0 Habilitado"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures that logging is enabled for resources protected by WAF 3.0.",
 		"zh": "确保 WAF 3.0 防护的资源已开启日志审计。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass die Protokollierung für von WAF 3.0 geschützte Ressourcen aktiviert ist.",
 		"es": "Garantiza que el registro esté habilitado para los recursos protegidos por WAF 3.0.",
 		"fr": "Garantit que la journalisation est activée pour les ressources protégées par WAF 3.0.",
-		"pt": "Garante que o registro esteja habilitado para recursos protegidos pelo WAF 3.0.",
+		"pt": "Garante que o registro esteja habilitado para recursos protegidos pelo WAF 3.0."
 	},
 	"reason": {
 		"en": "Logging is critical for tracking web attacks and security incidents.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Die Protokollierung ist entscheidend für die Verfolgung von Web-Angriffen und Sicherheitsvorfällen.",
 		"es": "El registro es crítico para rastrear ataques web e incidentes de seguridad.",
 		"fr": "La journalisation est essentielle pour suivre les attaques Web et les incidents de sécurité.",
-		"pt": "O registro é crítico para rastrear ataques web e incidentes de segurança.",
+		"pt": "O registro é crítico para rastrear ataques web e incidentes de segurança."
 	},
 	"recommendation": {
 		"en": "Enable log service for the WAF 3.0 instance.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Aktivieren Sie den Log-Service für die WAF 3.0-Instanz.",
 		"es": "Habilite el servicio de registro para la instancia WAF 3.0.",
 		"fr": "Activez le service de journalisation pour l'instance WAF 3.0.",
-		"pt": "Habilite o serviço de registro para a instância WAF 3.0.",
+		"pt": "Habilite o serviço de registro para a instância WAF 3.0."
 	},
-	"resource_types": ["ALIYUN::WAF3::Instance"],
+	"resource_types": ["ALIYUN::WAF3::Instance"]
 }
 
 is_compliant(resource) if {

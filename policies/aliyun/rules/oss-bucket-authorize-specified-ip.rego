@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "oss-bucket-authorize-specified-ip",
+	"severity": "medium",
 	"name": {
 		"en": "OSS Bucket Authorize Specified IP",
 		"zh": "OSS 存储桶策略授权特定 IP",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "OSS-Bucket autorisiert angegebene IP",
 		"es": "Bucket OSS Autoriza IP Especificada",
 		"fr": "Bucket OSS Autorise IP Spécifiée",
-		"pt": "Bucket OSS Autoriza IP Especificada",
+		"pt": "Bucket OSS Autoriza IP Especificada"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures OSS bucket policies restrict access to specified IP ranges.",
 		"zh": "确保 OSS 存储桶策略限制了特定 IP 范围的访问。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass OSS-Bucket-Richtlinien den Zugriff auf angegebene IP-Bereiche einschränken.",
 		"es": "Garantiza que las políticas de bucket OSS restrinjan el acceso a rangos de IP especificados.",
 		"fr": "Garantit que les politiques de bucket OSS restreignent l'accès aux plages d'IP spécifiées.",
-		"pt": "Garante que as políticas de bucket OSS restrinjam o acesso a intervalos de IP especificados.",
+		"pt": "Garante que as políticas de bucket OSS restrinjam o acesso a intervalos de IP especificados."
 	},
 	"reason": {
 		"en": "Restricting access by IP helps prevent unauthorized access even if credentials are compromised.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Die Einschränkung des Zugriffs nach IP hilft, unbefugten Zugriff zu verhindern, auch wenn Anmeldeinformationen kompromittiert sind.",
 		"es": "Restringir el acceso por IP ayuda a prevenir el acceso no autorizado incluso si las credenciales están comprometidas.",
 		"fr": "Restreindre l'accès par IP aide à prévenir l'accès non autorisé même si les identifiants sont compromis.",
-		"pt": "Restringir o acesso por IP ajuda a prevenir acesso não autorizado mesmo se as credenciais estiverem comprometidas.",
+		"pt": "Restringir o acesso por IP ajuda a prevenir acesso não autorizado mesmo se as credenciais estiverem comprometidas."
 	},
 	"recommendation": {
 		"en": "Add IP restriction conditions (acs:SourceIp) to the OSS bucket policy.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Fügen Sie IP-Beschränkungsbedingungen (acs:SourceIp) zur OSS-Bucket-Richtlinie hinzu.",
 		"es": "Agregue condiciones de restricción de IP (acs:SourceIp) a la política de bucket OSS.",
 		"fr": "Ajoutez des conditions de restriction IP (acs:SourceIp) à la politique de bucket OSS.",
-		"pt": "Adicione condições de restrição de IP (acs:SourceIp) à política de bucket OSS.",
+		"pt": "Adicione condições de restrição de IP (acs:SourceIp) à política de bucket OSS."
 	},
-	"resource_types": ["ALIYUN::OSS::Bucket"],
+	"resource_types": ["ALIYUN::OSS::Bucket"]
 }
 
 is_compliant(resource) if {

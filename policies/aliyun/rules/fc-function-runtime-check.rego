@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "fc-function-runtime-check",
+	"severity": "high",
 	"name": {
 		"en": "FC Function Runtime Check",
 		"zh": "FC 未使用废弃的运行时",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "FC-Funktionslaufzeitprüfung",
 		"es": "Verificación de Runtime de Función FC",
 		"fr": "Vérification du Runtime de Fonction FC",
-		"pt": "Verificação de Runtime de Função FC",
+		"pt": "Verificação de Runtime de Função FC"
 	},
-	"severity": "high",
 	"description": {
 		"en": "FC functions should not use deprecated runtimes that may have security vulnerabilities.",
 		"zh": "FC 使用的运行时未废弃，则视为合规。截止 2025-04-20，本规则检测废弃版本清单为：nodejs12,nodejs10,nodejs8,dotnetcore2.1,python2.7,nodejs6,nodejs4.4。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "FC-Funktionen sollten keine veralteten Laufzeiten verwenden, die Sicherheitslücken haben können.",
 		"es": "Las funciones FC no deben usar runtimes deprecados que puedan tener vulnerabilidades de seguridad.",
 		"fr": "Les fonctions FC ne doivent pas utiliser de runtimes dépréciés qui peuvent avoir des vulnérabilités de sécurité.",
-		"pt": "As funções FC não devem usar runtimes depreciados que possam ter vulnerabilidades de segurança.",
+		"pt": "As funções FC não devem usar runtimes depreciados que possam ter vulnerabilidades de segurança."
 	},
 	"reason": {
 		"en": "The FC function is using a deprecated runtime that may have security vulnerabilities.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Die FC-Funktion verwendet eine veraltete Laufzeit, die Sicherheitslücken haben kann.",
 		"es": "La función FC está usando un runtime deprecado que puede tener vulnerabilidades de seguridad.",
 		"fr": "La fonction FC utilise un runtime déprécié qui peut avoir des vulnérabilités de sécurité.",
-		"pt": "A função FC está usando um runtime depreciado que pode ter vulnerabilidades de segurança.",
+		"pt": "A função FC está usando um runtime depreciado que pode ter vulnerabilidades de segurança."
 	},
 	"recommendation": {
 		"en": "Migrate the function to a supported runtime version. See FC documentation for supported runtimes.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Migrieren Sie die Funktion auf eine unterstützte Laufzeitversion. Siehe FC-Dokumentation für unterstützte Laufzeiten.",
 		"es": "Migre la función a una versión de runtime compatible. Consulte la documentación de FC para ver los runtimes compatibles.",
 		"fr": "Migrez la fonction vers une version de runtime prise en charge. Consultez la documentation FC pour les runtimes pris en charge.",
-		"pt": "Migre a função para uma versão de runtime suportada. Consulte a documentação do FC para runtimes suportados.",
+		"pt": "Migre a função para uma versão de runtime suportada. Consulte a documentação do FC para runtimes suportados."
 	},
-	"resource_types": ["ALIYUN::FC::Function"],
+	"resource_types": ["ALIYUN::FC::Function"]
 }
 
 # Deprecated runtimes as of the specified date (using Set for string key lookup)

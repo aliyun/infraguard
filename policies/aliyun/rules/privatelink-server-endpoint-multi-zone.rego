@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "privatelink-server-endpoint-multi-zone",
+	"severity": "medium",
 	"name": {
 		"en": "PrivateLink VPC Endpoint Service Multi-Zone Deployment",
 		"zh": "PrivateLink 服务终端节点部署在多可用区",
@@ -16,7 +17,6 @@ rule_meta := {
 		"fr": "Déploiement Multi-Zone du Service de Point de Terminaison VPC PrivateLink",
 		"pt": "Implantação Multi-Zona do Serviço de Endpoint VPC PrivateLink"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "PrivateLink VPC endpoint services should have resources deployed across multiple availability zones for high availability.",
 		"zh": "PrivateLink 服务终端节点应将资源部署在多个可用区以实现高可用性。",
@@ -44,7 +44,7 @@ rule_meta := {
 		"fr": "Déployez les ressources du service sur au moins deux zones de disponibilité en spécifiant plusieurs entrées avec différents ZoneIds dans la propriété Resource.",
 		"pt": "Implante recursos do serviço em pelo menos duas zonas de disponibilidade especificando múltiplas entradas com diferentes ZoneIds na propriedade Resource."
 	},
-	"resource_types": ["ALIYUN::PrivateLink::VpcEndpointService"],
+	"resource_types": ["ALIYUN::PrivateLink::VpcEndpointService"]
 }
 
 # Get unique zone IDs from resources

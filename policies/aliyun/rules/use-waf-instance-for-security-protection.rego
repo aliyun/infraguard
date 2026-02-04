@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "use-waf-instance-for-security-protection",
+	"severity": "high",
 	"name": {
 		"en": "Use WAF for Security Protection",
 		"zh": "使用 WEB 防火墙对网站或 APP 进行安全防护",
@@ -15,7 +16,6 @@ rule_meta := {
 		"fr": "Utiliser WAF pour la Protection de Sécurité",
 		"pt": "Usar WAF para Proteção de Segurança"
 	},
-	"severity": "high",
 	"description": {
 		"en": "WEB Application Firewall (WAF) should be used to protect websites and APPs from web-based attacks.",
 		"zh": "使用 WEB 防火墙对网站或 APP 进行安全防护，视为合规。",
@@ -43,7 +43,7 @@ rule_meta := {
 		"fr": "Activez WAF pour l'instance ALB en définissant LoadBalancerEdition sur 'StandardWithWaf'.",
 		"pt": "Habilite WAF para a instância ALB definindo LoadBalancerEdition como 'StandardWithWaf'."
 	},
-	"resource_types": ["ALIYUN::ALB::LoadBalancer"],
+	"resource_types": ["ALIYUN::ALB::LoadBalancer"]
 }
 
 # Check if ALB has WAF enabled via its edition

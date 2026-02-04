@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "alb-server-group-multi-server",
+	"severity": "high",
 	"name": {
 		"en": "ALB Server Group Has Multiple Servers",
 		"zh": "ALB 服务器组包含至少两台服务器",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "ALB-Servergruppe hat mehrere Server",
 		"es": "El Grupo de Servidores ALB Tiene Múltiples Servidores",
 		"fr": "Le Groupe de Serveurs ALB a Plusieurs Serveurs",
-		"pt": "O Grupo de Servidores ALB Tem Múltiplos Servidores",
+		"pt": "O Grupo de Servidores ALB Tem Múltiplos Servidores"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures that ALB server groups contain at least two backend servers for high availability.",
 		"zh": "确保 ALB 服务器组包含至少两台后端服务器以实现高可用性。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass ALB-Servergruppen mindestens zwei Backend-Server für Hochverfügbarkeit enthalten.",
 		"es": "Garantiza que los grupos de servidores ALB contengan al menos dos servidores backend para alta disponibilidad.",
 		"fr": "Garantit que les groupes de serveurs ALB contiennent au moins deux serveurs backend pour une haute disponibilité.",
-		"pt": "Garante que os grupos de servidores ALB contenham pelo menos dois servidores backend para alta disponibilidade.",
+		"pt": "Garante que os grupos de servidores ALB contenham pelo menos dois servidores backend para alta disponibilidade."
 	},
 	"reason": {
 		"en": "Server groups with only one server create a single point of failure.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Servergruppen mit nur einem Server schaffen einen Single Point of Failure.",
 		"es": "Los grupos de servidores con solo un servidor crean un punto único de falla.",
 		"fr": "Les groupes de serveurs avec un seul serveur créent un point de défaillance unique.",
-		"pt": "Grupos de servidores com apenas um servidor criam um ponto único de falha.",
+		"pt": "Grupos de servidores com apenas um servidor criam um ponto único de falha."
 	},
 	"recommendation": {
 		"en": "Add at least two backend servers to the server group using ALIYUN::ALB::BackendServerAttachment resources.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Fügen Sie mindestens zwei Backend-Server zur Servergruppe hinzu, indem Sie ALIYUN::ALB::BackendServerAttachment-Ressourcen verwenden.",
 		"es": "Agregue al menos dos servidores backend al grupo de servidores usando recursos ALIYUN::ALB::BackendServerAttachment.",
 		"fr": "Ajoutez au moins deux serveurs backend au groupe de serveurs en utilisant les ressources ALIYUN::ALB::BackendServerAttachment.",
-		"pt": "Adicione pelo menos dois servidores backend ao grupo de servidores usando recursos ALIYUN::ALB::BackendServerAttachment.",
+		"pt": "Adicione pelo menos dois servidores backend ao grupo de servidores usando recursos ALIYUN::ALB::BackendServerAttachment."
 	},
-	"resource_types": ["ALIYUN::ALB::ServerGroup"],
+	"resource_types": ["ALIYUN::ALB::ServerGroup"]
 }
 
 # Check if server group type is Instance (not IP or Function Compute)

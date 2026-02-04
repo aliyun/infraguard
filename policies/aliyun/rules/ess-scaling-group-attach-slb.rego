@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "ess-scaling-group-attach-slb",
+	"severity": "medium",
 	"name": {
 		"en": "ESS Scaling Group Attach SLB",
 		"zh": "弹性伸缩组设置关联负载均衡",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "ESS-Skalierungsgruppe SLB anhängen",
 		"es": "Grupo de Escalado ESS Adjuntar SLB",
 		"fr": "Groupe de Mise à l'Échelle ESS Attacher SLB",
-		"pt": "Grupo de Escalonamento ESS Anexar SLB",
+		"pt": "Grupo de Escalonamento ESS Anexar SLB"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "ESS scaling groups should be attached to Classic Load Balancer (SLB) for proper traffic distribution.",
 		"zh": "弹性伸缩组关联传统型负载均衡，视为合规。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "ESS-Skalierungsgruppen sollten an Classic Load Balancer (SLB) angehängt werden, um eine ordnungsgemäße Verkehrsverteilung zu gewährleisten.",
 		"es": "Los grupos de escalado ESS deben adjuntarse al Equilibrador de Carga Clásico (SLB) para una distribución adecuada del tráfico.",
 		"fr": "Les groupes de mise à l'échelle ESS doivent être attachés à l'Équilibreur de Charge Classique (SLB) pour une distribution appropriée du trafic.",
-		"pt": "Os grupos de escalonamento ESS devem ser anexados ao Balanceador de Carga Clássico (SLB) para distribuição adequada de tráfego.",
+		"pt": "Os grupos de escalonamento ESS devem ser anexados ao Balanceador de Carga Clássico (SLB) para distribuição adequada de tráfego."
 	},
 	"reason": {
 		"en": "The ESS scaling group is not attached to a Classic Load Balancer, which may affect traffic distribution.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Die ESS-Skalierungsgruppe ist nicht an einen Classic Load Balancer angehängt, was die Verkehrsverteilung beeinträchtigen kann.",
 		"es": "El grupo de escalado ESS no está adjunto a un Equilibrador de Carga Clásico, lo que puede afectar la distribución del tráfico.",
 		"fr": "Le groupe de mise à l'échelle ESS n'est pas attaché à un Équilibreur de Charge Classique, ce qui peut affecter la distribution du trafic.",
-		"pt": "O grupo de escalonamento ESS não está anexado a um Balanceador de Carga Clássico, o que pode afetar a distribuição de tráfego.",
+		"pt": "O grupo de escalonamento ESS não está anexado a um Balanceador de Carga Clássico, o que pode afetar a distribuição de tráfego."
 	},
 	"recommendation": {
 		"en": "Attach the scaling group to a Classic Load Balancer using the LoadBalancerIds property.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Hängen Sie die Skalierungsgruppe mit der Eigenschaft LoadBalancerIds an einen Classic Load Balancer an.",
 		"es": "Adjunte el grupo de escalado a un Equilibrador de Carga Clásico usando la propiedad LoadBalancerIds.",
 		"fr": "Attachez le groupe de mise à l'échelle à un Équilibreur de Charge Classique en utilisant la propriété LoadBalancerIds.",
-		"pt": "Anexe o grupo de escalonamento a um Balanceador de Carga Clássico usando a propriedade LoadBalancerIds.",
+		"pt": "Anexe o grupo de escalonamento a um Balanceador de Carga Clássico usando a propriedade LoadBalancerIds."
 	},
-	"resource_types": ["ALIYUN::ESS::ScalingGroup"],
+	"resource_types": ["ALIYUN::ESS::ScalingGroup"]
 }
 
 # Check if scaling group has Classic Load Balancer attached

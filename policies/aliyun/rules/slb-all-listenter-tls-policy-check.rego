@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "slb-all-listenter-tls-policy-check",
+	"severity": "medium",
 	"name": {
 		"en": "SLB Listener TLS Policy Check",
 		"zh": "SLB 监听使用安全 TLS 策略",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "SLB Listener TLS-Richtlinien-Prüfung",
 		"es": "Verificación de Política TLS del Listener SLB",
 		"fr": "Vérification de la Politique TLS du Listener SLB",
-		"pt": "Verificação de Política TLS do Listener SLB",
+		"pt": "Verificação de Política TLS do Listener SLB"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures SLB HTTPS listeners use secure TLS cipher policies.",
 		"zh": "确保 SLB HTTPS 监听使用安全的 TLS 加密策略。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass SLB HTTPS-Listener sichere TLS-Verschlüsselungsrichtlinien verwenden.",
 		"es": "Garantiza que los listeners HTTPS de SLB usen políticas de cifrado TLS seguras.",
 		"fr": "Garantit que les listeners HTTPS SLB utilisent des politiques de chiffrement TLS sécurisées.",
-		"pt": "Garante que os listeners HTTPS SLB usem políticas de criptografia TLS seguras.",
+		"pt": "Garante que os listeners HTTPS SLB usem políticas de criptografia TLS seguras."
 	},
 	"reason": {
 		"en": "Weak cipher suites can be exploited to decrypt intercepted traffic.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Schwache Verschlüsselungssuiten können ausgenutzt werden, um abgefangenen Datenverkehr zu entschlüsseln.",
 		"es": "Las suites de cifrado débiles pueden ser explotadas para descifrar el tráfico interceptado.",
 		"fr": "Les suites de chiffrement faibles peuvent être exploitées pour déchiffrer le trafic intercepté.",
-		"pt": "Suites de criptografia fracas podem ser exploradas para descriptografar tráfego interceptado.",
+		"pt": "Suites de criptografia fracas podem ser exploradas para descriptografar tráfego interceptado."
 	},
 	"recommendation": {
 		"en": "Use a recommended TLS policy like 'tls_cipher_policy_1_2'.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Verwenden Sie eine empfohlene TLS-Richtlinie wie 'tls_cipher_policy_1_2'.",
 		"es": "Use una política TLS recomendada como 'tls_cipher_policy_1_2'.",
 		"fr": "Utilisez une politique TLS recommandée comme 'tls_cipher_policy_1_2'.",
-		"pt": "Use uma política TLS recomendada como 'tls_cipher_policy_1_2'.",
+		"pt": "Use uma política TLS recomendada como 'tls_cipher_policy_1_2'."
 	},
-	"resource_types": ["ALIYUN::SLB::Listener"],
+	"resource_types": ["ALIYUN::SLB::Listener"]
 }
 
 is_compliant(resource) if {

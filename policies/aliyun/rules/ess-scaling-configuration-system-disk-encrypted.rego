@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "ess-scaling-configuration-system-disk-encrypted",
+	"severity": "high",
 	"name": {
 		"en": "ESS Scaling Configuration System Disk Encryption",
 		"zh": "弹性伸缩配置中设置系统磁盘加密",
@@ -16,7 +17,6 @@ rule_meta := {
 		"fr": "Chiffrement du Disque Système de la Configuration de Mise à l'Échelle ESS",
 		"pt": "Criptografia de Disco do Sistema da Configuração de Escalonamento ESS"
 	},
-	"severity": "high",
 	"description": {
 		"en": "ESS scaling configurations should enable system disk encryption to protect system data at rest.",
 		"zh": "弹性伸缩配置中系统磁盘配置设置为加密，视为合规。",
@@ -44,7 +44,7 @@ rule_meta := {
 		"fr": "Activez le chiffrement du disque système dans les paramètres de configuration de mise à l'échelle.",
 		"pt": "Habilite a criptografia do disco do sistema nas configurações de escalonamento."
 	},
-	"resource_types": ["ALIYUN::ESS::ScalingConfiguration"],
+	"resource_types": ["ALIYUN::ESS::ScalingConfiguration"]
 }
 
 # Check if system disk encryption is enabled

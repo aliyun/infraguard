@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "adb-cluster-multi-zone",
+	"severity": "medium",
 	"name": {
 		"en": "ADB Cluster Multi-Zone Deployment",
 		"zh": "ADB 集群部署模式为多可用区",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "ADB-Cluster Multi-Zonen-Bereitstellung",
 		"es": "Implementación Multi-Zona del Clúster ADB",
 		"fr": "Déploiement Multi-Zone du Cluster ADB",
-		"pt": "Implantação Multi-Zona do Cluster ADB",
+		"pt": "Implantação Multi-Zona do Cluster ADB"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "The ADB cluster should be deployed in multi-zone mode.",
 		"zh": "ADB 集群为多可用区部署模式，视为合规。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "Der ADB-Cluster sollte im Multi-Zonen-Modus bereitgestellt werden.",
 		"es": "El clúster ADB debe implementarse en modo multi-zona.",
 		"fr": "Le cluster ADB doit être déployé en mode multi-zone.",
-		"pt": "O cluster ADB deve ser implantado em modo multi-zona.",
+		"pt": "O cluster ADB deve ser implantado em modo multi-zona."
 	},
 	"reason": {
 		"en": "The ADB cluster is not configured with a secondary zone, indicating it is single-zone.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Der ADB-Cluster ist nicht mit einer sekundären Zone konfiguriert, was darauf hindeutet, dass es sich um eine Einzelzone handelt.",
 		"es": "El clúster ADB no está configurado con una zona secundaria, lo que indica que es de zona única.",
 		"fr": "Le cluster ADB n'est pas configuré avec une zone secondaire, indiquant qu'il s'agit d'une zone unique.",
-		"pt": "O cluster ADB não está configurado com uma zona secundária, indicando que é de zona única.",
+		"pt": "O cluster ADB não está configurado com uma zona secundária, indicando que é de zona única."
 	},
 	"recommendation": {
 		"en": "Configure the SecondaryZoneId to enable multi-zone deployment.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Konfigurieren Sie SecondaryZoneId, um Multi-Zonen-Bereitstellung zu aktivieren.",
 		"es": "Configure SecondaryZoneId para habilitar la implementación multi-zona.",
 		"fr": "Configurez SecondaryZoneId pour activer le déploiement multi-zone.",
-		"pt": "Configure SecondaryZoneId para habilitar a implantação multi-zona.",
+		"pt": "Configure SecondaryZoneId para habilitar a implantação multi-zona."
 	},
-	"resource_types": ["ALIYUN::ADBLake::DBCluster"],
+	"resource_types": ["ALIYUN::ADBLake::DBCluster"]
 }
 
 # Check if ADB is multi-zone

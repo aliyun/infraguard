@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "intranet-nat-gateway-in-specified-vpc",
+	"severity": "medium",
 	"name": {
 		"en": "Intranet NAT Gateway in Specified VPC",
 		"zh": "私网 NAT 网关创建在指定专有网络内",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "Intranet NAT-Gateway im angegebenen VPC",
 		"es": "Puerta de Enlace NAT de Intranet en VPC Especificado",
 		"fr": "Passerelle NAT Intranet dans VPC Spécifié",
-		"pt": "Gateway NAT de Intranet em VPC Especificado",
+		"pt": "Gateway NAT de Intranet em VPC Especificado"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Intranet-facing NAT gateways should be created in specified VPCs according to network security requirements.",
 		"zh": "VPC NAT 网关所属专有网络在参数指定的专有网络列表中，视为合规。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Intranet-NAT-Gateways sollten gemäß den Netzwerksicherheitsanforderungen in angegebenen VPCs erstellt werden.",
 		"es": "Las puertas de enlace NAT orientadas a intranet deben crearse en VPC especificados según los requisitos de seguridad de red.",
 		"fr": "Les passerelles NAT orientées intranet doivent être créées dans des VPC spécifiés selon les exigences de sécurité réseau.",
-		"pt": "Os gateways NAT voltados para intranet devem ser criados em VPCs especificados de acordo com os requisitos de segurança de rede.",
+		"pt": "Os gateways NAT voltados para intranet devem ser criados em VPCs especificados de acordo com os requisitos de segurança de rede."
 	},
 	"reason": {
 		"en": "Intranet-facing NAT gateways in non-specified VPCs may violate network segmentation and security policies.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Intranet-NAT-Gateways in nicht angegebenen VPCs können gegen Netzwerksegmentierung und Sicherheitsrichtlinien verstoßen.",
 		"es": "Las puertas de enlace NAT orientadas a intranet en VPC no especificados pueden violar la segmentación de red y las políticas de seguridad.",
 		"fr": "Les passerelles NAT orientées intranet dans des VPC non spécifiés peuvent violer la segmentation réseau et les politiques de sécurité.",
-		"pt": "Gateways NAT voltados para intranet em VPCs não especificados podem violar a segmentação de rede e políticas de segurança.",
+		"pt": "Gateways NAT voltados para intranet em VPCs não especificados podem violar a segmentação de rede e políticas de segurança."
 	},
 	"recommendation": {
 		"en": "Ensure intranet-facing NAT gateways are deployed only in the specified VPCs.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Stellen Sie sicher, dass Intranet-NAT-Gateways nur in den angegebenen VPCs bereitgestellt werden.",
 		"es": "Asegúrese de que las puertas de enlace NAT orientadas a intranet se implementen solo en los VPC especificados.",
 		"fr": "Assurez-vous que les passerelles NAT orientées intranet ne sont déployées que dans les VPC spécifiés.",
-		"pt": "Garanta que os gateways NAT voltados para intranet sejam implantados apenas nos VPCs especificados.",
+		"pt": "Garanta que os gateways NAT voltados para intranet sejam implantados apenas nos VPCs especificados."
 	},
-	"resource_types": ["ALIYUN::NAT::NatGateway"],
+	"resource_types": ["ALIYUN::NAT::NatGateway"]
 }
 
 is_intranet_nat_gateway(resource) if {

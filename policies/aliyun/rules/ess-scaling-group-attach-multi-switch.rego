@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "ess-scaling-group-attach-multi-switch",
+	"severity": "medium",
 	"name": {
 		"en": "ESS Scaling Group Multi-VSwitch",
 		"zh": "弹性伸缩组关联至少两个交换机",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "ESS-Skalierungsgruppe Multi-VSwitch",
 		"es": "Grupo de Escalado ESS Multi-VSwitch",
 		"fr": "Groupe de Mise à l'Échelle ESS Multi-VSwitch",
-		"pt": "Grupo de Escalonamento ESS Multi-VSwitch",
+		"pt": "Grupo de Escalonamento ESS Multi-VSwitch"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "ESS scaling groups should be associated with at least two VSwitches for high availability across multiple zones.",
 		"zh": "弹性伸缩组关联至少两个交换机，视为合规。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "ESS-Skalierungsgruppen sollten für Hochverfügbarkeit über mehrere Zonen hinweg mit mindestens zwei VSwitches verknüpft sein.",
 		"es": "Los grupos de escalado ESS deben estar asociados con al menos dos VSwitches para alta disponibilidad en múltiples zonas.",
 		"fr": "Les groupes de mise à l'échelle ESS doivent être associés à au moins deux VSwitches pour une haute disponibilité sur plusieurs zones.",
-		"pt": "Os grupos de escalonamento ESS devem estar associados a pelo menos dois VSwitches para alta disponibilidade em múltiplas zonas.",
+		"pt": "Os grupos de escalonamento ESS devem estar associados a pelo menos dois VSwitches para alta disponibilidade em múltiplas zonas."
 	},
 	"reason": {
 		"en": "The ESS scaling group is associated with fewer than two VSwitches, which may affect availability.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Die ESS-Skalierungsgruppe ist mit weniger als zwei VSwitches verknüpft, was die Verfügbarkeit beeinträchtigen kann.",
 		"es": "El grupo de escalado ESS está asociado con menos de dos VSwitches, lo que puede afectar la disponibilidad.",
 		"fr": "Le groupe de mise à l'échelle ESS est associé à moins de deux VSwitches, ce qui peut affecter la disponibilité.",
-		"pt": "O grupo de escalonamento ESS está associado a menos de dois VSwitches, o que pode afetar a disponibilidade.",
+		"pt": "O grupo de escalonamento ESS está associado a menos de dois VSwitches, o que pode afetar a disponibilidade."
 	},
 	"recommendation": {
 		"en": "Configure at least two VSwitches in the VSwitchIds property to ensure high availability across multiple zones.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Konfigurieren Sie mindestens zwei VSwitches in der VSwitchIds-Eigenschaft, um Hochverfügbarkeit über mehrere Zonen hinweg sicherzustellen.",
 		"es": "Configure al menos dos VSwitches en la propiedad VSwitchIds para asegurar alta disponibilidad en múltiples zonas.",
 		"fr": "Configurez au moins deux VSwitches dans la propriété VSwitchIds pour assurer une haute disponibilité sur plusieurs zones.",
-		"pt": "Configure pelo menos dois VSwitches na propriedade VSwitchIds para garantir alta disponibilidade em múltiplas zonas.",
+		"pt": "Configure pelo menos dois VSwitches na propriedade VSwitchIds para garantir alta disponibilidade em múltiplas zonas."
 	},
-	"resource_types": ["ALIYUN::ESS::ScalingGroup"],
+	"resource_types": ["ALIYUN::ESS::ScalingGroup"]
 }
 
 # Check if scaling group has multiple VSwitches

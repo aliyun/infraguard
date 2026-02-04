@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "redis-min-capacity-limit",
+	"severity": "medium",
 	"name": {
 		"en": "Redis Min Capacity Limit",
 		"zh": "Redis 实例满足指定内存容量要求",
@@ -15,7 +16,6 @@ rule_meta := {
 		"fr": "Limite de Capacité Minimale Redis",
 		"pt": "Limite de Capacidade Mínima do Redis"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures Redis instance has memory capacity meeting the minimum requirement.",
 		"zh": "确保 Redis 实例内存总量大于等于指定的参数值。",
@@ -43,7 +43,7 @@ rule_meta := {
 		"fr": "Assurez-vous que l'instance Redis a la capacité mémoire minimale requise.",
 		"pt": "Garanta que a instância Redis tenha a capacidade de memória mínima necessária."
 	},
-	"resource_types": ["ALIYUN::REDIS::Instance"],
+	"resource_types": ["ALIYUN::REDIS::Instance"]
 }
 
 is_compliant(resource) if {

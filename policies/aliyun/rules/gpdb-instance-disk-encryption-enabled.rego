@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "gpdb-instance-disk-encryption-enabled",
+	"severity": "high",
 	"name": {
 		"en": "GPDB Disk Encryption Enabled",
 		"zh": "GPDB 开启磁盘加密",
@@ -14,7 +15,6 @@ rule_meta := {
 		"fr": "Chiffrement de Disque GPDB Activé",
 		"pt": "Criptografia de Disco GPDB Habilitada"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures GPDB instances have disk encryption enabled.",
 		"zh": "确保 GPDB 实例开启了磁盘加密。",
@@ -42,7 +42,7 @@ rule_meta := {
 		"fr": "Activez le chiffrement de disque en utilisant KMS pour l'instance GPDB.",
 		"pt": "Habilite a criptografia de disco usando KMS para a instância GPDB."
 	},
-	"resource_types": ["ALIYUN::GPDB::DBInstance"],
+	"resource_types": ["ALIYUN::GPDB::DBInstance"]
 }
 
 is_compliant(resource) if {

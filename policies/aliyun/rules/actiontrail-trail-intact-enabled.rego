@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "actiontrail-trail-intact-enabled",
+	"severity": "high",
 	"name": {
 		"en": "ActionTrail Trail Intact Enabled",
 		"zh": "开启操作审计全量日志跟踪",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "ActionTrail Trail vollständig aktiviert",
 		"es": "Trilha ActionTrail Intacta Habilitada",
 		"fr": "Piste ActionTrail Intacte Activée",
-		"pt": "Trilha ActionTrail Intacta Habilitada",
+		"pt": "Trilha ActionTrail Intacta Habilitada"
 	},
-	"severity": "high",
 	"description": {
 		"en": "ActionTrail trail should be enabled and track all event types (Read and Write).",
 		"zh": "操作审计中存在开启状态的跟踪，且跟踪全部地域和全部事件类型。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "ActionTrail Trail sollte aktiviert sein und alle Ereignistypen (Lesen und Schreiben) verfolgen.",
 		"es": "La trilha ActionTrail debe estar habilitada y rastrear todos los tipos de eventos (Lectura y Escritura).",
 		"fr": "La piste ActionTrail doit être activée et suivre tous les types d'événements (Lecture et Écriture).",
-		"pt": "A trilha ActionTrail deve estar habilitada e rastrear todos os tipos de eventos (Leitura e Escrita).",
+		"pt": "A trilha ActionTrail deve estar habilitada e rastrear todos os tipos de eventos (Leitura e Escrita)."
 	},
 	"reason": {
 		"en": "The ActionTrail trail is not enabled or does not track all event types.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Der ActionTrail Trail ist nicht aktiviert oder verfolgt nicht alle Ereignistypen.",
 		"es": "La trilha ActionTrail no está habilitada o no rastrea todos los tipos de eventos.",
 		"fr": "La piste ActionTrail n'est pas activée ou ne suit pas tous les types d'événements.",
-		"pt": "A trilha ActionTrail não está habilitada ou não rastreia todos os tipos de eventos.",
+		"pt": "A trilha ActionTrail não está habilitada ou não rastreia todos os tipos de eventos."
 	},
 	"recommendation": {
 		"en": "Enable the trail using ALIYUN::ACTIONTRAIL::TrailLogging and set EventRW to All in ALIYUN::ACTIONTRAIL::Trail.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Aktivieren Sie den Trail mit ALIYUN::ACTIONTRAIL::TrailLogging und setzen Sie EventRW in ALIYUN::ACTIONTRAIL::Trail auf All.",
 		"es": "Habilite la trilha usando ALIYUN::ACTIONTRAIL::TrailLogging y establezca EventRW en All en ALIYUN::ACTIONTRAIL::Trail.",
 		"fr": "Activez la piste en utilisant ALIYUN::ACTIONTRAIL::TrailLogging et définissez EventRW sur All dans ALIYUN::ACTIONTRAIL::Trail.",
-		"pt": "Habilite a trilha usando ALIYUN::ACTIONTRAIL::TrailLogging e defina EventRW como All em ALIYUN::ACTIONTRAIL::Trail.",
+		"pt": "Habilite a trilha usando ALIYUN::ACTIONTRAIL::TrailLogging e defina EventRW como All em ALIYUN::ACTIONTRAIL::Trail."
 	},
-	"resource_types": ["ALIYUN::ACTIONTRAIL::Trail"],
+	"resource_types": ["ALIYUN::ACTIONTRAIL::Trail"]
 }
 
 # Get all enabled trail names from TrailLogging resources

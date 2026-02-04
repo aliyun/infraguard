@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "ecs-internetmaxbandwidth-check",
+	"severity": "medium",
 	"name": {
 		"en": "ECS Internet Max Bandwidth Check",
 		"zh": "ECS 公网出口带宽检查",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "ECS-Internet Max-Bandbreitenprüfung",
 		"es": "Verificación de Ancho de Banda Máximo de Internet ECS",
 		"fr": "Vérification de la Bande Passante Internet Maximale ECS",
-		"pt": "Verificação de Largura de Banda Máxima da Internet ECS",
+		"pt": "Verificação de Largura de Banda Máxima da Internet ECS"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures ECS internet outbound bandwidth does not exceed specified limits.",
 		"zh": "确保 ECS 公网出口带宽不超过指定限制。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass die ausgehende Internet-Bandbreite von ECS die angegebenen Grenzwerte nicht überschreitet.",
 		"es": "Garantiza que el ancho de banda saliente de Internet ECS no exceda los límites especificados.",
 		"fr": "Garantit que la bande passante Internet sortante ECS ne dépasse pas les limites spécifiées.",
-		"pt": "Garante que a largura de banda de saída da Internet ECS não exceda os limites especificados.",
+		"pt": "Garante que a largura de banda de saída da Internet ECS não exceda os limites especificados."
 	},
 	"reason": {
 		"en": "High bandwidth settings can lead to unexpected costs and increased attack surface.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Hohe Bandbreiteneinstellungen können zu unerwarteten Kosten und einer erhöhten Angriffsfläche führen.",
 		"es": "Las configuraciones de alto ancho de banda pueden provocar costos inesperados y una superficie de ataque aumentada.",
 		"fr": "Les paramètres de bande passante élevée peuvent entraîner des coûts inattendus et une surface d'attaque accrue.",
-		"pt": "Configurações de largura de banda alta podem levar a custos inesperados e aumento da superfície de ataque.",
+		"pt": "Configurações de largura de banda alta podem levar a custos inesperados e aumento da superfície de ataque."
 	},
 	"recommendation": {
 		"en": "Limit the InternetMaxBandwidthOut to a reasonable value (e.g., 100Mbps).",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Begrenzen Sie InternetMaxBandwidthOut auf einen angemessenen Wert (z. B. 100 Mbps).",
 		"es": "Limite InternetMaxBandwidthOut a un valor razonable (por ejemplo, 100 Mbps).",
 		"fr": "Limitez InternetMaxBandwidthOut à une valeur raisonnable (par exemple, 100 Mbps).",
-		"pt": "Limite InternetMaxBandwidthOut a um valor razoável (por exemplo, 100 Mbps).",
+		"pt": "Limite InternetMaxBandwidthOut a um valor razoável (por exemplo, 100 Mbps)."
 	},
-	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"],
+	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"]
 }
 
 is_compliant(resource) if {

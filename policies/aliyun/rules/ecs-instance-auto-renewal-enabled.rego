@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "ecs-instance-auto-renewal-enabled",
+	"severity": "medium",
 	"name": {
 		"en": "ECS subscription instance has auto-renewal enabled",
 		"zh": "ECS 包年包月实例开启自动续费",
@@ -13,7 +14,7 @@ rule_meta := {
 		"de": "ECS-Abonnement-Instanz hat automatische Verlängerung aktiviert",
 		"es": "Instancia de suscripción ECS tiene renovación automática habilitada",
 		"fr": "Instance d'abonnement ECS a le renouvellement automatique activé",
-		"pt": "Instância de assinatura ECS tem renovação automática habilitada",
+		"pt": "Instância de assinatura ECS tem renovação automática habilitada"
 	},
 	"description": {
 		"en": "ECS subscription (prepaid) instances have auto-renewal enabled, considered compliant. Pay-as-you-go instances are not applicable.",
@@ -22,10 +23,8 @@ rule_meta := {
 		"de": "ECS-Abonnement-Instanzen (vorausbezahlt) haben automatische Verlängerung aktiviert, werden als konform betrachtet. Pay-as-you-go-Instanzen sind nicht anwendbar.",
 		"es": "Las instancias de suscripción ECS (prepagadas) tienen renovación automática habilitada, consideradas conformes. Las instancias de pago por uso no son aplicables.",
 		"fr": "Les instances d'abonnement ECS (prépayées) ont le renouvellement automatique activé, considérées comme conformes. Les instances à la demande ne sont pas applicables.",
-		"pt": "Instâncias de assinatura ECS (pré-pagas) têm renovação automática habilitada, consideradas conformes. Instâncias pay-as-you-go não são aplicáveis.",
+		"pt": "Instâncias de assinatura ECS (pré-pagas) têm renovação automática habilitada, consideradas conformes. Instâncias pay-as-you-go não são aplicáveis."
 	},
-	"severity": "medium",
-	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"],
 	"reason": {
 		"en": "ECS subscription instance does not have auto-renewal enabled",
 		"zh": "ECS 包年包月实例未开启自动续费",
@@ -33,7 +32,7 @@ rule_meta := {
 		"de": "ECS-Abonnement-Instanz hat keine automatische Verlängerung aktiviert",
 		"es": "La instancia de suscripción ECS no tiene renovación automática habilitada",
 		"fr": "L'instance d'abonnement ECS n'a pas le renouvellement automatique activé",
-		"pt": "Instância de assinatura ECS não tem renovação automática habilitada",
+		"pt": "Instância de assinatura ECS não tem renovação automática habilitada"
 	},
 	"recommendation": {
 		"en": "Enable auto-renewal for subscription instances to avoid service interruption due to expiration",
@@ -42,8 +41,9 @@ rule_meta := {
 		"de": "Aktivieren Sie die automatische Verlängerung für Abonnement-Instanzen, um Dienstunterbrechungen aufgrund von Ablauf zu vermeiden",
 		"es": "Habilite la renovación automática para instancias de suscripción para evitar la interrupción del servicio debido a la expiración",
 		"fr": "Activez le renouvellement automatique pour les instances d'abonnement pour éviter l'interruption de service due à l'expiration",
-		"pt": "Habilite renovação automática para instâncias de assinatura para evitar interrupção do serviço devido à expiração",
+		"pt": "Habilite renovação automática para instâncias de assinatura para evitar interrupção do serviço devido à expiração"
 	},
+	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"]
 }
 
 deny contains result if {

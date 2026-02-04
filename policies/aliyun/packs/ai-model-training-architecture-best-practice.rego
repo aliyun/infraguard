@@ -11,7 +11,7 @@ pack_meta := {
 		"de": "KI-Modelltrainingsarchitektur Best Practices",
 		"es": "Mejores Prácticas de Arquitectura de Entrenamiento de Modelos de IA",
 		"fr": "Meilleures Pratiques d'Architecture d'Entraînement de Modèles d'IA",
-		"pt": "Melhores Práticas de Arquitetura de Treinamento de Modelos de IA",
+		"pt": "Melhores Práticas de Arquitetura de Treinamento de Modelos de IA"
 	},
 	"description": {
 		"en": "Best practices for AI model training architecture, covering ACK, ECS, NAS, OSS, VPC, and other resources.",
@@ -20,38 +20,38 @@ pack_meta := {
 		"de": "Best Practices für KI-Modelltrainingsarchitekturen, die ACK, ECS, NAS, OSS, VPC und andere Ressourcen abdecken.",
 		"es": "Mejores prácticas para la arquitectura de entrenamiento de modelos de IA, que cubre ACK, ECS, NAS, OSS, VPC y otros recursos.",
 		"fr": "Meilleures pratiques pour l'architecture d'entraînement de modèles d'IA, couvrant ACK, ECS, NAS, OSS, VPC et d'autres ressources.",
-		"pt": "Melhores práticas para arquitetura de treinamento de modelos de IA, cobrindo ACK, ECS, NAS, OSS, VPC e outros recursos.",
+		"pt": "Melhores práticas para arquitetura de treinamento de modelos de IA, cobrindo ACK, ECS, NAS, OSS, VPC e outros recursos."
 	},
 	"rules": [
-		"ack-cluster-upgrade-latest-version",
-		"ack-cluster-supported-version",
 		"ack-cluster-encryption-enabled",
+		"ack-cluster-supported-version",
+		"ack-cluster-upgrade-latest-version",
 		"cr-instance-multi-zone",
-		# "cr-instance-public-access-check",  # Commented: ROS CR::Instance does not support PublicNetworkAccess property
+		# "cr-instance-public-access-check",  # Commented: ROS CR::Instance does not support PublicNetworkAccess property,
 		"cr-repository-immutablity-enable",
-		"ecs-disk-encrypted",
 		"ecs-disk-auto-snapshot-policy",
-		# "ecs-instance-monitor-enabled",  # Commented: ROS ECS::Instance does not support CloudMonitorFlags property
+		"ecs-disk-encrypted",
 		"ecs-instance-image-expired-check",
-		# "ecs-instance-status-no-stopped",  # Commented: ROS ECS::Instance does not support Status property
-		"ecs-instance-ram-role-attached",
+		# "ecs-instance-monitor-enabled",  # Commented: ROS ECS::Instance does not support CloudMonitorFlags property,
 		"ecs-instance-not-bind-key-pair",
-		"kms-key-rotation-enabled",
+		"ecs-instance-ram-role-attached",
+		# "ecs-instance-status-no-stopped",  # Commented: ROS ECS::Instance does not support Status property,
 		"kms-key-delete-protection-enabled",
+		"kms-key-rotation-enabled",
 		"kms-secret-rotation-enabled",
-		"nas-filesystem-mount-target-access-group-check",
+		# "nas-filesystem-access-point-enabled-ram",  # Commented: ROS does not support ALIYUN::NAS::AccessPoint resource type,
+		# "nas-filesystem-access-point-root-directory-check",  # Commented: ROS does not support ALIYUN::NAS::AccessPoint resource type,
 		# "nas-filesystem-enable-backup-plan",
-		# "nas-filesystem-access-point-enabled-ram",  # Commented: ROS does not support ALIYUN::NAS::AccessPoint resource type
 		"nas-filesystem-encrypt-type-check",
-		# "nas-filesystem-access-point-root-directory-check",  # Commented: ROS does not support ALIYUN::NAS::AccessPoint resource type
-		"oss-default-encryption-kms",
-		"oss-bucket-tls-version-check",
-		# "oss-bucket-remote-replication",  # Commented: ROS template does not support ReplicationConfiguration
+		"nas-filesystem-mount-target-access-group-check",
 		"oss-bucket-only-https-enabled",
+		# "oss-bucket-remote-replication",  # Commented: ROS template does not support ReplicationConfiguration,
+		"oss-bucket-tls-version-check",
+		"oss-default-encryption-kms",
 		"pai-eas-instances-multi-zone",
-		# "vpc-secondary-cidr-route-check",
-		"vpc-flow-logs-enabled",
-		"vswitch-available-ip-count",
 		"sls-project-multi-zone",
-	],
+		"vpc-flow-logs-enabled",
+		# "vpc-secondary-cidr-route-check",
+		"vswitch-available-ip-count"
+	]
 }

@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "ecs-launch-template-version-data-disk-encrypted",
+	"severity": "medium",
 	"name": {
 		"en": "ECS launch template version enables data disk encryption",
 		"zh": "ECS 启动模版版本中设置数据磁盘加密",
@@ -13,7 +14,7 @@ rule_meta := {
 		"de": "ECS-Startvorlagenversion aktiviert Datenfestplattenverschlüsselung",
 		"es": "La Versión de Plantilla de Inicio ECS Habilita el Cifrado de Disco de Datos",
 		"fr": "La Version du Modèle de Démarrage ECS Active le Chiffrement de Disque de Données",
-		"pt": "A Versão do Modelo de Inicialização ECS Habilita a Criptografia de Disco de Dados",
+		"pt": "A Versão do Modelo de Inicialização ECS Habilita a Criptografia de Disco de Dados"
 	},
 	"description": {
 		"en": "All data disks configured in ECS launch template versions are encrypted, considered compliant.",
@@ -22,10 +23,8 @@ rule_meta := {
 		"de": "Alle in ECS-Startvorlagenversionen konfigurierten Datenfestplatten sind verschlüsselt und gelten als konform.",
 		"es": "Todos los discos de datos configurados en las versiones de plantilla de inicio ECS están cifrados, considerado conforme.",
 		"fr": "Tous les disques de données configurés dans les versions de modèle de démarrage ECS sont chiffrés, considéré comme conforme.",
-		"pt": "Todos os discos de dados configurados nas versões do modelo de inicialização ECS estão criptografados, considerado conforme.",
+		"pt": "Todos os discos de dados configurados nas versões do modelo de inicialização ECS estão criptografados, considerado conforme."
 	},
-	"severity": "medium",
-	"resource_types": ["ALIYUN::ECS::LaunchTemplate"],
 	"reason": {
 		"en": "ECS launch template version has data disks without encryption enabled",
 		"zh": "ECS 启动模板版本的数据磁盘未启用加密",
@@ -33,7 +32,7 @@ rule_meta := {
 		"de": "ECS-Startvorlagenversion hat Datenfestplatten ohne aktivierte Verschlüsselung",
 		"es": "La versión de plantilla de inicio ECS tiene discos de datos sin cifrado habilitado",
 		"fr": "La version du modèle de démarrage ECS a des disques de données sans chiffrement activé",
-		"pt": "A versão do modelo de inicialização ECS tem discos de dados sem criptografia habilitada",
+		"pt": "A versão do modelo de inicialização ECS tem discos de dados sem criptografia habilitada"
 	},
 	"recommendation": {
 		"en": "Enable encryption for all data disks in launch template versions",
@@ -42,8 +41,9 @@ rule_meta := {
 		"de": "Aktivieren Sie die Verschlüsselung für alle Datenfestplatten in Startvorlagenversionen",
 		"es": "Habilite el cifrado para todos los discos de datos en las versiones de plantilla de inicio",
 		"fr": "Activez le chiffrement pour tous les disques de données dans les versions de modèle de démarrage",
-		"pt": "Habilite a criptografia para todos os discos de dados nas versões do modelo de inicialização",
+		"pt": "Habilite a criptografia para todos os discos de dados nas versões do modelo de inicialização"
 	},
+	"resource_types": ["ALIYUN::ECS::LaunchTemplate"]
 }
 
 deny contains result if {

@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "rds-instance-maintain-time-check",
+	"severity": "low",
 	"name": {
 		"en": "RDS Instance Maintenance Window Check",
 		"zh": "RDS 实例维护时间检测",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "RDS-Instanz Wartungsfenster-Prüfung",
 		"es": "Verificación de Ventana de Mantenimiento de Instancia RDS",
 		"fr": "Vérification de la Fenêtre de Maintenance de l'Instance RDS",
-		"pt": "Verificação de Janela de Manutenção de Instância RDS",
+		"pt": "Verificação de Janela de Manutenção de Instância RDS"
 	},
-	"severity": "low",
 	"description": {
 		"en": "Ensures that the RDS instance has a maintenance window configured.",
 		"zh": "确保 RDS 实例配置了维护时间段。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass die RDS-Instanz ein Wartungsfenster konfiguriert hat.",
 		"es": "Garantiza que la instancia RDS tenga configurada una ventana de mantenimiento.",
 		"fr": "Garantit que l'instance RDS a une fenêtre de maintenance configurée.",
-		"pt": "Garante que a instância RDS tenha uma janela de manutenção configurada.",
+		"pt": "Garante que a instância RDS tenha uma janela de manutenção configurada."
 	},
 	"reason": {
 		"en": "Configuring a maintenance window allows for planned maintenance during off-peak hours.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Die Konfiguration eines Wartungsfensters ermöglicht geplante Wartungen während der Nebenzeiten.",
 		"es": "Configurar una ventana de mantenimiento permite realizar mantenimiento planificado durante las horas de menor actividad.",
 		"fr": "La configuration d'une fenêtre de maintenance permet d'effectuer une maintenance planifiée pendant les heures creuses.",
-		"pt": "Configurar uma janela de manutenção permite realizar manutenção planejada durante as horas de menor movimento.",
+		"pt": "Configurar uma janela de manutenção permite realizar manutenção planejada durante as horas de menor movimento."
 	},
 	"recommendation": {
 		"en": "Configure a maintenance window for the RDS instance.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Konfigurieren Sie ein Wartungsfenster für die RDS-Instanz.",
 		"es": "Configure una ventana de mantenimiento para la instancia RDS.",
 		"fr": "Configurez une fenêtre de maintenance pour l'instance RDS.",
-		"pt": "Configure uma janela de manutenção para a instância RDS.",
+		"pt": "Configure uma janela de manutenção para a instância RDS."
 	},
-	"resource_types": ["ALIYUN::RDS::DBInstance"],
+	"resource_types": ["ALIYUN::RDS::DBInstance"]
 }
 
 deny contains result if {

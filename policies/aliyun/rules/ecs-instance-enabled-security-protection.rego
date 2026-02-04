@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "ecs-instance-enabled-security-protection",
+	"severity": "high",
 	"name": {
 		"en": "ECS Instance Enabled Security Protection",
 		"zh": "运行中的 ECS 实例开启云安全中心防护",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "ECS-Instanz Sicherheitsschutz aktiviert",
 		"es": "Protección de Seguridad de Instancia ECS Habilitada",
 		"fr": "Protection de Sécurité d'Instance ECS Activée",
-		"pt": "Proteção de Segurança de Instância ECS Habilitada",
+		"pt": "Proteção de Segurança de Instância ECS Habilitada"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures that ECS instances have security enhancement strategy enabled.",
 		"zh": "确保 ECS 实例开启了安全增强策略（云安全中心防护）。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass ECS-Instanzen Sicherheitsverbesserungsstrategie aktiviert haben.",
 		"es": "Garantiza que las instancias ECS tengan estrategia de mejora de seguridad habilitada.",
 		"fr": "Garantit que les instances ECS ont la stratégie d'amélioration de la sécurité activée.",
-		"pt": "Garante que as instâncias ECS tenham estratégia de aprimoramento de segurança habilitada.",
+		"pt": "Garante que as instâncias ECS tenham estratégia de aprimoramento de segurança habilitada."
 	},
 	"reason": {
 		"en": "Without security protection, the instance is more vulnerable to attacks and malware.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Ohne Sicherheitsschutz ist die Instanz anfälliger für Angriffe und Malware.",
 		"es": "Sin protección de seguridad, la instancia es más vulnerable a ataques y malware.",
 		"fr": "Sans protection de sécurité, l'instance est plus vulnérable aux attaques et aux logiciels malveillants.",
-		"pt": "Sem proteção de segurança, a instância é mais vulnerável a ataques e malware.",
+		"pt": "Sem proteção de segurança, a instância é mais vulnerável a ataques e malware."
 	},
 	"recommendation": {
 		"en": "Enable security enhancement strategy for the ECS instance by setting SecurityEnhancementStrategy to 'Active'.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Aktivieren Sie die Sicherheitsverbesserungsstrategie für die ECS-Instanz, indem Sie SecurityEnhancementStrategy auf 'Active' setzen.",
 		"es": "Habilite la estrategia de mejora de seguridad para la instancia ECS estableciendo SecurityEnhancementStrategy en 'Active'.",
 		"fr": "Activez la stratégie d'amélioration de la sécurité pour l'instance ECS en définissant SecurityEnhancementStrategy sur 'Active'.",
-		"pt": "Habilite estratégia de aprimoramento de segurança para a instância ECS definindo SecurityEnhancementStrategy como 'Active'.",
+		"pt": "Habilite estratégia de aprimoramento de segurança para a instância ECS definindo SecurityEnhancementStrategy como 'Active'."
 	},
-	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"],
+	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"]
 }
 
 is_compliant(resource) if {

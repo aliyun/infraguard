@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "vpn-ipsec-connection-health-check-open",
+	"severity": "low",
 	"name": {
 		"en": "VPN IPsec Health Check Enabled",
 		"zh": "VPN IPsec 连接开启健康检查",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "VPN IPsec Health Check aktiviert",
 		"es": "Verificación de Salud IPsec VPN Habilitada",
 		"fr": "Vérification de Santé IPsec VPN Activée",
-		"pt": "Verificação de Integridade IPsec VPN Habilitada",
+		"pt": "Verificação de Integridade IPsec VPN Habilitada"
 	},
-	"severity": "low",
 	"description": {
 		"en": "Ensures VPN IPsec connections have health checks enabled to detect tunnel failures.",
 		"zh": "确保 VPN IPsec 连接开启了健康检查，以便及时发现隧道故障。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass VPN-IPsec-Verbindungen Health Checks aktiviert haben, um Tunnelausfälle zu erkennen.",
 		"es": "Garantiza que las conexiones VPN IPsec tengan verificaciones de salud habilitadas para detectar fallas del túnel.",
 		"fr": "Garantit que les connexions VPN IPsec ont des vérifications de santé activées pour détecter les défaillances du tunnel.",
-		"pt": "Garante que as conexões VPN IPsec tenham verificações de integridade habilitadas para detectar falhas do túnel.",
+		"pt": "Garante que as conexões VPN IPsec tenham verificações de integridade habilitadas para detectar falhas do túnel."
 	},
 	"reason": {
 		"en": "Health checks enable automatic failover and proactive monitoring of VPN stability.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Health Checks ermöglichen automatisches Failover und proaktive Überwachung der VPN-Stabilität.",
 		"es": "Las verificaciones de salud permiten la conmutación por error automática y el monitoreo proactivo de la estabilidad VPN.",
 		"fr": "Les vérifications de santé permettent le basculement automatique et la surveillance proactive de la stabilité VPN.",
-		"pt": "As verificações de integridade permitem failover automático e monitoramento proativo da estabilidade VPN.",
+		"pt": "As verificações de integridade permitem failover automático e monitoramento proativo da estabilidade VPN."
 	},
 	"recommendation": {
 		"en": "Enable health checks for the IPsec connection.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Aktivieren Sie Health Checks für die IPsec-Verbindung.",
 		"es": "Habilite las verificaciones de salud para la conexión IPsec.",
 		"fr": "Activez les vérifications de santé pour la connexion IPsec.",
-		"pt": "Habilite verificações de integridade para a conexão IPsec.",
+		"pt": "Habilite verificações de integridade para a conexão IPsec."
 	},
-	"resource_types": ["ALIYUN::VPC::VpnConnection"],
+	"resource_types": ["ALIYUN::VPC::VpnConnection"]
 }
 
 is_compliant(resource) if {

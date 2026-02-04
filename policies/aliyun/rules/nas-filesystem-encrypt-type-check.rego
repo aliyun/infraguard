@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "nas-filesystem-encrypt-type-check",
+	"severity": "low",
 	"name": {
 		"en": "NAS file system encryption configured",
 		"zh": "NAS 文件系统设置了加密",
@@ -24,8 +25,6 @@ rule_meta := {
 		"fr": "Le système de fichiers NAS a le chiffrement configuré, considéré comme conforme.",
 		"pt": "O sistema de arquivos NAS tem criptografia configurada, considerado em conformidade."
 	},
-	"severity": "low",
-	"resource_types": ["ALIYUN::NAS::FileSystem"],
 	"reason": {
 		"en": "NAS file system does not have encryption configured",
 		"zh": "NAS 文件系统未设置加密",
@@ -44,6 +43,7 @@ rule_meta := {
 		"fr": "Configurez le chiffrement pour le système de fichiers NAS pour protéger les données au repos à l'aide de clés KMS",
 		"pt": "Configure a criptografia para o sistema de arquivos NAS para proteger dados em repouso usando chaves KMS"
 	},
+	"resource_types": ["ALIYUN::NAS::FileSystem"]
 }
 
 deny contains result if {

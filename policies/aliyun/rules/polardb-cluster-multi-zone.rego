@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "polardb-cluster-multi-zone",
+	"severity": "medium",
 	"name": {
 		"en": "PolarDB Cluster Multi-Zone Deployment",
 		"zh": "PolarDB 集群多可用区部署",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "PolarDB-Cluster Multi-Zone-Bereitstellung",
 		"es": "Implementación Multi-zona de Cluster PolarDB",
 		"fr": "Déploiement Multi-zones du Cluster PolarDB",
-		"pt": "Implantação Multi-zona de Cluster PolarDB",
+		"pt": "Implantação Multi-zona de Cluster PolarDB"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "PolarDB clusters should be deployed across multiple availability zones for high availability.",
 		"zh": "PolarDB 集群应部署在多个可用区。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "PolarDB-Cluster sollten für hohe Verfügbarkeit über mehrere Verfügbarkeitszonen bereitgestellt werden.",
 		"es": "Los clústeres PolarDB deben implementarse en múltiples zonas de disponibilidad para alta disponibilidad.",
 		"fr": "Les clusters PolarDB doivent être déployés sur plusieurs zones de disponibilité pour une haute disponibilité.",
-		"pt": "Clusters PolarDB devem ser implantados em múltiplas zonas de disponibilidade para alta disponibilidade.",
+		"pt": "Clusters PolarDB devem ser implantados em múltiplas zonas de disponibilidade para alta disponibilidade."
 	},
 	"reason": {
 		"en": "The PolarDB cluster is not configured with a standby availability zone.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Der PolarDB-Cluster ist nicht mit einer Standby-Verfügbarkeitszone konfiguriert.",
 		"es": "El clúster PolarDB no está configurado con una zona de disponibilidad en espera.",
 		"fr": "Le cluster PolarDB n'est pas configuré avec une zone de disponibilité de secours.",
-		"pt": "O cluster PolarDB não está configurado com uma zona de disponibilidade em espera.",
+		"pt": "O cluster PolarDB não está configurado com uma zona de disponibilidade em espera."
 	},
 	"recommendation": {
 		"en": "Configure StandbyAZ to enable multi-zone deployment.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Konfigurieren Sie StandbyAZ, um Multi-Zone-Bereitstellung zu aktivieren.",
 		"es": "Configure StandbyAZ para habilitar la implementación multi-zona.",
 		"fr": "Configurez StandbyAZ pour activer le déploiement multi-zones.",
-		"pt": "Configure StandbyAZ para habilitar a implantação multi-zona.",
+		"pt": "Configure StandbyAZ para habilitar a implantação multi-zona."
 	},
-	"resource_types": ["ALIYUN::POLARDB::DBCluster"],
+	"resource_types": ["ALIYUN::POLARDB::DBCluster"]
 }
 
 # Check if cluster is multi-zone

@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "ecs-disk-in-use",
+	"severity": "medium",
 	"name": {
 		"en": "ECS disk is in use",
 		"zh": "ECS 磁盘正在使用中",
@@ -13,7 +14,7 @@ rule_meta := {
 		"de": "ECS-Festplatte ist in Verwendung",
 		"es": "El Disco ECS Está en Uso",
 		"fr": "Le Disque ECS est en Utilisation",
-		"pt": "O Disco ECS Está em Uso",
+		"pt": "O Disco ECS Está em Uso"
 	},
 	"description": {
 		"en": "ECS disks are attached to an instance or in use state, considered compliant. Disks that are available or unattached may be idle resources.",
@@ -22,10 +23,8 @@ rule_meta := {
 		"de": "ECS-Festplatten sind an eine Instanz angehängt oder im Gebrauchszustand, was als konform gilt. Verfügbare oder nicht angehängte Festplatten können inaktive Ressourcen sein.",
 		"es": "Los discos ECS están adjuntos a una instancia o en estado de uso, considerado conforme. Los discos disponibles o no adjuntos pueden ser recursos inactivos.",
 		"fr": "Les disques ECS sont attachés à une instance ou en état d'utilisation, considéré comme conforme. Les disques disponibles ou non attachés peuvent être des ressources inactives.",
-		"pt": "Os discos ECS estão anexados a uma instância ou em estado de uso, considerado conforme. Discos disponíveis ou não anexados podem ser recursos ociosos.",
+		"pt": "Os discos ECS estão anexados a uma instância ou em estado de uso, considerado conforme. Discos disponíveis ou não anexados podem ser recursos ociosos."
 	},
-	"severity": "medium",
-	"resource_types": ["ALIYUN::ECS::Disk"],
 	"reason": {
 		"en": "ECS disk is not in use (Available status or unattached)",
 		"zh": "ECS 磁盘未使用中（可用状态或未挂载）",
@@ -33,7 +32,7 @@ rule_meta := {
 		"de": "ECS-Festplatte ist nicht in Verwendung (Verfügbarer Status oder nicht angehängt)",
 		"es": "El disco ECS no está en uso (estado disponible o no adjunto)",
 		"fr": "Le disque ECS n'est pas en utilisation (statut disponible ou non attaché)",
-		"pt": "O disco ECS não está em uso (status disponível ou não anexado)",
+		"pt": "O disco ECS não está em uso (status disponível ou não anexado)"
 	},
 	"recommendation": {
 		"en": "Attach the disk to an ECS instance or release unused disks to save costs",
@@ -42,8 +41,9 @@ rule_meta := {
 		"de": "Hängen Sie die Festplatte an eine ECS-Instanz an oder geben Sie ungenutzte Festplatten frei, um Kosten zu sparen",
 		"es": "Adjunte el disco a una instancia ECS o libere discos no utilizados para ahorrar costos",
 		"fr": "Attachez le disque à une instance ECS ou libérez les disques non utilisés pour économiser des coûts",
-		"pt": "Anexe o disco a uma instância ECS ou libere discos não utilizados para economizar custos",
+		"pt": "Anexe o disco a uma instância ECS ou libere discos não utilizados para economizar custos"
 	},
+	"resource_types": ["ALIYUN::ECS::Disk"]
 }
 
 deny contains result if {

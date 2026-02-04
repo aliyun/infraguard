@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "fc-service-tracing-enable",
+	"severity": "medium",
 	"name": {
 		"en": "FC Service Tracing Enable",
 		"zh": "函数计算服务启用链路追踪",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "FC-Service Tracing aktivieren",
 		"es": "Habilitar Seguimiento de Servicio FC",
 		"fr": "Activer le Traçage de Service FC",
-		"pt": "Habilitar Rastreamento de Serviço FC",
+		"pt": "Habilitar Rastreamento de Serviço FC"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "FC services should have tracing enabled for performance monitoring and debugging.",
 		"zh": "函数计算服务启用链路追踪功能，视为合规。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "FC-Services sollten Tracing für Leistungsüberwachung und Debugging aktiviert haben.",
 		"es": "Los servicios FC deben tener seguimiento habilitado para monitoreo de rendimiento y depuración.",
 		"fr": "Les services FC doivent avoir le traçage activé pour la surveillance des performances et le débogage.",
-		"pt": "Os serviços FC devem ter rastreamento habilitado para monitoramento de desempenho e depuração.",
+		"pt": "Os serviços FC devem ter rastreamento habilitado para monitoramento de desempenho e depuração."
 	},
 	"reason": {
 		"en": "The FC service does not have tracing enabled, which may affect performance analysis.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Der FC-Service hat kein Tracing aktiviert, was die Leistungsanalyse beeinträchtigen kann.",
 		"es": "El servicio FC no tiene seguimiento habilitado, lo que puede afectar el análisis de rendimiento.",
 		"fr": "Le service FC n'a pas le traçage activé, ce qui peut affecter l'analyse des performances.",
-		"pt": "O serviço FC não tem rastreamento habilitado, o que pode afetar a análise de desempenho.",
+		"pt": "O serviço FC não tem rastreamento habilitado, o que pode afetar a análise de desempenho."
 	},
 	"recommendation": {
 		"en": "Enable tracing for the FC service by configuring TracingConfig.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Aktivieren Sie Tracing für den FC-Service durch Konfiguration von TracingConfig.",
 		"es": "Habilite el seguimiento para el servicio FC configurando TracingConfig.",
 		"fr": "Activez le traçage pour le service FC en configurant TracingConfig.",
-		"pt": "Habilite o rastreamento para o serviço FC configurando TracingConfig.",
+		"pt": "Habilite o rastreamento para o serviço FC configurando TracingConfig."
 	},
-	"resource_types": ["ALIYUN::FC::Service"],
+	"resource_types": ["ALIYUN::FC::Service"]
 }
 
 deny contains result if {

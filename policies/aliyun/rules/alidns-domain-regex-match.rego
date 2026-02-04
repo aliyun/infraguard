@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "alidns-domain-regex-match",
+	"severity": "medium",
 	"name": {
 		"en": "Alibaba Cloud DNS Domain Names Match Naming Convention",
 		"zh": "阿里云解析域名符合命名规范",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "Alibaba Cloud DNS-Domänennamen entsprechen Namenskonvention",
 		"es": "Los Nombres de Dominio DNS de Alibaba Cloud Coinciden con la Convención de Nomenclatura",
 		"fr": "Les Noms de Domaine DNS d'Alibaba Cloud Correspondent à la Convention de Dénomination",
-		"pt": "Os Nomes de Domínio DNS da Alibaba Cloud Correspondem à Convenção de Nomenclatura",
+		"pt": "Os Nomes de Domínio DNS da Alibaba Cloud Correspondem à Convenção de Nomenclatura"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures that Alibaba Cloud DNS domain names match the specified naming convention regex.",
 		"zh": "域名符合参数指定的命名规范正则，视为合规。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass Alibaba Cloud DNS-Domänennamen dem angegebenen Namenskonventions-Regex entsprechen.",
 		"es": "Garantiza que los nombres de dominio DNS de Alibaba Cloud coincidan con la expresión regular de convención de nomenclatura especificada.",
 		"fr": "Garantit que les noms de domaine DNS d'Alibaba Cloud correspondent à l'expression régulière de convention de dénomination spécifiée.",
-		"pt": "Garante que os nomes de domínio DNS da Alibaba Cloud correspondam à expressão regular de convenção de nomenclatura especificada.",
+		"pt": "Garante que os nomes de domínio DNS da Alibaba Cloud correspondam à expressão regular de convenção de nomenclatura especificada."
 	},
 	"reason": {
 		"en": "Domain name does not match the specified naming convention regex.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Domänenname entspricht nicht dem angegebenen Namenskonventions-Regex.",
 		"es": "El nombre de dominio no coincide con la expresión regular de convención de nomenclatura especificada.",
 		"fr": "Le nom de domaine ne correspond pas à l'expression régulière de convention de dénomination spécifiée.",
-		"pt": "O nome de domínio não corresponde à expressão regular de convenção de nomenclatura especificada.",
+		"pt": "O nome de domínio não corresponde à expressão regular de convenção de nomenclatura especificada."
 	},
 	"recommendation": {
 		"en": "Rename the domain to match the specified naming convention.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Benennen Sie die Domäne um, damit sie der angegebenen Namenskonvention entspricht.",
 		"es": "Renombre el dominio para que coincida con la convención de nomenclatura especificada.",
 		"fr": "Renommez le domaine pour qu'il corresponde à la convention de dénomination spécifiée.",
-		"pt": "Renomeie o domínio para corresponder à convenção de nomenclatura especificada.",
+		"pt": "Renomeie o domínio para corresponder à convenção de nomenclatura especificada."
 	},
-	"resource_types": ["ALIYUN::DNS::Domain"],
+	"resource_types": ["ALIYUN::DNS::Domain"]
 }
 
 # Default regex pattern for domain names

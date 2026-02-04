@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "ecs-instance-chargetype-check",
+	"severity": "low",
 	"name": {
 		"en": "ECS Instance Charge Type Check",
 		"zh": "ECS 实例付费类型核查",
@@ -14,7 +15,6 @@ rule_meta := {
 		"fr": "Vérification du Type de Facturation de l'Instance ECS",
 		"pt": "Verificação de Tipo de Cobrança da Instância ECS"
 	},
-	"severity": "low",
 	"description": {
 		"en": "Ensures ECS instances use the authorized charge type.",
 		"zh": "确保 ECS 实例使用授权的付费类型。",
@@ -42,7 +42,7 @@ rule_meta := {
 		"fr": "Définissez InstanceChargeType sur 'PostPaid'.",
 		"pt": "Defina InstanceChargeType como 'PostPaid'."
 	},
-	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"],
+	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"]
 }
 
 is_compliant(resource) if {

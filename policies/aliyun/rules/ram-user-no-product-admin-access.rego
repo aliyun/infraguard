@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "ram-user-no-product-admin-access",
+	"severity": "medium",
 	"name": {
 		"en": "RAM User No Product Administrative Access",
 		"zh": "RAM 用户没有产品管理权限",
@@ -16,7 +17,6 @@ rule_meta := {
 		"fr": "Utilisateur RAM Sans Accès Administratif au Produit",
 		"pt": "Usuário RAM Sem Acesso Administrativo ao Produto"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures that RAM users do not have full administrative access to cloud products unless necessary.",
 		"zh": "确保 RAM 用户未被授予对云产品的完全管理权限，除非必要。",
@@ -44,7 +44,7 @@ rule_meta := {
 		"fr": "Suivez le principe du moindre privilège et accordez uniquement les permissions nécessaires aux utilisateurs RAM.",
 		"pt": "Siga o princípio do menor privilégio e conceda apenas as permissões necessárias aos usuários RAM."
 	},
-	"resource_types": ["ALIYUN::RAM::User"],
+	"resource_types": ["ALIYUN::RAM::User"]
 }
 
 deny contains result if {

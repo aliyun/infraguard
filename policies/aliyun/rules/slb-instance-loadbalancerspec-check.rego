@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "slb-instance-loadbalancerspec-check",
+	"severity": "low",
 	"name": {
 		"en": "SLB Instance Spec Check",
 		"zh": "SLB 规格合规性检查",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "SLB-Instanz Spezifikationsprüfung",
 		"es": "Verificación de Especificación de Instancia SLB",
 		"fr": "Vérification de Spécification d'Instance SLB",
-		"pt": "Verificação de Especificação de Instância SLB",
+		"pt": "Verificação de Especificação de Instância SLB"
 	},
-	"severity": "low",
 	"description": {
 		"en": "Ensures SLB instances use approved performance specifications.",
 		"zh": "确保 SLB 实例使用批准的性能规格。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass SLB-Instanzen genehmigte Leistungsspezifikationen verwenden.",
 		"es": "Garantiza que las instancias SLB usen especificaciones de rendimiento aprobadas.",
 		"fr": "Garantit que les instances SLB utilisent des spécifications de performance approuvées.",
-		"pt": "Garante que as instâncias SLB usem especificações de desempenho aprovadas.",
+		"pt": "Garante que as instâncias SLB usem especificações de desempenho aprovadas."
 	},
 	"reason": {
 		"en": "Using specific specs helps in cost management and performance standardization.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Die Verwendung spezifischer Spezifikationen hilft bei der Kostenverwaltung und Leistungsstandardisierung.",
 		"es": "Usar especificaciones específicas ayuda en la gestión de costos y la estandarización del rendimiento.",
 		"fr": "L'utilisation de spécifications spécifiques aide à la gestion des coûts et à la standardisation des performances.",
-		"pt": "Usar especificações específicas ajuda no gerenciamento de custos e padronização de desempenho.",
+		"pt": "Usar especificações específicas ajuda no gerenciamento de custos e padronização de desempenho."
 	},
 	"recommendation": {
 		"en": "Use a spec from the approved list (e.g., slb.s1.small).",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Verwenden Sie eine Spezifikation aus der genehmigten Liste (z. B. slb.s1.small).",
 		"es": "Use una especificación de la lista aprobada (por ejemplo, slb.s1.small).",
 		"fr": "Utilisez une spécification de la liste approuvée (par exemple, slb.s1.small).",
-		"pt": "Use uma especificação da lista aprovada (por exemplo, slb.s1.small).",
+		"pt": "Use uma especificação da lista aprovada (por exemplo, slb.s1.small)."
 	},
-	"resource_types": ["ALIYUN::SLB::LoadBalancer"],
+	"resource_types": ["ALIYUN::SLB::LoadBalancer"]
 }
 
 allowed_specs := ["slb.s1.small", "slb.s2.small", "slb.s3.small"]

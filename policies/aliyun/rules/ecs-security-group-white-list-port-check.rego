@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata with i18n support
 rule_meta := {
 	"id": "ecs-security-group-white-list-port-check",
+	"severity": "high",
 	"name": {
 		"en": "Security Group Non-Whitelist Port Ingress Check",
 		"zh": "安全组非白名单端口入网设置有效",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "Sicherheitsgruppe Nicht-Whitelist-Port-Ingress-Prüfung",
 		"es": "Verificación de Ingress de Puerto No en Lista Blanca de Grupo de Seguridad",
 		"fr": "Vérification d'Ingress de Port Non-Liste Blanche du Groupe de Sécurité",
-		"pt": "Verificação de Ingresso de Porta Não na Lista Branca do Grupo de Segurança",
+		"pt": "Verificação de Ingresso de Porta Não na Lista Branca do Grupo de Segurança"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Except for whitelisted ports (80), other ports should not have ingress rules allowing access from 0.0.0.0/0.",
 		"zh": "除指定的白名单端口（80）外，其余端口不能有授权策略设置为允许而且来源为 0.0.0.0/0 的入方向规则，视为合规。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "Außer Whitelist-Ports (80) sollten andere Ports keine Ingress-Regeln haben, die Zugriff von 0.0.0.0/0 erlauben.",
 		"es": "Excepto los puertos en lista blanca (80), otros puertos no deben tener reglas de ingreso que permitan el acceso desde 0.0.0.0/0.",
 		"fr": "À l'exception des ports en liste blanche (80), les autres ports ne doivent pas avoir de règles d'ingress autorisant l'accès depuis 0.0.0.0/0.",
-		"pt": "Exceto portas na lista branca (80), outras portas não devem ter regras de ingresso que permitam acesso de 0.0.0.0/0.",
+		"pt": "Exceto portas na lista branca (80), outras portas não devem ter regras de ingresso que permitam acesso de 0.0.0.0/0."
 	},
 	"reason": {
 		"en": "The security group allows access to non-whitelisted ports from all sources (0.0.0.0/0), which may expose unnecessary services to the internet.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Die Sicherheitsgruppe erlaubt Zugriff auf Nicht-Whitelist-Ports von allen Quellen (0.0.0.0/0), was unnötige Dienste dem Internet aussetzen kann.",
 		"es": "El grupo de seguridad permite el acceso a puertos no incluidos en la lista blanca desde todas las fuentes (0.0.0.0/0), lo que puede exponer servicios innecesarios a internet.",
 		"fr": "Le groupe de sécurité autorise l'accès aux ports non listés en liste blanche depuis toutes les sources (0.0.0.0/0), ce qui peut exposer des services inutiles à Internet.",
-		"pt": "O grupo de segurança permite acesso a portas não na lista branca de todas as fontes (0.0.0.0/0), o que pode expor serviços desnecessários à internet.",
+		"pt": "O grupo de segurança permite acesso a portas não na lista branca de todas as fontes (0.0.0.0/0), o que pode expor serviços desnecessários à internet."
 	},
 	"recommendation": {
 		"en": "Only allow whitelisted ports (e.g., 80 for HTTP) to be accessible from 0.0.0.0/0. Restrict other ports to specific trusted source IP ranges.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Erlauben Sie nur Whitelist-Ports (z. B. 80 für HTTP), die von 0.0.0.0/0 zugänglich sind. Beschränken Sie andere Ports auf spezifische vertrauenswürdige Quell-IP-Bereiche.",
 		"es": "Solo permita que los puertos en lista blanca (por ejemplo, 80 para HTTP) sean accesibles desde 0.0.0.0/0. Restrinja otros puertos a rangos de IP de origen confiables específicos.",
 		"fr": "Autorisez uniquement les ports en liste blanche (par exemple, 80 pour HTTP) à être accessibles depuis 0.0.0.0/0. Restreignez les autres ports à des plages d'IP source de confiance spécifiques.",
-		"pt": "Permita apenas portas na lista branca (por exemplo, 80 para HTTP) sejam acessíveis de 0.0.0.0/0. Restrinja outras portas a intervalos de IP de origem confiáveis específicos.",
+		"pt": "Permita apenas portas na lista branca (por exemplo, 80 para HTTP) sejam acessíveis de 0.0.0.0/0. Restrinja outras portas a intervalos de IP de origem confiáveis específicos."
 	},
-	"resource_types": ["ALIYUN::ECS::SecurityGroup", "ALIYUN::ECS::SecurityGroupIngress", "ALIYUN::ECS::SecurityGroupIngresses"],
+	"resource_types": ["ALIYUN::ECS::SecurityGroup", "ALIYUN::ECS::SecurityGroupIngress", "ALIYUN::ECS::SecurityGroupIngresses"]
 }
 
 # Whitelisted ports that are allowed from 0.0.0.0/0

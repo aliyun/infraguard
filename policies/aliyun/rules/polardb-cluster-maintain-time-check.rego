@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "polardb-cluster-maintain-time-check",
+	"severity": "low",
 	"name": {
 		"en": "PolarDB Cluster Maintenance Window Check",
 		"zh": "PolarDB 集群维护时间检测",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "PolarDB-Cluster Wartungsfenster-Prüfung",
 		"es": "Verificación de Ventana de Mantenimiento de Cluster PolarDB",
 		"fr": "Vérification de la Fenêtre de Maintenance du Cluster PolarDB",
-		"pt": "Verificação de Janela de Manutenção de Cluster PolarDB",
+		"pt": "Verificação de Janela de Manutenção de Cluster PolarDB"
 	},
-	"severity": "low",
 	"description": {
 		"en": "Ensures that the PolarDB cluster has a maintenance window configured.",
 		"zh": "确保 PolarDB 集群配置了维护时间段。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass der PolarDB-Cluster ein Wartungsfenster konfiguriert hat.",
 		"es": "Garantiza que el clúster PolarDB tenga una ventana de mantenimiento configurada.",
 		"fr": "Garantit que le cluster PolarDB a une fenêtre de maintenance configurée.",
-		"pt": "Garante que o cluster PolarDB tenha uma janela de manutenção configurada.",
+		"pt": "Garante que o cluster PolarDB tenha uma janela de manutenção configurada."
 	},
 	"reason": {
 		"en": "Configuring a maintenance window allows for planned maintenance during off-peak hours.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Die Konfiguration eines Wartungsfensters ermöglicht geplante Wartung während der Nebenzeiten.",
 		"es": "Configurar una ventana de mantenimiento permite realizar mantenimiento planificado durante las horas de menor actividad.",
 		"fr": "Configurer une fenêtre de maintenance permet d'effectuer une maintenance planifiée pendant les heures creuses.",
-		"pt": "Configurar uma janela de manutenção permite manutenção planejada durante horários de baixa demanda.",
+		"pt": "Configurar uma janela de manutenção permite manutenção planejada durante horários de baixa demanda."
 	},
 	"recommendation": {
 		"en": "Configure a maintenance window for the PolarDB cluster.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Konfigurieren Sie ein Wartungsfenster für den PolarDB-Cluster.",
 		"es": "Configure una ventana de mantenimiento para el clúster PolarDB.",
 		"fr": "Configurez une fenêtre de maintenance pour le cluster PolarDB.",
-		"pt": "Configure uma janela de manutenção para o cluster PolarDB.",
+		"pt": "Configure uma janela de manutenção para o cluster PolarDB."
 	},
-	"resource_types": ["ALIYUN::POLARDB::DBCluster"],
+	"resource_types": ["ALIYUN::POLARDB::DBCluster"]
 }
 
 deny contains result if {

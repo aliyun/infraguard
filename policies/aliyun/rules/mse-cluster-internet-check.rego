@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "mse-cluster-internet-check",
+	"severity": "high",
 	"name": {
 		"en": "MSE Cluster Has No Public Internet Access",
 		"zh": "MSE 集群公网检测",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "MSE-Cluster hat keinen öffentlichen Internetzugriff",
 		"es": "El Clúster MSE No Tiene Acceso Público a Internet",
 		"fr": "Le Cluster MSE N'a Pas d'Accès Internet Public",
-		"pt": "O Cluster MSE Não Tem Acesso Público à Internet",
+		"pt": "O Cluster MSE Não Tem Acesso Público à Internet"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures that MSE clusters do not have public internet access enabled.",
 		"zh": "确保 MSE 集群未开放公网访问。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass MSE-Cluster keinen öffentlichen Internetzugriff aktiviert haben.",
 		"es": "Garantiza que los clústeres MSE no tengan acceso público a Internet habilitado.",
 		"fr": "Garantit que les clusters MSE n'ont pas d'accès Internet public activé.",
-		"pt": "Garante que os clusters MSE não tenham acesso público à Internet habilitado.",
+		"pt": "Garante que os clusters MSE não tenham acesso público à Internet habilitado."
 	},
 	"reason": {
 		"en": "Public internet access increases the attack surface and security risks for the cluster.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Öffentlicher Internetzugriff erhöht die Angriffsfläche und Sicherheitsrisiken für den Cluster.",
 		"es": "El acceso público a Internet aumenta la superficie de ataque y los riesgos de seguridad del clúster.",
 		"fr": "L'accès Internet public augmente la surface d'attaque et les risques de sécurité pour le cluster.",
-		"pt": "O acesso público à Internet aumenta a superfície de ataque e os riscos de segurança do cluster.",
+		"pt": "O acesso público à Internet aumenta a superfície de ataque e os riscos de segurança do cluster."
 	},
 	"recommendation": {
 		"en": "Configure the MSE cluster to use private network access only.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Konfigurieren Sie den MSE-Cluster so, dass nur privater Netzwerkzugriff verwendet wird.",
 		"es": "Configure el clúster MSE para usar solo acceso de red privada.",
 		"fr": "Configurez le cluster MSE pour utiliser uniquement l'accès réseau privé.",
-		"pt": "Configure o cluster MSE para usar apenas acesso de rede privada.",
+		"pt": "Configure o cluster MSE para usar apenas acesso de rede privada."
 	},
-	"resource_types": ["ALIYUN::MSE::Cluster"],
+	"resource_types": ["ALIYUN::MSE::Cluster"]
 }
 
 # Check if cluster has public internet access

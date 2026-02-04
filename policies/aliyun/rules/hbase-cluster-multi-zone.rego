@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "hbase-cluster-multi-zone",
+	"severity": "medium",
 	"name": {
 		"en": "HBase Cluster Multi-Zone Deployment",
 		"zh": "使用多可用区的 HBase 集群",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "HBase-Cluster Multi-Zonen-Bereitstellung",
 		"es": "Implementación Multi-Zona del Clúster HBase",
 		"fr": "Déploiement Multi-Zone du Cluster HBase",
-		"pt": "Implantação Multi-Zona do Cluster HBase",
+		"pt": "Implantação Multi-Zona do Cluster HBase"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "HBase clusters should be deployed in cluster mode with at least 2 nodes for high availability.",
 		"zh": "使用多可用区的 HBase 集群，视为合规。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "HBase-Cluster sollten im Clustermodus mit mindestens 2 Knoten für Hochverfügbarkeit bereitgestellt werden.",
 		"es": "Los clústeres HBase deben implementarse en modo clúster con al menos 2 nodos para alta disponibilidad.",
 		"fr": "Les clusters HBase doivent être déployés en mode cluster avec au moins 2 nœuds pour une haute disponibilité.",
-		"pt": "Os clusters HBase devem ser implantados em modo cluster com pelo menos 2 nós para alta disponibilidade.",
+		"pt": "Os clusters HBase devem ser implantados em modo cluster com pelo menos 2 nós para alta disponibilidade."
 	},
 	"reason": {
 		"en": "The HBase cluster is deployed in single-node mode, which does not provide high availability.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Der HBase-Cluster wird im Einzelknotenmodus bereitgestellt, was keine Hochverfügbarkeit bietet.",
 		"es": "El clúster HBase se implementa en modo de nodo único, que no proporciona alta disponibilidad.",
 		"fr": "Le cluster HBase est déployé en mode nœud unique, ce qui ne fournit pas de haute disponibilité.",
-		"pt": "O cluster HBase é implantado em modo de nó único, que não fornece alta disponibilidade.",
+		"pt": "O cluster HBase é implantado em modo de nó único, que não fornece alta disponibilidade."
 	},
 	"recommendation": {
 		"en": "Deploy HBase cluster in cluster mode by setting NodeCount to at least 2 for high availability.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Stellen Sie den HBase-Cluster im Clustermodus bereit, indem Sie NodeCount auf mindestens 2 für Hochverfügbarkeit setzen.",
 		"es": "Implemente el clúster HBase en modo clúster estableciendo NodeCount en al menos 2 para alta disponibilidad.",
 		"fr": "Déployez le cluster HBase en mode cluster en définissant NodeCount sur au moins 2 pour une haute disponibilité.",
-		"pt": "Implante o cluster HBase em modo cluster definindo NodeCount para pelo menos 2 para alta disponibilidade.",
+		"pt": "Implante o cluster HBase em modo cluster definindo NodeCount para pelo menos 2 para alta disponibilidade."
 	},
-	"resource_types": ["ALIYUN::HBase::Cluster"],
+	"resource_types": ["ALIYUN::HBase::Cluster"]
 }
 
 # Check if cluster is in cluster mode (at least 2 nodes)

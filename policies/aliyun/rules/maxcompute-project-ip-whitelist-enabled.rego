@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "maxcompute-project-ip-whitelist-enabled",
+	"severity": "high",
 	"name": {
 		"en": "MaxCompute Project IP Whitelist Enabled",
 		"zh": "MaxCompute 项目开启 IP 白名单",
@@ -14,7 +15,6 @@ rule_meta := {
 		"fr": "Liste Blanche IP du Projet MaxCompute Activée",
 		"pt": "Lista Branca de IP do Projeto MaxCompute Habilitada"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures MaxCompute projects have an IP whitelist configured to restrict access.",
 		"zh": "确保 MaxCompute 项目配置了 IP 白名单以限制访问。",
@@ -42,7 +42,7 @@ rule_meta := {
 		"fr": "Configurez la liste blanche IP pour le projet MaxCompute.",
 		"pt": "Configure a lista branca de IP para o projeto MaxCompute."
 	},
-	"resource_types": ["ALIYUN::MaxCompute::Project"],
+	"resource_types": ["ALIYUN::MaxCompute::Project"]
 }
 
 is_compliant(resource) if {

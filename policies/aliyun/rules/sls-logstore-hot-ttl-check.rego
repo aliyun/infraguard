@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "sls-logstore-hot-ttl-check",
+	"severity": "low",
 	"name": {
 		"en": "SLS Logstore Smart Tier Storage Enabled",
 		"zh": "SLS 日志库开启智能冷热分层存储",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "SLS Logstore Smart Tier Storage aktiviert",
 		"es": "Almacenamiento de Nivel Inteligente de Logstore SLS Habilitado",
 		"fr": "Stockage à Niveaux Intelligents de Logstore SLS Activé",
-		"pt": "Armazenamento de Camada Inteligente do Logstore SLS Habilitado",
+		"pt": "Armazenamento de Camada Inteligente do Logstore SLS Habilitado"
 	},
-	"severity": "low",
 	"description": {
 		"en": "Ensures SLS Logstores have intelligent hot/cold tier storage enabled for cost optimization.",
 		"zh": "确保 SLS 日志库开启了智能冷热分层存储功能以优化成本。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass SLS-Logstores intelligentes Hot/Cold-Tier-Speicher für die Kostenoptimierung aktiviert haben.",
 		"es": "Garantiza que los Logstores SLS tengan almacenamiento inteligente de nivel caliente/frío habilitado para optimización de costos.",
 		"fr": "Garantit que les Logstores SLS ont le stockage intelligent à niveaux chaud/froid activé pour l'optimisation des coûts.",
-		"pt": "Garante que os Logstores SLS tenham armazenamento inteligente de camada quente/fria habilitado para otimização de custos.",
+		"pt": "Garante que os Logstores SLS tenham armazenamento inteligente de camada quente/fria habilitado para otimização de custos."
 	},
 	"reason": {
 		"en": "Hot/cold tier storage helps optimize costs by automatically moving less frequently accessed data to cheaper storage.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Hot/Cold-Tier-Speicher hilft bei der Kostenoptimierung, indem weniger häufig aufgerufene Daten automatisch in günstigeren Speicher verschoben werden.",
 		"es": "El almacenamiento de nivel caliente/frío ayuda a optimizar los costos al mover automáticamente los datos menos accedidos a un almacenamiento más barato.",
 		"fr": "Le stockage à niveaux chaud/froid aide à optimiser les coûts en déplaçant automatiquement les données moins fréquemment consultées vers un stockage moins cher.",
-		"pt": "O armazenamento de camada quente/fria ajuda a otimizar custos movendo automaticamente dados menos acessados para armazenamento mais barato.",
+		"pt": "O armazenamento de camada quente/fria ajuda a otimizar custos movendo automaticamente dados menos acessados para armazenamento mais barato."
 	},
 	"recommendation": {
 		"en": "Enable intelligent hot/cold tier storage for the Logstore.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Aktivieren Sie intelligentes Hot/Cold-Tier-Speicher für den Logstore.",
 		"es": "Habilite el almacenamiento inteligente de nivel caliente/frío para el Logstore.",
 		"fr": "Activez le stockage intelligent à niveaux chaud/froid pour le Logstore.",
-		"pt": "Habilite o armazenamento inteligente de camada quente/fria para o Logstore.",
+		"pt": "Habilite o armazenamento inteligente de camada quente/fria para o Logstore."
 	},
-	"resource_types": ["ALIYUN::SLS::Logstore"],
+	"resource_types": ["ALIYUN::SLS::Logstore"]
 }
 
 is_compliant(resource) if {

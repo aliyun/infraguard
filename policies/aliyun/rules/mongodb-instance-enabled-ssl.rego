@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "mongodb-instance-enabled-ssl",
+	"severity": "medium",
 	"name": {
 		"en": "MongoDB Instance SSL Enabled",
 		"zh": "MongoDB 实例开启 SSL 加密",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "MongoDB-Instanz SSL aktiviert",
 		"es": "SSL de Instancia MongoDB Habilitado",
 		"fr": "SSL d'Instance MongoDB Activé",
-		"pt": "SSL de Instância MongoDB Habilitado",
+		"pt": "SSL de Instância MongoDB Habilitado"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures MongoDB instances have SSL encryption enabled.",
 		"zh": "确保 MongoDB 实例开启了 SSL 加密。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass MongoDB-Instanzen SSL-Verschlüsselung aktiviert haben.",
 		"es": "Garantiza que las instancias MongoDB tengan cifrado SSL habilitado.",
 		"fr": "Garantit que les instances MongoDB ont le chiffrement SSL activé.",
-		"pt": "Garante que as instâncias MongoDB tenham criptografia SSL habilitada.",
+		"pt": "Garante que as instâncias MongoDB tenham criptografia SSL habilitada."
 	},
 	"reason": {
 		"en": "SSL protects data in transit between the client and the database.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "SSL schützt Daten während der Übertragung zwischen Client und Datenbank.",
 		"es": "SSL protege los datos en tránsito entre el cliente y la base de datos.",
 		"fr": "SSL protège les données en transit entre le client et la base de données.",
-		"pt": "SSL protege dados em trânsito entre o cliente e o banco de dados.",
+		"pt": "SSL protege dados em trânsito entre o cliente e o banco de dados."
 	},
 	"recommendation": {
 		"en": "Enable SSL for the MongoDB instance.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Aktivieren Sie SSL für die MongoDB-Instanz.",
 		"es": "Habilite SSL para la instancia MongoDB.",
 		"fr": "Activez SSL pour l'instance MongoDB.",
-		"pt": "Habilite SSL para a instância MongoDB.",
+		"pt": "Habilite SSL para a instância MongoDB."
 	},
-	"resource_types": ["ALIYUN::MONGODB::Instance"],
+	"resource_types": ["ALIYUN::MONGODB::Instance"]
 }
 
 is_compliant(resource) if {

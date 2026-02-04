@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "hbase-cluster-type-check",
+	"severity": "low",
 	"name": {
 		"en": "HBase Cluster Type Check",
 		"zh": "HBase 集群实例类型检测",
@@ -16,7 +17,6 @@ rule_meta := {
 		"fr": "Vérification du Type de Cluster HBase",
 		"pt": "Verificação de Tipo de Cluster HBase"
 	},
-	"severity": "low",
 	"description": {
 		"en": "Ensures that the HBase cluster is of a specified or recommended type.",
 		"zh": "确保 HBase 集群是指定的或推荐的类型。",
@@ -44,7 +44,7 @@ rule_meta := {
 		"fr": "Sélectionnez un type de cluster HBase recommandé.",
 		"pt": "Selecione um tipo de cluster HBase recomendado."
 	},
-	"resource_types": ["ALIYUN::HBase::Cluster"],
+	"resource_types": ["ALIYUN::HBase::Cluster"]
 }
 
 deny contains result if {

@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "ack-cluster-rrsa-enabled",
+	"severity": "medium",
 	"name": {
 		"en": "ACK Cluster RRSA Enabled",
 		"zh": "ACK 集群开启 RRSA",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "ACK-Cluster RRSA aktiviert",
 		"es": "RRSA del Cluster ACK Habilitado",
 		"fr": "RRSA du Cluster ACK Activé",
-		"pt": "RRSA do Cluster ACK Habilitado",
+		"pt": "RRSA do Cluster ACK Habilitado"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures that the RAM Roles for Service Accounts (RRSA) feature is enabled for the ACK cluster.",
 		"zh": "确保 ACK 集群开启了 RAM 角色注入(RRSA)功能。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass die RAM Roles for Service Accounts (RRSA)-Funktion für den ACK-Cluster aktiviert ist.",
 		"es": "Garantiza que la función RAM Roles for Service Accounts (RRSA) esté habilitada para el clúster ACK.",
 		"fr": "Garantit que la fonctionnalité RAM Roles for Service Accounts (RRSA) est activée pour le cluster ACK.",
-		"pt": "Garante que o recurso RAM Roles for Service Accounts (RRSA) está habilitado para o cluster ACK.",
+		"pt": "Garante que o recurso RAM Roles for Service Accounts (RRSA) está habilitado para o cluster ACK."
 	},
 	"reason": {
 		"en": "RRSA allows pods to assume RAM roles, providing a more secure and fine-grained way to manage permissions.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "RRSA ermöglicht es Pods, RAM-Rollen zu übernehmen, was eine sicherere und feinere Art der Berechtigungsverwaltung bietet.",
 		"es": "RRSA permite que los pods asuman roles RAM, proporcionando una forma más segura y granular de gestionar permisos.",
 		"fr": "RRSA permet aux pods d'assumer des rôles RAM, offrant une manière plus sécurisée et granulaire de gérer les permissions.",
-		"pt": "O RRSA permite que pods assumam funções RAM, fornecendo uma maneira mais segura e granular de gerenciar permissões.",
+		"pt": "O RRSA permite que pods assumam funções RAM, fornecendo uma maneira mais segura e granular de gerenciar permissões."
 	},
 	"recommendation": {
 		"en": "Enable RRSA for the ACK cluster.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Aktivieren Sie RRSA für den ACK-Cluster.",
 		"es": "Habilite RRSA para el clúster ACK.",
 		"fr": "Activez RRSA pour le cluster ACK.",
-		"pt": "Habilite RRSA para o cluster ACK.",
+		"pt": "Habilite RRSA para o cluster ACK."
 	},
-	"resource_types": ["ALIYUN::CS::ManagedKubernetesCluster", "ALIYUN::CS::AnyCluster"],
+	"resource_types": ["ALIYUN::CS::AnyCluster", "ALIYUN::CS::ManagedKubernetesCluster"]
 }
 
 deny contains result if {

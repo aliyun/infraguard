@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "ecs-instance-deletion-protection-enabled",
+	"severity": "high",
 	"name": {
 		"en": "ECS Instance Deletion Protection Enabled",
 		"zh": "ECS 实例开启释放保护",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "ECS-Instanz Löschschutz aktiviert",
 		"es": "Protección de Eliminación de Instancia ECS Habilitada",
 		"fr": "Protection contre la Suppression d'Instance ECS Activée",
-		"pt": "Proteção contra Exclusão de Instância ECS Habilitada",
+		"pt": "Proteção contra Exclusão de Instância ECS Habilitada"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures that ECS instances have deletion protection enabled.",
 		"zh": "确保 ECS 实例开启了释放保护。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass ECS-Instanzen Löschschutz aktiviert haben.",
 		"es": "Asegura que las instancias ECS tengan habilitada la protección contra eliminación.",
 		"fr": "Garantit que les instances ECS ont la protection contre la suppression activée.",
-		"pt": "Garante que as instâncias ECS tenham proteção contra exclusão habilitada.",
+		"pt": "Garante que as instâncias ECS tenham proteção contra exclusão habilitada."
 	},
 	"reason": {
 		"en": "If deletion protection is not enabled, the instance may be released accidentally, causing service interruption or data loss.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Wenn der Löschschutz nicht aktiviert ist, kann die Instanz versehentlich freigegeben werden, was zu Dienstunterbrechungen oder Datenverlust führt.",
 		"es": "Si la protección contra eliminación no está habilitada, la instancia puede ser liberada accidentalmente, causando interrupción del servicio o pérdida de datos.",
 		"fr": "Si la protection contre la suppression n'est pas activée, l'instance peut être libérée accidentellement, provoquant une interruption de service ou une perte de données.",
-		"pt": "Se a proteção contra exclusão não estiver habilitada, a instância pode ser liberada acidentalmente, causando interrupção do serviço ou perda de dados.",
+		"pt": "Se a proteção contra exclusão não estiver habilitada, a instância pode ser liberada acidentalmente, causando interrupção do serviço ou perda de dados."
 	},
 	"recommendation": {
 		"en": "Enable deletion protection for the ECS instance.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Aktivieren Sie den Löschschutz für die ECS-Instanz.",
 		"es": "Habilite la protección contra eliminación para la instancia ECS.",
 		"fr": "Activez la protection contre la suppression pour l'instance ECS.",
-		"pt": "Habilite proteção contra exclusão para a instância ECS.",
+		"pt": "Habilite proteção contra exclusão para a instância ECS."
 	},
-	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"],
+	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"]
 }
 
 is_compliant(resource) if {

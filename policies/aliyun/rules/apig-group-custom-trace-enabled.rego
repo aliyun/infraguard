@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "apig-group-custom-trace-enabled",
+	"severity": "low",
 	"name": {
 		"en": "API Gateway Group Custom Trace Enabled",
 		"zh": "API 分组自定义追踪启用",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "API Gateway Gruppe Benutzerdefinierte Verfolgung aktiviert",
 		"es": "Rastreo Personalizado de Grupo de API Gateway Habilitado",
 		"fr": "Traçage Personnalisé du Groupe API Gateway Activé",
-		"pt": "Rastreamento Personalizado do Grupo API Gateway Habilitado",
+		"pt": "Rastreamento Personalizado do Grupo API Gateway Habilitado"
 	},
-	"severity": "low",
 	"description": {
 		"en": "Ensures API Gateway groups have custom tracing enabled.",
 		"zh": "确保 API 网关分组启用了自定义追踪功能。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass API Gateway-Gruppen benutzerdefinierte Verfolgung aktiviert haben.",
 		"es": "Garantiza que los grupos de API Gateway tengan rastreo personalizado habilitado.",
 		"fr": "Garantit que les groupes API Gateway ont le traçage personnalisé activé.",
-		"pt": "Garante que os grupos do API Gateway tenham rastreamento personalizado habilitado.",
+		"pt": "Garante que os grupos do API Gateway tenham rastreamento personalizado habilitado."
 	},
 	"reason": {
 		"en": "Custom tracing enables better debugging and performance analysis.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Benutzerdefinierte Verfolgung ermöglicht besseres Debugging und Leistungsanalyse.",
 		"es": "El rastreo personalizado permite un mejor depuración y análisis de rendimiento.",
 		"fr": "Le traçage personnalisé permet un meilleur débogage et une meilleure analyse des performances.",
-		"pt": "O rastreamento personalizado permite melhor depuração e análise de desempenho.",
+		"pt": "O rastreamento personalizado permite melhor depuração e análise de desempenho."
 	},
 	"recommendation": {
 		"en": "Enable custom tracing for API Gateway groups.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Aktivieren Sie benutzerdefinierte Verfolgung für API Gateway-Gruppen.",
 		"es": "Habilite el rastreo personalizado para los grupos de API Gateway.",
 		"fr": "Activez le traçage personnalisé pour les groupes API Gateway.",
-		"pt": "Habilite o rastreamento personalizado para os grupos do API Gateway.",
+		"pt": "Habilite o rastreamento personalizado para os grupos do API Gateway."
 	},
-	"resource_types": ["ALIYUN::ApiGateway::Group"],
+	"resource_types": ["ALIYUN::ApiGateway::Group"]
 }
 
 deny contains result if {

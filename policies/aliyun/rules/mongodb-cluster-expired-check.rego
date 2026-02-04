@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "mongodb-cluster-expired-check",
+	"severity": "high",
 	"name": {
 		"en": "MongoDB Instance Expiration Check",
 		"zh": "MongoDB 实例到期检查",
@@ -15,7 +16,6 @@ rule_meta := {
 		"fr": "Vérification d'Expiration de l'Instance MongoDB",
 		"pt": "Verificação de Expiração da Instância MongoDB"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Prepaid MongoDB instances should have auto-renewal enabled.",
 		"zh": "预付费 MongoDB 实例应开启自动续费，避免业务中断。",
@@ -43,7 +43,7 @@ rule_meta := {
 		"fr": "Activez le renouvellement automatique pour l'instance MongoDB prépayée en définissant AutoRenew sur true.",
 		"pt": "Habilite a renovação automática para a instância MongoDB pré-paga definindo AutoRenew como true."
 	},
-	"resource_types": ["ALIYUN::MONGODB::Instance"],
+	"resource_types": ["ALIYUN::MONGODB::Instance"]
 }
 
 is_prepaid(resource) if {

@@ -5,6 +5,7 @@ import rego.v1
 # Rule metadata with i18n support
 rule_meta := {
 	"id": "parameter-sensitive-noecho-check",
+	"severity": "high",
 	"name": {
 		"en": "Sensitive Parameters Must Have NoEcho",
 		"zh": "敏感参数必须配置 NoEcho",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "Sensible Parameter müssen NoEcho haben",
 		"es": "Los Parámetros Sensibles Deben Tener NoEcho",
 		"fr": "Les Paramètres Sensibles Doivent Avoir NoEcho",
-		"pt": "Parâmetros Sensíveis Devem Ter NoEcho",
+		"pt": "Parâmetros Sensíveis Devem Ter NoEcho"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Template parameters that contain sensitive information (passwords, API keys, secrets) must be protected by either setting NoEcho to true or using valid AssociationProperty values to prevent them from being displayed in plain text.",
 		"zh": "包含敏感信息（密码、API 密钥、密钥等）的模板参数必须通过设置 NoEcho 为 true 或使用有效的 AssociationProperty 值来保护，以防止以明文形式显示。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Vorlagenparameter, die sensible Informationen (Passwörter, API-Schlüssel, Geheimnisse) enthalten, müssen geschützt werden, indem NoEcho auf true gesetzt oder gültige AssociationProperty-Werte verwendet werden, um zu verhindern, dass sie im Klartext angezeigt werden.",
 		"es": "Los parámetros de plantilla que contienen información sensible (contraseñas, claves API, secretos) deben protegerse estableciendo NoEcho en true o usando valores válidos de AssociationProperty para evitar que se muestren en texto plano.",
 		"fr": "Les paramètres de modèle qui contiennent des informations sensibles (mots de passe, clés API, secrets) doivent être protégés en définissant NoEcho sur true ou en utilisant des valeurs AssociationProperty valides pour éviter qu'ils ne soient affichés en texte clair.",
-		"pt": "Parâmetros de template que contêm informações sensíveis (senhas, chaves de API, segredos) devem ser protegidos definindo NoEcho como true ou usando valores válidos de AssociationProperty para evitar que sejam exibidos em texto plano.",
+		"pt": "Parâmetros de template que contêm informações sensíveis (senhas, chaves de API, segredos) devem ser protegidos definindo NoEcho como true ou usando valores válidos de AssociationProperty para evitar que sejam exibidos em texto plano."
 	},
 	"reason": {
 		"en": "Sensitive parameters without proper protection (NoEcho or valid AssociationProperty) may be exposed in logs, console output, or API responses, leading to security risks.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Sensible Parameter ohne angemessenen Schutz (NoEcho oder gültige AssociationProperty) können in Protokollen, Konsolenausgaben oder API-Antworten offengelegt werden, was zu Sicherheitsrisiken führt.",
 		"es": "Los parámetros sensibles sin protección adecuada (NoEcho o AssociationProperty válido) pueden exponerse en registros, salida de consola o respuestas de API, lo que genera riesgos de seguridad.",
 		"fr": "Les paramètres sensibles sans protection adéquate (NoEcho ou AssociationProperty valide) peuvent être exposés dans les journaux, la sortie de la console ou les réponses API, ce qui entraîne des risques de sécurité.",
-		"pt": "Parâmetros sensíveis sem proteção adequada (NoEcho ou AssociationProperty válido) podem ser expostos em logs, saída do console ou respostas de API, levando a riscos de segurança.",
+		"pt": "Parâmetros sensíveis sem proteção adequada (NoEcho ou AssociationProperty válido) podem ser expostos em logs, saída do console ou respostas de API, levando a riscos de segurança."
 	},
 	"recommendation": {
 		"en": "For all sensitive parameters (those containing password, apikey, secret, etc.), either set NoEcho to true or use valid AssociationProperty values such as ALIYUN::ECS::Instance::Password, ALIYUN::Bailian::ApiKey::ApiKeyInfo, or ALIYUN::DashScope::ApiKey.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Für alle sensiblen Parameter (diejenigen, die password, apikey, secret usw. enthalten) setzen Sie entweder NoEcho auf true oder verwenden Sie gültige AssociationProperty-Werte wie ALIYUN::ECS::Instance::Password, ALIYUN::Bailian::ApiKey::ApiKeyInfo oder ALIYUN::DashScope::ApiKey.",
 		"es": "Para todos los parámetros sensibles (aquellos que contienen password, apikey, secret, etc.), establezca NoEcho en true o use valores válidos de AssociationProperty como ALIYUN::ECS::Instance::Password, ALIYUN::Bailian::ApiKey::ApiKeyInfo o ALIYUN::DashScope::ApiKey.",
 		"fr": "Pour tous les paramètres sensibles (ceux contenant password, apikey, secret, etc.), définissez NoEcho sur true ou utilisez des valeurs AssociationProperty valides telles que ALIYUN::ECS::Instance::Password, ALIYUN::Bailian::ApiKey::ApiKeyInfo ou ALIYUN::DashScope::ApiKey.",
-		"pt": "Para todos os parâmetros sensíveis (aqueles que contêm password, apikey, secret, etc.), defina NoEcho como true ou use valores válidos de AssociationProperty como ALIYUN::ECS::Instance::Password, ALIYUN::Bailian::ApiKey::ApiKeyInfo ou ALIYUN::DashScope::ApiKey.",
+		"pt": "Para todos os parâmetros sensíveis (aqueles que contêm password, apikey, secret, etc.), defina NoEcho como true ou use valores válidos de AssociationProperty como ALIYUN::ECS::Instance::Password, ALIYUN::Bailian::ApiKey::ApiKeyInfo ou ALIYUN::DashScope::ApiKey."
 	},
-	"resource_types": [],
+	"resource_types": []
 }
 
 # Sensitive keywords to detect in parameter names

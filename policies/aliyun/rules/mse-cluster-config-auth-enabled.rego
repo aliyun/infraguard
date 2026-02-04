@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "mse-cluster-config-auth-enabled",
+	"severity": "medium",
 	"name": {
 		"en": "MSE Cluster Config Auth Enabled",
 		"zh": "MSE 集群配置中心开启鉴权",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "MSE-Cluster Config Auth aktiviert",
 		"es": "Autenticación de Configuración de Clúster MSE Habilitada",
 		"fr": "Authentification de Configuration de Cluster MSE Activée",
-		"pt": "Autenticação de Configuração de Cluster MSE Habilitada",
+		"pt": "Autenticação de Configuração de Cluster MSE Habilitada"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures that the Microservices Engine (MSE) cluster configuration center has authentication enabled.",
 		"zh": "确保微服务引擎(MSE)集群配置中心已开启鉴权。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass das Konfigurationszentrum des Microservices Engine (MSE)-Clusters Authentifizierung aktiviert hat.",
 		"es": "Garantiza que el centro de configuración del clúster del Motor de Microservicios (MSE) tenga autenticación habilitada.",
 		"fr": "Garantit que le centre de configuration du cluster du moteur de microservices (MSE) a l'authentification activée.",
-		"pt": "Garante que o centro de configuração do cluster do Motor de Microserviços (MSE) tenha autenticação habilitada.",
+		"pt": "Garante que o centro de configuração do cluster do Motor de Microserviços (MSE) tenha autenticação habilitada."
 	},
 	"reason": {
 		"en": "Enabling authentication prevents unauthorized access to service configurations.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Die Aktivierung der Authentifizierung verhindert unbefugten Zugriff auf Dienstkonfigurationen.",
 		"es": "Habilitar la autenticación previene el acceso no autorizado a las configuraciones del servicio.",
 		"fr": "L'activation de l'authentification empêche l'accès non autorisé aux configurations de service.",
-		"pt": "Habilitar a autenticação impede o acesso não autorizado às configurações do serviço.",
+		"pt": "Habilitar a autenticação impede o acesso não autorizado às configurações do serviço."
 	},
 	"recommendation": {
 		"en": "Enable authentication for the MSE cluster configuration center.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Aktivieren Sie die Authentifizierung für das MSE-Cluster-Konfigurationszentrum.",
 		"es": "Habilite la autenticación para el centro de configuración del clúster MSE.",
 		"fr": "Activez l'authentification pour le centre de configuration du cluster MSE.",
-		"pt": "Habilite a autenticação para o centro de configuração do cluster MSE.",
+		"pt": "Habilite a autenticação para o centro de configuração do cluster MSE."
 	},
-	"resource_types": ["ALIYUN::MSE::Cluster"],
+	"resource_types": ["ALIYUN::MSE::Cluster"]
 }
 
 deny contains result if {

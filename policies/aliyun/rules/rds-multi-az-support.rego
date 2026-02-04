@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "rds-multi-az-support",
+	"severity": "medium",
 	"name": {
 		"en": "RDS Instance Multi-AZ Deployment",
 		"zh": "RDS 实例多可用区部署",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "RDS-Instanz Multi-AZ-Bereitstellung",
 		"es": "Despliegue Multi-AZ de Instancia RDS",
 		"fr": "Déploiement Multi-AZ d'Instance RDS",
-		"pt": "Implantação Multi-AZ de Instância RDS",
+		"pt": "Implantação Multi-AZ de Instância RDS"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "RDS instances should be deployed in multi-AZ configuration for high availability and automatic failover.",
 		"zh": "RDS 实例应部署在多可用区配置中，以实现高可用性和自动故障转移。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "RDS-Instanzen sollten für hohe Verfügbarkeit und automatisches Failover in Multi-AZ-Konfiguration bereitgestellt werden.",
 		"es": "Las instancias RDS deben implementarse en configuración multi-AZ para alta disponibilidad y conmutación por error automática.",
 		"fr": "Les instances RDS doivent être déployées en configuration multi-AZ pour une haute disponibilité et un basculement automatique.",
-		"pt": "Instâncias RDS devem ser implantadas em configuração multi-AZ para alta disponibilidade e failover automático.",
+		"pt": "Instâncias RDS devem ser implantadas em configuração multi-AZ para alta disponibilidade e failover automático."
 	},
 	"reason": {
 		"en": "The RDS instance is not deployed in multi-AZ configuration, which may affect availability during zone failures.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Die RDS-Instanz ist nicht in Multi-AZ-Konfiguration bereitgestellt, was die Verfügbarkeit bei Zonenausfällen beeinträchtigen kann.",
 		"es": "La instancia RDS no está implementada en configuración multi-AZ, lo que puede afectar la disponibilidad durante fallas de zona.",
 		"fr": "L'instance RDS n'est pas déployée en configuration multi-AZ, ce qui peut affecter la disponibilité lors de pannes de zone.",
-		"pt": "A instância RDS não está implantada em configuração multi-AZ, o que pode afetar a disponibilidade durante falhas de zona.",
+		"pt": "A instância RDS não está implantada em configuração multi-AZ, o que pode afetar a disponibilidade durante falhas de zona."
 	},
 	"recommendation": {
 		"en": "Enable multi-AZ deployment by setting MultiAZ to true when creating the instance.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Aktivieren Sie Multi-AZ-Bereitstellung, indem Sie MultiAZ beim Erstellen der Instanz auf true setzen.",
 		"es": "Habilite la implementación multi-AZ estableciendo MultiAZ en true al crear la instancia.",
 		"fr": "Activez le déploiement multi-AZ en définissant MultiAZ sur true lors de la création de l'instance.",
-		"pt": "Habilite implantação multi-AZ definindo MultiAZ como true ao criar a instância.",
+		"pt": "Habilite implantação multi-AZ definindo MultiAZ como true ao criar a instância."
 	},
-	"resource_types": ["ALIYUN::RDS::DBInstance"],
+	"resource_types": ["ALIYUN::RDS::DBInstance"]
 }
 
 # Check if instance has multi-AZ enabled

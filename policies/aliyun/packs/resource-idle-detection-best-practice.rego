@@ -15,7 +15,7 @@ pack_meta := {
 		"de": "Ressourcen-Leerlauf-Erkennung Best Practices",
 		"es": "Mejores Prácticas de Detección de Recursos Inactivos",
 		"fr": "Meilleures Pratiques de Détection des Ressources Inactives",
-		"pt": "Melhores Práticas de Detecção de Recursos Inativos",
+		"pt": "Melhores Práticas de Detecção de Recursos Inativos"
 	},
 	"description": {
 		"en": "Detect common cloud resources that are idle after purchase, involving EIP, shared bandwidth, VPC, VPN and other cloud products. Idle resources lead to enterprise cost waste and should be identified and managed in time.",
@@ -24,9 +24,9 @@ pack_meta := {
 		"de": "Erkennung gängiger Cloud-Ressourcen, die nach dem Kauf im Leerlauf sind, einschließlich EIP, gemeinsam genutzter Bandbreite, VPC, VPN und anderen Cloud-Produkten. Leerlaufende Ressourcen führen zu Unternehmenskostenverschwendung und sollten rechtzeitig identifiziert und verwaltet werden.",
 		"es": "Detecta recursos en la nube comunes que están inactivos después de la compra, involucrando EIP, ancho de banda compartido, VPC, VPN y otros productos en la nube. Los recursos inactivos conducen al desperdicio de costos empresariales y deben identificarse y gestionarse a tiempo.",
 		"fr": "Détecte les ressources cloud courantes qui sont inactives après l'achat, impliquant EIP, bande passante partagée, VPC, VPN et d'autres produits cloud. Les ressources inactives entraînent un gaspillage des coûts d'entreprise et doivent être identifiées et gérées à temps.",
-		"pt": "Detecta recursos em nuvem comuns que estão inativos após a compra, envolvendo EIP, largura de banda compartilhada, VPC, VPN e outros produtos em nuvem. Recursos inativos levam ao desperdício de custos empresariais e devem ser identificados e gerenciados a tempo.",
+		"pt": "Detecta recursos em nuvem comuns que estão inativos após a compra, envolvendo EIP, largura de banda compartilhada, VPC, VPN e outros produtos em nuvem. Recursos inativos levam ao desperdício de custos empresariais e devem ser identificados e gerenciados a tempo."
 	},
-	"rules": ["ecs-disk-idle-check"], # "cr-instance-idle-check", # "alb-instance-idle-check", # "cbwp-bandwidth-package-idle-check",
+	"rules": ["ecs-disk-idle-check"]
 	# "ecs-instance-status-no-stopped",  # Commented: ROS ECS::Instance does not support Status property
 	# "eip-idle-check",
 	# "nas-filesystem-idle-check",
@@ -34,5 +34,4 @@ pack_meta := {
 	# "intranet-natgateway-idle-check",
 	# "slb-instance-idle-check",
 	# "vpn-gateway-idle-check"
-
 }

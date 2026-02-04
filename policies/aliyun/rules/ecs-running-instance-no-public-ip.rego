@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "ecs-running-instance-no-public-ip",
+	"severity": "high",
 	"name": {
 		"en": "ECS Instance No Public IP",
 		"zh": "ECS 实例不分配公网 IP",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "ECS-Instanz Keine öffentliche IP",
 		"es": "Instancia ECS Sin IP Pública",
 		"fr": "Instance ECS Sans IP Publique",
-		"pt": "Instância ECS Sem IP Público",
+		"pt": "Instância ECS Sem IP Público"
 	},
-	"severity": "high",
 	"description": {
 		"en": "ECS instances should not have a public IP address to reduce direct internet exposure.",
 		"zh": "ECS 实例不应分配公网 IP，以减少直接暴露在互联网上的风险。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "ECS-Instanzen sollten keine öffentliche IP-Adresse haben, um die direkte Internetexposition zu reduzieren.",
 		"es": "Las instancias ECS no deben tener una dirección IP pública para reducir la exposición directa a Internet.",
 		"fr": "Les instances ECS ne doivent pas avoir d'adresse IP publique pour réduire l'exposition directe à Internet.",
-		"pt": "As instâncias ECS não devem ter um endereço IP público para reduzir a exposição direta à Internet.",
+		"pt": "As instâncias ECS não devem ter um endereço IP público para reduzir a exposição direta à Internet."
 	},
 	"reason": {
 		"en": "Public IP addresses allow direct access from the internet, increasing the attack surface.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Öffentliche IP-Adressen ermöglichen direkten Zugriff aus dem Internet und erhöhen die Angriffsfläche.",
 		"es": "Las direcciones IP públicas permiten acceso directo desde Internet, aumentando la superficie de ataque.",
 		"fr": "Les adresses IP publiques permettent un accès direct depuis Internet, augmentant la surface d'attaque.",
-		"pt": "Endereços IP públicos permitem acesso direto da Internet, aumentando a superfície de ataque.",
+		"pt": "Endereços IP públicos permitem acesso direto da Internet, aumentando a superfície de ataque."
 	},
 	"recommendation": {
 		"en": "Remove public IP assignment by setting AllocatePublicIP to false or using a NAT gateway for egress.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Entfernen Sie die öffentliche IP-Zuweisung, indem Sie AllocatePublicIP auf false setzen oder ein NAT-Gateway für den Ausgang verwenden.",
 		"es": "Elimine la asignación de IP pública estableciendo AllocatePublicIP en false o usando una puerta de enlace NAT para la salida.",
 		"fr": "Supprimez l'attribution d'IP publique en définissant AllocatePublicIP sur false ou en utilisant une passerelle NAT pour la sortie.",
-		"pt": "Remova a atribuição de IP público definindo AllocatePublicIP como false ou usando um gateway NAT para saída.",
+		"pt": "Remova a atribuição de IP público definindo AllocatePublicIP como false ou usando um gateway NAT para saída."
 	},
-	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"],
+	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"]
 }
 
 # Check if the instance has a public IP allocated

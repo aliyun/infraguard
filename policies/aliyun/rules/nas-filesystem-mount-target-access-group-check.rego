@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "nas-filesystem-mount-target-access-group-check",
+	"severity": "medium",
 	"name": {
 		"en": "NAS Mount Target Access Group Check",
 		"zh": "NAS 挂载点禁用默认权限组",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "NAS-Mount-Ziel Zugriffsgruppenprüfung",
 		"es": "Verificación de Grupo de Acceso de Objetivo de Montaje NAS",
 		"fr": "Vérification du Groupe d'Accès de Cible de Montage NAS",
-		"pt": "Verificação de Grupo de Acesso do Alvo de Montagem NAS",
+		"pt": "Verificação de Grupo de Acesso do Alvo de Montagem NAS"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures NAS mount targets do not use the 'DEFAULT_VPC_GROUP_NAME'.",
 		"zh": "确保 NAS 挂载点未使用'DEFAULT_VPC_GROUP_NAME'。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass NAS-Mount-Ziele 'DEFAULT_VPC_GROUP_NAME' nicht verwenden.",
 		"es": "Garantiza que los objetivos de montaje NAS no usen 'DEFAULT_VPC_GROUP_NAME'.",
 		"fr": "Garantit que les cibles de montage NAS n'utilisent pas 'DEFAULT_VPC_GROUP_NAME'.",
-		"pt": "Garante que os alvos de montagem NAS não usem 'DEFAULT_VPC_GROUP_NAME'.",
+		"pt": "Garante que os alvos de montagem NAS não usem 'DEFAULT_VPC_GROUP_NAME'."
 	},
 	"reason": {
 		"en": "The default access group may have overly permissive rules.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Die Standard-Zugriffsgruppe kann übermäßig permissive Regeln haben.",
 		"es": "El grupo de acceso predeterminado puede tener reglas excesivamente permisivas.",
 		"fr": "Le groupe d'accès par défaut peut avoir des règles trop permissives.",
-		"pt": "O grupo de acesso padrão pode ter regras excessivamente permissivas.",
+		"pt": "O grupo de acesso padrão pode ter regras excessivamente permissivas."
 	},
 	"recommendation": {
 		"en": "Use a custom access group with restricted rules for NAS mount targets.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Verwenden Sie eine benutzerdefinierte Zugriffsgruppe mit eingeschränkten Regeln für NAS-Mount-Ziele.",
 		"es": "Use un grupo de acceso personalizado con reglas restringidas para objetivos de montaje NAS.",
 		"fr": "Utilisez un groupe d'accès personnalisé avec des règles restreintes pour les cibles de montage NAS.",
-		"pt": "Use um grupo de acesso personalizado com regras restritas para alvos de montagem NAS.",
+		"pt": "Use um grupo de acesso personalizado com regras restritas para alvos de montagem NAS."
 	},
-	"resource_types": ["ALIYUN::NAS::MountTarget"],
+	"resource_types": ["ALIYUN::NAS::MountTarget"]
 }
 
 is_compliant(resource) if {

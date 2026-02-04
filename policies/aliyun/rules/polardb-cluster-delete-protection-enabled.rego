@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "polardb-cluster-delete-protection-enabled",
+	"severity": "medium",
 	"name": {
 		"en": "PolarDB Cluster Deletion Protection Enabled",
 		"zh": "PolarDB 集群开启删除保护",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "PolarDB-Cluster-Löschschutz aktiviert",
 		"es": "Protección contra Eliminación de Cluster PolarDB Habilitada",
 		"fr": "Protection contre la Suppression du Cluster PolarDB Activée",
-		"pt": "Proteção contra Exclusão de Cluster PolarDB Habilitada",
+		"pt": "Proteção contra Exclusão de Cluster PolarDB Habilitada"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures that PolarDB clusters have deletion protection enabled.",
 		"zh": "确保 PolarDB 集群开启了删除保护。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass PolarDB-Cluster den Löschschutz aktiviert haben.",
 		"es": "Garantiza que los clústeres PolarDB tengan protección contra eliminación habilitada.",
 		"fr": "Garantit que les clusters PolarDB ont la protection contre la suppression activée.",
-		"pt": "Garante que os clusters PolarDB tenham proteção contra exclusão habilitada.",
+		"pt": "Garante que os clusters PolarDB tenham proteção contra exclusão habilitada."
 	},
 	"reason": {
 		"en": "If deletion protection is not enabled, the PolarDB cluster may be released accidentally, causing data loss.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Wenn der Löschschutz nicht aktiviert ist, kann der PolarDB-Cluster versehentlich freigegeben werden, was zu Datenverlust führt.",
 		"es": "Si la protección contra eliminación no está habilitada, el clúster PolarDB puede ser liberado accidentalmente, causando pérdida de datos.",
 		"fr": "Si la protection contre la suppression n'est pas activée, le cluster PolarDB peut être libéré accidentellement, causant une perte de données.",
-		"pt": "Se a proteção contra exclusão não estiver habilitada, o cluster PolarDB pode ser liberado acidentalmente, causando perda de dados.",
+		"pt": "Se a proteção contra exclusão não estiver habilitada, o cluster PolarDB pode ser liberado acidentalmente, causando perda de dados."
 	},
 	"recommendation": {
 		"en": "Enable deletion protection for the PolarDB cluster.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Aktivieren Sie den Löschschutz für den PolarDB-Cluster.",
 		"es": "Habilite protección contra eliminación para el clúster PolarDB.",
 		"fr": "Activez la protection contre la suppression pour le cluster PolarDB.",
-		"pt": "Habilite proteção contra exclusão para o cluster PolarDB.",
+		"pt": "Habilite proteção contra exclusão para o cluster PolarDB."
 	},
-	"resource_types": ["ALIYUN::POLARDB::DBCluster"],
+	"resource_types": ["ALIYUN::POLARDB::DBCluster"]
 }
 
 is_compliant(resource) if {

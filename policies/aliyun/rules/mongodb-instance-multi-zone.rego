@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "mongodb-instance-multi-zone",
+	"severity": "medium",
 	"name": {
 		"en": "MongoDB Instance Multi-Zone Deployment",
 		"zh": "MongoDB 实例多可用区部署",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "MongoDB-Instanz Multi-Zone-Bereitstellung",
 		"es": "Despliegue Multi-Zona de Instancia MongoDB",
 		"fr": "Déploiement Multi-Zone d'Instance MongoDB",
-		"pt": "Implantações Multi-Zona de Instância MongoDB",
+		"pt": "Implantações Multi-Zona de Instância MongoDB"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "MongoDB instances should be deployed across multiple availability zones for high availability.",
 		"zh": "MongoDB 实例应部署在多个可用区。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "MongoDB-Instanzen sollten über mehrere Verfügbarkeitszonen hinweg für Hochverfügbarkeit bereitgestellt werden.",
 		"es": "Las instancias MongoDB deben desplegarse en múltiples zonas de disponibilidad para alta disponibilidad.",
 		"fr": "Les instances MongoDB doivent être déployées sur plusieurs zones de disponibilité pour une haute disponibilité.",
-		"pt": "As instâncias MongoDB devem ser implantadas em múltiplas zonas de disponibilidade para alta disponibilidade.",
+		"pt": "As instâncias MongoDB devem ser implantadas em múltiplas zonas de disponibilidade para alta disponibilidade."
 	},
 	"reason": {
 		"en": "The MongoDB instance is not configured with a secondary or hidden zone.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Die MongoDB-Instanz ist nicht mit einer sekundären oder versteckten Zone konfiguriert.",
 		"es": "La instancia MongoDB no está configurada con una zona secundaria u oculta.",
 		"fr": "L'instance MongoDB n'est pas configurée avec une zone secondaire ou cachée.",
-		"pt": "A instância MongoDB não está configurada com uma zona secundária ou oculta.",
+		"pt": "A instância MongoDB não está configurada com uma zona secundária ou oculta."
 	},
 	"recommendation": {
 		"en": "Configure SecondaryZoneId or HiddenZoneId to enable multi-zone deployment.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Konfigurieren Sie SecondaryZoneId oder HiddenZoneId, um Multi-Zone-Bereitstellung zu aktivieren.",
 		"es": "Configure SecondaryZoneId o HiddenZoneId para habilitar el despliegue multi-zona.",
 		"fr": "Configurez SecondaryZoneId ou HiddenZoneId pour activer le déploiement multi-zone.",
-		"pt": "Configure SecondaryZoneId ou HiddenZoneId para habilitar a implantação multi-zona.",
+		"pt": "Configure SecondaryZoneId ou HiddenZoneId para habilitar a implantação multi-zona."
 	},
-	"resource_types": ["ALIYUN::MONGODB::Instance"],
+	"resource_types": ["ALIYUN::MONGODB::Instance"]
 }
 
 # Check if instance is multi-zone

@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "kafka-instance-multi-zone",
+	"severity": "medium",
 	"name": {
 		"en": "Kafka Instance Multi-Zone Deployment",
 		"zh": "使用多可用区的消息队列 Kafka 版实例",
@@ -16,7 +17,6 @@ rule_meta := {
 		"fr": "Déploiement Multi-Zone de l'Instance Kafka",
 		"pt": "Implantação Multi-Zona da Instância Kafka"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Kafka instances should be deployed across multiple availability zones for high availability.",
 		"zh": "使用多可用区的消息队列 Kafka 版实例，视为合规。",
@@ -44,7 +44,7 @@ rule_meta := {
 		"fr": "Activez CrossZone ou spécifiez au moins 2 zones dans SelectedZones.",
 		"pt": "Habilite CrossZone ou especifique pelo menos 2 zonas em SelectedZones."
 	},
-	"resource_types": ["ALIYUN::KAFKA::Instance"],
+	"resource_types": ["ALIYUN::KAFKA::Instance"]
 }
 
 # Check if instance is multi-zone

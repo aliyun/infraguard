@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "api-gateway-api-auth-required",
+	"severity": "medium",
 	"name": {
 		"en": "API Gateway API Auth Required",
 		"zh": "API 网关中配置 API 安全认证",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "API Gateway API-Authentifizierung erforderlich",
 		"es": "Autenticación de API del Gateway de API Requerida",
 		"fr": "Authentification API du Gateway API Requise",
-		"pt": "Autenticação de API do Gateway de API Obrigatória",
+		"pt": "Autenticação de API do Gateway de API Obrigatória"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures API Gateway APIs have authentication configured.",
 		"zh": "确保 API 网关中配置 API 安全认证为阿里云 APP 或使用指定的插件类型。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass API Gateway APIs Authentifizierung konfiguriert haben.",
 		"es": "Garantiza que las APIs del Gateway de API tengan autenticación configurada.",
 		"fr": "Garantit que les APIs du Gateway API ont l'authentification configurée.",
-		"pt": "Garante que as APIs do Gateway de API tenham autenticação configurada.",
+		"pt": "Garante que as APIs do Gateway de API tenham autenticação configurada."
 	},
 	"reason": {
 		"en": "Authentication prevents unauthorized access to APIs.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Authentifizierung verhindert unbefugten Zugriff auf APIs.",
 		"es": "La autenticación previene el acceso no autorizado a las APIs.",
 		"fr": "L'authentification empêche l'accès non autorisé aux APIs.",
-		"pt": "A autenticação impede acesso não autorizado às APIs.",
+		"pt": "A autenticação impede acesso não autorizado às APIs."
 	},
 	"recommendation": {
 		"en": "Enable authentication for all APIs.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Aktivieren Sie Authentifizierung für alle APIs.",
 		"es": "Habilite autenticación para todas las APIs.",
 		"fr": "Activez l'authentification pour toutes les APIs.",
-		"pt": "Habilite autenticação para todas as APIs.",
+		"pt": "Habilite autenticação para todas as APIs."
 	},
-	"resource_types": ["ALIYUN::ApiGateway::Api"],
+	"resource_types": ["ALIYUN::ApiGateway::Api"]
 }
 
 deny contains result if {

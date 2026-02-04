@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "fc-function-settings-check",
+	"severity": "medium",
 	"name": {
 		"en": "FC Function Settings Check",
 		"zh": "函数计算中函数设置满足参数指定要求",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "FC-Funktionseinstellungsprüfung",
 		"es": "Verificación de Configuración de Función FC",
 		"fr": "Vérification des Paramètres de Fonction FC",
-		"pt": "Verificação de Configurações de Função FC",
+		"pt": "Verificação de Configurações de Função FC"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "FC function settings should meet specified requirements for optimal performance and security.",
 		"zh": "函数计算 2.0 中的函数设置满足参数指定的要求，视为合规。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "FC-Funktionseinstellungen sollten die angegebenen Anforderungen für optimale Leistung und Sicherheit erfüllen.",
 		"es": "Las configuraciones de función FC deben cumplir con los requisitos especificados para un rendimiento y seguridad óptimos.",
 		"fr": "Les paramètres de fonction FC doivent répondre aux exigences spécifiées pour des performances et une sécurité optimales.",
-		"pt": "As configurações de função FC devem atender aos requisitos especificados para desempenho e segurança ideais.",
+		"pt": "As configurações de função FC devem atender aos requisitos especificados para desempenho e segurança ideais."
 	},
 	"reason": {
 		"en": "The FC function settings may not meet the specified requirements.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Die FC-Funktionseinstellungen erfüllen möglicherweise nicht die angegebenen Anforderungen.",
 		"es": "Las configuraciones de función FC pueden no cumplir con los requisitos especificados.",
 		"fr": "Les paramètres de fonction FC peuvent ne pas répondre aux exigences spécifiées.",
-		"pt": "As configurações de função FC podem não atender aos requisitos especificados.",
+		"pt": "As configurações de função FC podem não atender aos requisitos especificados."
 	},
 	"recommendation": {
 		"en": "Review and update function settings according to your organization's requirements.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Überprüfen und aktualisieren Sie die Funktionseinstellungen gemäß den Anforderungen Ihrer Organisation.",
 		"es": "Revise y actualice la configuración de la función según los requisitos de su organización.",
 		"fr": "Examinez et mettez à jour les paramètres de fonction selon les exigences de votre organisation.",
-		"pt": "Revise e atualize as configurações da função de acordo com os requisitos da sua organização.",
+		"pt": "Revise e atualize as configurações da função de acordo com os requisitos da sua organização."
 	},
-	"resource_types": ["ALIYUN::FC::Function"],
+	"resource_types": ["ALIYUN::FC::Function"]
 }
 
 # Deny rule: FC functions should have valid settings

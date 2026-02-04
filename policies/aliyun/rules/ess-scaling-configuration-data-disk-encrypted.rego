@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "ess-scaling-configuration-data-disk-encrypted",
+	"severity": "high",
 	"name": {
 		"en": "ESS Scaling Configuration Data Disk Encryption",
 		"zh": "弹性伸缩配置中设置数据磁盘加密",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "ESS-Skalierungskonfiguration Datenfestplattenverschlüsselung",
 		"es": "Cifrado de Disco de Datos de Configuración de Escalado ESS",
 		"fr": "Chiffrement de Disque de Données de Configuration de Mise à l'Échelle ESS",
-		"pt": "Criptografia de Disco de Dados de Configuração de Escalonamento ESS",
+		"pt": "Criptografia de Disco de Dados de Configuração de Escalonamento ESS"
 	},
-	"severity": "high",
 	"description": {
 		"en": "ESS scaling configurations should enable data disk encryption to protect data at rest.",
 		"zh": "弹性伸缩配置中数据磁盘配置均设置为加密，视为合规。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "ESS-Skalierungskonfigurationen sollten Datenfestplattenverschlüsselung aktivieren, um ruhende Daten zu schützen.",
 		"es": "Las configuraciones de escalado ESS deben habilitar el cifrado de disco de datos para proteger los datos en reposo.",
 		"fr": "Les configurations de mise à l'échelle ESS doivent activer le chiffrement des disques de données pour protéger les données au repos.",
-		"pt": "As configurações de escalonamento ESS devem habilitar a criptografia de disco de dados para proteger dados em repouso.",
+		"pt": "As configurações de escalonamento ESS devem habilitar a criptografia de disco de dados para proteger dados em repouso."
 	},
 	"reason": {
 		"en": "The ESS scaling configuration has data disks that are not encrypted, which may expose sensitive data at rest.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Die ESS-Skalierungskonfiguration hat Datenfestplatten, die nicht verschlüsselt sind, was ruhende sensible Daten aussetzen kann.",
 		"es": "La configuración de escalado ESS tiene discos de datos que no están cifrados, lo que puede exponer datos sensibles en reposo.",
 		"fr": "La configuration de mise à l'échelle ESS a des disques de données qui ne sont pas chiffrés, ce qui peut exposer des données sensibles au repos.",
-		"pt": "A configuração de escalonamento ESS tem discos de dados que não estão criptografados, o que pode expor dados sensíveis em repouso.",
+		"pt": "A configuração de escalonamento ESS tem discos de dados que não estão criptografados, o que pode expor dados sensíveis em repouso."
 	},
 	"recommendation": {
 		"en": "Enable encryption for all data disks in the scaling configuration by setting DiskMappings[*].Encrypted to true.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Aktivieren Sie die Verschlüsselung für alle Datenfestplatten in der Skalierungskonfiguration, indem Sie DiskMappings[*].Encrypted auf true setzen.",
 		"es": "Habilite el cifrado para todos los discos de datos en la configuración de escalado estableciendo DiskMappings[*].Encrypted en true.",
 		"fr": "Activez le chiffrement pour tous les disques de données dans la configuration de mise à l'échelle en définissant DiskMappings[*].Encrypted sur true.",
-		"pt": "Habilite a criptografia para todos os discos de dados na configuração de escalonamento definindo DiskMappings[*].Encrypted como true.",
+		"pt": "Habilite a criptografia para todos os discos de dados na configuração de escalonamento definindo DiskMappings[*].Encrypted como true."
 	},
-	"resource_types": ["ALIYUN::ESS::ScalingConfiguration"],
+	"resource_types": ["ALIYUN::ESS::ScalingConfiguration"]
 }
 
 # Check if all data disks are encrypted

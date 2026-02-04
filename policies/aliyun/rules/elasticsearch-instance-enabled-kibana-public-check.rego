@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "elasticsearch-instance-enabled-kibana-public-check",
+	"severity": "high",
 	"name": {
 		"en": "Elasticsearch Instance Kibana Does Not Enable Public Access",
 		"zh": "Elasticsearch 实例 Kibana 未开启公网访问",
@@ -16,7 +17,6 @@ rule_meta := {
 		"fr": "L'Instance Elasticsearch Kibana N'Active Pas l'Accès Public",
 		"pt": "A Instância do Elasticsearch Kibana Não Habilita o Acesso Público"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures that Elasticsearch instance Kibana is not accessible from public networks.",
 		"zh": "Elasticsearch 实例 Kibana 未开启公网访问，视为合规。",
@@ -44,7 +44,7 @@ rule_meta := {
 		"fr": "Configurez Kibana pour n'autoriser l'accès qu'à partir du VPC ou d'IP spécifiques.",
 		"pt": "Configure Kibana para permitir acesso apenas de VPC ou IPs específicos."
 	},
-	"resource_types": ["ALIYUN::ElasticSearch::Instance"],
+	"resource_types": ["ALIYUN::ElasticSearch::Instance"]
 }
 
 # Check if Kibana public access is enabled

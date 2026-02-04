@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "ecs-instance-image-type-check",
+	"severity": "medium",
 	"name": {
 		"en": "ECS Instance Image Type Check",
 		"zh": "ECS 实例镜像来源核查",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "ECS-Instanz Bildtyp-Prüfung",
 		"es": "Verificación de Tipo de Imagen de Instancia ECS",
 		"fr": "Vérification du Type d'Image d'Instance ECS",
-		"pt": "Verificação de Tipo de Imagem de Instância ECS",
+		"pt": "Verificação de Tipo de Imagem de Instância ECS"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures ECS instances use images from authorized sources.",
 		"zh": "确保 ECS 实例使用来自授权来源的镜像。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass ECS-Instanzen Bilder aus autorisierten Quellen verwenden.",
 		"es": "Garantiza que las instancias ECS usen imágenes de fuentes autorizadas.",
 		"fr": "Garantit que les instances ECS utilisent des images provenant de sources autorisées.",
-		"pt": "Garante que as instâncias ECS usem imagens de fontes autorizadas.",
+		"pt": "Garante que as instâncias ECS usem imagens de fontes autorizadas."
 	},
 	"reason": {
 		"en": "Using untrusted image sources can introduce security vulnerabilities or malware.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Die Verwendung nicht vertrauenswürdiger Bildquellen kann Sicherheitslücken oder Malware einführen.",
 		"es": "Usar fuentes de imagen no confiables puede introducir vulnerabilidades de seguridad o malware.",
 		"fr": "Utiliser des sources d'images non fiables peut introduire des vulnérabilités de sécurité ou des logiciels malveillants.",
-		"pt": "Usar fontes de imagem não confiáveis pode introduzir vulnerabilidades de segurança ou malware.",
+		"pt": "Usar fontes de imagem não confiáveis pode introduzir vulnerabilidades de segurança ou malware."
 	},
 	"recommendation": {
 		"en": "Specify an authorized ImageId for the ECS instance.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Geben Sie eine autorisierte ImageId für die ECS-Instanz an.",
 		"es": "Especifique un ImageId autorizado para la instancia ECS.",
 		"fr": "Spécifiez un ImageId autorisé pour l'instance ECS.",
-		"pt": "Especifique um ImageId autorizado para a instância ECS.",
+		"pt": "Especifique um ImageId autorizado para a instância ECS."
 	},
-	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"],
+	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"]
 }
 
 is_compliant(resource) if {

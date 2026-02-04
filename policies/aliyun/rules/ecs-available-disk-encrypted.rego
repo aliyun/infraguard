@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "ecs-available-disk-encrypted",
+	"severity": "high",
 	"name": {
 		"en": "ECS Disk Encryption Enabled",
 		"zh": "可用的磁盘均已加密",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "ECS-Festplattenverschlüsselung aktiviert",
 		"es": "Cifrado de Disco ECS Habilitado",
 		"fr": "Chiffrement de Disque ECS Activé",
-		"pt": "Criptografia de Disco ECS Habilitada",
+		"pt": "Criptografia de Disco ECS Habilitada"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures that all ECS disks are encrypted.",
 		"zh": "确保所有 ECS 磁盘都已加密。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass alle ECS-Festplatten verschlüsselt sind.",
 		"es": "Garantiza que todos los discos ECS estén cifrados.",
 		"fr": "Garantit que tous les disques ECS sont chiffrés.",
-		"pt": "Garante que todos os discos ECS estejam criptografados.",
+		"pt": "Garante que todos os discos ECS estejam criptografados."
 	},
 	"reason": {
 		"en": "Encryption protects data at rest from unauthorized physical access or theft.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Verschlüsselung schützt ruhende Daten vor unbefugtem physischem Zugriff oder Diebstahl.",
 		"es": "El cifrado protege los datos en reposo del acceso físico no autorizado o el robo.",
 		"fr": "Le chiffrement protège les données au repos contre l'accès physique non autorisé ou le vol.",
-		"pt": "A criptografia protege dados em repouso contra acesso físico não autorizado ou roubo.",
+		"pt": "A criptografia protege dados em repouso contra acesso físico não autorizado ou roubo."
 	},
 	"recommendation": {
 		"en": "Set 'Encrypted' to true for all ECS disks.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Setzen Sie 'Encrypted' für alle ECS-Festplatten auf true.",
 		"es": "Establezca 'Encrypted' en true para todos los discos ECS.",
 		"fr": "Définissez 'Encrypted' sur true pour tous les disques ECS.",
-		"pt": "Defina 'Encrypted' como true para todos os discos ECS.",
+		"pt": "Defina 'Encrypted' como true para todos os discos ECS."
 	},
-	"resource_types": ["ALIYUN::ECS::Disk"],
+	"resource_types": ["ALIYUN::ECS::Disk"]
 }
 
 is_compliant(resource) if {

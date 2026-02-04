@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "vswitch-available-ip-count",
+	"severity": "medium",
 	"name": {
 		"en": "VSwitch Available IP Count Check",
 		"zh": "VSwitch 可用 IP 数量检测",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "VSwitch Verfügbare IP-Anzahlprüfung",
 		"es": "Verificación de Conteo de IP Disponibles de VSwitch",
 		"fr": "Vérification du Nombre d'IP Disponibles VSwitch",
-		"pt": "Verificação de Contagem de IP Disponível do VSwitch",
+		"pt": "Verificação de Contagem de IP Disponível do VSwitch"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures that the VSwitch has a sufficient number of available IP addresses.",
 		"zh": "确保 VSwitch 具有足够数量的可用 IP 地址。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass der VSwitch eine ausreichende Anzahl verfügbarer IP-Adressen hat.",
 		"es": "Garantiza que el VSwitch tenga un número suficiente de direcciones IP disponibles.",
 		"fr": "Garantit que le VSwitch a un nombre suffisant d'adresses IP disponibles.",
-		"pt": "Garante que o VSwitch tenha um número suficiente de endereços IP disponíveis.",
+		"pt": "Garante que o VSwitch tenha um número suficiente de endereços IP disponíveis."
 	},
 	"reason": {
 		"en": "Running out of available IP addresses prevents new resources from being created in the VSwitch.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Das Ausgehen verfügbarer IP-Adressen verhindert die Erstellung neuer Ressourcen im VSwitch.",
 		"es": "Agotar las direcciones IP disponibles impide crear nuevos recursos en el VSwitch.",
 		"fr": "L'épuisement des adresses IP disponibles empêche la création de nouvelles ressources dans le VSwitch.",
-		"pt": "Esgotar os endereços IP disponíveis impede a criação de novos recursos no VSwitch.",
+		"pt": "Esgotar os endereços IP disponíveis impede a criação de novos recursos no VSwitch."
 	},
 	"recommendation": {
 		"en": "Ensure that the VSwitch has enough available IP addresses or create a larger VSwitch.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Stellen Sie sicher, dass der VSwitch genügend verfügbare IP-Adressen hat oder erstellen Sie einen größeren VSwitch.",
 		"es": "Asegúrese de que el VSwitch tenga suficientes direcciones IP disponibles o cree un VSwitch más grande.",
 		"fr": "Assurez-vous que le VSwitch a suffisamment d'adresses IP disponibles ou créez un VSwitch plus grand.",
-		"pt": "Garanta que o VSwitch tenha endereços IP disponíveis suficientes ou crie um VSwitch maior.",
+		"pt": "Garanta que o VSwitch tenha endereços IP disponíveis suficientes ou crie um VSwitch maior."
 	},
-	"resource_types": ["ALIYUN::ECS::VSwitch"],
+	"resource_types": ["ALIYUN::ECS::VSwitch"]
 }
 
 deny contains result if {

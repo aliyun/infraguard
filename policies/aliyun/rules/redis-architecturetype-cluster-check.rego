@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "redis-architecturetype-cluster-check",
+	"severity": "medium",
 	"name": {
 		"en": "Redis Architecture Type Cluster Check",
 		"zh": "使用集群版的 Redis 实例",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "Redis-Architekturtyp Cluster-Prüfung",
 		"es": "Verificación de Tipo de Arquitectura de Clúster Redis",
 		"fr": "Vérification du Type d'Architecture de Cluster Redis",
-		"pt": "Verificação de Tipo de Arquitetura de Cluster Redis",
+		"pt": "Verificação de Tipo de Arquitetura de Cluster Redis"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures Redis instance uses cluster architecture type.",
 		"zh": "确保 Redis 实例的架构类型为集群版。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass die Redis-Instanz den Cluster-Architekturtyp verwendet.",
 		"es": "Garantiza que la instancia Redis use el tipo de arquitectura de clúster.",
 		"fr": "Garantit que l'instance Redis utilise le type d'architecture de cluster.",
-		"pt": "Garante que a instância Redis use o tipo de arquitetura de cluster.",
+		"pt": "Garante que a instância Redis use o tipo de arquitetura de cluster."
 	},
 	"reason": {
 		"en": "Cluster architecture provides better scalability and high availability.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Cluster-Architektur bietet bessere Skalierbarkeit und Hochverfügbarkeit.",
 		"es": "La arquitectura de clúster proporciona mejor escalabilidad y alta disponibilidad.",
 		"fr": "L'architecture de cluster offre une meilleure scalabilité et une haute disponibilité.",
-		"pt": "A arquitetura de cluster fornece melhor escalabilidade e alta disponibilidade.",
+		"pt": "A arquitetura de cluster fornece melhor escalabilidade e alta disponibilidade."
 	},
 	"recommendation": {
 		"en": "Use cluster architecture for Redis instance.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Verwenden Sie Cluster-Architektur für Redis-Instanz.",
 		"es": "Use arquitectura de clúster para la instancia Redis.",
 		"fr": "Utilisez l'architecture de cluster pour l'instance Redis.",
-		"pt": "Use arquitetura de cluster para a instância Redis.",
+		"pt": "Use arquitetura de cluster para a instância Redis."
 	},
-	"resource_types": ["ALIYUN::REDIS::Instance"],
+	"resource_types": ["ALIYUN::REDIS::Instance"]
 }
 
 is_compliant(resource) if {

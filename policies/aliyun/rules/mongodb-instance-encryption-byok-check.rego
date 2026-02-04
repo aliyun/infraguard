@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "mongodb-instance-encryption-byok-check",
+	"severity": "medium",
 	"name": {
 		"en": "MongoDB Instance Uses Custom Key for TDE",
 		"zh": "使用自定义密钥为 MongoDB 设置透明数据加密 TDE",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "MongoDB-Instanz verwendet benutzerdefinierten Schlüssel für TDE",
 		"es": "La Instancia MongoDB Usa Clave Personalizada para TDE",
 		"fr": "L'Instance MongoDB Utilise une Clé Personnalisée pour TDE",
-		"pt": "A Instância MongoDB Usa Chave Personalizada para TDE",
+		"pt": "A Instância MongoDB Usa Chave Personalizada para TDE"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures MongoDB instances use custom KMS keys for Transparent Data Encryption (TDE).",
 		"zh": "确保 MongoDB 实例使用自定义 KMS 密钥进行透明数据加密（TDE）。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass MongoDB-Instanzen benutzerdefinierte KMS-Schlüssel für Transparent Data Encryption (TDE) verwenden.",
 		"es": "Garantiza que las instancias MongoDB usen claves KMS personalizadas para Cifrado Transparente de Datos (TDE).",
 		"fr": "Garantit que les instances MongoDB utilisent des clés KMS personnalisées pour le Chiffrement Transparent des Données (TDE).",
-		"pt": "Garante que as instâncias MongoDB usem chaves KMS personalizadas para Criptografia Transparente de Dados (TDE).",
+		"pt": "Garante que as instâncias MongoDB usem chaves KMS personalizadas para Criptografia Transparente de Dados (TDE)."
 	},
 	"reason": {
 		"en": "Using customer-managed keys for TDE provides better control over encryption and enhances data security.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Die Verwendung von kundenseitig verwalteten Schlüsseln für TDE bietet eine bessere Kontrolle über die Verschlüsselung und verbessert die Datensicherheit.",
 		"es": "Usar claves administradas por el cliente para TDE proporciona un mejor control sobre el cifrado y mejora la seguridad de los datos.",
 		"fr": "L'utilisation de clés gérées par le client pour TDE offre un meilleur contrôle sur le chiffrement et améliore la sécurité des données.",
-		"pt": "Usar chaves gerenciadas pelo cliente para TDE fornece melhor controle sobre a criptografia e melhora a segurança dos dados.",
+		"pt": "Usar chaves gerenciadas pelo cliente para TDE fornece melhor controle sobre a criptografia e melhora a segurança dos dados."
 	},
 	"recommendation": {
 		"en": "Enable TDE with a custom KMS key for the MongoDB instance.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Aktivieren Sie TDE mit einem benutzerdefinierten KMS-Schlüssel für die MongoDB-Instanz.",
 		"es": "Habilite TDE con una clave KMS personalizada para la instancia MongoDB.",
 		"fr": "Activez TDE avec une clé KMS personnalisée pour l'instance MongoDB.",
-		"pt": "Habilite TDE com uma chave KMS personalizada para a instância MongoDB.",
+		"pt": "Habilite TDE com uma chave KMS personalizada para a instância MongoDB."
 	},
-	"resource_types": ["ALIYUN::MONGODB::Instance"],
+	"resource_types": ["ALIYUN::MONGODB::Instance"]
 }
 
 # Check if instance is Serverless type (not applicable)

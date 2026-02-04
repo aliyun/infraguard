@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "elasticsearch-instance-node-not-use-specified-spec",
+	"severity": "high",
 	"name": {
 		"en": "Elasticsearch Instance Does Not Use Deprecated Spec",
 		"zh": "未使用不推荐的 Elasticsearch 实例",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "Elasticsearch-Instanz verwendet keine veraltete Spezifikation",
 		"es": "La Instancia Elasticsearch No Usa Especificación Deprecada",
 		"fr": "L'Instance Elasticsearch N'utilise Pas de Spécification Dépréciée",
-		"pt": "A Instância Elasticsearch Não Usa Especificação Depreciada",
+		"pt": "A Instância Elasticsearch Não Usa Especificação Depreciada"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures that Elasticsearch instances do not use deprecated or unsupported node specifications.",
 		"zh": "未使用参数指定的 Elasticsearch 规格实例，视为合规。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass Elasticsearch-Instanzen keine veralteten oder nicht unterstützten Knotenspezifikationen verwenden.",
 		"es": "Garantiza que las instancias Elasticsearch no usen especificaciones de nodo deprecadas o no compatibles.",
 		"fr": "Garantit que les instances Elasticsearch n'utilisent pas de spécifications de nœud dépréciées ou non prises en charge.",
-		"pt": "Garante que as instâncias Elasticsearch não usem especificações de nó depreciadas ou não suportadas.",
+		"pt": "Garante que as instâncias Elasticsearch não usem especificações de nó depreciadas ou não suportadas."
 	},
 	"reason": {
 		"en": "Using deprecated Elasticsearch node specifications may lack support and security updates.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Die Verwendung veralteter Elasticsearch-Knotenspezifikationen kann zu fehlender Unterstützung und Sicherheitsupdates führen.",
 		"es": "Usar especificaciones de nodo Elasticsearch deprecadas puede carecer de soporte y actualizaciones de seguridad.",
 		"fr": "L'utilisation de spécifications de nœud Elasticsearch dépréciées peut manquer de support et de mises à jour de sécurité.",
-		"pt": "Usar especificações de nó Elasticsearch depreciadas pode faltar suporte e atualizações de segurança.",
+		"pt": "Usar especificações de nó Elasticsearch depreciadas pode faltar suporte e atualizações de segurança."
 	},
 	"recommendation": {
 		"en": "Upgrade to a supported Elasticsearch node specification.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Aktualisieren Sie auf eine unterstützte Elasticsearch-Knotenspezifikation.",
 		"es": "Actualice a una especificación de nodo Elasticsearch compatible.",
 		"fr": "Mettez à niveau vers une spécification de nœud Elasticsearch prise en charge.",
-		"pt": "Atualize para uma especificação de nó Elasticsearch suportada.",
+		"pt": "Atualize para uma especificação de nó Elasticsearch suportada."
 	},
-	"resource_types": ["ALIYUN::ElasticSearch::Instance"],
+	"resource_types": ["ALIYUN::ElasticSearch::Instance"]
 }
 
 # Default deprecated specs (should be parameterized in production)

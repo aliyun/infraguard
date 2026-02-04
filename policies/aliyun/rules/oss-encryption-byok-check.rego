@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "oss-encryption-byok-check",
+	"severity": "medium",
 	"name": {
 		"en": "OSS Bucket BYOK Encryption Check",
 		"zh": "OSS 存储空间使用自定义 KMS 密钥加密",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "OSS-Bucket BYOK-Verschlüsselungsprüfung",
 		"es": "Verificación de Cifrado BYOK de Bucket OSS",
 		"fr": "Vérification du Chiffrement BYOK de Bucket OSS",
-		"pt": "Verificação de Criptografia BYOK de Bucket OSS",
+		"pt": "Verificação de Criptografia BYOK de Bucket OSS"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "OSS buckets should use customer-managed KMS keys (BYOK - Bring Your Own Key) for encryption. This provides better control over encryption keys and meets compliance requirements.",
 		"zh": "OSS 存储空间应使用客户管理的 KMS 密钥（BYOK - 自带密钥）进行加密。这提供了对加密密钥的更好控制并满足合规要求。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "OSS-Buckets sollten kundenseitig verwaltete KMS-Schlüssel (BYOK - Bring Your Own Key) für die Verschlüsselung verwenden. Dies bietet eine bessere Kontrolle über Verschlüsselungsschlüssel und erfüllt Compliance-Anforderungen.",
 		"es": "Los buckets OSS deben usar claves KMS administradas por el cliente (BYOK - Bring Your Own Key) para el cifrado. Esto proporciona un mejor control sobre las claves de cifrado y cumple con los requisitos de cumplimiento.",
 		"fr": "Les buckets OSS doivent utiliser des clés KMS gérées par le client (BYOK - Bring Your Own Key) pour le chiffrement. Cela offre un meilleur contrôle sur les clés de chiffrement et répond aux exigences de conformité.",
-		"pt": "Buckets OSS devem usar chaves KMS gerenciadas pelo cliente (BYOK - Bring Your Own Key) para criptografia. Isso fornece melhor controle sobre chaves de criptografia e atende aos requisitos de conformidade.",
+		"pt": "Buckets OSS devem usar chaves KMS gerenciadas pelo cliente (BYOK - Bring Your Own Key) para criptografia. Isso fornece melhor controle sobre chaves de criptografia e atende aos requisitos de conformidade."
 	},
 	"reason": {
 		"en": "The OSS bucket does not use customer-managed KMS keys for encryption, which may not meet compliance requirements for key management.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Der OSS-Bucket verwendet keine kundenseitig verwalteten KMS-Schlüssel für die Verschlüsselung, was möglicherweise nicht den Compliance-Anforderungen für die Schlüsselverwaltung entspricht.",
 		"es": "El bucket OSS no usa claves KMS administradas por el cliente para el cifrado, lo que puede no cumplir con los requisitos de cumplimiento para la gestión de claves.",
 		"fr": "Le bucket OSS n'utilise pas de clés KMS gérées par le client pour le chiffrement, ce qui peut ne pas répondre aux exigences de conformité pour la gestion des clés.",
-		"pt": "O bucket OSS não usa chaves KMS gerenciadas pelo cliente para criptografia, o que pode não atender aos requisitos de conformidade para gerenciamento de chaves.",
+		"pt": "O bucket OSS não usa chaves KMS gerenciadas pelo cliente para criptografia, o que pode não atender aos requisitos de conformidade para gerenciamento de chaves."
 	},
 	"recommendation": {
 		"en": "Configure the OSS bucket to use customer-managed KMS keys by setting SSEAlgorithm to KMS and specifying a KMSMasterKeyID in ServerSideEncryptionConfiguration.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Konfigurieren Sie den OSS-Bucket so, dass er kundenseitig verwaltete KMS-Schlüssel verwendet, indem Sie SSEAlgorithm auf KMS setzen und eine KMSMasterKeyID in ServerSideEncryptionConfiguration angeben.",
 		"es": "Configure el bucket OSS para usar claves KMS administradas por el cliente estableciendo SSEAlgorithm en KMS y especificando un KMSMasterKeyID en ServerSideEncryptionConfiguration.",
 		"fr": "Configurez le bucket OSS pour utiliser des clés KMS gérées par le client en définissant SSEAlgorithm sur KMS et en spécifiant un KMSMasterKeyID dans ServerSideEncryptionConfiguration.",
-		"pt": "Configure o bucket OSS para usar chaves KMS gerenciadas pelo cliente definindo SSEAlgorithm como KMS e especificando um KMSMasterKeyID em ServerSideEncryptionConfiguration.",
+		"pt": "Configure o bucket OSS para usar chaves KMS gerenciadas pelo cliente definindo SSEAlgorithm como KMS e especificando um KMSMasterKeyID em ServerSideEncryptionConfiguration."
 	},
-	"resource_types": ["ALIYUN::OSS::Bucket"],
+	"resource_types": ["ALIYUN::OSS::Bucket"]
 }
 
 deny contains result if {

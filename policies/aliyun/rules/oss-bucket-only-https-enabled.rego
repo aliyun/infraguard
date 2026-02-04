@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "oss-bucket-only-https-enabled",
+	"severity": "high",
 	"name": {
 		"en": "OSS Bucket Only HTTPS Enabled",
 		"zh": "OSS 存储桶开启仅允许 HTTPS 访问",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "OSS-Bucket nur HTTPS aktiviert",
 		"es": "Solo HTTPS de Bucket OSS Habilitado",
 		"fr": "Seul HTTPS de Bucket OSS Activé",
-		"pt": "Apenas HTTPS de Bucket OSS Habilitado",
+		"pt": "Apenas HTTPS de Bucket OSS Habilitado"
 	},
-	"severity": "high",
 	"description": {
 		"en": "OSS bucket should have a policy that denies non-HTTPS requests to ensure data transport security.",
 		"zh": "OSS 存储桶应配置仅允许 HTTPS 访问的策略，以确保数据传输安全。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "OSS-Bucket sollte eine Richtlinie haben, die Nicht-HTTPS-Anfragen ablehnt, um die Datentransportsicherheit zu gewährleisten.",
 		"es": "El bucket OSS debe tener una política que niegue las solicitudes que no sean HTTPS para garantizar la seguridad del transporte de datos.",
 		"fr": "Le bucket OSS doit avoir une politique qui refuse les requêtes non-HTTPS pour assurer la sécurité du transport des données.",
-		"pt": "O bucket OSS deve ter uma política que negue solicitações não HTTPS para garantir a segurança do transporte de dados.",
+		"pt": "O bucket OSS deve ter uma política que negue solicitações não HTTPS para garantir a segurança do transporte de dados."
 	},
 	"reason": {
 		"en": "The OSS bucket allows non-HTTPS requests, which may lead to data interception or tampering during transport.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Der OSS-Bucket erlaubt Nicht-HTTPS-Anfragen, was zu Datenabfangen oder Manipulation während des Transports führen kann.",
 		"es": "El bucket OSS permite solicitudes que no sean HTTPS, lo que puede llevar a la interceptación o manipulación de datos durante el transporte.",
 		"fr": "Le bucket OSS autorise les requêtes non-HTTPS, ce qui peut entraîner une interception ou une falsification des données pendant le transport.",
-		"pt": "O bucket OSS permite solicitações não HTTPS, o que pode levar à interceptação ou adulteração de dados durante o transporte.",
+		"pt": "O bucket OSS permite solicitações não HTTPS, o que pode levar à interceptação ou adulteração de dados durante o transporte."
 	},
 	"recommendation": {
 		"en": "Configure a bucket policy that denies requests where 'acs:SecureTransport' is false.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Konfigurieren Sie eine Bucket-Richtlinie, die Anfragen ablehnt, bei denen 'acs:SecureTransport' false ist.",
 		"es": "Configure una política de bucket que niegue las solicitudes donde 'acs:SecureTransport' es false.",
 		"fr": "Configurez une politique de bucket qui refuse les requêtes où 'acs:SecureTransport' est false.",
-		"pt": "Configure uma política de bucket que negue solicitações onde 'acs:SecureTransport' é false.",
+		"pt": "Configure uma política de bucket que negue solicitações onde 'acs:SecureTransport' é false."
 	},
-	"resource_types": ["ALIYUN::OSS::Bucket"],
+	"resource_types": ["ALIYUN::OSS::Bucket"]
 }
 
 # Check if the bucket has a policy that enforces HTTPS

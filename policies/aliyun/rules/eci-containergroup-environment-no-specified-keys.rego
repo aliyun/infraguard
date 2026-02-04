@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "eci-containergroup-environment-no-specified-keys",
+	"severity": "high",
 	"name": {
 		"en": "ECI Container Group Does Not Contain Sensitive Environment Variables",
 		"zh": "ECI 容器组不包含敏感环境变量",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "ECI-Containergruppe enthält keine sensiblen Umgebungsvariablen",
 		"es": "El Grupo de Contenedores ECI No Contiene Variables de Entorno Sensibles",
 		"fr": "Le Groupe de Conteneurs ECI Ne Contient Pas de Variables d'Environnement Sensibles",
-		"pt": "Grupo de Contêineres ECI Não Contém Variáveis de Ambiente Sensíveis",
+		"pt": "Grupo de Contêineres ECI Não Contém Variáveis de Ambiente Sensíveis"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures that ECI container groups do not have sensitive environment variables like passwords or access keys.",
 		"zh": "ECI 容器组不包含敏感环境变量（如密码、AccessKey 等），视为合规。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass ECI-Containergruppen keine sensiblen Umgebungsvariablen wie Passwörter oder Zugriffsschlüssel haben.",
 		"es": "Garantiza que los grupos de contenedores ECI no tengan variables de entorno sensibles como contraseñas o claves de acceso.",
 		"fr": "Garantit que les groupes de conteneurs ECI n'ont pas de variables d'environnement sensibles comme les mots de passe ou les clés d'accès.",
-		"pt": "Garante que os grupos de contêineres ECI não tenham variáveis de ambiente sensíveis como senhas ou chaves de acesso.",
+		"pt": "Garante que os grupos de contêineres ECI não tenham variáveis de ambiente sensíveis como senhas ou chaves de acesso."
 	},
 	"reason": {
 		"en": "ECI container group contains sensitive environment variables, which may leak credentials.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "ECI-Containergruppe enthält sensible Umgebungsvariablen, die zu Anmeldedatenlecks führen können.",
 		"es": "El grupo de contenedores ECI contiene variables de entorno sensibles, lo que puede provocar la filtración de credenciales.",
 		"fr": "Le groupe de conteneurs ECI contient des variables d'environnement sensibles, ce qui peut entraîner une fuite d'identifiants.",
-		"pt": "O grupo de contêineres ECI contém variáveis de ambiente sensíveis, o que pode causar vazamento de credenciais.",
+		"pt": "O grupo de contêineres ECI contém variáveis de ambiente sensíveis, o que pode causar vazamento de credenciais."
 	},
 	"recommendation": {
 		"en": "Use Secrets or parameter store to manage sensitive environment variables.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Verwenden Sie Secrets oder Parameter Store, um sensible Umgebungsvariablen zu verwalten.",
 		"es": "Use Secrets o almacén de parámetros para gestionar variables de entorno sensibles.",
 		"fr": "Utilisez Secrets ou le magasin de paramètres pour gérer les variables d'environnement sensibles.",
-		"pt": "Use Secrets ou armazenamento de parâmetros para gerenciar variáveis de ambiente sensíveis.",
+		"pt": "Use Secrets ou armazenamento de parâmetros para gerenciar variáveis de ambiente sensíveis."
 	},
-	"resource_types": ["ALIYUN::ECI::ContainerGroup"],
+	"resource_types": ["ALIYUN::ECI::ContainerGroup"]
 }
 
 # Default sensitive environment variable keys

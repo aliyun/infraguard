@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata with i18n support
 rule_meta := {
 	"id": "ecs-security-group-type-not-normal",
+	"severity": "low",
 	"name": {
 		"en": "Use Enterprise Security Group Type",
 		"zh": "使用企业类型安全组",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "Unternehmens-Sicherheitsgruppentyp verwenden",
 		"es": "Usar Tipo de Grupo de Seguridad Empresarial",
 		"fr": "Utiliser le Type de Groupe de Sécurité Entreprise",
-		"pt": "Usar Tipo de Grupo de Segurança Empresarial",
+		"pt": "Usar Tipo de Grupo de Segurança Empresarial"
 	},
-	"severity": "low",
 	"description": {
 		"en": "ECS security group type should not be normal type. Using enterprise security group is considered compliant.",
 		"zh": "ECS 安全组类型非普通安全组，视为合规。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "Der ECS-Sicherheitsgruppentyp sollte nicht der normale Typ sein. Die Verwendung von Unternehmens-Sicherheitsgruppen gilt als konform.",
 		"es": "El tipo de grupo de seguridad ECS no debe ser tipo normal. Usar grupo de seguridad empresarial se considera conforme.",
 		"fr": "Le type de groupe de sécurité ECS ne doit pas être de type normal. L'utilisation d'un groupe de sécurité entreprise est considérée comme conforme.",
-		"pt": "O tipo de grupo de segurança ECS não deve ser tipo normal. Usar grupo de segurança empresarial é considerado conforme.",
+		"pt": "O tipo de grupo de segurança ECS não deve ser tipo normal. Usar grupo de segurança empresarial é considerado conforme."
 	},
 	"reason": {
 		"en": "The security group is using normal type instead of enterprise type, which may have limitations in functionality and performance.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Die Sicherheitsgruppe verwendet den normalen Typ anstelle des Unternehmenstyps, was Einschränkungen bei Funktionalität und Leistung haben kann.",
 		"es": "El grupo de seguridad está usando tipo normal en lugar de tipo empresarial, lo que puede tener limitaciones en funcionalidad y rendimiento.",
 		"fr": "Le groupe de sécurité utilise le type normal au lieu du type entreprise, ce qui peut avoir des limitations en termes de fonctionnalité et de performances.",
-		"pt": "O grupo de segurança está usando tipo normal em vez de tipo empresarial, o que pode ter limitações em funcionalidade e desempenho.",
+		"pt": "O grupo de segurança está usando tipo normal em vez de tipo empresarial, o que pode ter limitações em funcionalidade e desempenho."
 	},
 	"recommendation": {
 		"en": "Set SecurityGroupType property to 'enterprise' to use enterprise security group which provides better performance and more features.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Setzen Sie die Eigenschaft SecurityGroupType auf 'enterprise', um Unternehmens-Sicherheitsgruppen zu verwenden, die bessere Leistung und mehr Funktionen bieten.",
 		"es": "Establezca la propiedad SecurityGroupType en 'enterprise' para usar grupo de seguridad empresarial que proporciona mejor rendimiento y más funciones.",
 		"fr": "Définissez la propriété SecurityGroupType sur 'enterprise' pour utiliser un groupe de sécurité entreprise qui offre de meilleures performances et plus de fonctionnalités.",
-		"pt": "Defina a propriedade SecurityGroupType como 'enterprise' para usar grupo de segurança empresarial que oferece melhor desempenho e mais recursos.",
+		"pt": "Defina a propriedade SecurityGroupType como 'enterprise' para usar grupo de segurança empresarial que oferece melhor desempenho e mais recursos."
 	},
-	"resource_types": ["ALIYUN::ECS::SecurityGroup"],
+	"resource_types": ["ALIYUN::ECS::SecurityGroup"]
 }
 
 # Check if security group uses enterprise type

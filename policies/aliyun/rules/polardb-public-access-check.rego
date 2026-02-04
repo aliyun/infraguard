@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "polardb-public-access-check",
+	"severity": "high",
 	"name": {
 		"en": "PolarDB Public Access Check",
 		"zh": "PolarDB 实例 IP 白名单禁止设置为全网段",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "PolarDB Öffentlicher Zugriffsprüfung",
 		"es": "Verificación de Acceso Público de PolarDB",
 		"fr": "Vérification d'Accès Public PolarDB",
-		"pt": "Verificação de Acesso Público do PolarDB",
+		"pt": "Verificação de Acesso Público do PolarDB"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures PolarDB IP whitelist is not set to 0.0.0.0/0.",
 		"zh": "确保 PolarDB 实例 IP 白名单未设置为 0.0.0.0/0。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass die PolarDB-IP-Whitelist nicht auf 0.0.0.0/0 gesetzt ist.",
 		"es": "Garantiza que la lista blanca de IP de PolarDB no esté establecida en 0.0.0.0/0.",
 		"fr": "Garantit que la liste blanche IP PolarDB n'est pas définie sur 0.0.0.0/0.",
-		"pt": "Garante que a lista branca de IP do PolarDB não esteja definida como 0.0.0.0/0.",
+		"pt": "Garante que a lista branca de IP do PolarDB não esteja definida como 0.0.0.0/0."
 	},
 	"reason": {
 		"en": "Setting whitelist to 0.0.0.0/0 allows access from any IP, which is a severe security risk.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Das Setzen der Whitelist auf 0.0.0.0/0 erlaubt Zugriff von jeder IP, was ein schwerwiegendes Sicherheitsrisiko darstellt.",
 		"es": "Establecer la lista blanca en 0.0.0.0/0 permite el acceso desde cualquier IP, lo que es un riesgo de seguridad grave.",
 		"fr": "Définir la liste blanche sur 0.0.0.0/0 autorise l'accès depuis n'importe quelle IP, ce qui constitue un risque de sécurité grave.",
-		"pt": "Definir a lista branca como 0.0.0.0/0 permite acesso de qualquer IP, o que é um risco de segurança grave.",
+		"pt": "Definir a lista branca como 0.0.0.0/0 permite acesso de qualquer IP, o que é um risco de segurança grave."
 	},
 	"recommendation": {
 		"en": "Configure IP whitelist to restrict access to specific IPs.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Konfigurieren Sie die IP-Whitelist, um den Zugriff auf bestimmte IPs einzuschränken.",
 		"es": "Configure la lista blanca de IP para restringir el acceso a IPs específicas.",
 		"fr": "Configurez la liste blanche IP pour restreindre l'accès à des IP spécifiques.",
-		"pt": "Configure a lista branca de IP para restringir o acesso a IPs específicos.",
+		"pt": "Configure a lista branca de IP para restringir o acesso a IPs específicos."
 	},
-	"resource_types": ["ALIYUN::POLARDB::DBCluster"],
+	"resource_types": ["ALIYUN::POLARDB::DBCluster"]
 }
 
 is_compliant(resource) if {

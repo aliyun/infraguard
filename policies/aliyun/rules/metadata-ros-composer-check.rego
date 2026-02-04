@@ -5,6 +5,7 @@ import rego.v1
 # Rule metadata with i18n support
 rule_meta := {
 	"id": "metadata-ros-composer-check",
+	"severity": "low",
 	"name": {
 		"en": "Template Metadata ALIYUN::ROS::Composer Check",
 		"zh": "模板 Metadata ALIYUN::ROS::Composer 检查",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "Vorlagen-Metadaten ALIYUN::ROS::Composer Prüfung",
 		"es": "Verificación de Metadatos de Plantilla ALIYUN::ROS::Composer",
 		"fr": "Vérification des Métadonnées de Modèle ALIYUN::ROS::Composer",
-		"pt": "Verificação de Metadados de Modelo ALIYUN::ROS::Composer",
+		"pt": "Verificação de Metadados de Modelo ALIYUN::ROS::Composer"
 	},
-	"severity": "low",
 	"description": {
 		"en": "Template must have Metadata.ALIYUN::ROS::Composer configured. The value must be a dictionary (object).",
 		"zh": "模板必须配置 Metadata.ALIYUN::ROS::Composer。该值必须是字典（对象）类型。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Vorlage muss Metadata.ALIYUN::ROS::Composer konfiguriert haben. Der Wert muss ein Wörterbuch (Objekt) sein.",
 		"es": "La plantilla debe tener Metadata.ALIYUN::ROS::Composer configurado. El valor debe ser un diccionario (objeto).",
 		"fr": "Le modèle doit avoir Metadata.ALIYUN::ROS::Composer configuré. La valeur doit être un dictionnaire (objet).",
-		"pt": "O modelo deve ter Metadata.ALIYUN::ROS::Composer configurado. O valor deve ser um dicionário (objeto).",
+		"pt": "O modelo deve ter Metadata.ALIYUN::ROS::Composer configurado. O valor deve ser um dicionário (objeto)."
 	},
 	"reason": {
 		"en": "ALIYUN::ROS::Composer is missing or invalid. It must be configured as a dictionary.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "ALIYUN::ROS::Composer fehlt oder ist ungültig. Es muss als Wörterbuch konfiguriert werden.",
 		"es": "ALIYUN::ROS::Composer falta o no es válido. Debe configurarse como un diccionario.",
 		"fr": "ALIYUN::ROS::Composer est manquant ou invalide. Il doit être configuré comme un dictionnaire.",
-		"pt": "ALIYUN::ROS::Composer está ausente ou inválido. Deve ser configurado como um dicionário.",
+		"pt": "ALIYUN::ROS::Composer está ausente ou inválido. Deve ser configurado como um dicionário."
 	},
 	"recommendation": {
 		"en": "Use ROS Composer (https://ros.console.aliyun.com/composer) to import your template, configure the architecture diagram, and the composer metadata will be automatically generated.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Verwenden Sie ROS Composer (https://ros.console.aliyun.com/composer), um Ihre Vorlage zu importieren, das Architekturdiagramm zu konfigurieren, und die Composer-Metadaten werden automatisch generiert.",
 		"es": "Use ROS Composer (https://ros.console.aliyun.com/composer) para importar su plantilla, configurar el diagrama de arquitectura, y los metadatos del compositor se generarán automáticamente.",
 		"fr": "Utilisez ROS Composer (https://ros.console.aliyun.com/composer) pour importer votre modèle, configurer le diagramme d'architecture, et les métadonnées du compositeur seront automatiquement générées.",
-		"pt": "Use o ROS Composer (https://ros.console.aliyun.com/composer) para importar seu modelo, configurar o diagrama de arquitetura, e os metadados do compositor serão gerados automaticamente.",
+		"pt": "Use o ROS Composer (https://ros.console.aliyun.com/composer) para importar seu modelo, configurar o diagrama de arquitetura, e os metadados do compositor serão gerados automaticamente."
 	},
-	"resource_types": [],
+	"resource_types": []
 }
 
 # Check if ALIYUN::ROS::Composer exists and is valid

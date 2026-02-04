@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "ecs-instance-multiple-eni-check",
+	"severity": "low",
 	"name": {
 		"en": "ECS instance is bound to only one elastic network interface",
 		"zh": "ECS 实例仅绑定一个弹性网卡",
@@ -13,7 +14,7 @@ rule_meta := {
 		"de": "ECS-Instanz ist nur an eine elastische Netzwerkschnittstelle gebunden",
 		"es": "La Instancia ECS Está Vinculada Solo a Una Interfaz de Red Elástica",
 		"fr": "L'Instance ECS est Liée à Une Seule Interface Réseau Élastique",
-		"pt": "A Instância ECS Está Vinculada Apenas a Uma Interface de Rede Elástica",
+		"pt": "A Instância ECS Está Vinculada Apenas a Uma Interface de Rede Elástica"
 	},
 	"description": {
 		"en": "ECS instances are bound to only one elastic network interface, considered compliant. This helps simplify network configuration and reduce complexity.",
@@ -22,10 +23,8 @@ rule_meta := {
 		"de": "ECS-Instanzen sind nur an eine elastische Netzwerkschnittstelle gebunden, was als konform gilt. Dies hilft, die Netzwerkkonfiguration zu vereinfachen und die Komplexität zu reduzieren.",
 		"es": "Las instancias ECS están vinculadas solo a una interfaz de red elástica, considerado conforme. Esto ayuda a simplificar la configuración de red y reducir la complejidad.",
 		"fr": "Les instances ECS sont liées à une seule interface réseau élastique, considéré comme conforme. Cela aide à simplifier la configuration réseau et à réduire la complexité.",
-		"pt": "As instâncias ECS estão vinculadas apenas a uma interface de rede elástica, considerado conforme. Isso ajuda a simplificar a configuração de rede e reduzir a complexidade.",
+		"pt": "As instâncias ECS estão vinculadas apenas a uma interface de rede elástica, considerado conforme. Isso ajuda a simplificar a configuração de rede e reduzir a complexidade."
 	},
-	"severity": "low",
-	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"],
 	"reason": {
 		"en": "ECS instance is bound to multiple elastic network interfaces",
 		"zh": "ECS 实例绑定了多个弹性网卡",
@@ -33,7 +32,7 @@ rule_meta := {
 		"de": "ECS-Instanz ist an mehrere elastische Netzwerkschnittstellen gebunden",
 		"es": "La instancia ECS está vinculada a múltiples interfaces de red elásticas",
 		"fr": "L'instance ECS est liée à plusieurs interfaces réseau élastiques",
-		"pt": "A instância ECS está vinculada a múltiplas interfaces de rede elásticas",
+		"pt": "A instância ECS está vinculada a múltiplas interfaces de rede elásticas"
 	},
 	"recommendation": {
 		"en": "Simplify instance network configuration by using only one ENI",
@@ -42,8 +41,9 @@ rule_meta := {
 		"de": "Vereinfachen Sie die Instanznetzwerkkonfiguration, indem Sie nur eine ENI verwenden",
 		"es": "Simplifique la configuración de red de la instancia usando solo una ENI",
 		"fr": "Simplifiez la configuration réseau de l'instance en utilisant une seule ENI",
-		"pt": "Simplifique a configuração de rede da instância usando apenas uma ENI",
+		"pt": "Simplifique a configuração de rede da instância usando apenas uma ENI"
 	},
+	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"]
 }
 
 deny contains result if {

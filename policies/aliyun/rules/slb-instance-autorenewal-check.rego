@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "slb-instance-autorenewal-check",
+	"severity": "medium",
 	"name": {
 		"en": "SLB Instance Auto-Renewal Check",
 		"zh": "SLB 实例包年包月开启自动续费",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "SLB-Instanz Auto-Verlängerungsprüfung",
 		"es": "Verificación de Renovación Automática de Instancia SLB",
 		"fr": "Vérification de Renouvellement Automatique d'Instance SLB",
-		"pt": "Verificação de Renovação Automática de Instância SLB",
+		"pt": "Verificação de Renovação Automática de Instância SLB"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Prepaid SLB instances should have auto-renewal enabled to avoid service interruption.",
 		"zh": "包年包月的 SLB 实例开启了自动续费，视为合规。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Vorausbezahlte SLB-Instanzen sollten Auto-Verlängerung aktiviert haben, um Dienstunterbrechungen zu vermeiden.",
 		"es": "Las instancias SLB prepagadas deben tener renovación automática habilitada para evitar interrupciones del servicio.",
 		"fr": "Les instances SLB prépayées doivent avoir le renouvellement automatique activé pour éviter les interruptions de service.",
-		"pt": "Instâncias SLB pré-pagas devem ter renovação automática habilitada para evitar interrupção do serviço.",
+		"pt": "Instâncias SLB pré-pagas devem ter renovação automática habilitada para evitar interrupção do serviço."
 	},
 	"reason": {
 		"en": "SLB instances without auto-renewal may expire and cause service interruption.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "SLB-Instanzen ohne Auto-Verlängerung können ablaufen und Dienstunterbrechungen verursachen.",
 		"es": "Las instancias SLB sin renovación automática pueden expirar y causar interrupción del servicio.",
 		"fr": "Les instances SLB sans renouvellement automatique peuvent expirer et causer une interruption de service.",
-		"pt": "Instâncias SLB sem renovação automática podem expirar e causar interrupção do serviço.",
+		"pt": "Instâncias SLB sem renovação automática podem expirar e causar interrupção do serviço."
 	},
 	"recommendation": {
 		"en": "Enable auto-renewal for prepaid SLB instances.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Aktivieren Sie die Auto-Verlängerung für vorausbezahlte SLB-Instanzen.",
 		"es": "Habilite la renovación automática para instancias SLB prepagadas.",
 		"fr": "Activez le renouvellement automatique pour les instances SLB prépayées.",
-		"pt": "Habilite a renovação automática para instâncias SLB pré-pagas.",
+		"pt": "Habilite a renovação automática para instâncias SLB pré-pagas."
 	},
-	"resource_types": ["ALIYUN::SLB::LoadBalancer"],
+	"resource_types": ["ALIYUN::SLB::LoadBalancer"]
 }
 
 is_prepaid(resource) if {

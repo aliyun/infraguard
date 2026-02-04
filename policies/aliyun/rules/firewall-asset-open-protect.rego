@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "firewall-asset-open-protect",
+	"severity": "medium",
 	"name": {
 		"en": "Cloud Firewall Asset Protection Enabled",
 		"zh": "云防火墙资产开启保护",
@@ -14,7 +15,6 @@ rule_meta := {
 		"fr": "Protection des Actifs du Pare-feu Cloud Activée",
 		"pt": "Proteção de Ativos do Firewall em Nuvem Habilitada"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures assets are protected by Cloud Firewall.",
 		"zh": "确保资产已受云防火墙保护。",
@@ -42,7 +42,7 @@ rule_meta := {
 		"fr": "Ajoutez la ressource ALIYUN::CLOUDFW::FwSwitch pour activer la protection de tous les actifs publics dans le Pare-feu Cloud.",
 		"pt": "Adicione o recurso ALIYUN::CLOUDFW::FwSwitch para habilitar a proteção para todos os ativos públicos no Firewall em Nuvem."
 	},
-	"resource_types": ["ALIYUN::CLOUDFW::FwSwitch"],
+	"resource_types": ["ALIYUN::CLOUDFW::FwSwitch"]
 }
 
 # ALIYUN::CLOUDFW::FwSwitch resource existence means protection is enabled

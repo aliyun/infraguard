@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "ecs-disk-idle-check",
+	"severity": "low",
 	"name": {
 		"en": "ECS Disk Idle Check",
 		"zh": "ECS 磁盘闲置检测",
@@ -16,7 +17,6 @@ rule_meta := {
 		"fr": "Vérification de Disque Inactif ECS",
 		"pt": "Verificação de Disco Inativo ECS"
 	},
-	"severity": "low",
 	"description": {
 		"en": "Ensures that ECS disks are attached to an instance and not in an idle state.",
 		"zh": "确保 ECS 磁盘已挂载到实例，未处于闲置状态。",
@@ -44,7 +44,7 @@ rule_meta := {
 		"fr": "Attachez le disque à une instance ou supprimez-le s'il n'est plus nécessaire.",
 		"pt": "Anexe o disco a uma instância ou exclua-o se não for mais necessário."
 	},
-	"resource_types": ["ALIYUN::ECS::Disk"],
+	"resource_types": ["ALIYUN::ECS::Disk"]
 }
 
 deny contains result if {

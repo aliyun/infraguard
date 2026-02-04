@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "rds-instance-storage-autoscale-enable",
+	"severity": "low",
 	"name": {
 		"en": "RDS Storage Autoscale Enabled",
 		"zh": "RDS 开启存储自动扩容",
@@ -14,7 +15,6 @@ rule_meta := {
 		"fr": "Mise à l'Échelle Automatique du Stockage RDS Activée",
 		"pt": "Autoescala de Armazenamento RDS Habilitada"
 	},
-	"severity": "low",
 	"description": {
 		"en": "Ensures RDS instances have storage autoscale enabled to prevent downtime due to full disks.",
 		"zh": "确保 RDS 实例开启了存储自动扩容，以防止因磁盘满载导致的服务中断。",
@@ -42,7 +42,7 @@ rule_meta := {
 		"fr": "Définissez StorageAutoScale sur 'Enable' pour l'instance RDS.",
 		"pt": "Defina StorageAutoScale como 'Enable' para a instância RDS."
 	},
-	"resource_types": ["ALIYUN::RDS::DBInstance"],
+	"resource_types": ["ALIYUN::RDS::DBInstance"]
 }
 
 is_compliant(resource) if {

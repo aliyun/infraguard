@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "lindorm-instance-in-vpc",
+	"severity": "medium",
 	"name": {
 		"en": "Lindorm in VPC Check",
 		"zh": "Lindorm 实例强制 VPC 部署",
@@ -14,7 +15,6 @@ rule_meta := {
 		"fr": "Vérification de Lindorm dans VPC",
 		"pt": "Verificação de Lindorm em VPC"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures Lindorm instances are deployed within a VPC.",
 		"zh": "确保 Lindorm 实例部署在 VPC 内。",
@@ -42,7 +42,7 @@ rule_meta := {
 		"fr": "Créez des instances Lindorm dans un VPC.",
 		"pt": "Crie instâncias Lindorm dentro de uma VPC."
 	},
-	"resource_types": ["ALIYUN::Lindorm::Instance"],
+	"resource_types": ["ALIYUN::Lindorm::Instance"]
 }
 
 is_compliant(resource) if {

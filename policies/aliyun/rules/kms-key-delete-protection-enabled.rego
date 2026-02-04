@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "kms-key-delete-protection-enabled",
+	"severity": "medium",
 	"name": {
 		"en": "KMS key deletion protection enabled",
 		"zh": "KMS 主密钥开启删除保护",
@@ -24,8 +25,6 @@ rule_meta := {
 		"fr": "La clé maître KMS a la protection contre la suppression activée, considérée comme conforme. Les clés qui ne sont pas en état activé et les clés de service (qui ne peuvent pas être supprimées) ne sont pas applicables.",
 		"pt": "A chave mestra KMS tem proteção de exclusão habilitada, considerada em conformidade. Chaves que não estão em status habilitado e chaves de serviço (que não podem ser excluídas) não são aplicáveis."
 	},
-	"severity": "medium",
-	"resource_types": ["ALIYUN::KMS::Key"],
 	"reason": {
 		"en": "KMS key does not have deletion protection enabled",
 		"zh": "KMS 主密钥未开启删除保护",
@@ -44,6 +43,7 @@ rule_meta := {
 		"fr": "Activez la protection contre la suppression pour la clé KMS pour empêcher la suppression accidentelle de clés de chiffrement critiques",
 		"pt": "Habilite a proteção de exclusão para a chave KMS para prevenir a exclusão acidental de chaves de criptografia críticas"
 	},
+	"resource_types": ["ALIYUN::KMS::Key"]
 }
 
 deny contains result if {

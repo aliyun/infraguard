@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "mongodb-min-maxiops-limit",
+	"severity": "high",
 	"name": {
 		"en": "MongoDB Meets Minimum IOPS Requirements",
 		"zh": "MongoDB 实例满足指定读写次数要求",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "MongoDB erfüllt Mindest-IOPS-Anforderungen",
 		"es": "MongoDB Cumple con los Requisitos Mínimos de IOPS",
 		"fr": "MongoDB Répond aux Exigences Minimales d'IOPS",
-		"pt": "MongoDB Atende aos Requisitos Mínimos de IOPS",
+		"pt": "MongoDB Atende aos Requisitos Mínimos de IOPS"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures MongoDB instances provide at least the minimum required IOPS.",
 		"zh": "确保 MongoDB 实例提供至少所需的最少 IOPS。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass MongoDB-Instanzen mindestens die erforderliche Mindest-IOPS bereitstellen.",
 		"es": "Garantiza que las instancias MongoDB proporcionen al menos el IOPS mínimo requerido.",
 		"fr": "Garantit que les instances MongoDB fournissent au moins l'IOPS minimum requis.",
-		"pt": "Garante que as instâncias MongoDB forneçam pelo menos o IOPS mínimo necessário.",
+		"pt": "Garante que as instâncias MongoDB forneçam pelo menos o IOPS mínimo necessário."
 	},
 	"reason": {
 		"en": "Insufficient IOPS may cause performance issues under load.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Unzureichende IOPS können bei Last zu Leistungsproblemen führen.",
 		"es": "IOPS insuficientes pueden causar problemas de rendimiento bajo carga.",
 		"fr": "Des IOPS insuffisantes peuvent causer des problèmes de performance sous charge.",
-		"pt": "IOPS insuficientes podem causar problemas de desempenho sob carga.",
+		"pt": "IOPS insuficientes podem causar problemas de desempenho sob carga."
 	},
 	"recommendation": {
 		"en": "Select an instance class or storage that provides sufficient IOPS.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Wählen Sie eine Instanzklasse oder Speicher, die ausreichend IOPS bereitstellt.",
 		"es": "Seleccione una clase de instancia o almacenamiento que proporcione IOPS suficientes.",
 		"fr": "Sélectionnez une classe d'instance ou un stockage qui fournit des IOPS suffisants.",
-		"pt": "Selecione uma classe de instância ou armazenamento que forneça IOPS suficientes.",
+		"pt": "Selecione uma classe de instância ou armazenamento que forneça IOPS suficientes."
 	},
-	"resource_types": ["ALIYUN::MONGODB::Instance"],
+	"resource_types": ["ALIYUN::MONGODB::Instance"]
 }
 
 # Default minimum IOPS

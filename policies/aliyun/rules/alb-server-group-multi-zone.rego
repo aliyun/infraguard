@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "alb-server-group-multi-zone",
+	"severity": "medium",
 	"name": {
 		"en": "ALB Server Group Multi-Zone Distribution",
 		"zh": "ALB 负载均衡服务器组添加多个可用区资源",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "ALB-Servergruppe Multi-Zone-Verteilung",
 		"es": "Distribución Multi-Zona del Grupo de Servidores ALB",
 		"fr": "Distribution Multi-Zone du Groupe de Serveurs ALB",
-		"pt": "Distribuição Multi-Zona do Grupo de Servidores ALB",
+		"pt": "Distribuição Multi-Zona do Grupo de Servidores ALB"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "ALB server groups should have backend servers distributed across multiple availability zones for high availability. This rule does not apply to server groups with no attached servers, or to IP/Function Compute type server groups.",
 		"zh": "ALB 负载均衡的服务器组挂载资源分布在多个可用区，视为合规。ALB 服务器组无挂载任何资源时不适用本规则，视为不适用。IP 或者函数计算类型的服务器组视为不适用。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "ALB-Servergruppen sollten Backend-Server über mehrere Verfügbarkeitszonen verteilt haben, um Hochverfügbarkeit zu gewährleisten. Diese Regel gilt nicht für Servergruppen ohne angehängte Server oder für IP/Function Compute-Typ-Servergruppen.",
 		"es": "Los grupos de servidores ALB deben tener servidores backend distribuidos en múltiples zonas de disponibilidad para alta disponibilidad. Esta regla no se aplica a grupos de servidores sin servidores adjuntos, ni a grupos de servidores de tipo IP/Function Compute.",
 		"fr": "Les groupes de serveurs ALB doivent avoir des serveurs backend distribués sur plusieurs zones de disponibilité pour une haute disponibilité. Cette règle ne s'applique pas aux groupes de serveurs sans serveurs attachés, ni aux groupes de serveurs de type IP/Function Compute.",
-		"pt": "Os grupos de servidores ALB devem ter servidores backend distribuídos em múltiplas zonas de disponibilidade para alta disponibilidade. Esta regra não se aplica a grupos de servidores sem servidores anexados, nem a grupos de servidores do tipo IP/Function Compute.",
+		"pt": "Os grupos de servidores ALB devem ter servidores backend distribuídos em múltiplas zonas de disponibilidade para alta disponibilidade. Esta regra não se aplica a grupos de servidores sem servidores anexados, nem a grupos de servidores do tipo IP/Function Compute."
 	},
 	"reason": {
 		"en": "The ALB server group has backend servers in only one availability zone, creating a single point of failure.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Die ALB-Servergruppe hat Backend-Server nur in einer Verfügbarkeitszone, was einen Single Point of Failure schafft.",
 		"es": "El grupo de servidores ALB tiene servidores backend en solo una zona de disponibilidad, creando un punto único de falla.",
 		"fr": "Le groupe de serveurs ALB a des serveurs backend dans une seule zone de disponibilité, créant un point de défaillance unique.",
-		"pt": "O grupo de servidores ALB tem servidores backend em apenas uma zona de disponibilidade, criando um ponto único de falha.",
+		"pt": "O grupo de servidores ALB tem servidores backend em apenas uma zona de disponibilidade, criando um ponto único de falha."
 	},
 	"recommendation": {
 		"en": "Add backend servers from at least two different availability zones to the server group using ALIYUN::ALB::BackendServerAttachment resources.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Fügen Sie Backend-Server aus mindestens zwei verschiedenen Verfügbarkeitszonen zur Servergruppe hinzu, indem Sie ALIYUN::ALB::BackendServerAttachment-Ressourcen verwenden.",
 		"es": "Agregue servidores backend de al menos dos zonas de disponibilidad diferentes al grupo de servidores usando recursos ALIYUN::ALB::BackendServerAttachment.",
 		"fr": "Ajoutez des serveurs backend d'au moins deux zones de disponibilité différentes au groupe de serveurs en utilisant les ressources ALIYUN::ALB::BackendServerAttachment.",
-		"pt": "Adicione servidores backend de pelo menos duas zonas de disponibilidade diferentes ao grupo de servidores usando recursos ALIYUN::ALB::BackendServerAttachment.",
+		"pt": "Adicione servidores backend de pelo menos duas zonas de disponibilidade diferentes ao grupo de servidores usando recursos ALIYUN::ALB::BackendServerAttachment."
 	},
-	"resource_types": ["ALIYUN::ALB::ServerGroup"],
+	"resource_types": ["ALIYUN::ALB::ServerGroup"]
 }
 
 # Check if server group type is applicable (not IP or Fc)

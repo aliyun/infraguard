@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "ram-user-last-login-expired-check",
+	"severity": "low",
 	"name": {
 		"en": "RAM User Last Login Check",
 		"zh": "RAM 用户最后登录时间核查",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "RAM-Benutzer letzte Anmeldung-Prüfung",
 		"es": "Verificación de Último Inicio de Sesión de Usuario RAM",
 		"fr": "Vérification de la Dernière Connexion d'Utilisateur RAM",
-		"pt": "Verificação de Último Login de Usuário RAM",
+		"pt": "Verificação de Último Login de Usuário RAM"
 	},
-	"severity": "low",
 	"description": {
 		"en": "Checks if RAM users have not logged in for a long time.",
 		"zh": "核查 RAM 用户是否长时间未登录。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Prüft, ob RAM-Benutzer seit langer Zeit nicht angemeldet waren.",
 		"es": "Verifica si los usuarios RAM no han iniciado sesión durante mucho tiempo.",
 		"fr": "Vérifie si les utilisateurs RAM ne se sont pas connectés depuis longtemps.",
-		"pt": "Verifica se usuários RAM não fizeram login há muito tempo.",
+		"pt": "Verifica se usuários RAM não fizeram login há muito tempo."
 	},
 	"reason": {
 		"en": "Inactive users should be removed to reduce security surface.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Inaktive Benutzer sollten entfernt werden, um die Sicherheitsfläche zu reduzieren.",
 		"es": "Los usuarios inactivos deben eliminarse para reducir la superficie de seguridad.",
 		"fr": "Les utilisateurs inactifs doivent être supprimés pour réduire la surface de sécurité.",
-		"pt": "Usuários inativos devem ser removidos para reduzir a superfície de segurança.",
+		"pt": "Usuários inativos devem ser removidos para reduzir a superfície de segurança."
 	},
 	"recommendation": {
 		"en": "Remove or deactivate unused RAM users.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Entfernen oder deaktivieren Sie nicht verwendete RAM-Benutzer.",
 		"es": "Elimine o desactive usuarios RAM no utilizados.",
 		"fr": "Supprimez ou désactivez les utilisateurs RAM non utilisés.",
-		"pt": "Remova ou desative usuários RAM não utilizados.",
+		"pt": "Remova ou desative usuários RAM não utilizados."
 	},
-	"resource_types": ["ALIYUN::RAM::User"],
+	"resource_types": ["ALIYUN::RAM::User"]
 }
 
 # Always compliant in static analysis as runtime data is missing

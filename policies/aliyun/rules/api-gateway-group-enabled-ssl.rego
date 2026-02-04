@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "api-gateway-group-enabled-ssl",
+	"severity": "medium",
 	"name": {
 		"en": "API Gateway Group SSL Enabled",
 		"zh": "API 网关分组开启 SSL",
@@ -16,7 +17,6 @@ rule_meta := {
 		"fr": "SSL du Groupe API Gateway Activé",
 		"pt": "SSL do Grupo de API Gateway Habilitado"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures that SSL is enabled for API Gateway groups.",
 		"zh": "确保 API 网关分组开启了 SSL。",
@@ -44,7 +44,7 @@ rule_meta := {
 		"fr": "Configurez un certificat SSL pour le groupe API Gateway.",
 		"pt": "Configure um certificado SSL para o grupo de API Gateway."
 	},
-	"resource_types": ["ALIYUN::ApiGateway::Group"],
+	"resource_types": ["ALIYUN::ApiGateway::Group"]
 }
 
 deny contains result if {

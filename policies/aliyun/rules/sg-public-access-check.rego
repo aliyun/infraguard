@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata with i18n support
 rule_meta := {
 	"id": "sg-public-access-check",
+	"severity": "high",
 	"name": {
 		"en": "Security Group Ingress Valid",
 		"zh": "安全组入网设置有效",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "Sicherheitsgruppe Ingress gültig",
 		"es": "Ingress de Grupo de Seguridad Válido",
 		"fr": "Ingress du Groupe de Sécurité Valide",
-		"pt": "Ingress de Grupo de Segurança Válido",
+		"pt": "Ingress de Grupo de Segurança Válido"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Security group ingress rules should not allow all ports (-1/-1) from all sources (0.0.0.0/0) simultaneously.",
 		"zh": "安全组入方向授权策略为允许，当端口范围-1/-1 和授权对象 0.0.0.0/0 未同时出现，或者被优先级更高的授权策略拒绝，视为合规。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "Sicherheitsgruppen-Ingress-Regeln sollten nicht gleichzeitig alle Ports (-1/-1) von allen Quellen (0.0.0.0/0) erlauben.",
 		"es": "Las reglas de ingreso del grupo de seguridad no deben permitir todos los puertos (-1/-1) desde todas las fuentes (0.0.0.0/0) simultáneamente.",
 		"fr": "Les règles d'ingress du groupe de sécurité ne doivent pas autoriser tous les ports (-1/-1) depuis toutes les sources (0.0.0.0/0) simultanément.",
-		"pt": "As regras de ingresso do grupo de segurança não devem permitir todas as portas (-1/-1) de todas as fontes (0.0.0.0/0) simultaneamente.",
+		"pt": "As regras de ingresso do grupo de segurança não devem permitir todas as portas (-1/-1) de todas as fontes (0.0.0.0/0) simultaneamente."
 	},
 	"reason": {
 		"en": "The security group has an ingress rule that allows all ports from all sources (0.0.0.0/0 with port range -1/-1), which poses a critical security risk.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Die Sicherheitsgruppe hat eine Ingress-Regel, die alle Ports von allen Quellen (0.0.0.0/0 mit Portbereich -1/-1) erlaubt, was ein kritisches Sicherheitsrisiko darstellt.",
 		"es": "El grupo de seguridad tiene una regla de ingreso que permite todos los puertos desde todas las fuentes (0.0.0.0/0 con rango de puertos -1/-1), lo que plantea un riesgo de seguridad crítico.",
 		"fr": "Le groupe de sécurité a une règle d'ingress qui autorise tous les ports depuis toutes les sources (0.0.0.0/0 avec plage de ports -1/-1), ce qui pose un risque de sécurité critique.",
-		"pt": "O grupo de segurança tem uma regra de ingresso que permite todas as portas de todas as fontes (0.0.0.0/0 com intervalo de portas -1/-1), o que representa um risco de segurança crítico.",
+		"pt": "O grupo de segurança tem uma regra de ingresso que permite todas as portas de todas as fontes (0.0.0.0/0 com intervalo de portas -1/-1), o que representa um risco de segurança crítico."
 	},
 	"recommendation": {
 		"en": "Either restrict the source IP range to specific CIDR blocks or limit the port range to specific ports based on actual business requirements.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Beschränken Sie entweder den Quell-IP-Bereich auf spezifische CIDR-Blöcke oder begrenzen Sie den Portbereich auf spezifische Ports basierend auf tatsächlichen Geschäftsanforderungen.",
 		"es": "Restrinja el rango de IP de origen a bloques CIDR específicos o limite el rango de puertos a puertos específicos según los requisitos comerciales reales.",
 		"fr": "Restreignez soit la plage d'IP source à des blocs CIDR spécifiques, soit limitez la plage de ports à des ports spécifiques en fonction des exigences commerciales réelles.",
-		"pt": "Restrinja o intervalo de IP de origem a blocos CIDR específicos ou limite o intervalo de portas a portas específicas com base nos requisitos comerciais reais.",
+		"pt": "Restrinja o intervalo de IP de origem a blocos CIDR específicos ou limite o intervalo de portas a portas específicas com base nos requisitos comerciais reais."
 	},
-	"resource_types": ["ALIYUN::ECS::SecurityGroup", "ALIYUN::ECS::SecurityGroupIngress", "ALIYUN::ECS::SecurityGroupIngresses"],
+	"resource_types": ["ALIYUN::ECS::SecurityGroup", "ALIYUN::ECS::SecurityGroupIngress", "ALIYUN::ECS::SecurityGroupIngresses"]
 }
 
 # Check if an ingress rule is a public access rule (all ports from all sources)

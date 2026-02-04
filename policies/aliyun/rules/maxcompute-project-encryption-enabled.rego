@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "maxcompute-project-encryption-enabled",
+	"severity": "high",
 	"name": {
 		"en": "MaxCompute Project Encryption Enabled",
 		"zh": "MaxCompute 项目开启加密",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "MaxCompute-Projekt Verschlüsselung aktiviert",
 		"es": "Cifrado de Proyecto MaxCompute Habilitado",
 		"fr": "Chiffrement de Projet MaxCompute Activé",
-		"pt": "Criptografia de Projeto MaxCompute Habilitada",
+		"pt": "Criptografia de Projeto MaxCompute Habilitada"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures MaxCompute projects have encryption enabled to protect stored data.",
 		"zh": "确保 MaxCompute 项目启用了加密以保护存储的数据。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass MaxCompute-Projekte Verschlüsselung aktiviert haben, um gespeicherte Daten zu schützen.",
 		"es": "Garantiza que los proyectos MaxCompute tengan cifrado habilitado para proteger los datos almacenados.",
 		"fr": "Garantit que les projets MaxCompute ont le chiffrement activé pour protéger les données stockées.",
-		"pt": "Garante que os projetos MaxCompute tenham criptografia habilitada para proteger dados armazenados.",
+		"pt": "Garante que os projetos MaxCompute tenham criptografia habilitada para proteger dados armazenados."
 	},
 	"reason": {
 		"en": "Encryption protects sensitive data stored in MaxCompute projects from unauthorized access.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Verschlüsselung schützt sensible Daten, die in MaxCompute-Projekten gespeichert sind, vor unbefugtem Zugriff.",
 		"es": "El cifrado protege los datos sensibles almacenados en proyectos MaxCompute del acceso no autorizado.",
 		"fr": "Le chiffrement protège les données sensibles stockées dans les projets MaxCompute contre l'accès non autorisé.",
-		"pt": "A criptografia protege dados sensíveis armazenados em projetos MaxCompute contra acesso não autorizado.",
+		"pt": "A criptografia protege dados sensíveis armazenados em projetos MaxCompute contra acesso não autorizado."
 	},
 	"recommendation": {
 		"en": "Enable encryption for the MaxCompute project.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Aktivieren Sie die Verschlüsselung für das MaxCompute-Projekt.",
 		"es": "Habilite el cifrado para el proyecto MaxCompute.",
 		"fr": "Activez le chiffrement pour le projet MaxCompute.",
-		"pt": "Habilite a criptografia para o projeto MaxCompute.",
+		"pt": "Habilite a criptografia para o projeto MaxCompute."
 	},
-	"resource_types": ["ALIYUN::MaxCompute::Project"],
+	"resource_types": ["ALIYUN::MaxCompute::Project"]
 }
 
 # Check if encryption is enabled

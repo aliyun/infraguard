@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "rds-instance-has-guard-instance",
+	"severity": "medium",
 	"name": {
 		"en": "RDS Instance Has Guard Instance",
 		"zh": "RDS 关键实例配置灾备实例",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "RDS-Instanz hat Guard-Instanz",
 		"es": "La Instancia RDS Tiene Instancia de Guardia",
 		"fr": "L'Instance RDS a une Instance de Garde",
-		"pt": "A Instância RDS Tem Instância de Guarda",
+		"pt": "A Instância RDS Tem Instância de Guarda"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures production RDS instances have a corresponding guard (disaster recovery) instance.",
 		"zh": "确保生产环境 RDS 实例配置了相应的灾备实例。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass Produktions-RDS-Instanzen eine entsprechende Guard-Instanz (Notfallwiederherstellung) haben.",
 		"es": "Garantiza que las instancias RDS de producción tengan una instancia de guardia (recuperación ante desastres) correspondiente.",
 		"fr": "Garantit que les instances RDS de production ont une instance de garde (récupération après sinistre) correspondante.",
-		"pt": "Garante que as instâncias RDS de produção tenham uma instância de guarda (recuperação de desastres) correspondente.",
+		"pt": "Garante que as instâncias RDS de produção tenham uma instância de guarda (recuperação de desastres) correspondente."
 	},
 	"reason": {
 		"en": "Guard instances provide high availability and data redundancy across regions.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Guard-Instanzen bieten Hochverfügbarkeit und Datenredundanz über Regionen hinweg.",
 		"es": "Las instancias de guardia proporcionan alta disponibilidad y redundancia de datos entre regiones.",
 		"fr": "Les instances de garde offrent une haute disponibilité et une redondance des données entre les régions.",
-		"pt": "As instâncias de guarda fornecem alta disponibilidade e redundância de dados entre regiões.",
+		"pt": "As instâncias de guarda fornecem alta disponibilidade e redundância de dados entre regiões."
 	},
 	"recommendation": {
 		"en": "Configure a guard instance for the primary RDS instance.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Konfigurieren Sie eine Guard-Instanz für die primäre RDS-Instanz.",
 		"es": "Configure una instancia de guardia para la instancia RDS principal.",
 		"fr": "Configurez une instance de garde pour l'instance RDS principale.",
-		"pt": "Configure uma instância de guarda para a instância RDS principal.",
+		"pt": "Configure uma instância de guarda para a instância RDS principal."
 	},
-	"resource_types": ["ALIYUN::RDS::DBInstance"],
+	"resource_types": ["ALIYUN::RDS::DBInstance"]
 }
 
 # Cross-resource check: is there another RDS instance or DR resource linked?

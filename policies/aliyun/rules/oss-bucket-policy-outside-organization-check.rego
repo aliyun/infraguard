@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "oss-bucket-policy-outside-organization-check",
+	"severity": "high",
 	"name": {
 		"en": "OSS Bucket Policy No Outside Organization Access",
 		"zh": "OSS 存储桶策略未给组织外授权",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "OSS-Bucket-Richtlinie kein Zugriff außerhalb der Organisation",
 		"es": "Política de Bucket OSS Sin Acceso Fuera de la Organización",
 		"fr": "Politique de Bucket OSS Sans Accès Hors Organisation",
-		"pt": "Política de Bucket OSS Sem Acesso Fora da Organização",
+		"pt": "Política de Bucket OSS Sem Acesso Fora da Organização"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures OSS bucket policies do not grant access to principals outside of the organization.",
 		"zh": "确保 OSS 存储桶策略未授予组织外部的主体访问权限。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass OSS-Bucket-Richtlinien keinen Zugriff auf Prinzipalen außerhalb der Organisation gewähren.",
 		"es": "Garantiza que las políticas de bucket OSS no otorguen acceso a principales fuera de la organización.",
 		"fr": "Garantit que les politiques de bucket OSS n'accordent pas d'accès aux principaux en dehors de l'organisation.",
-		"pt": "Garante que as políticas de bucket OSS não concedam acesso a principais fora da organização.",
+		"pt": "Garante que as políticas de bucket OSS não concedam acesso a principais fora da organização."
 	},
 	"reason": {
 		"en": "Granting access to external principals can lead to data leaks outside the organization's control.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Die Gewährung von Zugriff auf externe Prinzipalen kann zu Datenlecks außerhalb der Kontrolle der Organisation führen.",
 		"es": "Otorgar acceso a principales externos puede llevar a fugas de datos fuera del control de la organización.",
 		"fr": "Accorder l'accès à des principaux externes peut entraîner des fuites de données en dehors du contrôle de l'organisation.",
-		"pt": "Conceder acesso a principais externos pode levar a vazamentos de dados fora do controle da organização.",
+		"pt": "Conceder acesso a principais externos pode levar a vazamentos de dados fora do controle da organização."
 	},
 	"recommendation": {
 		"en": "Ensure all principals in the bucket policy are within the authorized organization.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Stellen Sie sicher, dass alle Prinzipalen in der Bucket-Richtlinie innerhalb der autorisierten Organisation sind.",
 		"es": "Asegúrese de que todos los principales en la política de bucket estén dentro de la organización autorizada.",
 		"fr": "Assurez-vous que tous les principaux dans la politique de bucket sont au sein de l'organisation autorisée.",
-		"pt": "Certifique-se de que todos os principais na política de bucket estejam dentro da organização autorizada.",
+		"pt": "Certifique-se de que todos os principais na política de bucket estejam dentro da organização autorizada."
 	},
-	"resource_types": ["ALIYUN::OSS::Bucket"],
+	"resource_types": ["ALIYUN::OSS::Bucket"]
 }
 
 # Simplified implementation for IaC: Check if any Principal is '*' without a restrictive Condition

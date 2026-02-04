@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "hbase-cluster-expired-check",
+	"severity": "high",
 	"name": {
 		"en": "HBase Cluster Expiration Check",
 		"zh": "HBase 集群到期检查",
@@ -15,7 +16,6 @@ rule_meta := {
 		"fr": "Vérification d'Expiration du Cluster HBase",
 		"pt": "Verificação de Expiração do Cluster HBase"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Prepaid HBase clusters should have auto-renewal enabled.",
 		"zh": "预付费 HBase 集群应开启自动续费，避免业务中断。",
@@ -43,7 +43,7 @@ rule_meta := {
 		"fr": "Activez le renouvellement automatique pour le cluster HBase prépayé en définissant AutoRenewPeriod sur une valeur supérieure à 0.",
 		"pt": "Habilite a renovação automática para o cluster HBase pré-pago definindo AutoRenewPeriod como um valor maior que 0."
 	},
-	"resource_types": ["ALIYUN::HBase::Cluster"],
+	"resource_types": ["ALIYUN::HBase::Cluster"]
 }
 
 is_prepaid(resource) if {

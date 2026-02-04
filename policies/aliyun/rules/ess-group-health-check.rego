@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "ess-group-health-check",
+	"severity": "medium",
 	"name": {
 		"en": "ESS Scaling Group Health Check",
 		"zh": "弹性伸缩组开启 ECS 实例健康检查",
@@ -16,7 +17,6 @@ rule_meta := {
 		"fr": "Vérification de Santé du Groupe de Mise à l'Échelle ESS",
 		"pt": "Verificação de Saúde do Grupo de Escalonamento ESS"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "ESS scaling groups should enable ECS instance health check to ensure only healthy instances are in service.",
 		"zh": "弹性伸缩组开启对 ECS 实例的健康检查，视为合规。",
@@ -44,7 +44,7 @@ rule_meta := {
 		"fr": "Activez le type de vérification de santé pour le groupe de mise à l'échelle ESS en définissant HealthCheckType sur ECS ou en configurant HealthCheckTypes.",
 		"pt": "Habilite o tipo de verificação de saúde para o grupo de escalonamento ESS definindo HealthCheckType como ECS ou configurando HealthCheckTypes."
 	},
-	"resource_types": ["ALIYUN::ESS::ScalingGroup"],
+	"resource_types": ["ALIYUN::ESS::ScalingGroup"]
 }
 
 # Check if scaling group has health check enabled

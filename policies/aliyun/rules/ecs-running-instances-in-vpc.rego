@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "ecs-running-instances-in-vpc",
+	"severity": "medium",
 	"name": {
 		"en": "Running ECS instances are in VPC",
 		"zh": "运行中的 ECS 实例在专有网络",
@@ -13,7 +14,7 @@ rule_meta := {
 		"de": "Laufende ECS-Instanzen sind in VPC",
 		"es": "Las Instancias ECS en Ejecución Están en VPC",
 		"fr": "Les Instances ECS en Cours d'Exécution Sont dans le VPC",
-		"pt": "Instâncias ECS em execução estão em VPC",
+		"pt": "Instâncias ECS em execução estão em VPC"
 	},
 	"description": {
 		"en": "Running ECS instances are deployed in Virtual Private Cloud (VPC), considered compliant. This provides network isolation and enhanced security.",
@@ -22,10 +23,8 @@ rule_meta := {
 		"de": "Laufende ECS-Instanzen sind in Virtual Private Cloud (VPC) bereitgestellt, werden als konform betrachtet. Dies bietet Netzwerkisolation und verbesserte Sicherheit.",
 		"es": "Las instancias ECS en ejecución se implementan en Virtual Private Cloud (VPC), consideradas conformes. Esto proporciona aislamiento de red y seguridad mejorada.",
 		"fr": "Les instances ECS en cours d'exécution sont déployées dans Virtual Private Cloud (VPC), considérées comme conformes. Cela offre un isolement réseau et une sécurité renforcée.",
-		"pt": "Instâncias ECS em execução são implantadas em Virtual Private Cloud (VPC), consideradas conformes. Isso fornece isolamento de rede e segurança aprimorada.",
+		"pt": "Instâncias ECS em execução são implantadas em Virtual Private Cloud (VPC), consideradas conformes. Isso fornece isolamento de rede e segurança aprimorada."
 	},
-	"severity": "medium",
-	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"],
 	"reason": {
 		"en": "ECS instance is not deployed in VPC (Classic network)",
 		"zh": "ECS 实例未部署在专有网络（经典网络）",
@@ -33,7 +32,7 @@ rule_meta := {
 		"de": "ECS-Instanz ist nicht in VPC bereitgestellt (klassisches Netzwerk)",
 		"es": "La instancia ECS no está implementada en VPC (red clásica)",
 		"fr": "L'instance ECS n'est pas déployée dans le VPC (réseau classique)",
-		"pt": "A instância ECS não está implantada em VPC (rede clássica)",
+		"pt": "A instância ECS não está implantada em VPC (rede clássica)"
 	},
 	"recommendation": {
 		"en": "Deploy ECS instances in VPC for network isolation and enhanced security",
@@ -42,8 +41,9 @@ rule_meta := {
 		"de": "Stellen Sie ECS-Instanzen in VPC bereit, um Netzwerkisolation und verbesserte Sicherheit zu erreichen",
 		"es": "Implemente instancias ECS en VPC para aislamiento de red y seguridad mejorada",
 		"fr": "Déployez les instances ECS dans le VPC pour l'isolement réseau et une sécurité renforcée",
-		"pt": "Implante instâncias ECS em VPC para isolamento de rede e segurança aprimorada",
+		"pt": "Implante instâncias ECS em VPC para isolamento de rede e segurança aprimorada"
 	},
+	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"]
 }
 
 deny contains result if {

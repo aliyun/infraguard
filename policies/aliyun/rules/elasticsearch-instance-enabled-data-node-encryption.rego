@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "elasticsearch-instance-enabled-data-node-encryption",
+	"severity": "medium",
 	"name": {
 		"en": "Elasticsearch Data Node Encryption Enabled",
 		"zh": "Elasticsearch 数据节点开启加密",
@@ -16,7 +17,6 @@ rule_meta := {
 		"fr": "Chiffrement du Nœud de Données Elasticsearch Activé",
 		"pt": "Criptografia de Nó de Dados do Elasticsearch Habilitada"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures that data nodes in the Elasticsearch instance have disk encryption enabled.",
 		"zh": "确保 Elasticsearch 实例中的数据节点已开启磁盘加密。",
@@ -44,7 +44,7 @@ rule_meta := {
 		"fr": "Activez le chiffrement de disque pour les nœuds de données de l'instance Elasticsearch.",
 		"pt": "Habilite a criptografia de disco para os nós de dados da instância do Elasticsearch."
 	},
-	"resource_types": ["ALIYUN::Elasticsearch::Instance"],
+	"resource_types": ["ALIYUN::Elasticsearch::Instance"]
 }
 
 deny contains result if {

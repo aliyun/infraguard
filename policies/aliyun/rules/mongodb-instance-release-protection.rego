@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "mongodb-instance-release-protection",
+	"severity": "medium",
 	"name": {
 		"en": "MongoDB Instance Release Protection Enabled",
 		"zh": "MongoDB 实例开启释放保护",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "MongoDB-Instanz Freigabeschutz aktiviert",
 		"es": "Protección de Liberación de Instancia MongoDB Habilitada",
 		"fr": "Protection contre la Libération d'Instance MongoDB Activée",
-		"pt": "Proteção contra Liberação de Instância MongoDB Habilitada",
+		"pt": "Proteção contra Liberação de Instância MongoDB Habilitada"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures that MongoDB instances have release protection enabled.",
 		"zh": "确保 MongoDB 实例开启了释放保护。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass MongoDB-Instanzen Freigabeschutz aktiviert haben.",
 		"es": "Garantiza que las instancias MongoDB tengan protección contra liberación habilitada.",
 		"fr": "Garantit que les instances MongoDB ont la protection contre la libération activée.",
-		"pt": "Garante que as instâncias MongoDB tenham proteção contra liberação habilitada.",
+		"pt": "Garante que as instâncias MongoDB tenham proteção contra liberação habilitada."
 	},
 	"reason": {
 		"en": "If release protection is not enabled, the MongoDB instance may be released accidentally, causing data loss.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Wenn der Freigabeschutz nicht aktiviert ist, kann die MongoDB-Instanz versehentlich freigegeben werden, was zu Datenverlust führt.",
 		"es": "Si la protección contra liberación no está habilitada, la instancia MongoDB puede ser liberada accidentalmente, causando pérdida de datos.",
 		"fr": "Si la protection contre la libération n'est pas activée, l'instance MongoDB peut être libérée accidentellement, entraînant une perte de données.",
-		"pt": "Se a proteção contra liberação não estiver habilitada, a instância MongoDB pode ser liberada acidentalmente, causando perda de dados.",
+		"pt": "Se a proteção contra liberação não estiver habilitada, a instância MongoDB pode ser liberada acidentalmente, causando perda de dados."
 	},
 	"recommendation": {
 		"en": "Enable release protection for the MongoDB instance.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Aktivieren Sie den Freigabeschutz für die MongoDB-Instanz.",
 		"es": "Habilite la protección contra liberación para la instancia MongoDB.",
 		"fr": "Activez la protection contre la libération pour l'instance MongoDB.",
-		"pt": "Habilite a proteção contra liberação para a instância MongoDB.",
+		"pt": "Habilite a proteção contra liberação para a instância MongoDB."
 	},
-	"resource_types": ["ALIYUN::MONGODB::Instance"],
+	"resource_types": ["ALIYUN::MONGODB::Instance"]
 }
 
 is_compliant(resource) if {

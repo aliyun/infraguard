@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "polardb-revision-version-used-check",
+	"severity": "medium",
 	"name": {
 		"en": "PolarDB Revision Version Used Check",
 		"zh": "使用稳定内核版本的 PolarDB 集群",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "PolarDB Revisionsversion Verwendungsprüfung",
 		"es": "Verificación de Versión de Revisión PolarDB Utilizada",
 		"fr": "Vérification de la Version de Révision PolarDB Utilisée",
-		"pt": "Verificação de Versão de Revisão PolarDB Utilizada",
+		"pt": "Verificação de Versão de Revisão PolarDB Utilizada"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures PolarDB cluster is using a stable kernel revision version.",
 		"zh": "确保 PolarDB 集群使用稳定内核版本。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass der PolarDB-Cluster eine stabile Kernel-Revisionsversion verwendet.",
 		"es": "Garantiza que el clúster PolarDB esté usando una versión de revisión de kernel estable.",
 		"fr": "Garantit que le cluster PolarDB utilise une version de révision de noyau stable.",
-		"pt": "Garante que o cluster PolarDB esteja usando uma versão de revisão de kernel estável.",
+		"pt": "Garante que o cluster PolarDB esteja usando uma versão de revisão de kernel estável."
 	},
 	"reason": {
 		"en": "Using stable kernel version ensures better reliability and security.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Die Verwendung einer stabilen Kernel-Version gewährleistet bessere Zuverlässigkeit und Sicherheit.",
 		"es": "Usar una versión de kernel estable garantiza mejor confiabilidad y seguridad.",
 		"fr": "L'utilisation d'une version de noyau stable garantit une meilleure fiabilité et sécurité.",
-		"pt": "Usar uma versão de kernel estável garante melhor confiabilidade e segurança.",
+		"pt": "Usar uma versão de kernel estável garante melhor confiabilidade e segurança."
 	},
 	"recommendation": {
 		"en": "Use stable kernel version for the PolarDB cluster.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Verwenden Sie eine stabile Kernel-Version für den PolarDB-Cluster.",
 		"es": "Use una versión de kernel estable para el clúster PolarDB.",
 		"fr": "Utilisez une version de noyau stable pour le cluster PolarDB.",
-		"pt": "Use uma versão de kernel estável para o cluster PolarDB.",
+		"pt": "Use uma versão de kernel estável para o cluster PolarDB."
 	},
-	"resource_types": ["ALIYUN::POLARDB::DBCluster"],
+	"resource_types": ["ALIYUN::POLARDB::DBCluster"]
 }
 
 is_compliant(resource) if {

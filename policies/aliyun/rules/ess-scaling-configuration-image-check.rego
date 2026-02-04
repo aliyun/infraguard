@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "ess-scaling-configuration-image-check",
+	"severity": "medium",
 	"name": {
 		"en": "ESS Scaling Configuration Image Check",
 		"zh": "弹性伸缩配置镜像检测",
@@ -16,7 +17,6 @@ rule_meta := {
 		"fr": "Vérification d'Image de Configuration de Mise à l'Échelle ESS",
 		"pt": "Verificação de Imagem da Configuração de Escalonamento ESS"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "ESS scaling configurations should use maintained images to ensure security and stability.",
 		"zh": "弹性伸缩配置中镜像为保有中资源，视为合规。",
@@ -44,7 +44,7 @@ rule_meta := {
 		"fr": "Utilisez des images qui sont en état maintenu. Vous pouvez utiliser les propriétés ImageId ou ImageFamily avec des ID d'image valides.",
 		"pt": "Use imagens que estejam em status mantido. Você pode usar as propriedades ImageId ou ImageFamily com IDs de imagem válidos."
 	},
-	"resource_types": ["ALIYUN::ESS::ScalingConfiguration"],
+	"resource_types": ["ALIYUN::ESS::ScalingConfiguration"]
 }
 
 # Check if scaling configuration has a valid image

@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "root-has-specified-role",
+	"severity": "low",
 	"name": {
 		"en": "Root Account Has Specified Role",
 		"zh": "主账号具有指定的角色",
@@ -16,7 +17,6 @@ rule_meta := {
 		"fr": "Le Compte Racine a un Rôle Spécifié",
 		"pt": "A Conta Raiz Tem Função Especificada"
 	},
-	"severity": "low",
 	"description": {
 		"en": "Ensures that the root account has a specified RAM role for governance and management.",
 		"zh": "确保主账号具有用于治理和管理的指定 RAM 角色。",
@@ -44,7 +44,7 @@ rule_meta := {
 		"fr": "Créez et assignez le rôle RAM spécifié au compte racine.",
 		"pt": "Crie e atribua a função RAM especificada à conta raiz."
 	},
-	"resource_types": ["ALIYUN::RAM::User"],
+	"resource_types": ["ALIYUN::RAM::User"]
 }
 
 deny contains result if {

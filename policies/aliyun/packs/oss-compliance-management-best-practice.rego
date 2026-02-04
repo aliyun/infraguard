@@ -11,7 +11,7 @@ pack_meta := {
 		"de": "OSS-Compliance-Management Best Practices",
 		"es": "Mejores Prácticas de Gestión de Cumplimiento de OSS",
 		"fr": "Meilleures Pratiques de Gestion de la Conformité OSS",
-		"pt": "Melhores Práticas de Gestão de Conformidade OSS",
+		"pt": "Melhores Práticas de Gestão de Conformidade OSS"
 	},
 	"description": {
 		"en": "Best practices for OSS bucket compliance management, covering access control, encryption, logging, versioning, and security policies.",
@@ -20,17 +20,17 @@ pack_meta := {
 		"de": "Best Practices für das OSS-Bucket-Compliance-Management, einschließlich Zugriffskontrolle, Verschlüsselung, Protokollierung, Versionskontrolle und Sicherheitsrichtlinien.",
 		"es": "Mejores prácticas para la gestión de cumplimiento de buckets OSS, que cubre control de acceso, cifrado, registro, control de versiones y políticas de seguridad.",
 		"fr": "Meilleures pratiques pour la gestion de la conformité des buckets OSS, couvrant le contrôle d'accès, le chiffrement, l'enregistrement, le contrôle de version et les politiques de sécurité.",
-		"pt": "Melhores práticas para gestão de conformidade de buckets OSS, cobrindo controle de acesso, criptografia, registro, controle de versão e políticas de segurança.",
+		"pt": "Melhores práticas para gestão de conformidade de buckets OSS, cobrindo controle de acesso, criptografia, registro, controle de versão e políticas de segurança."
 	},
 	"rules": [
+		"oss-bucket-logging-enabled",
+		"oss-bucket-policy-no-any-anonymous",
+		"oss-bucket-policy-outside-organization-check",
 		"oss-bucket-public-read-prohibited",
 		"oss-bucket-public-write-prohibited",
-		"oss-bucket-server-side-encryption-enabled",
-		"oss-zrs-enabled",
-		"oss-bucket-policy-no-any-anonymous",
-		"oss-bucket-logging-enabled",
-		"oss-bucket-versioning-enabled",
-		"oss-bucket-policy-outside-organization-check",
 		"oss-bucket-referer-limit",
-	],
+		"oss-bucket-server-side-encryption-enabled",
+		"oss-bucket-versioning-enabled",
+		"oss-zrs-enabled"
+	]
 }

@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "slb-modify-protection-check",
+	"severity": "low",
 	"name": {
 		"en": "SLB Modification Protection Enabled",
 		"zh": "SLB 实例开启配置修改保护",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "SLB Änderungsschutz aktiviert",
 		"es": "Protección contra Modificación de SLB Habilitada",
 		"fr": "Protection contre la Modification SLB Activée",
-		"pt": "Proteção contra Modificação de SLB Habilitada",
+		"pt": "Proteção contra Modificação de SLB Habilitada"
 	},
-	"severity": "low",
 	"description": {
 		"en": "Ensures that SLB instances have modification protection enabled.",
 		"zh": "确保 SLB 实例开启了配置修改保护。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass SLB-Instanzen Änderungsschutz aktiviert haben.",
 		"es": "Garantiza que las instancias SLB tengan protección contra modificación habilitada.",
 		"fr": "Garantit que les instances SLB ont la protection contre la modification activée.",
-		"pt": "Garante que as instâncias SLB tenham proteção contra modificação habilitada.",
+		"pt": "Garante que as instâncias SLB tenham proteção contra modificação habilitada."
 	},
 	"reason": {
 		"en": "If modification protection is not enabled, the SLB configuration may be modified accidentally, causing service issues.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Wenn der Änderungsschutz nicht aktiviert ist, kann die SLB-Konfiguration versehentlich geändert werden, was zu Dienstproblemen führt.",
 		"es": "Si la protección contra modificación no está habilitada, la configuración SLB puede modificarse accidentalmente, causando problemas en el servicio.",
 		"fr": "Si la protection contre la modification n'est pas activée, la configuration SLB peut être modifiée accidentellement, causant des problèmes de service.",
-		"pt": "Se a proteção contra modificação não estiver habilitada, a configuração SLB pode ser modificada acidentalmente, causando problemas no serviço.",
+		"pt": "Se a proteção contra modificação não estiver habilitada, a configuração SLB pode ser modificada acidentalmente, causando problemas no serviço."
 	},
 	"recommendation": {
 		"en": "Enable modification protection for the SLB instance.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Aktivieren Sie den Änderungsschutz für die SLB-Instanz.",
 		"es": "Habilite protección contra modificación para la instancia SLB.",
 		"fr": "Activez la protection contre la modification pour l'instance SLB.",
-		"pt": "Habilite proteção contra modificação para a instância SLB.",
+		"pt": "Habilite proteção contra modificação para a instância SLB."
 	},
-	"resource_types": ["ALIYUN::SLB::LoadBalancer"],
+	"resource_types": ["ALIYUN::SLB::LoadBalancer"]
 }
 
 is_compliant(resource) if {

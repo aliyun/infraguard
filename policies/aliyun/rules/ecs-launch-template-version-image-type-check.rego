@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "ecs-launch-template-version-image-type-check",
+	"severity": "medium",
 	"name": {
 		"en": "Launch Template Image Type Check",
 		"zh": "启动模板镜像来源核查",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "Startvorlage Bildtypprüfung",
 		"es": "Verificación de Tipo de Imagen de Plantilla de Inicio",
 		"fr": "Vérification du Type d'Image du Modèle de Démarrage",
-		"pt": "Verificação de Tipo de Imagem do Modelo de Inicialização",
+		"pt": "Verificação de Tipo de Imagem do Modelo de Inicialização"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures ECS launch templates use authorized image types.",
 		"zh": "确保 ECS 启动模板使用授权的镜像类型。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass ECS-Startvorlagen autorisierte Bildtypen verwenden.",
 		"es": "Garantiza que las plantillas de inicio ECS usen tipos de imagen autorizados.",
 		"fr": "Garantit que les modèles de démarrage ECS utilisent des types d'image autorisés.",
-		"pt": "Garante que os modelos de inicialização ECS usem tipos de imagem autorizados.",
+		"pt": "Garante que os modelos de inicialização ECS usem tipos de imagem autorizados."
 	},
 	"reason": {
 		"en": "Restricting image sources in templates ensures consistent security baselines.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Die Einschränkung von Bildquellen in Vorlagen gewährleistet konsistente Sicherheitsbaselines.",
 		"es": "Restringir las fuentes de imagen en las plantillas garantiza líneas base de seguridad consistentes.",
 		"fr": "Restreindre les sources d'image dans les modèles garantit des lignes de base de sécurité cohérentes.",
-		"pt": "Restringir fontes de imagem em modelos garante linhas de base de segurança consistentes.",
+		"pt": "Restringir fontes de imagem em modelos garante linhas de base de segurança consistentes."
 	},
 	"recommendation": {
 		"en": "Update the launch template to use authorized images.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Aktualisieren Sie die Startvorlage, um autorisierte Bilder zu verwenden.",
 		"es": "Actualice la plantilla de inicio para usar imágenes autorizadas.",
 		"fr": "Mettez à jour le modèle de démarrage pour utiliser des images autorisées.",
-		"pt": "Atualize o modelo de inicialização para usar imagens autorizadas.",
+		"pt": "Atualize o modelo de inicialização para usar imagens autorizadas."
 	},
-	"resource_types": ["ALIYUN::ECS::LaunchTemplate"],
+	"resource_types": ["ALIYUN::ECS::LaunchTemplate"]
 }
 
 is_compliant(resource) if {

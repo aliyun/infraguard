@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "ram-user-has-specified-policy",
+	"severity": "medium",
 	"name": {
 		"en": "RAM User Has Specified Policy",
 		"zh": "RAM 用户及所属用户组绑定指定条件的权限策略",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "RAM-Benutzer hat angegebene Richtlinie",
 		"es": "El Usuario RAM Tiene Política Especificada",
 		"fr": "L'Utilisateur RAM a une Politique Spécifiée",
-		"pt": "O Usuário RAM Tem Política Especificada",
+		"pt": "O Usuário RAM Tem Política Especificada"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures RAM users have the required policies attached, including those inherited from groups.",
 		"zh": "确保 RAM 用户绑定了符合参数条件的权限策略，包括继承自用户组的权限。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass RAM-Benutzer die erforderlichen Richtlinien angehängt haben, einschließlich derer, die von Gruppen geerbt wurden.",
 		"es": "Garantiza que los usuarios RAM tengan las políticas requeridas adjuntas, incluidas las heredadas de grupos.",
 		"fr": "Garantit que les utilisateurs RAM ont les politiques requises attachées, y compris celles héritées des groupes.",
-		"pt": "Garante que os usuários RAM tenham as políticas necessárias anexadas, incluindo as herdadas de grupos.",
+		"pt": "Garante que os usuários RAM tenham as políticas necessárias anexadas, incluindo as herdadas de grupos."
 	},
 	"reason": {
 		"en": "Proper policy attachment ensures users have necessary permissions.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Die ordnungsgemäße Anheftung von Richtlinien stellt sicher, dass Benutzer die erforderlichen Berechtigungen haben.",
 		"es": "La adjunción adecuada de políticas garantiza que los usuarios tengan los permisos necesarios.",
 		"fr": "L'attachement approprié des politiques garantit que les utilisateurs ont les permissions nécessaires.",
-		"pt": "O anexo adequado de políticas garante que os usuários tenham as permissões necessárias.",
+		"pt": "O anexo adequado de políticas garante que os usuários tenham as permissões necessárias."
 	},
 	"recommendation": {
 		"en": "Attach the required policies to the RAM user or their groups.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Hängen Sie die erforderlichen Richtlinien an den RAM-Benutzer oder deren Gruppen an.",
 		"es": "Adjunte las políticas requeridas al usuario RAM o sus grupos.",
 		"fr": "Attachez les politiques requises à l'utilisateur RAM ou à leurs groupes.",
-		"pt": "Anexe as políticas necessárias ao usuário RAM ou seus grupos.",
+		"pt": "Anexe as políticas necessárias ao usuário RAM ou seus grupos."
 	},
-	"resource_types": ["ALIYUN::RAM::User"],
+	"resource_types": ["ALIYUN::RAM::User"]
 }
 
 has_system_policy(resource) if {

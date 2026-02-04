@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "slb-backendserver-weight-check",
+	"severity": "low",
 	"name": {
 		"en": "SLB Backend Server Weight Check",
 		"zh": "SLB 后端服务器权重配置核查",
@@ -14,7 +15,6 @@ rule_meta := {
 		"fr": "Vérification du Poids du Serveur Backend SLB",
 		"pt": "Verificação de Peso do Servidor Backend SLB"
 	},
-	"severity": "low",
 	"description": {
 		"en": "Ensures SLB backend servers have reasonable weight configurations.",
 		"zh": "确保 SLB 后端服务器具有合理的权重配置。",
@@ -42,7 +42,7 @@ rule_meta := {
 		"fr": "Assurez-vous que les poids des serveurs backend sont correctement définis.",
 		"pt": "Garanta que os pesos dos servidores backend estejam configurados corretamente."
 	},
-	"resource_types": ["ALIYUN::SLB::BackendServerAttachment"],
+	"resource_types": ["ALIYUN::SLB::BackendServerAttachment"]
 }
 
 is_compliant(resource) if {

@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "vpn-gateway-enabled-ssl-vpn",
+	"severity": "low",
 	"name": {
 		"en": "VPN Gateway SSL-VPN Enabled",
 		"zh": "VPN 网关开启 SSL-VPN",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "VPN-Gateway SSL-VPN aktiviert",
 		"es": "SSL-VPN de Puerta de Enlace VPN Habilitado",
 		"fr": "SSL-VPN de Passerelle VPN Activé",
-		"pt": "SSL-VPN do Gateway VPN Habilitado",
+		"pt": "SSL-VPN do Gateway VPN Habilitado"
 	},
-	"severity": "low",
 	"description": {
 		"en": "Ensures the VPN gateway has SSL-VPN enabled for secure client access.",
 		"zh": "确保 VPN 网关开启了 SSL-VPN，以便客户端安全访问。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass das VPN-Gateway SSL-VPN für sicheren Client-Zugriff aktiviert hat.",
 		"es": "Garantiza que la puerta de enlace VPN tenga SSL-VPN habilitado para acceso seguro del cliente.",
 		"fr": "Garantit que la passerelle VPN a SSL-VPN activé pour un accès client sécurisé.",
-		"pt": "Garante que o gateway VPN tenha SSL-VPN habilitado para acesso seguro do cliente.",
+		"pt": "Garante que o gateway VPN tenha SSL-VPN habilitado para acesso seguro do cliente."
 	},
 	"reason": {
 		"en": "SSL-VPN provides a secure way for remote users to access internal network resources.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "SSL-VPN bietet eine sichere Möglichkeit für Remote-Benutzer, auf interne Netzwerkressourcen zuzugreifen.",
 		"es": "SSL-VPN proporciona una forma segura para que los usuarios remotos accedan a los recursos de red internos.",
 		"fr": "SSL-VPN fournit un moyen sécurisé pour les utilisateurs distants d'accéder aux ressources réseau internes.",
-		"pt": "SSL-VPN fornece uma maneira segura para usuários remotos acessarem recursos de rede internos.",
+		"pt": "SSL-VPN fornece uma maneira segura para usuários remotos acessarem recursos de rede internos."
 	},
 	"recommendation": {
 		"en": "Set EnableSsl to 'true' for the VPN Gateway.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Setzen Sie EnableSsl für das VPN-Gateway auf 'true'.",
 		"es": "Establezca EnableSsl en 'true' para la puerta de enlace VPN.",
 		"fr": "Définissez EnableSsl sur 'true' pour la passerelle VPN.",
-		"pt": "Defina EnableSsl como 'true' para o Gateway VPN.",
+		"pt": "Defina EnableSsl como 'true' para o Gateway VPN."
 	},
-	"resource_types": ["ALIYUN::VPC::VpnGateway"],
+	"resource_types": ["ALIYUN::VPC::VpnGateway"]
 }
 
 is_compliant(resource) if {

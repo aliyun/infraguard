@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "hbase-cluster-deletion-protection",
+	"severity": "medium",
 	"name": {
 		"en": "HBase Cluster Deletion Protection Enabled",
 		"zh": "HBase 集群开启删除保护",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "HBase-Cluster Löschschutz aktiviert",
 		"es": "Protección de Eliminación de Clúster HBase Habilitada",
 		"fr": "Protection contre la Suppression de Cluster HBase Activée",
-		"pt": "Proteção contra Exclusão de Cluster HBase Habilitada",
+		"pt": "Proteção contra Exclusão de Cluster HBase Habilitada"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures that HBase clusters have deletion protection enabled.",
 		"zh": "确保 HBase 集群开启了删除保护。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass HBase-Cluster Löschschutz aktiviert haben.",
 		"es": "Garantiza que los clústeres HBase tengan protección contra eliminación habilitada.",
 		"fr": "Garantit que les clusters HBase ont la protection contre la suppression activée.",
-		"pt": "Garante que os clusters HBase tenham proteção contra exclusão habilitada.",
+		"pt": "Garante que os clusters HBase tenham proteção contra exclusão habilitada."
 	},
 	"reason": {
 		"en": "If deletion protection is not enabled, the HBase cluster may be released accidentally, causing data loss.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Wenn der Löschschutz nicht aktiviert ist, kann der HBase-Cluster versehentlich freigegeben werden, was zu Datenverlust führt.",
 		"es": "Si la protección contra eliminación no está habilitada, el clúster HBase puede ser liberado accidentalmente, causando pérdida de datos.",
 		"fr": "Si la protection contre la suppression n'est pas activée, le cluster HBase peut être libéré accidentellement, entraînant une perte de données.",
-		"pt": "Se a proteção contra exclusão não estiver habilitada, o cluster HBase pode ser liberado acidentalmente, causando perda de dados.",
+		"pt": "Se a proteção contra exclusão não estiver habilitada, o cluster HBase pode ser liberado acidentalmente, causando perda de dados."
 	},
 	"recommendation": {
 		"en": "Enable deletion protection for the HBase cluster.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Aktivieren Sie den Löschschutz für den HBase-Cluster.",
 		"es": "Habilite la protección contra eliminación para el clúster HBase.",
 		"fr": "Activez la protection contre la suppression pour le cluster HBase.",
-		"pt": "Habilite a proteção contra exclusão para o cluster HBase.",
+		"pt": "Habilite a proteção contra exclusão para o cluster HBase."
 	},
-	"resource_types": ["ALIYUN::HBase::Cluster"],
+	"resource_types": ["ALIYUN::HBase::Cluster"]
 }
 
 is_compliant(resource) if {

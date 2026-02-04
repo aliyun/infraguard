@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "ram-user-no-has-specified-policy",
+	"severity": "medium",
 	"name": {
 		"en": "RAM User No Specified Policy",
 		"zh": "RAM 用户及所属用户组未绑定指定条件的权限策略",
@@ -14,7 +15,6 @@ rule_meta := {
 		"fr": "Utilisateur RAM Sans Politique Spécifiée",
 		"pt": "Usuário RAM Sem Política Especificada"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures RAM users do not have specified risky policies attached.",
 		"zh": "确保 RAM 用户未绑定符合参数条件的高危权限策略。",
@@ -42,7 +42,7 @@ rule_meta := {
 		"fr": "Supprimez ou remplacez les politiques risquées par des alternatives à privilèges minimaux.",
 		"pt": "Remova ou substitua políticas arriscadas por alternativas de menor privilégio."
 	},
-	"resource_types": ["ALIYUN::RAM::User"],
+	"resource_types": ["ALIYUN::RAM::User"]
 }
 
 risky_policies := [

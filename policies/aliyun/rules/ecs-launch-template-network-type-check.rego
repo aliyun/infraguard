@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "ecs-launch-template-network-type-check",
+	"severity": "medium",
 	"name": {
 		"en": "ECS launch template uses VPC network type",
 		"zh": "ECS 启动模版配置不应设置公网访问",
@@ -24,8 +25,6 @@ rule_meta := {
 		"fr": "Les versions de modèle de lancement ECS ont le type de réseau défini sur VPC, considéré comme conforme. Le type de réseau classique n'est pas recommandé pour les environnements de production.",
 		"pt": "As versões do modelo de inicialização do ECS têm o tipo de rede definido como VPC, considerado em conformidade. O tipo de rede clássica não é recomendado para ambientes de produção."
 	},
-	"severity": "medium",
-	"resource_types": ["ALIYUN::ECS::LaunchTemplate"],
 	"reason": {
 		"en": "ECS launch template is configured with classic network type",
 		"zh": "ECS 启动模板配置了经典网络类型",
@@ -44,6 +43,7 @@ rule_meta := {
 		"fr": "Utilisez le type de réseau VPC dans les modèles de lancement pour une meilleure isolation réseau",
 		"pt": "Use o tipo de rede VPC nos modelos de inicialização para melhor isolamento de rede"
 	},
+	"resource_types": ["ALIYUN::ECS::LaunchTemplate"]
 }
 
 deny contains result if {

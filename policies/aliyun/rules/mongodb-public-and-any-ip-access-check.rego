@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "mongodb-public-and-any-ip-access-check",
+	"severity": "high",
 	"name": {
 		"en": "MongoDB Public and Any IP Access Check",
 		"zh": "MongoDB 实例不开启公网或安全白名单不设置为允许任意来源访问",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "MongoDB öffentlicher und beliebiger IP-Zugriff-Prüfung",
 		"es": "Verificación de Acceso Público y de Cualquier IP de MongoDB",
 		"fr": "Vérification d'Accès Public et de N'importe Quelle IP MongoDB",
-		"pt": "Verificação de Acesso Público e de Qualquer IP do MongoDB",
+		"pt": "Verificação de Acesso Público e de Qualquer IP do MongoDB"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures that MongoDB instances do not have an open whitelist (0.0.0.0/0).",
 		"zh": "确保 MongoDB 实例未设置开放白名单（0.0.0.0/0）。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass MongoDB-Instanzen keine offene Whitelist (0.0.0.0/0) haben.",
 		"es": "Garantiza que las instancias MongoDB no tengan una lista blanca abierta (0.0.0.0/0).",
 		"fr": "Garantit que les instances MongoDB n'ont pas de liste blanche ouverte (0.0.0.0/0).",
-		"pt": "Garante que as instâncias MongoDB não tenham uma lista branca aberta (0.0.0.0/0).",
+		"pt": "Garante que as instâncias MongoDB não tenham uma lista branca aberta (0.0.0.0/0)."
 	},
 	"reason": {
 		"en": "Setting the whitelist to 0.0.0.0/0 allows any IP to attempt connection, significantly increasing the risk of data breaches or brute force attacks.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Das Setzen der Whitelist auf 0.0.0.0/0 erlaubt jeder IP, eine Verbindung zu versuchen, was das Risiko von Datenlecks oder Brute-Force-Angriffen erheblich erhöht.",
 		"es": "Establecer la lista blanca en 0.0.0.0/0 permite que cualquier IP intente conectarse, aumentando significativamente el riesgo de violaciones de datos o ataques de fuerza bruta.",
 		"fr": "Définir la liste blanche sur 0.0.0.0/0 permet à n'importe quelle IP de tenter une connexion, augmentant considérablement le risque de violations de données ou d'attaques par force brute.",
-		"pt": "Definir a lista branca como 0.0.0.0/0 permite que qualquer IP tente conexão, aumentando significativamente o risco de violações de dados ou ataques de força bruta.",
+		"pt": "Definir a lista branca como 0.0.0.0/0 permite que qualquer IP tente conexão, aumentando significativamente o risco de violações de dados ou ataques de força bruta."
 	},
 	"recommendation": {
 		"en": "Restrict the IP whitelist for the MongoDB instance to specific trusted IP ranges.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Beschränken Sie die IP-Whitelist für die MongoDB-Instanz auf spezifische vertrauenswürdige IP-Bereiche.",
 		"es": "Restrinja la lista blanca de IP para la instancia MongoDB a rangos de IP confiables específicos.",
 		"fr": "Restreignez la liste blanche IP pour l'instance MongoDB à des plages d'IP de confiance spécifiques.",
-		"pt": "Restrinja a lista branca de IP para a instância MongoDB a intervalos de IP confiáveis específicos.",
+		"pt": "Restrinja a lista branca de IP para a instância MongoDB a intervalos de IP confiáveis específicos."
 	},
-	"resource_types": ["ALIYUN::MONGODB::Instance"],
+	"resource_types": ["ALIYUN::MONGODB::Instance"]
 }
 
 is_compliant(resource) if {

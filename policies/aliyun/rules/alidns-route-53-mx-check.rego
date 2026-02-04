@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "alidns-route-53-mx-check",
+	"severity": "high",
 	"name": {
 		"en": "DNS MX Record Has Valid SPF in Associated TXT Record",
 		"zh": "DNS 域名 MX 记录关联的 TXT 记录包含有效的 SPF 值",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "DNS MX-Eintrag hat gültiges SPF in zugehörigem TXT-Eintrag",
 		"es": "Registro MX de DNS Tiene SPF Válido en Registro TXT Asociado",
 		"fr": "L'Enregistrement MX DNS a un SPF Valide dans l'Enregistrement TXT Associé",
-		"pt": "Registro MX DNS Tem SPF Válido no Registro TXT Associado",
+		"pt": "Registro MX DNS Tem SPF Válido no Registro TXT Associado"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures that MX records have associated TXT records with valid SPF values for email validation.",
 		"zh": "对于每个 MX 记录，检查关联的 TXT 记录是否包含有效的 SPF 值,只要 MX 记录有至少一个具有有效 SPF 值的关联 TXT 记录，则视为合规。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass MX-Einträge zugehörige TXT-Einträge mit gültigen SPF-Werten für die E-Mail-Validierung haben.",
 		"es": "Garantiza que los registros MX tengan registros TXT asociados con valores SPF válidos para validación de correo electrónico.",
 		"fr": "Garantit que les enregistrements MX ont des enregistrements TXT associés avec des valeurs SPF valides pour la validation des e-mails.",
-		"pt": "Garante que os registros MX tenham registros TXT associados com valores SPF válidos para validação de e-mail.",
+		"pt": "Garante que os registros MX tenham registros TXT associados com valores SPF válidos para validação de e-mail."
 	},
 	"reason": {
 		"en": "MX records without valid SPF configuration may be vulnerable to email spoofing.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "MX-Einträge ohne gültige SPF-Konfiguration können anfällig für E-Mail-Spoofing sein.",
 		"es": "Los registros MX sin configuración SPF válida pueden ser vulnerables a suplantación de correo electrónico.",
 		"fr": "Les enregistrements MX sans configuration SPF valide peuvent être vulnérables à l'usurpation d'e-mail.",
-		"pt": "Registros MX sem configuração SPF válida podem ser vulneráveis à falsificação de e-mail.",
+		"pt": "Registros MX sem configuração SPF válida podem ser vulneráveis à falsificação de e-mail."
 	},
 	"recommendation": {
 		"en": "Configure TXT records with valid SPF values for each MX record.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Konfigurieren Sie TXT-Einträge mit gültigen SPF-Werten für jeden MX-Eintrag.",
 		"es": "Configure registros TXT con valores SPF válidos para cada registro MX.",
 		"fr": "Configurez les enregistrements TXT avec des valeurs SPF valides pour chaque enregistrement MX.",
-		"pt": "Configure registros TXT com valores SPF válidos para cada registro MX.",
+		"pt": "Configure registros TXT com valores SPF válidos para cada registro MX."
 	},
-	"resource_types": ["ALIYUN::DNS::DomainRecord"],
+	"resource_types": ["ALIYUN::DNS::DomainRecord"]
 }
 
 # Check if a TXT record contains a valid SPF record

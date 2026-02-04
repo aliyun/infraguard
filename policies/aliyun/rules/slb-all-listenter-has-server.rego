@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "slb-all-listenter-has-server",
+	"severity": "medium",
 	"name": {
 		"en": "SLB All Listeners Have Backend Servers",
 		"zh": "SLB 负载均衡的所有监听都至少添加了指定数量的后端服务器",
@@ -14,7 +15,6 @@ rule_meta := {
 		"fr": "Tous les Auditeurs SLB ont des Serveurs Backend",
 		"pt": "Todos os Ouvintes SLB Têm Servidores Backend"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "All listeners of SLB instances should have at least the specified number of backend servers attached.",
 		"zh": "SLB 负载均衡的所有监听都至少添加参数指定数量的后端服务器，视为合规。默认至少添加一台服务器视为合规。",
@@ -42,7 +42,7 @@ rule_meta := {
 		"fr": "Attachez au moins le nombre minimum requis de serveurs backend à tous les auditeurs.",
 		"pt": "Anexe pelo menos o número mínimo necessário de servidores backend a todos os ouvintes."
 	},
-	"resource_types": ["ALIYUN::SLB::LoadBalancer"],
+	"resource_types": ["ALIYUN::SLB::LoadBalancer"]
 }
 
 deny contains result if {

@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "cr-repository-image-scanning-enabled",
+	"severity": "high",
 	"name": {
 		"en": "CR Instance Image Scanning Enabled",
 		"zh": "为容器镜像实例开启安全扫描",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "CR-Instanz Bild-Scanning aktiviert",
 		"es": "Escaneo de Imagen de Instancia CR Habilitado",
 		"fr": "Balayage d'Image d'Instance CR Activé",
-		"pt": "Varredura de Imagem de Instância CR Habilitada",
+		"pt": "Varredura de Imagem de Instância CR Habilitada"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures Container Registry instances have image scanning enabled for security vulnerability detection.",
 		"zh": "确保容器镜像实例开启了镜像安全扫描功能以检测安全漏洞。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass Container Registry-Instanzen Bild-Scanning für die Erkennung von Sicherheitslücken aktiviert haben.",
 		"es": "Garantiza que las instancias de Container Registry tengan escaneo de imágenes habilitado para la detección de vulnerabilidades de seguridad.",
 		"fr": "Garantit que les instances Container Registry ont le balayage d'images activé pour la détection des vulnérabilités de sécurité.",
-		"pt": "Garante que as instâncias do Container Registry tenham varredura de imagem habilitada para detecção de vulnerabilidades de segurança.",
+		"pt": "Garante que as instâncias do Container Registry tenham varredura de imagem habilitada para detecção de vulnerabilidades de segurança."
 	},
 	"reason": {
 		"en": "Image scanning helps identify and prevent deployment of vulnerable container images.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Bild-Scanning hilft dabei, die Bereitstellung anfälliger Container-Images zu identifizieren und zu verhindern.",
 		"es": "El escaneo de imágenes ayuda a identificar y prevenir el despliegue de imágenes de contenedor vulnerables.",
 		"fr": "Le balayage d'images aide à identifier et empêcher le déploiement d'images de conteneurs vulnérables.",
-		"pt": "A varredura de imagem ajuda a identificar e prevenir a implantação de imagens de contêiner vulneráveis.",
+		"pt": "A varredura de imagem ajuda a identificar e prevenir a implantação de imagens de contêiner vulneráveis."
 	},
 	"recommendation": {
 		"en": "Enable image scanning for the Container Registry instance.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Aktivieren Sie Bild-Scanning für die Container Registry-Instanz.",
 		"es": "Habilite el escaneo de imágenes para la instancia de Container Registry.",
 		"fr": "Activez le balayage d'images pour l'instance Container Registry.",
-		"pt": "Habilite a varredura de imagem para a instância do Container Registry.",
+		"pt": "Habilite a varredura de imagem para a instância do Container Registry."
 	},
-	"resource_types": ["ALIYUN::CR::Instance"],
+	"resource_types": ["ALIYUN::CR::Instance"]
 }
 
 is_compliant(resource) if {

@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "elasticsearch-instance-multi-zone",
+	"severity": "medium",
 	"name": {
 		"en": "Elasticsearch Instance Multi-Zone Deployment",
 		"zh": "Elasticsearch 实例多可用区部署",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "Elasticsearch-Instanz Multi-Zonen-Bereitstellung",
 		"es": "Implementación Multi-Zona de Instancia Elasticsearch",
 		"fr": "Déploiement Multi-Zone d'Instance Elasticsearch",
-		"pt": "Implantação Multi-Zona de Instância Elasticsearch",
+		"pt": "Implantação Multi-Zona de Instância Elasticsearch"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Elasticsearch instances should be deployed across multiple availability zones.",
 		"zh": "Elasticsearch 实例应部署在多个可用区。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "Elasticsearch-Instanzen sollten über mehrere Verfügbarkeitszonen hinweg bereitgestellt werden.",
 		"es": "Las instancias Elasticsearch deben implementarse en múltiples zonas de disponibilidad.",
 		"fr": "Les instances Elasticsearch doivent être déployées sur plusieurs zones de disponibilité.",
-		"pt": "As instâncias Elasticsearch devem ser implantadas em múltiplas zonas de disponibilidade.",
+		"pt": "As instâncias Elasticsearch devem ser implantadas em múltiplas zonas de disponibilidade."
 	},
 	"reason": {
 		"en": "The Elasticsearch instance is configured with fewer than 2 availability zones.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Die Elasticsearch-Instanz ist mit weniger als 2 Verfügbarkeitszonen konfiguriert.",
 		"es": "La instancia Elasticsearch está configurada con menos de 2 zonas de disponibilidad.",
 		"fr": "L'instance Elasticsearch est configurée avec moins de 2 zones de disponibilité.",
-		"pt": "A instância Elasticsearch está configurada com menos de 2 zonas de disponibilidade.",
+		"pt": "A instância Elasticsearch está configurada com menos de 2 zonas de disponibilidade."
 	},
 	"recommendation": {
 		"en": "Increase the ZoneCount to at least 2.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Erhöhen Sie ZoneCount auf mindestens 2.",
 		"es": "Aumente ZoneCount a al menos 2.",
 		"fr": "Augmentez ZoneCount à au moins 2.",
-		"pt": "Aumente ZoneCount para pelo menos 2.",
+		"pt": "Aumente ZoneCount para pelo menos 2."
 	},
-	"resource_types": ["ALIYUN::ElasticSearch::Instance"],
+	"resource_types": ["ALIYUN::ElasticSearch::Instance"]
 }
 
 # Check if instance is multi-zone

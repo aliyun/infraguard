@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "slb-acl-public-access-check",
+	"severity": "high",
 	"name": {
 		"en": "SLB ACL Public Access Check",
 		"zh": "CLB 访问控制列表不配置所有地址段",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "SLB ACL öffentlicher Zugriff-Prüfung",
 		"es": "Verificación de Acceso Público de ACL de SLB",
 		"fr": "Vérification d'Accès Public ACL SLB",
-		"pt": "Verificação de Acesso Público de ACL SLB",
+		"pt": "Verificação de Acesso Público de ACL SLB"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures that SLB ACLs do not contain 0.0.0.0/0 to prevent unrestricted public access.",
 		"zh": "确保 CLB 访问控制列表中不包含 0.0.0.0/0，以防止无限制的公网访问。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass SLB ACLs 0.0.0.0/0 nicht enthalten, um uneingeschränkten öffentlichen Zugriff zu verhindern.",
 		"es": "Garantiza que las ACL de SLB no contengan 0.0.0.0/0 para prevenir acceso público sin restricciones.",
 		"fr": "Garantit que les ACL SLB ne contiennent pas 0.0.0.0/0 pour empêcher l'accès public sans restriction.",
-		"pt": "Garante que as ACLs SLB não contenham 0.0.0.0/0 para prevenir acesso público sem restrições.",
+		"pt": "Garante que as ACLs SLB não contenham 0.0.0.0/0 para prevenir acesso público sem restrições."
 	},
 	"reason": {
 		"en": "Allowing 0.0.0.0/0 in an ACL bypasses the security benefits of access control, potentially exposing services to attacks.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Das Zulassen von 0.0.0.0/0 in einer ACL umgeht die Sicherheitsvorteile der Zugriffskontrolle und kann Dienste Angriffen aussetzen.",
 		"es": "Permitir 0.0.0.0/0 en una ACL omite los beneficios de seguridad del control de acceso, potencialmente exponiendo servicios a ataques.",
 		"fr": "Autoriser 0.0.0.0/0 dans une ACL contourne les avantages de sécurité du contrôle d'accès, exposant potentiellement les services aux attaques.",
-		"pt": "Permitir 0.0.0.0/0 em uma ACL ignora os benefícios de segurança do controle de acesso, potencialmente expondo serviços a ataques.",
+		"pt": "Permitir 0.0.0.0/0 em uma ACL ignora os benefícios de segurança do controle de acesso, potencialmente expondo serviços a ataques."
 	},
 	"recommendation": {
 		"en": "Remove 0.0.0.0/0 from the SLB ACL entries and replace it with specific IP ranges.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Entfernen Sie 0.0.0.0/0 aus den SLB ACL-Einträgen und ersetzen Sie es durch spezifische IP-Bereiche.",
 		"es": "Elimine 0.0.0.0/0 de las entradas de ACL de SLB y reemplácelo con rangos de IP específicos.",
 		"fr": "Supprimez 0.0.0.0/0 des entrées ACL SLB et remplacez-le par des plages d'IP spécifiques.",
-		"pt": "Remova 0.0.0.0/0 das entradas de ACL SLB e substitua por intervalos de IP específicos.",
+		"pt": "Remova 0.0.0.0/0 das entradas de ACL SLB e substitua por intervalos de IP específicos."
 	},
-	"resource_types": ["ALIYUN::SLB::AccessControl"],
+	"resource_types": ["ALIYUN::SLB::AccessControl"]
 }
 
 is_compliant(resource) if {

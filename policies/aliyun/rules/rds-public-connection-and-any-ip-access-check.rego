@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "rds-public-connection-and-any-ip-access-check",
+	"severity": "high",
 	"name": {
 		"en": "RDS Public Connection and Any IP Access Check",
 		"zh": "开启公网 IP 的 RDS 实例白名单未对所有来源开放",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "RDS öffentliche Verbindung und beliebige IP-Zugriff-Prüfung",
 		"es": "Verificación de Conexión Pública y Acceso de Cualquier IP de RDS",
 		"fr": "Vérification de Connexion Publique et d'Accès de N'importe Quelle IP RDS",
-		"pt": "Verificação de Conexão Pública e Acesso de Qualquer IP RDS",
+		"pt": "Verificação de Conexão Pública e Acesso de Qualquer IP RDS"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures that RDS instances with public connections do not have a whitelist open to all IPs.",
 		"zh": "确保开启公网 IP 的 RDS 实例白名单未设置为对所有来源 IP 开放。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass RDS-Instanzen mit öffentlichen Verbindungen keine Whitelist haben, die für alle IPs geöffnet ist.",
 		"es": "Garantiza que las instancias RDS con conexiones públicas no tengan una lista blanca abierta a todas las IPs.",
 		"fr": "Garantit que les instances RDS avec connexions publiques n'ont pas de liste blanche ouverte à toutes les IPs.",
-		"pt": "Garante que instâncias RDS com conexões públicas não tenham uma lista branca aberta para todos os IPs.",
+		"pt": "Garante que instâncias RDS com conexões públicas não tenham uma lista branca aberta para todos os IPs."
 	},
 	"reason": {
 		"en": "An open whitelist combined with a public connection exposes the database to the internet, creating a high security risk.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Eine offene Whitelist in Kombination mit einer öffentlichen Verbindung setzt die Datenbank dem Internet aus und schafft ein hohes Sicherheitsrisiko.",
 		"es": "Una lista blanca abierta combinada con una conexión pública expone la base de datos a internet, creando un alto riesgo de seguridad.",
 		"fr": "Une liste blanche ouverte combinée à une connexion publique expose la base de données à Internet, créant un risque de sécurité élevé.",
-		"pt": "Uma lista branca aberta combinada com uma conexão pública expõe o banco de dados à internet, criando um alto risco de segurança.",
+		"pt": "Uma lista branca aberta combinada com uma conexão pública expõe o banco de dados à internet, criando um alto risco de segurança."
 	},
 	"recommendation": {
 		"en": "Disable public connection or restrict the IP whitelist for the RDS instance.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Deaktivieren Sie die öffentliche Verbindung oder beschränken Sie die IP-Whitelist für die RDS-Instanz.",
 		"es": "Deshabilite la conexión pública o restrinja la lista blanca de IP para la instancia RDS.",
 		"fr": "Désactivez la connexion publique ou restreignez la liste blanche IP pour l'instance RDS.",
-		"pt": "Desabilite a conexão pública ou restrinja a lista branca de IP para a instância RDS.",
+		"pt": "Desabilite a conexão pública ou restrinja a lista branca de IP para a instância RDS."
 	},
-	"resource_types": ["ALIYUN::RDS::DBInstance"],
+	"resource_types": ["ALIYUN::RDS::DBInstance"]
 }
 
 is_compliant(resource) if {

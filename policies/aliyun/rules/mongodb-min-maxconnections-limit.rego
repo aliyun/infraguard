@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "mongodb-min-maxconnections-limit",
+	"severity": "high",
 	"name": {
 		"en": "MongoDB Meets Minimum Connection Requirements",
 		"zh": "MongoDB 满足指定连接数要求",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "MongoDB erfüllt Mindestverbindungsanforderungen",
 		"es": "MongoDB Cumple los Requisitos Mínimos de Conexión",
 		"fr": "MongoDB Répond aux Exigences Minimales de Connexion",
-		"pt": "MongoDB Atende aos Requisitos Mínimos de Conexão",
+		"pt": "MongoDB Atende aos Requisitos Mínimos de Conexão"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures MongoDB instances provide at least the minimum required number of connections.",
 		"zh": "确保 MongoDB 实例提供至少所需的最少连接数。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass MongoDB-Instanzen mindestens die erforderliche Mindestanzahl von Verbindungen bereitstellen.",
 		"es": "Garantiza que las instancias MongoDB proporcionen al menos el número mínimo requerido de conexiones.",
 		"fr": "Garantit que les instances MongoDB fournissent au moins le nombre minimum requis de connexions.",
-		"pt": "Garante que as instâncias MongoDB forneçam pelo menos o número mínimo necessário de conexões.",
+		"pt": "Garante que as instâncias MongoDB forneçam pelo menos o número mínimo necessário de conexões."
 	},
 	"reason": {
 		"en": "Insufficient connection limits may cause application failures when under load.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Unzureichende Verbindungslimits können bei Belastung zu Anwendungsfehlern führen.",
 		"es": "Los límites de conexión insuficientes pueden causar fallas de aplicación bajo carga.",
 		"fr": "Des limites de connexion insuffisantes peuvent provoquer des défaillances d'application sous charge.",
-		"pt": "Limites de conexão insuficientes podem causar falhas de aplicação sob carga.",
+		"pt": "Limites de conexão insuficientes podem causar falhas de aplicação sob carga."
 	},
 	"recommendation": {
 		"en": "Select an instance class that provides sufficient connection limits.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Wählen Sie eine Instanzklasse, die ausreichende Verbindungslimits bietet.",
 		"es": "Seleccione una clase de instancia que proporcione límites de conexión suficientes.",
 		"fr": "Sélectionnez une classe d'instance qui fournit des limites de connexion suffisantes.",
-		"pt": "Selecione uma classe de instância que forneça limites de conexão suficientes.",
+		"pt": "Selecione uma classe de instância que forneça limites de conexão suficientes."
 	},
-	"resource_types": ["ALIYUN::MONGODB::Instance"],
+	"resource_types": ["ALIYUN::MONGODB::Instance"]
 }
 
 # Default minimum connections

@@ -11,7 +11,7 @@ pack_meta := {
 		"de": "OceanBase Best Practices",
 		"es": "Mejores Prácticas de OceanBase",
 		"fr": "Meilleures Pratiques OceanBase",
-		"pt": "Melhores Práticas do OceanBase",
+		"pt": "Melhores Práticas do OceanBase"
 	},
 	"description": {
 		"en": "Continuously check OceanBase compliance based on security practices.",
@@ -20,13 +20,12 @@ pack_meta := {
 		"de": "Kontinuierliche Überprüfung der OceanBase-Compliance basierend auf Sicherheitspraktiken.",
 		"es": "Verificar continuamente el cumplimiento de OceanBase basándose en prácticas de seguridad.",
 		"fr": "Vérifier continuellement la conformité d'OceanBase sur la base des pratiques de sécurité.",
-		"pt": "Verificar continuamente a conformidade do OceanBase com base em práticas de segurança.",
+		"pt": "Verificar continuamente a conformidade do OceanBase com base em práticas de segurança."
 	},
-	"rules": [],
+	"rules": []
 	# "oceanbase-instance-enabled-backup",  # Commented: ROS does not support ALIYUN::OceanBase::DBInstance resource type
 	# "oceanbase-instance-enabled-ssl",
 	# "oceanbase-instance-enabled-sql-diagnosis",
 	# "oceanbase-tenant-security-ip-check",
 	# "oceanbase-tenant-enabled-encryption",
-
 }

@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "redis-instance-in-vpc",
+	"severity": "medium",
 	"name": {
 		"en": "Redis Instance in VPC",
 		"zh": "使用专有网络类型的 Redis 实例",
@@ -15,7 +16,6 @@ rule_meta := {
 		"fr": "Instance Redis dans VPC",
 		"pt": "Instância Redis em VPC"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures Redis instance is deployed in a VPC.",
 		"zh": "确保 Redis 实例部署在专有网络中。",
@@ -43,7 +43,7 @@ rule_meta := {
 		"fr": "Déployez l'instance Redis dans un VPC.",
 		"pt": "Implante a instância Redis em uma VPC."
 	},
-	"resource_types": ["ALIYUN::REDIS::Instance"],
+	"resource_types": ["ALIYUN::REDIS::Instance"]
 }
 
 is_compliant(resource) if {

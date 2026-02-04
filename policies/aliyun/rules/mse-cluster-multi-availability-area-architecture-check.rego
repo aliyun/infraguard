@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "mse-cluster-multi-availability-area-architecture-check",
+	"severity": "medium",
 	"name": {
 		"en": "MSE Cluster High-Availability Configuration",
 		"zh": "使用高可用版本的 MSE 注册配置中心",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "MSE-Cluster Hochverfügbarkeitskonfiguration",
 		"es": "Configuración de Alta Disponibilidad del Clúster MSE",
 		"fr": "Configuration de Haute Disponibilité du Cluster MSE",
-		"pt": "Configuração de Alta Disponibilidade do Cluster MSE",
+		"pt": "Configuração de Alta Disponibilidade do Cluster MSE"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "MSE clusters should use the Professional Edition with at least 3 instances (odd number) for high availability.",
 		"zh": "使用高可用版本的 MSE 注册配置中心，视为合规。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "MSE-Cluster sollten die Professional Edition mit mindestens 3 Instanzen (ungerade Zahl) für Hochverfügbarkeit verwenden.",
 		"es": "Los clústeres MSE deben usar la Edición Profesional con al menos 3 instancias (número impar) para alta disponibilidad.",
 		"fr": "Les clusters MSE doivent utiliser l'Édition Professionnelle avec au moins 3 instances (nombre impair) pour une haute disponibilité.",
-		"pt": "Os clusters MSE devem usar a Edição Profissional com pelo menos 3 instâncias (número ímpar) para alta disponibilidade.",
+		"pt": "Os clusters MSE devem usar a Edição Profissional com pelo menos 3 instâncias (número ímpar) para alta disponibilidade."
 	},
 	"reason": {
 		"en": "The MSE cluster does not meet high-availability requirements (Professional Edition requires InstanceCount >= 3 and odd number).",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Der MSE-Cluster erfüllt nicht die Hochverfügbarkeitsanforderungen (Professional Edition erfordert InstanceCount >= 3 und ungerade Zahl).",
 		"es": "El clúster MSE no cumple con los requisitos de alta disponibilidad (la Edición Profesional requiere InstanceCount >= 3 y número impar).",
 		"fr": "Le cluster MSE ne répond pas aux exigences de haute disponibilité (l'Édition Professionnelle nécessite InstanceCount >= 3 et nombre impair).",
-		"pt": "O cluster MSE não atende aos requisitos de alta disponibilidade (a Edição Profissional requer InstanceCount >= 3 e número ímpar).",
+		"pt": "O cluster MSE não atende aos requisitos de alta disponibilidade (a Edição Profissional requer InstanceCount >= 3 e número ímpar)."
 	},
 	"recommendation": {
 		"en": "Use Professional Edition (MseVersion: mse_pro) and set InstanceCount to at least 3 (odd number) for high availability.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Verwenden Sie die Professional Edition (MseVersion: mse_pro) und setzen Sie InstanceCount auf mindestens 3 (ungerade Zahl) für Hochverfügbarkeit.",
 		"es": "Use la Edición Profesional (MseVersion: mse_pro) y establezca InstanceCount en al menos 3 (número impar) para alta disponibilidad.",
 		"fr": "Utilisez l'Édition Professionnelle (MseVersion: mse_pro) et définissez InstanceCount sur au moins 3 (nombre impair) pour une haute disponibilité.",
-		"pt": "Use a Edição Profissional (MseVersion: mse_pro) e defina InstanceCount para pelo menos 3 (número ímpar) para alta disponibilidade.",
+		"pt": "Use a Edição Profissional (MseVersion: mse_pro) e defina InstanceCount para pelo menos 3 (número ímpar) para alta disponibilidade."
 	},
-	"resource_types": ["ALIYUN::MSE::Cluster"],
+	"resource_types": ["ALIYUN::MSE::Cluster"]
 }
 
 # Check if cluster is Professional Edition

@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "ram-user-activated-ak-quantity-check",
+	"severity": "medium",
 	"name": {
 		"en": "RAM User Active AK Quantity Check",
 		"zh": "RAM 用户激活 AccessKey 数量核查",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "RAM-Benutzer aktive AK-Mengenprüfung",
 		"es": "Verificación de Cantidad de AK Activo de Usuario RAM",
 		"fr": "Vérification de la Quantité d'AK Actif d'Utilisateur RAM",
-		"pt": "Verificação de Quantidade de AK Ativo de Usuário RAM",
+		"pt": "Verificação de Quantidade de AK Ativo de Usuário RAM"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures RAM users do not have more than one active AccessKey.",
 		"zh": "确保 RAM 用户激活的 AccessKey 数量不超过 1 个。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass RAM-Benutzer nicht mehr als einen aktiven AccessKey haben.",
 		"es": "Garantiza que los usuarios RAM no tengan más de una AccessKey activa.",
 		"fr": "Garantit que les utilisateurs RAM n'ont pas plus d'une AccessKey active.",
-		"pt": "Garante que usuários RAM não tenham mais de uma AccessKey ativa.",
+		"pt": "Garante que usuários RAM não tenham mais de uma AccessKey ativa."
 	},
 	"reason": {
 		"en": "Limiting active AccessKeys reduces the potential impact of a credential leak.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Die Begrenzung aktiver AccessKeys reduziert die potenzielle Auswirkung eines Anmeldeinformationslecks.",
 		"es": "Limitar las AccessKeys activas reduce el impacto potencial de una fuga de credenciales.",
 		"fr": "Limiter les AccessKeys actives réduit l'impact potentiel d'une fuite d'identifiants.",
-		"pt": "Limitar AccessKeys ativas reduz o impacto potencial de um vazamento de credenciais.",
+		"pt": "Limitar AccessKeys ativas reduz o impacto potencial de um vazamento de credenciais."
 	},
 	"recommendation": {
 		"en": "Deactivate or remove unnecessary AccessKeys.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Deaktivieren oder entfernen Sie unnötige AccessKeys.",
 		"es": "Desactive o elimine AccessKeys innecesarias.",
 		"fr": "Désactivez ou supprimez les AccessKeys inutiles.",
-		"pt": "Desative ou remova AccessKeys desnecessárias.",
+		"pt": "Desative ou remova AccessKeys desnecessárias."
 	},
-	"resource_types": ["ALIYUN::RAM::User"],
+	"resource_types": ["ALIYUN::RAM::User"]
 }
 
 # Cross-resource check: Count ALIYUN::RAM::AccessKey referencing this user

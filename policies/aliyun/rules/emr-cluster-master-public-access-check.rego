@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata with i18n support
 rule_meta := {
 	"id": "emr-cluster-master-public-access-check",
+	"severity": "medium",
 	"name": {
 		"en": "EMR Cluster Master Node Public Access Check",
 		"zh": "EMR 集群 Master 节点公网开启检测",
@@ -16,7 +17,6 @@ rule_meta := {
 		"fr": "Vérification de l'Accès Public du Nœud Maître du Cluster EMR",
 		"pt": "Verificação de Acesso Público do Nó Mestre do Cluster EMR"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "EMR on ECS cluster master nodes should not have public IP enabled.",
 		"zh": "EMR on ECS 集群 Master 节点公网不开启，视为合规。",
@@ -44,7 +44,7 @@ rule_meta := {
 		"fr": "Définissez 'IsOpenPublicIp' sur false pour le cluster EMR et utilisez une passerelle NAT ou un hôte bastion pour l'accès.",
 		"pt": "Defina 'IsOpenPublicIp' como false para o cluster EMR e use um gateway NAT ou host bastião para acesso."
 	},
-	"resource_types": ["ALIYUN::EMR::Cluster"],
+	"resource_types": ["ALIYUN::EMR::Cluster"]
 }
 
 # Deny if IsOpenPublicIp is true

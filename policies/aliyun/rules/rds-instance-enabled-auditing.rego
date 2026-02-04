@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "rds-instance-enabled-auditing",
+	"severity": "medium",
 	"name": {
 		"en": "RDS Instance Auditing Enabled",
 		"zh": "RDS 实例开启 SQL 审计",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "RDS-Instanz-Überwachung aktiviert",
 		"es": "Auditoría de Instancia RDS Habilitada",
 		"fr": "Audit d'Instance RDS Activé",
-		"pt": "Auditoria de Instância RDS Habilitada",
+		"pt": "Auditoria de Instância RDS Habilitada"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures RDS instances have SQL auditing enabled.",
 		"zh": "确保 RDS 实例开启了 SQL 审计。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass RDS-Instanzen SQL-Überwachung aktiviert haben.",
 		"es": "Garantiza que las instancias RDS tengan auditoría SQL habilitada.",
 		"fr": "Garantit que les instances RDS ont l'audit SQL activé.",
-		"pt": "Garante que as instâncias RDS tenham auditoria SQL habilitada.",
+		"pt": "Garante que as instâncias RDS tenham auditoria SQL habilitada."
 	},
 	"reason": {
 		"en": "SQL auditing helps track database activities and investigate security incidents.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "SQL-Überwachung hilft dabei, Datenbankaktivitäten zu verfolgen und Sicherheitsvorfälle zu untersuchen.",
 		"es": "La auditoría SQL ayuda a rastrear las actividades de la base de datos e investigar incidentes de seguridad.",
 		"fr": "L'audit SQL aide à suivre les activités de la base de données et à enquêter sur les incidents de sécurité.",
-		"pt": "A auditoria SQL ajuda a rastrear atividades do banco de dados e investigar incidentes de segurança.",
+		"pt": "A auditoria SQL ajuda a rastrear atividades do banco de dados e investigar incidentes de segurança."
 	},
 	"recommendation": {
 		"en": "Enable SQL Collector for the RDS instance.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Aktivieren Sie SQL Collector für die RDS-Instanz.",
 		"es": "Habilite SQL Collector para la instancia RDS.",
 		"fr": "Activez SQL Collector pour l'instance RDS.",
-		"pt": "Habilite SQL Collector para a instância RDS.",
+		"pt": "Habilite SQL Collector para a instância RDS."
 	},
-	"resource_types": ["ALIYUN::RDS::DBInstance"],
+	"resource_types": ["ALIYUN::RDS::DBInstance"]
 }
 
 is_compliant(resource) if {

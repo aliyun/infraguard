@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "gwlb-loadbalancer-multi-zone",
+	"severity": "medium",
 	"name": {
 		"en": "GWLB LoadBalancer Multi-Zone Deployment",
 		"zh": "使用多可用区的网关型负载均衡实例",
@@ -16,7 +17,6 @@ rule_meta := {
 		"fr": "Déploiement Multi-Zone du Répartiteur de Charge GWLB",
 		"pt": "Implantação Multi-Zona do Balanceador de Carga GWLB"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "GWLB LoadBalancer instances should be deployed across at least two availability zones for high availability.",
 		"zh": "使用多可用区的网关型负载均衡实例，视为合规。",
@@ -44,7 +44,7 @@ rule_meta := {
 		"fr": "Configurez au moins deux mappages de zone dans la propriété ZoneMappings pour assurer une haute disponibilité.",
 		"pt": "Configure pelo menos dois mapeamentos de zona na propriedade ZoneMappings para garantir alta disponibilidade."
 	},
-	"resource_types": ["ALIYUN::GWLB::LoadBalancer"],
+	"resource_types": ["ALIYUN::GWLB::LoadBalancer"]
 }
 
 # Check if LoadBalancer has multiple zones

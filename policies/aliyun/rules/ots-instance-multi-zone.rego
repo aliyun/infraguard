@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "ots-instance-multi-zone",
+	"severity": "medium",
 	"name": {
 		"en": "OTS Instance Zone-Redundant Storage",
 		"zh": "使用同城冗余的 OTS 实例",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "OTS-Instanz Zonenredundanter Speicher",
 		"es": "Almacenamiento Redundante de Zona de Instancia OTS",
 		"fr": "Stockage Redondant par Zone d'Instance OTS",
-		"pt": "Armazenamento Redundante de Zona de Instância OTS",
+		"pt": "Armazenamento Redundante de Zona de Instância OTS"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures Tablestore (OTS) instances use zone-redundant storage for high availability.",
 		"zh": "确保 Tablestore（OTS）实例使用同城冗余存储以实现高可用性。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass Tablestore (OTS)-Instanzen zonenredundanten Speicher für Hochverfügbarkeit verwenden.",
 		"es": "Garantiza que las instancias Tablestore (OTS) usen almacenamiento redundante de zona para alta disponibilidad.",
 		"fr": "Garantit que les instances Tablestore (OTS) utilisent un stockage redondant par zone pour une haute disponibilité.",
-		"pt": "Garante que as instâncias Tablestore (OTS) usem armazenamento redundante de zona para alta disponibilidade.",
+		"pt": "Garante que as instâncias Tablestore (OTS) usem armazenamento redundante de zona para alta disponibilidade."
 	},
 	"reason": {
 		"en": "Zone-redundant storage provides higher availability and protects against zone-level failures.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Zonenredundanter Speicher bietet höhere Verfügbarkeit und schützt vor Zonenebenenausfällen.",
 		"es": "El almacenamiento redundante de zona proporciona mayor disponibilidad y protege contra fallas a nivel de zona.",
 		"fr": "Le stockage redondant par zone offre une disponibilité plus élevée et protège contre les défaillances au niveau de la zone.",
-		"pt": "O armazenamento redundante de zona fornece maior disponibilidade e protege contra falhas no nível de zona.",
+		"pt": "O armazenamento redundante de zona fornece maior disponibilidade e protege contra falhas no nível de zona."
 	},
 	"recommendation": {
 		"en": "Use zone-redundant Tablestore instances for critical workloads.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Verwenden Sie zonenredundante Tablestore-Instanzen für kritische Workloads.",
 		"es": "Use instancias Tablestore redundantes de zona para cargas de trabajo críticas.",
 		"fr": "Utilisez des instances Tablestore redondantes par zone pour les charges de travail critiques.",
-		"pt": "Use instâncias Tablestore redundantes de zona para cargas de trabalho críticas.",
+		"pt": "Use instâncias Tablestore redundantes de zona para cargas de trabalho críticas."
 	},
-	"resource_types": ["ALIYUN::OTS::Instance"],
+	"resource_types": ["ALIYUN::OTS::Instance"]
 }
 
 is_compliant(resource) if {

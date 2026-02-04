@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "vpn-connection-master-slave-established",
+	"severity": "medium",
 	"name": {
 		"en": "VPN Connection Dual Tunnel Established",
 		"zh": "双隧道 VPN 网关主备隧道都已建立连接",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "VPN-Verbindung Dual-Tunnel eingerichtet",
 		"es": "Conexión VPN Túnel Dual Establecido",
 		"fr": "Connexion VPN Tunnel Double Établi",
-		"pt": "Conexão VPN Túnel Duplo Estabelecido",
+		"pt": "Conexão VPN Túnel Duplo Estabelecido"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Use dual-tunnel VPN gateway and both master and slave tunnels are established with the peer.",
 		"zh": "使用双隧道的 VPN 网关同时主备隧道都已和对端建立连接。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "Verwenden Sie ein Dual-Tunnel-VPN-Gateway und beide Master- und Slave-Tunnel sind mit dem Peer eingerichtet.",
 		"es": "Use una puerta de enlace VPN de túnel dual y ambos túneles maestro y esclavo están establecidos con el par.",
 		"fr": "Utilisez une passerelle VPN à tunnel double et les tunnels maître et esclave sont établis avec le pair.",
-		"pt": "Use um gateway VPN de túnel duplo e ambos os túneis mestre e escravo estão estabelecidos com o par.",
+		"pt": "Use um gateway VPN de túnel duplo e ambos os túneis mestre e escravo estão estabelecidos com o par."
 	},
 	"reason": {
 		"en": "The VPN connection does not have dual tunnels configured.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Die VPN-Verbindung hat keine Dual-Tunnel-Konfiguration.",
 		"es": "La conexión VPN no tiene túneles duales configurados.",
 		"fr": "La connexion VPN n'a pas de tunnels doubles configurés.",
-		"pt": "A conexão VPN não tem túneis duplos configurados.",
+		"pt": "A conexão VPN não tem túneis duplos configurados."
 	},
 	"recommendation": {
 		"en": "Configure the VPN connection with both master and slave tunnels using TunnelOptionsSpecification.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Konfigurieren Sie die VPN-Verbindung mit Master- und Slave-Tunneln unter Verwendung von TunnelOptionsSpecification.",
 		"es": "Configure la conexión VPN con túneles maestro y esclavo usando TunnelOptionsSpecification.",
 		"fr": "Configurez la connexion VPN avec les tunnels maître et esclave en utilisant TunnelOptionsSpecification.",
-		"pt": "Configure a conexão VPN com túneis mestre e escravo usando TunnelOptionsSpecification.",
+		"pt": "Configure a conexão VPN com túneis mestre e escravo usando TunnelOptionsSpecification."
 	},
-	"resource_types": ["ALIYUN::VPC::VpnConnection"],
+	"resource_types": ["ALIYUN::VPC::VpnConnection"]
 }
 
 # Check if VPN connection has dual tunnels configured

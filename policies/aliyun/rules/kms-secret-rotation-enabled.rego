@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "kms-secret-rotation-enabled",
+	"severity": "medium",
 	"name": {
 		"en": "KMS secret automatic rotation enabled",
 		"zh": "密钥管理服务设置凭据自动轮转",
@@ -13,7 +14,7 @@ rule_meta := {
 		"de": "KMS-Geheimnis automatische Rotation aktiviert",
 		"es": "Rotación automática de secreto KMS habilitada",
 		"fr": "Rotation automatique de secret KMS activée",
-		"pt": "Rotação automática de segredo KMS habilitada",
+		"pt": "Rotação automática de segredo KMS habilitada"
 	},
 	"description": {
 		"en": "KMS secret has automatic rotation enabled, considered compliant. Generic secrets are not applicable.",
@@ -22,10 +23,8 @@ rule_meta := {
 		"de": "KMS-Geheimnis hat automatische Rotation aktiviert, wird als konform betrachtet. Generische Geheimnisse sind nicht anwendbar.",
 		"es": "El secreto KMS tiene rotación automática habilitada, considerado conforme. Los secretos genéricos no son aplicables.",
 		"fr": "Le secret KMS a la rotation automatique activée, considéré comme conforme. Les secrets génériques ne sont pas applicables.",
-		"pt": "Segredo KMS tem rotação automática habilitada, considerado conforme. Segredos genéricos não são aplicáveis.",
+		"pt": "Segredo KMS tem rotação automática habilitada, considerado conforme. Segredos genéricos não são aplicáveis."
 	},
-	"severity": "medium",
-	"resource_types": ["ALIYUN::KMS::Secret"],
 	"reason": {
 		"en": "KMS secret does not have automatic rotation enabled",
 		"zh": "KMS 凭据未开启自动轮转",
@@ -33,7 +32,7 @@ rule_meta := {
 		"de": "KMS-Geheimnis hat keine automatische Rotation aktiviert",
 		"es": "El secreto KMS no tiene rotación automática habilitada",
 		"fr": "Le secret KMS n'a pas la rotation automatique activée",
-		"pt": "Segredo KMS não tem rotação automática habilitada",
+		"pt": "Segredo KMS não tem rotação automática habilitada"
 	},
 	"recommendation": {
 		"en": "Enable automatic rotation for KMS secret to enhance security by regularly rotating credentials",
@@ -42,8 +41,9 @@ rule_meta := {
 		"de": "Aktivieren Sie die automatische Rotation für KMS-Geheimnisse, um die Sicherheit durch regelmäßige Rotation von Anmeldeinformationen zu verbessern",
 		"es": "Habilite la rotación automática para el secreto KMS para mejorar la seguridad rotando credenciales regularmente",
 		"fr": "Activez la rotation automatique pour le secret KMS pour améliorer la sécurité en faisant tourner régulièrement les identifiants",
-		"pt": "Habilite rotação automática para segredo KMS para melhorar a segurança rotacionando credenciais regularmente",
+		"pt": "Habilite rotação automática para segredo KMS para melhorar a segurança rotacionando credenciais regularmente"
 	},
+	"resource_types": ["ALIYUN::KMS::Secret"]
 }
 
 deny contains result if {

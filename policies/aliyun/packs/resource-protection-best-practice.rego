@@ -11,7 +11,7 @@ pack_meta := {
 		"de": "Ressourcenschutz Best Practices",
 		"es": "Mejores Prácticas de Protección de Recursos",
 		"fr": "Meilleures Pratiques de Protection des Ressources",
-		"pt": "Melhores Práticas de Proteção de Recursos",
+		"pt": "Melhores Práticas de Proteção de Recursos"
 	},
 	"description": {
 		"en": "Best practices for enabling protection features on cloud resources to prevent accidental deletion or modification.",
@@ -20,7 +20,7 @@ pack_meta := {
 		"de": "Best Practices zur Aktivierung von Schutzfunktionen für Cloud-Ressourcen, um versehentliches Löschen oder Ändern zu verhindern.",
 		"es": "Mejores prácticas para habilitar funciones de protección en recursos en la nube para prevenir eliminación o modificación accidental.",
 		"fr": "Meilleures pratiques pour activer les fonctions de protection sur les ressources cloud afin de prévenir la suppression ou la modification accidentelle.",
-		"pt": "Melhores práticas para habilitar recursos de proteção em recursos em nuvem para prevenir exclusão ou modificação acidental.",
+		"pt": "Melhores práticas para habilitar recursos de proteção em recursos em nuvem para prevenir exclusão ou modificação acidental."
 	},
 	"rules": [
 		# "ack-cluster-deletion-protection-enabled",
@@ -38,6 +38,6 @@ pack_meta := {
 		"slb-delete-protection-enabled",
 		"slb-modify-protection-check",
 		# "waf-domain-enabled-specified-protection-mode",
-		# "waf-domain-enabled-specified-protection-module",
-	],
+		# "waf-domain-enabled-specified-protection-module"
+	]
 }

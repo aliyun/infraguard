@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "rds-instance-enabled-log-backup",
+	"severity": "medium",
 	"name": {
 		"en": "RDS Instance Log Backup Enabled",
 		"zh": "RDS 实例开启日志备份",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "RDS-Instanz Log-Backup aktiviert",
 		"es": "Backup de Log de Instancia RDS Habilitado",
 		"fr": "Sauvegarde de Journal d'Instance RDS Activée",
-		"pt": "Backup de Log de Instância RDS Habilitado",
+		"pt": "Backup de Log de Instância RDS Habilitado"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures RDS instances have log backup enabled.",
 		"zh": "确保 RDS 实例开启了日志备份。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass RDS-Instanzen Log-Backup aktiviert haben.",
 		"es": "Garantiza que las instancias RDS tengan backup de log habilitado.",
 		"fr": "Garantit que les instances RDS ont la sauvegarde de journal activée.",
-		"pt": "Garante que as instâncias RDS tenham backup de log habilitado.",
+		"pt": "Garante que as instâncias RDS tenham backup de log habilitado."
 	},
 	"reason": {
 		"en": "Log backups are essential for point-in-time recovery of the database.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Log-Backups sind für die Point-in-Time-Wiederherstellung der Datenbank unerlässlich.",
 		"es": "Los backups de log son esenciales para la recuperación puntual de la base de datos.",
 		"fr": "Les sauvegardes de journal sont essentielles pour la récupération ponctuelle de la base de données.",
-		"pt": "Backups de log são essenciais para recuperação pontual do banco de dados.",
+		"pt": "Backups de log são essenciais para recuperação pontual do banco de dados."
 	},
 	"recommendation": {
 		"en": "Enable log backup in the RDS backup policy.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Aktivieren Sie Log-Backup in der RDS-Backup-Richtlinie.",
 		"es": "Habilite backup de log en la política de backup RDS.",
 		"fr": "Activez la sauvegarde de journal dans la politique de sauvegarde RDS.",
-		"pt": "Habilite backup de log na política de backup RDS.",
+		"pt": "Habilite backup de log na política de backup RDS."
 	},
-	"resource_types": ["ALIYUN::RDS::DBInstance"],
+	"resource_types": ["ALIYUN::RDS::DBInstance"]
 }
 
 is_compliant(resource) if {

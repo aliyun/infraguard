@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "elasticsearch-instance-version-not-deprecated",
+	"severity": "high",
 	"name": {
 		"en": "Elasticsearch Instance Does Not Use Deprecated Version",
 		"zh": "未使用不推荐的 Elasticsearch 实例版本",
@@ -16,7 +17,6 @@ rule_meta := {
 		"fr": "L'Instance Elasticsearch N'Utilise Pas de Version Obsolète",
 		"pt": "A Instância do Elasticsearch Não Usa Versão Obsoleta"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures that Elasticsearch instances are not using deprecated or EOL versions.",
 		"zh": "Elasticsearch 实例所使用的版本未在参数指定的不推荐版本范围内，视为合规。",
@@ -44,7 +44,7 @@ rule_meta := {
 		"fr": "Mettez à niveau vers une version Elasticsearch prise en charge.",
 		"pt": "Atualize para uma versão do Elasticsearch suportada."
 	},
-	"resource_types": ["ALIYUN::ElasticSearch::Instance"],
+	"resource_types": ["ALIYUN::ElasticSearch::Instance"]
 }
 
 # Default deprecated versions (major versions that are EOL)

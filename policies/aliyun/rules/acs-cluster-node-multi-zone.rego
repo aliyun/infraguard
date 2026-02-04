@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "acs-cluster-node-multi-zone",
+	"severity": "high",
 	"name": {
 		"en": "ACS Cluster Node Multi-Zone Deployment",
 		"zh": "使用区域级多可用区 ACS 集群",
@@ -16,7 +17,6 @@ rule_meta := {
 		"fr": "Déploiement Multi-Zone des Nœuds du Cluster ACS",
 		"pt": "Implantação Multi-Zona de Nós do Cluster ACS"
 	},
-	"severity": "high",
 	"description": {
 		"en": "The ACS cluster nodes should be distributed across 3 or more availability zones for high availability.",
 		"zh": "使用区域级 ACS 集群，节点分布在 3 个及以上可用区，视为合规。",
@@ -44,7 +44,7 @@ rule_meta := {
 		"fr": "Configurez le cluster pour utiliser au moins 3 zones de disponibilité en spécifiant plusieurs ZoneIds ou VSwitchIds.",
 		"pt": "Configure o cluster para usar pelo menos 3 zonas de disponibilidade especificando múltiplos ZoneIds ou VSwitchIds."
 	},
-	"resource_types": ["ALIYUN::ACS::Cluster"],
+	"resource_types": ["ALIYUN::ACS::Cluster"]
 }
 
 # Check if cluster is multi-zone

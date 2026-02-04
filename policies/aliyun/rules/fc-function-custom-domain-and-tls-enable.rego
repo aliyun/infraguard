@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "fc-function-custom-domain-and-tls-enable",
+	"severity": "medium",
 	"name": {
 		"en": "FC Function Custom Domain and TLS Enabled",
 		"zh": "FC 函数自定义域名及 TLS 开启",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "FC-Funktion Benutzerdefinierte Domain und TLS aktiviert",
 		"es": "Dominio Personalizado y TLS de Función FC Habilitado",
 		"fr": "Domaine Personnalisé et TLS de Fonction FC Activé",
-		"pt": "Domínio Personalizado e TLS de Função FC Habilitado",
+		"pt": "Domínio Personalizado e TLS de Função FC Habilitado"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures that custom domains for Function Compute functions have TLS enabled.",
 		"zh": "确保函数计算函数的自定义域名已开启 TLS。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass benutzerdefinierte Domains für Function Compute-Funktionen TLS aktiviert haben.",
 		"es": "Garantiza que los dominios personalizados para funciones de Function Compute tengan TLS habilitado.",
 		"fr": "Garantit que les domaines personnalisés pour les fonctions Function Compute ont TLS activé.",
-		"pt": "Garante que os domínios personalizados para funções Function Compute tenham TLS habilitado.",
+		"pt": "Garante que os domínios personalizados para funções Function Compute tenham TLS habilitado."
 	},
 	"reason": {
 		"en": "TLS encrypts traffic to your function, ensuring data confidentiality and integrity.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "TLS verschlüsselt den Datenverkehr zu Ihrer Funktion und gewährleistet Datenvertraulichkeit und -integrität.",
 		"es": "TLS cifra el tráfico a su función, garantizando la confidencialidad e integridad de los datos.",
 		"fr": "TLS chiffre le trafic vers votre fonction, garantissant la confidentialité et l'intégrité des données.",
-		"pt": "TLS criptografa o tráfego para sua função, garantindo confidencialidade e integridade dos dados.",
+		"pt": "TLS criptografa o tráfego para sua função, garantindo confidencialidade e integridade dos dados."
 	},
 	"recommendation": {
 		"en": "Configure an SSL certificate and enable TLS for the Function Compute custom domain.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Konfigurieren Sie ein SSL-Zertifikat und aktivieren Sie TLS für die Function Compute-Benutzerdomain.",
 		"es": "Configure un certificado SSL y habilite TLS para el dominio personalizado de Function Compute.",
 		"fr": "Configurez un certificat SSL et activez TLS pour le domaine personnalisé Function Compute.",
-		"pt": "Configure um certificado SSL e habilite TLS para o domínio personalizado do Function Compute.",
+		"pt": "Configure um certificado SSL e habilite TLS para o domínio personalizado do Function Compute."
 	},
-	"resource_types": ["ALIYUN::FC::CustomDomain"],
+	"resource_types": ["ALIYUN::FC::CustomDomain"]
 }
 
 deny contains result if {

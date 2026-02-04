@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "slb-loadbalancer-bandwidth-limit",
+	"severity": "low",
 	"name": {
 		"en": "SLB Bandwidth Limit",
 		"zh": "SLB 带宽上限核查",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "SLB-Bandbreitenlimit",
 		"es": "Límite de Ancho de Banda SLB",
 		"fr": "Limite de Bande Passante SLB",
-		"pt": "Limite de Largura de Banda SLB",
+		"pt": "Limite de Largura de Banda SLB"
 	},
-	"severity": "low",
 	"description": {
 		"en": "Ensures SLB instance bandwidth does not exceed a specified maximum value.",
 		"zh": "确保 SLB 实例带宽不超过指定的最高值。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass die Bandbreite der SLB-Instanz einen angegebenen Maximalwert nicht überschreitet.",
 		"es": "Garantiza que el ancho de banda de la instancia SLB no exceda un valor máximo especificado.",
 		"fr": "Garantit que la bande passante de l'instance SLB ne dépasse pas une valeur maximale spécifiée.",
-		"pt": "Garante que a largura de banda da instância SLB não exceda um valor máximo especificado.",
+		"pt": "Garante que a largura de banda da instância SLB não exceda um valor máximo especificado."
 	},
 	"reason": {
 		"en": "Controlling SLB bandwidth helps manage network costs.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Die Kontrolle der SLB-Bandbreite hilft bei der Verwaltung der Netzwerkkosten.",
 		"es": "Controlar el ancho de banda SLB ayuda a gestionar los costos de red.",
 		"fr": "Le contrôle de la bande passante SLB aide à gérer les coûts réseau.",
-		"pt": "Controlar a largura de banda do SLB ajuda a gerenciar os custos de rede.",
+		"pt": "Controlar a largura de banda do SLB ajuda a gerenciar os custos de rede."
 	},
 	"recommendation": {
 		"en": "Set SLB bandwidth to a reasonable value (e.g., up to 500Mbps).",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Setzen Sie die SLB-Bandbreite auf einen angemessenen Wert (z. B. bis zu 500 Mbps).",
 		"es": "Establezca el ancho de banda SLB en un valor razonable (por ejemplo, hasta 500 Mbps).",
 		"fr": "Définissez la bande passante SLB à une valeur raisonnable (par exemple, jusqu'à 500 Mbps).",
-		"pt": "Defina a largura de banda do SLB para um valor razoável (por exemplo, até 500 Mbps).",
+		"pt": "Defina a largura de banda do SLB para um valor razoável (por exemplo, até 500 Mbps)."
 	},
-	"resource_types": ["ALIYUN::SLB::LoadBalancer"],
+	"resource_types": ["ALIYUN::SLB::LoadBalancer"]
 }
 
 is_compliant(resource) if {

@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "ecs-instance-meta-data-mode-check",
+	"severity": "medium",
 	"name": {
 		"en": "ECS instance metadata access uses security-enhanced mode (IMDSv2)",
 		"zh": "访问 ECS 实例元数据时强制使用加固模式",
@@ -13,7 +14,7 @@ rule_meta := {
 		"de": "ECS-Instanz-Metadatenzugriff verwendet sicherheitsverbesserten Modus (IMDSv2)",
 		"es": "El acceso a metadatos de instancia ECS usa modo de seguridad mejorado (IMDSv2)",
 		"fr": "L'accès aux métadonnées d'instance ECS utilise le mode de sécurité renforcé (IMDSv2)",
-		"pt": "Acesso a metadados de instância ECS usa modo de segurança aprimorado (IMDSv2)",
+		"pt": "Acesso a metadados de instância ECS usa modo de segurança aprimorado (IMDSv2)"
 	},
 	"description": {
 		"en": "When accessing ECS instance metadata, security-enhanced mode (IMDSv2) is enforced, considered compliant. Instances associated with ACK clusters are not applicable.",
@@ -22,10 +23,8 @@ rule_meta := {
 		"de": "Beim Zugriff auf ECS-Instanz-Metadaten wird der sicherheitsverbesserte Modus (IMDSv2) erzwungen, wird als konform betrachtet. Mit ACK-Clustern verbundene Instanzen sind nicht anwendbar.",
 		"es": "Al acceder a metadatos de instancia ECS, se aplica el modo de seguridad mejorado (IMDSv2), considerado conforme. Las instancias asociadas con clústeres ACK no son aplicables.",
 		"fr": "Lors de l'accès aux métadonnées d'instance ECS, le mode de sécurité renforcé (IMDSv2) est appliqué, considéré comme conforme. Les instances associées aux clusters ACK ne sont pas applicables.",
-		"pt": "Ao acessar metadados de instância ECS, o modo de segurança aprimorado (IMDSv2) é aplicado, considerado conforme. Instâncias associadas a clusters ACK não são aplicáveis.",
+		"pt": "Ao acessar metadados de instância ECS, o modo de segurança aprimorado (IMDSv2) é aplicado, considerado conforme. Instâncias associadas a clusters ACK não são aplicáveis."
 	},
-	"severity": "medium",
-	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"],
 	"reason": {
 		"en": "ECS instance metadata is accessible without security-enhanced mode (IMDSv1)",
 		"zh": "ECS 实例元数据可在未启用加固模式(IMDSv1)的情况下访问",
@@ -33,7 +32,7 @@ rule_meta := {
 		"de": "ECS-Instanz-Metadaten sind ohne sicherheitsverbesserten Modus (IMDSv1) zugänglich",
 		"es": "Los metadatos de instancia ECS son accesibles sin modo de seguridad mejorado (IMDSv1)",
 		"fr": "Les métadonnées d'instance ECS sont accessibles sans mode de sécurité renforcé (IMDSv1)",
-		"pt": "Metadados de instância ECS são acessíveis sem modo de segurança aprimorado (IMDSv1)",
+		"pt": "Metadados de instância ECS são acessíveis sem modo de segurança aprimorado (IMDSv1)"
 	},
 	"recommendation": {
 		"en": "Set HttpEndpoint to 'enabled' and HttpTokens to 'required' to enforce IMDSv2",
@@ -42,8 +41,9 @@ rule_meta := {
 		"de": "Setzen Sie HttpEndpoint auf 'enabled' und HttpTokens auf 'required', um IMDSv2 zu erzwingen",
 		"es": "Establezca HttpEndpoint en 'enabled' y HttpTokens en 'required' para aplicar IMDSv2",
 		"fr": "Définissez HttpEndpoint sur 'enabled' et HttpTokens sur 'required' pour appliquer IMDSv2",
-		"pt": "Defina HttpEndpoint como 'enabled' e HttpTokens como 'required' para aplicar IMDSv2",
+		"pt": "Defina HttpEndpoint como 'enabled' e HttpTokens como 'required' para aplicar IMDSv2"
 	},
+	"resource_types": ["ALIYUN::ECS::Instance", "ALIYUN::ECS::InstanceGroup"]
 }
 
 deny contains result if {

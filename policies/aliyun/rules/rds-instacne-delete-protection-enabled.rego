@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "rds-instacne-delete-protection-enabled",
+	"severity": "medium",
 	"name": {
 		"en": "RDS Instance Deletion Protection Enabled",
 		"zh": "RDS 实例开启删除保护",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "RDS-Instanz-Löschschutz aktiviert",
 		"es": "Protección contra Eliminación de Instancia RDS Habilitada",
 		"fr": "Protection contre la Suppression d'Instance RDS Activée",
-		"pt": "Proteção contra Exclusão de Instância RDS Habilitada",
+		"pt": "Proteção contra Exclusão de Instância RDS Habilitada"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures that RDS instances have deletion protection enabled.",
 		"zh": "确保 RDS 实例开启了删除保护。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass RDS-Instanzen den Löschschutz aktiviert haben.",
 		"es": "Garantiza que las instancias RDS tengan protección contra eliminación habilitada.",
 		"fr": "Garantit que les instances RDS ont la protection contre la suppression activée.",
-		"pt": "Garante que as instâncias RDS tenham proteção contra exclusão habilitada.",
+		"pt": "Garante que as instâncias RDS tenham proteção contra exclusão habilitada."
 	},
 	"reason": {
 		"en": "If deletion protection is not enabled, the RDS instance may be released accidentally, causing data loss.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Wenn der Löschschutz nicht aktiviert ist, kann die RDS-Instanz versehentlich freigegeben werden, was zu Datenverlust führt.",
 		"es": "Si la protección contra eliminación no está habilitada, la instancia RDS puede ser liberada accidentalmente, causando pérdida de datos.",
 		"fr": "Si la protection contre la suppression n'est pas activée, l'instance RDS peut être libérée accidentellement, causant une perte de données.",
-		"pt": "Se a proteção contra exclusão não estiver habilitada, a instância RDS pode ser liberada acidentalmente, causando perda de dados.",
+		"pt": "Se a proteção contra exclusão não estiver habilitada, a instância RDS pode ser liberada acidentalmente, causando perda de dados."
 	},
 	"recommendation": {
 		"en": "Enable deletion protection for the RDS instance.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Aktivieren Sie den Löschschutz für die RDS-Instanz.",
 		"es": "Habilite protección contra eliminación para la instancia RDS.",
 		"fr": "Activez la protection contre la suppression pour l'instance RDS.",
-		"pt": "Habilite proteção contra exclusão para a instância RDS.",
+		"pt": "Habilite proteção contra exclusão para a instância RDS."
 	},
-	"resource_types": ["ALIYUN::RDS::DBInstance"],
+	"resource_types": ["ALIYUN::RDS::DBInstance"]
 }
 
 is_compliant(resource) if {

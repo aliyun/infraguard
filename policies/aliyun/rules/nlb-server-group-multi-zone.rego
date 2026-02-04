@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "nlb-server-group-multi-zone",
+	"severity": "medium",
 	"name": {
 		"en": "NLB Server Group Multi-Zone Distribution",
 		"zh": "NLB 负载均衡服务器组添加多个可用区资源",
@@ -16,7 +17,6 @@ rule_meta := {
 		"fr": "Distribution Multi-Zone du Groupe de Serveurs NLB",
 		"pt": "Distribuição Multi-Zona do Grupo de Servidores NLB"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "NLB server groups should have backend servers distributed across multiple availability zones for high availability. This rule does not apply to server groups with no attached servers, or to IP type server groups.",
 		"zh": "网络负载均衡的服务器组中资源分布在多个可用区，视为合规。服务器组中无资源或者资源类型为 IP 时，视为不适用。",
@@ -44,7 +44,7 @@ rule_meta := {
 		"fr": "Ajoutez des serveurs backend d'au moins deux zones de disponibilité différentes au groupe de serveurs en utilisant les ressources ALIYUN::NLB::BackendServerAttachment.",
 		"pt": "Adicione servidores backend de pelo menos duas zonas de disponibilidade diferentes ao grupo de servidores usando recursos ALIYUN::NLB::BackendServerAttachment."
 	},
-	"resource_types": ["ALIYUN::NLB::ServerGroup"],
+	"resource_types": ["ALIYUN::NLB::ServerGroup"]
 }
 
 # Check if server group type is applicable (Instance)

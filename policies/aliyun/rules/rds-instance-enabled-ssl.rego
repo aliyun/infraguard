@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "rds-instance-enabled-ssl",
+	"severity": "medium",
 	"name": {
 		"en": "RDS Instance SSL Enabled",
 		"zh": "RDS 实例开启 SSL 加密",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "RDS-Instanz SSL aktiviert",
 		"es": "SSL de Instancia RDS Habilitado",
 		"fr": "SSL d'Instance RDS Activé",
-		"pt": "SSL de Instância RDS Habilitado",
+		"pt": "SSL de Instância RDS Habilitado"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures RDS instances have SSL encryption enabled.",
 		"zh": "确保 RDS 实例开启了 SSL 加密。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass RDS-Instanzen SSL-Verschlüsselung aktiviert haben.",
 		"es": "Garantiza que las instancias RDS tengan cifrado SSL habilitado.",
 		"fr": "Garantit que les instances RDS ont le chiffrement SSL activé.",
-		"pt": "Garante que as instâncias RDS tenham criptografia SSL habilitada.",
+		"pt": "Garante que as instâncias RDS tenham criptografia SSL habilitada."
 	},
 	"reason": {
 		"en": "SSL encryption protects data in transit from eavesdropping and tampering.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "SSL-Verschlüsselung schützt Daten während der Übertragung vor Abhören und Manipulation.",
 		"es": "El cifrado SSL protege los datos en tránsito contra interceptación y manipulación.",
 		"fr": "Le chiffrement SSL protège les données en transit contre l'écoute et la falsification.",
-		"pt": "A criptografia SSL protege dados em trânsito contra interceptação e adulteração.",
+		"pt": "A criptografia SSL protege dados em trânsito contra interceptação e adulteração."
 	},
 	"recommendation": {
 		"en": "Enable SSL for the RDS instance.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Aktivieren Sie SSL für die RDS-Instanz.",
 		"es": "Habilite SSL para la instancia RDS.",
 		"fr": "Activez SSL pour l'instance RDS.",
-		"pt": "Habilite SSL para a instância RDS.",
+		"pt": "Habilite SSL para a instância RDS."
 	},
-	"resource_types": ["ALIYUN::RDS::DBInstance"],
+	"resource_types": ["ALIYUN::RDS::DBInstance"]
 }
 
 is_compliant(resource) if {

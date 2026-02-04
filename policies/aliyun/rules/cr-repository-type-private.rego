@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "cr-repository-type-private",
+	"severity": "high",
 	"name": {
 		"en": "CR Repository Type Private",
 		"zh": "容器镜像服务镜像仓库类型为私有",
@@ -15,7 +16,6 @@ rule_meta := {
 		"fr": "Type de Dépôt CR Privé",
 		"pt": "Tipo de Repositório CR Privado"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures that CR repositories are set to PRIVATE.",
 		"zh": "确保容器镜像仓库类型设置为私有。",
@@ -43,7 +43,7 @@ rule_meta := {
 		"fr": "Définissez le RepoType sur 'PRIVÉ' pour le dépôt CR.",
 		"pt": "Defina o RepoType como 'PRIVADO' para o repositório CR."
 	},
-	"resource_types": ["ALIYUN::CR::Repository"],
+	"resource_types": ["ALIYUN::CR::Repository"]
 }
 
 is_compliant(resource) if {

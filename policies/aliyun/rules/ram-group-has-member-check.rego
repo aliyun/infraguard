@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "ram-group-has-member-check",
+	"severity": "low",
 	"name": {
 		"en": "RAM Group Has Member",
 		"zh": "识别无成员的空 RAM 用户组",
@@ -14,7 +15,6 @@ rule_meta := {
 		"fr": "Le Groupe RAM a un Membre",
 		"pt": "O Grupo RAM Tem Membro"
 	},
-	"severity": "low",
 	"description": {
 		"en": "Ensures RAM groups have at least one member.",
 		"zh": "确保 RAM 用户组至少包含一名成员。",
@@ -42,7 +42,7 @@ rule_meta := {
 		"fr": "Ajoutez des membres au groupe ou supprimez le groupe vide.",
 		"pt": "Adicione membros ao grupo ou remova o grupo vazio."
 	},
-	"resource_types": ["ALIYUN::RAM::Group"],
+	"resource_types": ["ALIYUN::RAM::Group"]
 }
 
 has_members(group_name) if {

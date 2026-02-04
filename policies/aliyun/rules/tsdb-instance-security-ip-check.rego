@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "tsdb-instance-security-ip-check",
+	"severity": "high",
 	"name": {
 		"en": "TSDB Instance Does Not Allow Any IP Access",
 		"zh": "TSDB 实例安全白名单检测",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "TSDB-Instanz erlaubt keinen IP-Zugriff",
 		"es": "La Instancia TSDB No Permite Acceso de Cualquier IP",
 		"fr": "L'Instance TSDB N'autorise Pas l'Accès IP",
-		"pt": "Instância TSDB Não Permite Acesso de Qualquer IP",
+		"pt": "Instância TSDB Não Permite Acesso de Qualquer IP"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures that TSDB instances do not have security whitelists that allow all IPs.",
 		"zh": "TSDB 实例没有开启任意 IP 访问，视为合规。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass TSDB-Instanzen keine Sicherheits-Whitelists haben, die alle IPs erlauben.",
 		"es": "Garantiza que las instancias TSDB no tengan listas blancas de seguridad que permitan todas las IPs.",
 		"fr": "Garantit que les instances TSDB n'ont pas de listes blanches de sécurité qui autorisent toutes les IP.",
-		"pt": "Garante que as instâncias TSDB não tenham listas brancas de segurança que permitam todos os IPs.",
+		"pt": "Garante que as instâncias TSDB não tenham listas brancas de segurança que permitam todos os IPs."
 	},
 	"reason": {
 		"en": "TSDB instance allows access from any IP address, which is a security risk.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "TSDB-Instanz erlaubt Zugriff von jeder IP-Adresse, was ein Sicherheitsrisiko darstellt.",
 		"es": "La instancia TSDB permite el acceso desde cualquier dirección IP, lo cual es un riesgo de seguridad.",
 		"fr": "L'instance TSDB autorise l'accès depuis n'importe quelle adresse IP, ce qui constitue un risque de sécurité.",
-		"pt": "A instância TSDB permite acesso de qualquer endereço IP, o que é um risco de segurança.",
+		"pt": "A instância TSDB permite acesso de qualquer endereço IP, o que é um risco de segurança."
 	},
 	"recommendation": {
 		"en": "Configure security whitelist to restrict access to specific IPs.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Konfigurieren Sie die Sicherheits-Whitelist, um den Zugriff auf bestimmte IPs einzuschränken.",
 		"es": "Configure la lista blanca de seguridad para restringir el acceso a IPs específicas.",
 		"fr": "Configurez la liste blanche de sécurité pour restreindre l'accès à des IP spécifiques.",
-		"pt": "Configure a lista branca de segurança para restringir o acesso a IPs específicos.",
+		"pt": "Configure a lista branca de segurança para restringir o acesso a IPs específicos."
 	},
-	"resource_types": ["ALIYUN::TSDB::HiTSDBInstance"],
+	"resource_types": ["ALIYUN::TSDB::HiTSDBInstance"]
 }
 
 # Check if whitelist allows any IP

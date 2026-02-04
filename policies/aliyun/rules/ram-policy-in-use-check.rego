@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "ram-policy-in-use-check",
+	"severity": "low",
 	"name": {
 		"en": "RAM Policy In Use Check",
 		"zh": "RAM 权限策略使用检测",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "RAM-Richtlinie In Verwendung Prüfung",
 		"es": "Verificación de Política RAM en Uso",
 		"fr": "Vérification de Politique RAM en Utilisation",
-		"pt": "Verificação de Política RAM em Uso",
+		"pt": "Verificação de Política RAM em Uso"
 	},
-	"severity": "low",
 	"description": {
 		"en": "Ensures RAM policies are attached to at least one RAM user, group, or role.",
 		"zh": "确保 RAM 权限策略至少绑定到一个 RAM 用户、用户组或角色。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass RAM-Richtlinien an mindestens einen RAM-Benutzer, eine Gruppe oder eine Rolle angehängt sind.",
 		"es": "Garantiza que las políticas RAM estén adjuntas a al menos un usuario, grupo o rol RAM.",
 		"fr": "Garantit que les politiques RAM sont attachées à au moins un utilisateur, groupe ou rôle RAM.",
-		"pt": "Garante que as políticas RAM estejam anexadas a pelo menos um usuário, grupo ou função RAM.",
+		"pt": "Garante que as políticas RAM estejam anexadas a pelo menos um usuário, grupo ou função RAM."
 	},
 	"reason": {
 		"en": "Idle policies increase management complexity and should be removed.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Inaktive Richtlinien erhöhen die Verwaltungskomplexität und sollten entfernt werden.",
 		"es": "Las políticas inactivas aumentan la complejidad de gestión y deben eliminarse.",
 		"fr": "Les politiques inactives augmentent la complexité de gestion et doivent être supprimées.",
-		"pt": "Políticas ociosas aumentam a complexidade de gerenciamento e devem ser removidas.",
+		"pt": "Políticas ociosas aumentam a complexidade de gerenciamento e devem ser removidas."
 	},
 	"recommendation": {
 		"en": "Attach the policy to users, groups, or roles, or remove the unused policy.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Hängen Sie die Richtlinie an Benutzer, Gruppen oder Rollen an oder entfernen Sie die ungenutzte Richtlinie.",
 		"es": "Adjunte la política a usuarios, grupos o roles, o elimine la política no utilizada.",
 		"fr": "Attachez la politique aux utilisateurs, groupes ou rôles, ou supprimez la politique non utilisée.",
-		"pt": "Anexe a política a usuários, grupos ou funções, ou remova a política não utilizada.",
+		"pt": "Anexe a política a usuários, grupos ou funções, ou remova a política não utilizada."
 	},
-	"resource_types": ["ALIYUN::RAM::ManagedPolicy"],
+	"resource_types": ["ALIYUN::RAM::ManagedPolicy"]
 }
 
 deny contains result if {

@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "ecs-launch-template-version-attach-security-group",
+	"severity": "high",
 	"name": {
 		"en": "ECS launch template version attaches security groups",
 		"zh": "ECS 启动模版版本中设置加入的安全组",
@@ -13,7 +14,7 @@ rule_meta := {
 		"de": "ECS-Startvorlagenversion fügt Sicherheitsgruppen hinzu",
 		"es": "La Versión de Plantilla de Inicio ECS Adjunta Grupos de Seguridad",
 		"fr": "La Version du Modèle de Démarrage ECS Attache les Groupes de Sécurité",
-		"pt": "Versão do Modelo de Inicialização ECS Anexa Grupos de Segurança",
+		"pt": "Versão do Modelo de Inicialização ECS Anexa Grupos de Segurança"
 	},
 	"description": {
 		"en": "ECS launch template versions have security groups configured for instances, considered compliant.",
@@ -22,10 +23,8 @@ rule_meta := {
 		"de": "ECS-Startvorlagenversionen haben Sicherheitsgruppen für Instanzen konfiguriert, was als konform gilt.",
 		"es": "Las versiones de plantilla de inicio ECS tienen grupos de seguridad configurados para instancias, considerado conforme.",
 		"fr": "Les versions de modèle de démarrage ECS ont des groupes de sécurité configurés pour les instances, considéré comme conforme.",
-		"pt": "As versões do modelo de inicialização ECS têm grupos de segurança configurados para instâncias, considerado conforme.",
+		"pt": "As versões do modelo de inicialização ECS têm grupos de segurança configurados para instâncias, considerado conforme."
 	},
-	"severity": "high",
-	"resource_types": ["ALIYUN::ECS::LaunchTemplate"],
 	"reason": {
 		"en": "ECS launch template version does not have security groups configured",
 		"zh": "ECS 启动模板版本未配置安全组",
@@ -33,7 +32,7 @@ rule_meta := {
 		"de": "ECS-Startvorlagenversion hat keine Sicherheitsgruppen konfiguriert",
 		"es": "La versión de plantilla de inicio ECS no tiene grupos de seguridad configurados",
 		"fr": "La version du modèle de démarrage ECS n'a pas de groupes de sécurité configurés",
-		"pt": "A versão do modelo de inicialização ECS não tem grupos de segurança configurados",
+		"pt": "A versão do modelo de inicialização ECS não tem grupos de segurança configurados"
 	},
 	"recommendation": {
 		"en": "Configure security groups in launch template versions for instance network security",
@@ -42,8 +41,9 @@ rule_meta := {
 		"de": "Konfigurieren Sie Sicherheitsgruppen in Startvorlagenversionen für die Instanznetzwerksicherheit",
 		"es": "Configure grupos de seguridad en versiones de plantilla de inicio para la seguridad de red de instancias",
 		"fr": "Configurez les groupes de sécurité dans les versions de modèle de démarrage pour la sécurité réseau des instances",
-		"pt": "Configure grupos de segurança nas versões do modelo de inicialização para segurança de rede da instância",
+		"pt": "Configure grupos de segurança nas versões do modelo de inicialização para segurança de rede da instância"
 	},
+	"resource_types": ["ALIYUN::ECS::LaunchTemplate"]
 }
 
 deny contains result if {

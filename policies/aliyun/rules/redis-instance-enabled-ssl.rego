@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "redis-instance-enabled-ssl",
+	"severity": "medium",
 	"name": {
 		"en": "Redis Instance SSL Enabled",
 		"zh": "Redis 实例开启 SSL 加密",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "Redis-Instanz SSL aktiviert",
 		"es": "SSL de Instancia Redis Habilitado",
 		"fr": "SSL d'Instance Redis Activé",
-		"pt": "SSL de Instância Redis Habilitado",
+		"pt": "SSL de Instância Redis Habilitado"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures Redis instances have SSL encryption enabled.",
 		"zh": "确保 Redis 实例开启了 SSL 加密。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass Redis-Instanzen SSL-Verschlüsselung aktiviert haben.",
 		"es": "Garantiza que las instancias Redis tengan cifrado SSL habilitado.",
 		"fr": "Garantit que les instances Redis ont le chiffrement SSL activé.",
-		"pt": "Garante que as instâncias Redis tenham criptografia SSL habilitada.",
+		"pt": "Garante que as instâncias Redis tenham criptografia SSL habilitada."
 	},
 	"reason": {
 		"en": "SSL encryption protects Redis data in transit from being intercepted.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "SSL-Verschlüsselung schützt Redis-Daten während der Übertragung vor Abfangen.",
 		"es": "El cifrado SSL protege los datos Redis en tránsito contra interceptación.",
 		"fr": "Le chiffrement SSL protège les données Redis en transit contre l'interception.",
-		"pt": "A criptografia SSL protege dados Redis em trânsito contra interceptação.",
+		"pt": "A criptografia SSL protege dados Redis em trânsito contra interceptação."
 	},
 	"recommendation": {
 		"en": "Enable SSL for the Redis instance.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Aktivieren Sie SSL für die Redis-Instanz.",
 		"es": "Habilite SSL para la instancia Redis.",
 		"fr": "Activez SSL pour l'instance Redis.",
-		"pt": "Habilite SSL para a instância Redis.",
+		"pt": "Habilite SSL para a instância Redis."
 	},
-	"resource_types": ["ALIYUN::REDIS::Instance"],
+	"resource_types": ["ALIYUN::REDIS::Instance"]
 }
 
 is_compliant(resource) if {

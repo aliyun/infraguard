@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "mongodb-instance-in-vpc",
+	"severity": "medium",
 	"name": {
 		"en": "MongoDB Instance Uses VPC Network",
 		"zh": "使用专有网络类型的 MongoDB 实例",
@@ -15,7 +16,6 @@ rule_meta := {
 		"fr": "L'Instance MongoDB Utilise le Réseau VPC",
 		"pt": "A Instância MongoDB Usa Rede VPC"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures MongoDB instances are deployed in a Virtual Private Cloud (VPC) network.",
 		"zh": "确保 MongoDB 实例部署在专有网络（VPC）中。",
@@ -43,7 +43,7 @@ rule_meta := {
 		"fr": "Déployez l'instance MongoDB dans un réseau VPC.",
 		"pt": "Implante a instância MongoDB em uma rede VPC."
 	},
-	"resource_types": ["ALIYUN::MONGODB::Instance"],
+	"resource_types": ["ALIYUN::MONGODB::Instance"]
 }
 
 # Check if instance is in VPC

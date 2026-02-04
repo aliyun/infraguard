@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "mse-gateway-architecture-check",
+	"severity": "high",
 	"name": {
 		"en": "MSE Gateway Has Multiple Nodes",
 		"zh": "MSE 云原生网关多节点检测",
@@ -15,7 +16,6 @@ rule_meta := {
 		"fr": "La Passerelle MSE a Plusieurs Nœuds",
 		"pt": "O Gateway MSE Tem Múltiplos Nós"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures that MSE (Microservice Engine) gateways have more than 1 node for high availability.",
 		"zh": "确保 MSE（微服务引擎）网关具有超过 1 个节点以实现高可用性。",
@@ -43,7 +43,7 @@ rule_meta := {
 		"fr": "Configurez la passerelle MSE avec au moins 2 nœuds.",
 		"pt": "Configure o gateway MSE com pelo menos 2 nós."
 	},
-	"resource_types": ["ALIYUN::MSE::Gateway"],
+	"resource_types": ["ALIYUN::MSE::Gateway"]
 }
 
 # Get node count from gateway

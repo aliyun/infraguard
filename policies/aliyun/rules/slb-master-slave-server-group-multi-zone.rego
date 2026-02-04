@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "slb-master-slave-server-group-multi-zone",
+	"severity": "medium",
 	"name": {
 		"en": "SLB Master-Slave Server Group Multi-Zone",
 		"zh": "SLB 负载均衡主备服务器组添加多个可用区资源",
@@ -14,7 +15,6 @@ rule_meta := {
 		"fr": "Groupe de Serveurs Maître-Esclave SLB Multi-Zone",
 		"pt": "Grupo de Servidores Mestre-Escravo SLB Multi-Zona"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "The master-slave server group of SLB instances should have resources distributed across multiple availability zones.",
 		"zh": "SLB 负载均衡的主备服务器组挂载资源分布在多个可用区，视为合规。主备服务器组无挂载任何资源时不适用本规则，视为不适用。",
@@ -42,7 +42,7 @@ rule_meta := {
 		"fr": "Répartissez les serveurs maître et esclave sur différentes zones de disponibilité.",
 		"pt": "Distribua servidores mestre e escravo em diferentes zonas de disponibilidade."
 	},
-	"resource_types": ["ALIYUN::SLB::MasterSlaveServerGroup"],
+	"resource_types": ["ALIYUN::SLB::MasterSlaveServerGroup"]
 }
 
 deny contains result if {

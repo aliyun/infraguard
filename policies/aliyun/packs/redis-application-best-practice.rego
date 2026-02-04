@@ -11,7 +11,7 @@ pack_meta := {
 		"de": "Redis-Anwendung Best Practices",
 		"es": "Mejores Prácticas de Aplicación Redis",
 		"fr": "Meilleures Pratiques d'Application Redis",
-		"pt": "Melhores Práticas de Aplicação Redis",
+		"pt": "Melhores Práticas de Aplicação Redis"
 	},
 	"description": {
 		"en": "Best practices for Redis instance configuration, covering high availability, security, backup, performance, and operational settings.",
@@ -20,24 +20,24 @@ pack_meta := {
 		"de": "Best Practices für die Redis-Instanz-Konfiguration, einschließlich Hochverfügbarkeit, Sicherheit, Backup, Leistung und Betriebseinstellungen.",
 		"es": "Mejores prácticas para la configuración de instancias Redis, que cubre alta disponibilidad, seguridad, respaldo, rendimiento y configuraciones operativas.",
 		"fr": "Meilleures pratiques pour la configuration des instances Redis, couvrant la haute disponibilité, la sécurité, la sauvegarde, les performances et les configurations opérationnelles.",
-		"pt": "Melhores práticas para configuração de instâncias Redis, cobrindo alta disponibilidade, segurança, backup, desempenho e configurações operacionais.",
+		"pt": "Melhores práticas para configuração de instâncias Redis, cobrindo alta disponibilidade, segurança, backup, desempenho e configurações operacionais."
 	},
 	"rules": [
-		"redis-instance-multi-zone",
-		# "redis-instance-double-node-type",
-		# "redis-instance-disable-risk-commands",
-		"redis-public-and-any-ip-access-check",
-		"redis-instance-expired-check",
 		# "redis-instance-audit-log-retention",
+		"redis-instance-backup-log-enabled",
+		"redis-instance-backup-time-check",
+		# "redis-instance-disable-risk-commands",
+		# "redis-instance-double-node-type",
+		# "redis-instance-enabled-audit-log",  # Commented: ROS ALIYUN::REDIS::Instance does not support AuditLogConfig property,
 		"redis-instance-enabled-byok-tde",
 		"redis-instance-enabled-ssl",
-		# "redis-instance-upgrade-latest-version",
+		"redis-instance-expired-check",
+		"redis-instance-multi-zone",
 		"redis-instance-release-protection",
-		"redis-instance-backup-time-check",
-		# "redis-instance-enabled-audit-log",  # Commented: ROS ALIYUN::REDIS::Instance does not support AuditLogConfig property
-		# "redis-min-qps-limit",
+		# "redis-instance-upgrade-latest-version",
 		# "redis-min-bandwidth-limit",
 		# "redis-min-capacity-limit",
-		"redis-instance-backup-log-enabled",
-	],
+		# "redis-min-qps-limit",
+		"redis-public-and-any-ip-access-check"
+	]
 }

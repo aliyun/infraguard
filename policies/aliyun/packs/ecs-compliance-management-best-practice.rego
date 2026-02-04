@@ -11,7 +11,7 @@ pack_meta := {
 		"de": "ECS-Compliance-Management Best Practices",
 		"es": "Mejores Prácticas de Gestión de Cumplimiento de ECS",
 		"fr": "Meilleures Pratiques de Gestion de la Conformité ECS",
-		"pt": "Melhores Práticas de Gestão de Conformidade ECS",
+		"pt": "Melhores Práticas de Gestão de Conformidade ECS"
 	},
 	"description": {
 		"en": "Best practices for ECS compliance management",
@@ -20,26 +20,26 @@ pack_meta := {
 		"de": "Best Practices für das ECS-Compliance-Management",
 		"es": "Mejores prácticas para la gestión de cumplimiento de ECS",
 		"fr": "Meilleures pratiques pour la gestion de la conformité ECS",
-		"pt": "Melhores práticas para gestão de conformidade ECS",
+		"pt": "Melhores práticas para gestão de conformidade ECS"
 	},
 	"rules": [
-		# "ecs-all-updated-security-vul",
 		# "ecs-all-enabled-security-protection",
-		"ecs-snapshot-retention-days",
-		# "ecs-disk-no-lock",  # Removed: Status is a runtime attribute, cannot be checked in templates
+		# "ecs-all-updated-security-vul",
+		"ecs-disk-auto-snapshot-policy",
 		"ecs-disk-encrypted",
 		# "ecs-disk-in-use",
-		"ecs-disk-auto-snapshot-policy",
+		# "ecs-disk-no-lock",  # Removed: Status is a runtime attribute, cannot be checked in templates,
 		# "ecs-disk-retain-auto-snapshot",
-		"ecs-instance-expired-check",
-		"ecs-instance-deletion-protection-enabled",
 		"ecs-instance-attached-security-group",
-		# "ecs-instance-no-lock",
-		# "ecs-instance-status-no-stopped",  # Commented: ROS ECS::Instance does not support Status property
-		"ecs-instances-in-vpc",
+		"ecs-instance-deletion-protection-enabled",
+		"ecs-instance-expired-check",
 		# "ecs-instance-imageId-check",
-		"sg-public-access-check",
+		# "ecs-instance-no-lock",
+		# "ecs-instance-status-no-stopped",  # Commented: ROS ECS::Instance does not support Status property,
+		"ecs-instances-in-vpc",
 		"ecs-security-group-risky-ports-check-with-protocol",
+		"ecs-snapshot-retention-days",
 		# "ess-group-health-check",
-	],
+		"sg-public-access-check"
+	]
 }

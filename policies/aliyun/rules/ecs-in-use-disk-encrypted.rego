@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "ecs-in-use-disk-encrypted",
+	"severity": "medium",
 	"name": {
 		"en": "ECS In-Use Disk Encryption",
 		"zh": "使用中的 ECS 数据磁盘开启加密",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "ECS-Disk-Verschlüsselung in Verwendung",
 		"es": "Cifrado de Disco en Uso de ECS",
 		"fr": "Chiffrement de Disque en Utilisation ECS",
-		"pt": "Criptografia de Disco em Uso ECS",
+		"pt": "Criptografia de Disco em Uso ECS"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "ECS data disks should have encryption enabled to protect data at rest. Encrypted disks use KMS keys to encrypt data, ensuring data security and compliance with regulatory requirements.",
 		"zh": "使用中的 ECS 数据磁盘应开启加密以保护静态数据。加密磁盘使用 KMS 密钥对数据进行加密，确保数据安全并符合合规要求。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "ECS-Datendisks sollten Verschlüsselung aktiviert haben, um ruhende Daten zu schützen. Verschlüsselte Disks verwenden KMS-Schlüssel zur Datenverschlüsselung und gewährleisten Datensicherheit und Compliance mit regulatorischen Anforderungen.",
 		"es": "Los discos de datos ECS deben tener cifrado habilitado para proteger los datos en reposo. Los discos cifrados usan claves KMS para cifrar datos, asegurando la seguridad de los datos y el cumplimiento de los requisitos regulatorios.",
 		"fr": "Les disques de données ECS doivent avoir le chiffrement activé pour protéger les données au repos. Les disques chiffrés utilisent des clés KMS pour chiffrer les données, garantissant la sécurité des données et la conformité aux exigences réglementaires.",
-		"pt": "Discos de dados ECS devem ter criptografia habilitada para proteger dados em repouso. Discos criptografados usam chaves KMS para criptografar dados, garantindo segurança de dados e conformidade com requisitos regulatórios.",
+		"pt": "Discos de dados ECS devem ter criptografia habilitada para proteger dados em repouso. Discos criptografados usam chaves KMS para criptografar dados, garantindo segurança de dados e conformidade com requisitos regulatórios."
 	},
 	"reason": {
 		"en": "The ECS disk does not have encryption enabled, which may expose sensitive data to unauthorized access.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Die ECS-Disk hat keine Verschlüsselung aktiviert, was sensible Daten unbefugtem Zugriff aussetzen kann.",
 		"es": "El disco ECS no tiene cifrado habilitado, lo que puede exponer datos sensibles a acceso no autorizado.",
 		"fr": "Le disque ECS n'a pas le chiffrement activé, ce qui peut exposer des données sensibles à un accès non autorisé.",
-		"pt": "O disco ECS não tem criptografia habilitada, o que pode expor dados sensíveis a acesso não autorizado.",
+		"pt": "O disco ECS não tem criptografia habilitada, o que pode expor dados sensíveis a acesso não autorizado."
 	},
 	"recommendation": {
 		"en": "Enable encryption for the ECS disk by setting the Encrypted property to true.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Aktivieren Sie die Verschlüsselung für die ECS-Disk, indem Sie die Encrypted-Eigenschaft auf true setzen.",
 		"es": "Habilite el cifrado para el disco ECS estableciendo la propiedad Encrypted en true.",
 		"fr": "Activez le chiffrement pour le disque ECS en définissant la propriété Encrypted sur true.",
-		"pt": "Habilite criptografia para o disco ECS definindo a propriedade Encrypted como true.",
+		"pt": "Habilite criptografia para o disco ECS definindo a propriedade Encrypted como true."
 	},
-	"resource_types": ["ALIYUN::ECS::Disk"],
+	"resource_types": ["ALIYUN::ECS::Disk"]
 }
 
 deny contains result if {

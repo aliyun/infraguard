@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "ess-scaling-configuration-enabled-internet-check",
+	"severity": "medium",
 	"name": {
 		"en": "ESS Scaling Configuration Internet Access Check",
 		"zh": "ESS 伸缩配置公网访问检测",
@@ -16,7 +17,6 @@ rule_meta := {
 		"fr": "Vérification de l'Accès Internet de la Configuration de Mise à l'Échelle ESS",
 		"pt": "Verificação de Acesso à Internet da Configuração de Escalonamento ESS"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures that ESS scaling configurations do not enable public IP addresses for instances unless necessary.",
 		"zh": "确保 ESS 伸缩配置未为实例开启公网 IP 地址，除非必要。",
@@ -44,7 +44,7 @@ rule_meta := {
 		"fr": "Utilisez des IP internes et une passerelle NAT ou SLB pour l'accès Internet au lieu d'IP publiques sur chaque instance.",
 		"pt": "Use IPs internos e um gateway NAT ou SLB para acesso à internet em vez de IPs públicos em cada instância."
 	},
-	"resource_types": ["ALIYUN::ESS::ScalingConfiguration"],
+	"resource_types": ["ALIYUN::ESS::ScalingConfiguration"]
 }
 
 deny contains result if {

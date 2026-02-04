@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "polardb-x2-instance-multi-zone",
+	"severity": "medium",
 	"name": {
 		"en": "PolarDB-X 2.0 Instance Multi-Zone Deployment",
 		"zh": "PolarDB-X 2.0 实例多可用区部署",
@@ -16,7 +17,6 @@ rule_meta := {
 		"fr": "Déploiement Multi-Zone de l'Instance PolarDB-X 2.0",
 		"pt": "Implantação Multi-Zona da Instância PolarDB-X 2.0"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "PolarDB-X 2.0 instances should be deployed across 3 availability zones.",
 		"zh": "PolarDB-X 2.0 实例应部署在 3 个可用区。",
@@ -44,7 +44,7 @@ rule_meta := {
 		"fr": "Définissez TopologyType sur '3azones'.",
 		"pt": "Defina TopologyType como '3azones'."
 	},
-	"resource_types": ["ALIYUN::PolarDBX::DBInstance"],
+	"resource_types": ["ALIYUN::PolarDBX::DBInstance"]
 }
 
 # Check if instance is multi-zone (3azones)

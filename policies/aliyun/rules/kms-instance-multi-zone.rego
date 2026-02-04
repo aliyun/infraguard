@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "kms-instance-multi-zone",
+	"severity": "medium",
 	"name": {
 		"en": "KMS Instance Multi-Zone Deployment",
 		"zh": "使用多可用区的 KMS 实例",
@@ -16,7 +17,6 @@ rule_meta := {
 		"fr": "Déploiement Multi-Zone de l'Instance KMS",
 		"pt": "Implantação Multi-Zona da Instância KMS"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "KMS instances should be deployed across at least two availability zones for high availability and disaster recovery.",
 		"zh": "使用多可用区的 KMS 实例，视为合规。",
@@ -44,7 +44,7 @@ rule_meta := {
 		"fr": "Configurez au moins deux zones de disponibilité dans la propriété Connection.ZoneIds pour activer le déploiement multi-zones.",
 		"pt": "Configure pelo menos duas zonas de disponibilidade na propriedade Connection.ZoneIds para habilitar a implantação multi-zona."
 	},
-	"resource_types": ["ALIYUN::KMS::Instance"],
+	"resource_types": ["ALIYUN::KMS::Instance"]
 }
 
 # Check if instance has multiple zones configured

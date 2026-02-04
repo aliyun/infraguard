@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "actiontrail-enabled",
+	"severity": "high",
 	"name": {
 		"en": "ActionTrail Enabled",
 		"zh": "确保操作审计已开启",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "ActionTrail aktiviert",
 		"es": "ActionTrail Habilitado",
 		"fr": "ActionTrail Activé",
-		"pt": "ActionTrail Habilitado",
+		"pt": "ActionTrail Habilitado"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures ActionTrail is enabled to record account activities.",
 		"zh": "确保开启了操作审计（ActionTrail）以记录账号活动。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass ActionTrail aktiviert ist, um Kontenaktivitäten aufzuzeichnen.",
 		"es": "Garantiza que ActionTrail esté habilitado para registrar actividades de la cuenta.",
 		"fr": "Garantit qu'ActionTrail est activé pour enregistrer les activités du compte.",
-		"pt": "Garante que o ActionTrail está habilitado para registrar atividades da conta.",
+		"pt": "Garante que o ActionTrail está habilitado para registrar atividades da conta."
 	},
 	"reason": {
 		"en": "ActionTrail provides a record of API calls, which is essential for security auditing and forensic analysis.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "ActionTrail bietet einen Datensatz von API-Aufrufen, der für Sicherheitsaudits und forensische Analysen unerlässlich ist.",
 		"es": "ActionTrail proporciona un registro de llamadas API, esencial para auditorías de seguridad y análisis forense.",
 		"fr": "ActionTrail fournit un enregistrement des appels API, essentiel pour l'audit de sécurité et l'analyse médico-légale.",
-		"pt": "O ActionTrail fornece um registro de chamadas de API, essencial para auditoria de segurança e análise forense.",
+		"pt": "O ActionTrail fornece um registro de chamadas de API, essencial para auditoria de segurança e análise forense."
 	},
 	"recommendation": {
 		"en": "Create and enable at least one trail in ActionTrail.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Erstellen und aktivieren Sie mindestens eine Spur in ActionTrail.",
 		"es": "Cree y habilite al menos un rastro en ActionTrail.",
 		"fr": "Créez et activez au moins une piste dans ActionTrail.",
-		"pt": "Crie e habilite pelo menos uma trilha no ActionTrail.",
+		"pt": "Crie e habilite pelo menos uma trilha no ActionTrail."
 	},
-	"resource_types": ["ALIYUN::ACTIONTRAIL::Trail"],
+	"resource_types": ["ALIYUN::ACTIONTRAIL::Trail"]
 }
 
 is_compliant(resource) := true

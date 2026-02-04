@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "api-gateway-group-bind-domain",
+	"severity": "medium",
 	"name": {
 		"en": "API Gateway Group Bind Domain",
 		"zh": "API 网关中 API 分组绑定自定义域名",
@@ -14,7 +15,6 @@ rule_meta := {
 		"fr": "Lier le Domaine du Groupe API Gateway",
 		"pt": "Vincular Domínio do Grupo de API Gateway"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures API Gateway groups have custom domains bound.",
 		"zh": "确保 API 网关中的 API 分组绑定了自定义域名。",
@@ -42,7 +42,7 @@ rule_meta := {
 		"fr": "Liez des domaines personnalisés aux groupes API Gateway.",
 		"pt": "Vincule domínios personalizados a grupos de API Gateway."
 	},
-	"resource_types": ["ALIYUN::ApiGateway::Group"],
+	"resource_types": ["ALIYUN::ApiGateway::Group"]
 }
 
 deny contains result if {

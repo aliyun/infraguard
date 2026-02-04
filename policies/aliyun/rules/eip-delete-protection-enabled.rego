@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "eip-delete-protection-enabled",
+	"severity": "medium",
 	"name": {
 		"en": "EIP Deletion Protection Enabled",
 		"zh": "弹性公网 IP 开启删除保护",
@@ -15,7 +16,6 @@ rule_meta := {
 		"fr": "Protection contre la Suppression EIP Activée",
 		"pt": "Proteção de Exclusão de EIP Habilitada"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures that EIP instances have deletion protection enabled.",
 		"zh": "确保弹性公网 IP 开启了删除保护。",
@@ -43,7 +43,7 @@ rule_meta := {
 		"fr": "Activez la protection contre la suppression pour l'instance EIP.",
 		"pt": "Habilite a proteção de exclusão para a instância EIP."
 	},
-	"resource_types": ["ALIYUN::VPC::EIP"],
+	"resource_types": ["ALIYUN::VPC::EIP"]
 }
 
 is_compliant(resource) if {

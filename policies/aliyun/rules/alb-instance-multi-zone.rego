@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "alb-instance-multi-zone",
+	"severity": "high",
 	"name": {
 		"en": "ALB Instance Multi-Zone Deployment",
 		"zh": "使用多可用区的 ALB 实例",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "ALB-Instanz Multi-Zone-Bereitstellung",
 		"es": "Despliegue Multi-zona de Instancia ALB",
 		"fr": "Déploiement Multi-Zones de l'Instance ALB",
-		"pt": "Implantação Multi-zona da Instância ALB",
+		"pt": "Implantação Multi-zona da Instância ALB"
 	},
-	"severity": "high",
 	"description": {
 		"en": "ALB instances should be deployed across multiple availability zones for high availability. If only one zone is selected, a zone failure will affect the ALB instance and business stability.",
 		"zh": "ALB 实例为多可用区实例，视为合规。如果只选择了一个可用区，当这个可用区出现故障时，会影响 ALB 实例，进而影响业务稳定性。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "ALB-Instanzen sollten für hohe Verfügbarkeit über mehrere Verfügbarkeitszonen bereitgestellt werden. Wenn nur eine Zone ausgewählt wird, wirkt sich ein Zonenausfall auf die ALB-Instanz und die Geschäftsstabilität aus.",
 		"es": "Las instancias ALB deben implementarse en múltiples zonas de disponibilidad para alta disponibilidad. Si solo se selecciona una zona, una falla en la zona afectará la instancia ALB y la estabilidad del negocio.",
 		"fr": "Les instances ALB doivent être déployées sur plusieurs zones de disponibilité pour une haute disponibilité. Si une seule zone est sélectionnée, une panne de zone affectera l'instance ALB et la stabilité de l'entreprise.",
-		"pt": "Instâncias ALB devem ser implantadas em múltiplas zonas de disponibilidade para alta disponibilidade. Se apenas uma zona for selecionada, uma falha na zona afetará a instância ALB e a estabilidade do negócio.",
+		"pt": "Instâncias ALB devem ser implantadas em múltiplas zonas de disponibilidade para alta disponibilidade. Se apenas uma zona for selecionada, uma falha na zona afetará a instância ALB e a estabilidade do negócio."
 	},
 	"reason": {
 		"en": "The ALB instance is deployed in only one availability zone, which creates a single point of failure.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Die ALB-Instanz ist nur in einer Verfügbarkeitszone bereitgestellt, was einen Single Point of Failure schafft.",
 		"es": "La instancia ALB está implementada en solo una zona de disponibilidad, lo que crea un punto único de falla.",
 		"fr": "L'instance ALB est déployée dans une seule zone de disponibilité, ce qui crée un point de défaillance unique.",
-		"pt": "A instância ALB está implantada em apenas uma zona de disponibilidade, criando um ponto único de falha.",
+		"pt": "A instância ALB está implantada em apenas uma zona de disponibilidade, criando um ponto único de falha."
 	},
 	"recommendation": {
 		"en": "Configure the ALB instance to use at least two availability zones by adding multiple zone mappings in the ZoneMappings property.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Konfigurieren Sie die ALB-Instanz so, dass sie mindestens zwei Verfügbarkeitszonen verwendet, indem Sie mehrere Zonen-Zuordnungen in der ZoneMappings-Eigenschaft hinzufügen.",
 		"es": "Configure la instancia ALB para usar al menos dos zonas de disponibilidad agregando múltiples mapeos de zona en la propiedad ZoneMappings.",
 		"fr": "Configurez l'instance ALB pour utiliser au moins deux zones de disponibilité en ajoutant plusieurs mappages de zone dans la propriété ZoneMappings.",
-		"pt": "Configure a instância ALB para usar pelo menos duas zonas de disponibilidade adicionando múltiplos mapeamentos de zona na propriedade ZoneMappings.",
+		"pt": "Configure a instância ALB para usar pelo menos duas zonas de disponibilidade adicionando múltiplos mapeamentos de zona na propriedade ZoneMappings."
 	},
-	"resource_types": ["ALIYUN::ALB::LoadBalancer"],
+	"resource_types": ["ALIYUN::ALB::LoadBalancer"]
 }
 
 # Check if ALB is multi-zone

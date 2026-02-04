@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "ots-instance-network-not-normal",
+	"severity": "medium",
 	"name": {
 		"en": "OTS Restricted Network Type",
 		"zh": "OTS 实例限制网络类型",
@@ -14,7 +15,6 @@ rule_meta := {
 		"fr": "Type de Réseau Restreint OTS",
 		"pt": "Tipo de Rede Restrito OTS"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures Table Store (OTS) instances do not use the 'Normal' (unrestricted) network type.",
 		"zh": "确保表格存储（OTS）实例未使用 'Normal'（无限制）网络类型。",
@@ -42,7 +42,7 @@ rule_meta := {
 		"fr": "Définissez Network sur 'Vpc' ou 'VpcAndConsole' pour l'instance OTS.",
 		"pt": "Defina Network como 'Vpc' ou 'VpcAndConsole' para a instância OTS."
 	},
-	"resource_types": ["ALIYUN::OTS::Instance"],
+	"resource_types": ["ALIYUN::OTS::Instance"]
 }
 
 is_compliant(resource) if {

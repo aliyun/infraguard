@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "redis-instance-enabled-byok-tde",
+	"severity": "medium",
 	"name": {
 		"en": "Redis Instance BYOK TDE Enabled",
 		"zh": "Redis 实例开启 BYOK TDE 加密",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "Redis-Instanz BYOK TDE aktiviert",
 		"es": "TDE BYOK de Instancia Redis Habilitado",
 		"fr": "TDE BYOK d'Instance Redis Activé",
-		"pt": "TDE BYOK de Instância Redis Habilitado",
+		"pt": "TDE BYOK de Instância Redis Habilitado"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures that Redis instances have Transparent Data Encryption (TDE) enabled using Bring Your Own Key (BYOK).",
 		"zh": "确保 Redis 实例已使用自带密钥(BYOK)开启了透明数据加密(TDE)。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass Redis-Instanzen Transparent Data Encryption (TDE) mit Bring Your Own Key (BYOK) aktiviert haben.",
 		"es": "Garantiza que las instancias Redis tengan Transparent Data Encryption (TDE) habilitado usando Bring Your Own Key (BYOK).",
 		"fr": "Garantit que les instances Redis ont Transparent Data Encryption (TDE) activé en utilisant Bring Your Own Key (BYOK).",
-		"pt": "Garante que as instâncias Redis tenham Transparent Data Encryption (TDE) habilitado usando Bring Your Own Key (BYOK).",
+		"pt": "Garante que as instâncias Redis tenham Transparent Data Encryption (TDE) habilitado usando Bring Your Own Key (BYOK)."
 	},
 	"reason": {
 		"en": "TDE protects data at rest, and BYOK allows you to maintain control over the encryption keys.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "TDE schützt ruhende Daten, und BYOK ermöglicht es Ihnen, die Kontrolle über die Verschlüsselungsschlüssel zu behalten.",
 		"es": "TDE protege los datos en reposo, y BYOK le permite mantener el control sobre las claves de cifrado.",
 		"fr": "TDE protège les données au repos, et BYOK vous permet de maintenir le contrôle sur les clés de chiffrement.",
-		"pt": "TDE protege dados em repouso, e BYOK permite manter controle sobre as chaves de criptografia.",
+		"pt": "TDE protege dados em repouso, e BYOK permite manter controle sobre as chaves de criptografia."
 	},
 	"recommendation": {
 		"en": "Enable TDE for the Redis instance using a KMS key.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Aktivieren Sie TDE für die Redis-Instanz mit einem KMS-Schlüssel.",
 		"es": "Habilite TDE para la instancia Redis usando una clave KMS.",
 		"fr": "Activez TDE pour l'instance Redis en utilisant une clé KMS.",
-		"pt": "Habilite TDE para a instância Redis usando uma chave KMS.",
+		"pt": "Habilite TDE para a instância Redis usando uma chave KMS."
 	},
-	"resource_types": ["ALIYUN::Redis::DBInstance"],
+	"resource_types": ["ALIYUN::Redis::DBInstance"]
 }
 
 deny contains result if {

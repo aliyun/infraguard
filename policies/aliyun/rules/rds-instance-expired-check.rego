@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "rds-instance-expired-check",
+	"severity": "high",
 	"name": {
 		"en": "RDS Prepaid Instance Expiration Check",
 		"zh": "RDS 预付费实例到期检查",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "RDS Vorausbezahlte Instanz Ablaufprüfung",
 		"es": "Verificación de Expiración de Instancia Prepaga RDS",
 		"fr": "Vérification d'Expiration d'Instance Prépayée RDS",
-		"pt": "Verificação de Expiração de Instância Pré-paga RDS",
+		"pt": "Verificação de Expiração de Instância Pré-paga RDS"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Prepaid RDS instances should have auto-renewal enabled.",
 		"zh": "预付费 RDS 实例应开启自动续费，避免业务中断。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "Vorausbezahlte RDS-Instanzen sollten automatische Verlängerung aktiviert haben.",
 		"es": "Las instancias RDS prepagas deben tener renovación automática habilitada.",
 		"fr": "Les instances RDS prépayées doivent avoir le renouvellement automatique activé.",
-		"pt": "Instâncias RDS pré-pagas devem ter renovação automática habilitada.",
+		"pt": "Instâncias RDS pré-pagas devem ter renovação automática habilitada."
 	},
 	"reason": {
 		"en": "The prepaid RDS instance does not have auto-renewal enabled.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Die vorausbezahlte RDS-Instanz hat keine automatische Verlängerung aktiviert.",
 		"es": "La instancia RDS prepaga no tiene renovación automática habilitada.",
 		"fr": "L'instance RDS prépayée n'a pas le renouvellement automatique activé.",
-		"pt": "A instância RDS pré-paga não tem renovação automática habilitada.",
+		"pt": "A instância RDS pré-paga não tem renovação automática habilitada."
 	},
 	"recommendation": {
 		"en": "Enable auto-renewal for the prepaid RDS instance by setting AutoRenew to true.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Aktivieren Sie die automatische Verlängerung für die vorausbezahlte RDS-Instanz, indem Sie AutoRenew auf true setzen.",
 		"es": "Habilite la renovación automática para la instancia RDS prepaga estableciendo AutoRenew en true.",
 		"fr": "Activez le renouvellement automatique pour l'instance RDS prépayée en définissant AutoRenew sur true.",
-		"pt": "Habilite renovação automática para a instância RDS pré-paga definindo AutoRenew como true.",
+		"pt": "Habilite renovação automática para a instância RDS pré-paga definindo AutoRenew como true."
 	},
-	"resource_types": ["ALIYUN::RDS::DBInstance"],
+	"resource_types": ["ALIYUN::RDS::DBInstance"]
 }
 
 is_prepaid(resource) if {

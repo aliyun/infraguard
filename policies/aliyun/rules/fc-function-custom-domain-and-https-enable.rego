@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "fc-function-custom-domain-and-https-enable",
+	"severity": "medium",
 	"name": {
 		"en": "FC Function Custom Domain HTTPS Check",
 		"zh": "函数计算函数绑定到自定义域名且开启 https",
@@ -16,7 +17,6 @@ rule_meta := {
 		"fr": "Vérification HTTPS du Domaine Personnalisé de Fonction FC",
 		"pt": "Verificação HTTPS de Domínio Personalizado de Função FC"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "FC custom domains should have HTTPS enabled for secure communication.",
 		"zh": "函数计算函数绑定的自定义域名已开启 HTTPS，视为合规。",
@@ -44,7 +44,7 @@ rule_meta := {
 		"fr": "Activez HTTPS pour le domaine personnalisé dans la console FC ou l'API.",
 		"pt": "Habilite HTTPS para o domínio personalizado no console FC ou API."
 	},
-	"resource_types": ["ALIYUN::FC::CustomDomain"],
+	"resource_types": ["ALIYUN::FC::CustomDomain"]
 }
 
 # Check if custom domain has HTTPS enabled via protocol

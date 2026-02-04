@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "ram-role-has-specified-policy",
+	"severity": "medium",
 	"name": {
 		"en": "RAM Role Has Specified Policy",
 		"zh": "RAM 角色绑定指定策略检测",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "RAM-Rolle hat angegebene Richtlinie",
 		"es": "El Rol RAM Tiene Política Especificada",
 		"fr": "Le Rôle RAM a une Politique Spécifiée",
-		"pt": "Função RAM Tem Política Especificada",
+		"pt": "Função RAM Tem Política Especificada"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures RAM roles have the specified policies attached.",
 		"zh": "确保 RAM 角色绑定了符合参数条件的权限策略。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass RAM-Rollen die angegebenen Richtlinien angehängt haben.",
 		"es": "Garantiza que los roles RAM tengan las políticas especificadas adjuntas.",
 		"fr": "Garantit que les rôles RAM ont les politiques spécifiées attachées.",
-		"pt": "Garante que as funções RAM tenham as políticas especificadas anexadas.",
+		"pt": "Garante que as funções RAM tenham as políticas especificadas anexadas."
 	},
 	"reason": {
 		"en": "Proper policy attachment ensures roles have necessary permissions.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Die ordnungsgemäße Anheftung von Richtlinien stellt sicher, dass Rollen die erforderlichen Berechtigungen haben.",
 		"es": "La adjunción adecuada de políticas garantiza que los roles tengan los permisos necesarios.",
 		"fr": "L'attachement approprié des politiques garantit que les rôles ont les permissions nécessaires.",
-		"pt": "O anexo adequado de políticas garante que as funções tenham as permissões necessárias.",
+		"pt": "O anexo adequado de políticas garante que as funções tenham as permissões necessárias."
 	},
 	"recommendation": {
 		"en": "Attach the required policies to the RAM role.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Hängen Sie die erforderlichen Richtlinien an die RAM-Rolle an.",
 		"es": "Adjunte las políticas requeridas al rol RAM.",
 		"fr": "Attachez les politiques requises au rôle RAM.",
-		"pt": "Anexe as políticas necessárias à função RAM.",
+		"pt": "Anexe as políticas necessárias à função RAM."
 	},
-	"resource_types": ["ALIYUN::RAM::Role"],
+	"resource_types": ["ALIYUN::RAM::Role"]
 }
 
 has_policy_via_attachment(role_name) if {

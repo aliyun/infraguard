@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "mongodb-instance-multi-node",
+	"severity": "medium",
 	"name": {
 		"en": "MongoDB Instance Uses Multiple Nodes",
 		"zh": "使用多节点的 MongoDB 实例",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "MongoDB-Instanz verwendet mehrere Knoten",
 		"es": "La Instancia MongoDB Usa Múltiples Nodos",
 		"fr": "L'Instance MongoDB Utilise Plusieurs Nœuds",
-		"pt": "A Instância MongoDB Usa Múltiplos Nós",
+		"pt": "A Instância MongoDB Usa Múltiplos Nós"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures MongoDB instances are deployed with multiple nodes for high availability.",
 		"zh": "确保 MongoDB 实例部署了多个节点以实现高可用性。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass MongoDB-Instanzen mit mehreren Knoten für Hochverfügbarkeit bereitgestellt werden.",
 		"es": "Garantiza que las instancias MongoDB se implementen con múltiples nodos para alta disponibilidad.",
 		"fr": "Garantit que les instances MongoDB sont déployées avec plusieurs nœuds pour une haute disponibilité.",
-		"pt": "Garante que as instâncias MongoDB sejam implantadas com múltiplos nós para alta disponibilidade.",
+		"pt": "Garante que as instâncias MongoDB sejam implantadas com múltiplos nós para alta disponibilidade."
 	},
 	"reason": {
 		"en": "Single-node instances have no redundancy and are at risk of data loss or service interruption.",
@@ -32,7 +32,7 @@ rule_meta := {
 		"de": "Einzelknoten-Instanzen haben keine Redundanz und sind dem Risiko von Datenverlust oder Dienstunterbrechung ausgesetzt.",
 		"es": "Las instancias de nodo único no tienen redundancia y corren el riesgo de pérdida de datos o interrupción del servicio.",
 		"fr": "Les instances à nœud unique n'ont pas de redondance et risquent une perte de données ou une interruption de service.",
-		"pt": "Instâncias de nó único não têm redundância e correm risco de perda de dados ou interrupção do serviço.",
+		"pt": "Instâncias de nó único não têm redundância e correm risco de perda de dados ou interrupção do serviço."
 	},
 	"recommendation": {
 		"en": "Deploy MongoDB instances with multiple replica set nodes.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Stellen Sie MongoDB-Instanzen mit mehreren Replikat-Set-Knoten bereit.",
 		"es": "Implemente instancias MongoDB con múltiples nodos de conjunto de réplicas.",
 		"fr": "Déployez des instances MongoDB avec plusieurs nœuds de jeu de répliques.",
-		"pt": "Implante instâncias MongoDB com múltiplos nós de conjunto de réplicas.",
+		"pt": "Implante instâncias MongoDB com múltiplos nós de conjunto de réplicas."
 	},
-	"resource_types": ["ALIYUN::MONGODB::Instance"],
+	"resource_types": ["ALIYUN::MONGODB::Instance"]
 }
 
 # Check if instance has multiple nodes

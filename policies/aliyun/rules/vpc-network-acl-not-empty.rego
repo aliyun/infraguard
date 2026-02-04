@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "vpc-network-acl-not-empty",
+	"severity": "medium",
 	"name": {
 		"en": "VPC Network ACL Not Empty",
 		"zh": "专有网络 ACL 不为空条目",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "VPC-Netzwerk-ACL nicht leer",
 		"es": "ACL de Red VPC No Vacío",
 		"fr": "ACL de Réseau VPC Non Vide",
-		"pt": "ACL de Rede VPC Não Vazio",
+		"pt": "ACL de Rede VPC Não Vazio"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "Ensures VPC Network ACLs have at least one rule configured.",
 		"zh": "确保 VPC 网络 ACL 至少配置了一条规则。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass VPC-Netzwerk-ACLs mindestens eine Regel konfiguriert haben.",
 		"es": "Garantiza que las ACL de red VPC tengan al menos una regla configurada.",
 		"fr": "Garantit que les ACL de réseau VPC ont au moins une règle configurée.",
-		"pt": "Garante que as ACLs de rede VPC tenham pelo menos uma regra configurada.",
+		"pt": "Garante que as ACLs de rede VPC tenham pelo menos uma regra configurada."
 	},
 	"reason": {
 		"en": "An empty ACL provides no security filtering, which might lead to unintended access.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Eine leere ACL bietet keine Sicherheitsfilterung, was zu unbeabsichtigtem Zugriff führen kann.",
 		"es": "Una ACL vacía no proporciona filtrado de seguridad, lo que podría provocar acceso no deseado.",
 		"fr": "Une ACL vide ne fournit aucun filtrage de sécurité, ce qui peut entraîner un accès non intentionnel.",
-		"pt": "Uma ACL vazia não fornece filtragem de segurança, o que pode levar a acesso não intencional.",
+		"pt": "Uma ACL vazia não fornece filtragem de segurança, o que pode levar a acesso não intencional."
 	},
 	"recommendation": {
 		"en": "Add ingress and egress rules to the VPC Network ACL.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Fügen Sie Ein- und Ausgangsregeln zur VPC-Netzwerk-ACL hinzu.",
 		"es": "Agregue reglas de entrada y salida a la ACL de red VPC.",
 		"fr": "Ajoutez des règles d'entrée et de sortie à l'ACL de réseau VPC.",
-		"pt": "Adicione regras de entrada e saída à ACL de rede VPC.",
+		"pt": "Adicione regras de entrada e saída à ACL de rede VPC."
 	},
-	"resource_types": ["ALIYUN::VPC::NetworkAcl"],
+	"resource_types": ["ALIYUN::VPC::NetworkAcl"]
 }
 
 is_compliant(resource) if {

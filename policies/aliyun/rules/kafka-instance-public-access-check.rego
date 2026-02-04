@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "kafka-instance-public-access-check",
+	"severity": "high",
 	"name": {
 		"en": "Kafka Public Access Disabled",
 		"zh": "Kafka 实例禁用公网访问",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "Kafka Öffentlicher Zugriff deaktiviert",
 		"es": "Acceso Público de Kafka Deshabilitado",
 		"fr": "Accès Public Kafka Désactivé",
-		"pt": "Acesso Público do Kafka Desabilitado",
+		"pt": "Acesso Público do Kafka Desabilitado"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures Kafka instances do not have public network access.",
 		"zh": "确保 Kafka 实例未开启公网访问。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass Kafka-Instanzen keinen öffentlichen Netzwerkzugriff haben.",
 		"es": "Garantiza que las instancias Kafka no tengan acceso a la red pública.",
 		"fr": "Garantit que les instances Kafka n'ont pas d'accès réseau public.",
-		"pt": "Garante que as instâncias Kafka não tenham acesso à rede pública.",
+		"pt": "Garante que as instâncias Kafka não tenham acesso à rede pública."
 	},
 	"reason": {
 		"en": "Exposing Kafka to the public internet is a significant security risk.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Das Aussetzen von Kafka im öffentlichen Internet ist ein erhebliches Sicherheitsrisiko.",
 		"es": "Exponer Kafka a Internet público es un riesgo de seguridad significativo.",
 		"fr": "Exposer Kafka à Internet public constitue un risque de sécurité important.",
-		"pt": "Expor Kafka à Internet pública é um risco de segurança significativo.",
+		"pt": "Expor Kafka à Internet pública é um risco de segurança significativo."
 	},
 	"recommendation": {
 		"en": "Disable the public endpoint for the Kafka instance.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Deaktivieren Sie den öffentlichen Endpunkt für die Kafka-Instanz.",
 		"es": "Deshabilite el punto final público para la instancia Kafka.",
 		"fr": "Désactivez le point de terminaison public pour l'instance Kafka.",
-		"pt": "Desabilite o ponto de extremidade público para a instância Kafka.",
+		"pt": "Desabilite o ponto de extremidade público para a instância Kafka."
 	},
-	"resource_types": ["ALIYUN::KAFKA::Instance"],
+	"resource_types": ["ALIYUN::KAFKA::Instance"]
 }
 
 is_compliant(resource) if {

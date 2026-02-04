@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "sg-risky-ports-check",
+	"severity": "high",
 	"name": {
 		"en": "Security group does not open risky ports to 0.0.0.0/0",
 		"zh": "安全组不允许对全部网段开启风险端口",
@@ -13,7 +14,7 @@ rule_meta := {
 		"de": "Sicherheitsgruppe öffnet keine riskanten Ports für 0.0.0.0/0",
 		"es": "El Grupo de Seguridad No Abre Puertos de Riesgo a 0.0.0.0/0",
 		"fr": "Le Groupe de Sécurité N'ouvre Pas de Ports à Risque à 0.0.0.0/0",
-		"pt": "Grupo de Segurança Não Abre Portas de Risco para 0.0.0.0/0",
+		"pt": "Grupo de Segurança Não Abre Portas de Risco para 0.0.0.0/0"
 	},
 	"description": {
 		"en": "When security group ingress rule source is set to 0.0.0.0/0, the port range should not include specified risky ports, considered compliant. If source is not 0.0.0.0/0, it's compliant even if risky ports are included.",
@@ -22,10 +23,8 @@ rule_meta := {
 		"de": "Wenn die Quelle der Sicherheitsgruppen-Eingangsregel auf 0.0.0.0/0 gesetzt ist, sollte der Portbereich keine angegebenen riskanten Ports enthalten, was als konform gilt. Wenn die Quelle nicht 0.0.0.0/0 ist, ist es konform, auch wenn riskante Ports enthalten sind.",
 		"es": "Cuando la fuente de la regla de entrada del grupo de seguridad se establece en 0.0.0.0/0, el rango de puertos no debe incluir puertos de riesgo especificados, considerado conforme. Si la fuente no es 0.0.0.0/0, es conforme incluso si se incluyen puertos de riesgo.",
 		"fr": "Lorsque la source de la règle d'entrée du groupe de sécurité est définie sur 0.0.0.0/0, la plage de ports ne doit pas inclure de ports à risque spécifiés, considéré comme conforme. Si la source n'est pas 0.0.0.0/0, c'est conforme même si des ports à risque sont inclus.",
-		"pt": "Quando a origem da regra de entrada do grupo de segurança é definida como 0.0.0.0/0, o intervalo de portas não deve incluir portas de risco especificadas, considerado conforme. Se a origem não for 0.0.0.0/0, é conforme mesmo que portas de risco sejam incluídas.",
+		"pt": "Quando a origem da regra de entrada do grupo de segurança é definida como 0.0.0.0/0, o intervalo de portas não deve incluir portas de risco especificadas, considerado conforme. Se a origem não for 0.0.0.0/0, é conforme mesmo que portas de risco sejam incluídas."
 	},
-	"severity": "high",
-	"resource_types": ["ALIYUN::ECS::SecurityGroup"],
 	"reason": {
 		"en": "Security group opens risky ports to all IP addresses (0.0.0.0/0)",
 		"zh": "安全组向所有 IP 地址(0.0.0.0/0)开放了风险端口",
@@ -33,7 +32,7 @@ rule_meta := {
 		"de": "Sicherheitsgruppe öffnet riskante Ports für alle IP-Adressen (0.0.0.0/0)",
 		"es": "El grupo de seguridad abre puertos de riesgo a todas las direcciones IP (0.0.0.0/0)",
 		"fr": "Le groupe de sécurité ouvre des ports à risque à toutes les adresses IP (0.0.0.0/0)",
-		"pt": "O grupo de segurança abre portas de risco para todos os endereços IP (0.0.0.0/0)",
+		"pt": "O grupo de segurança abre portas de risco para todos os endereços IP (0.0.0.0/0)"
 	},
 	"recommendation": {
 		"en": "Remove risky port rules from security group ingress rules or restrict source IP range",
@@ -42,8 +41,9 @@ rule_meta := {
 		"de": "Entfernen Sie riskante Portregeln aus den Sicherheitsgruppen-Eingangsregeln oder beschränken Sie den Quell-IP-Bereich",
 		"es": "Elimine las reglas de puertos de riesgo de las reglas de entrada del grupo de seguridad o restrinja el rango de IP de origen",
 		"fr": "Supprimez les règles de ports à risque des règles d'entrée du groupe de sécurité ou restreignez la plage d'IP source",
-		"pt": "Remova as regras de portas de risco das regras de entrada do grupo de segurança ou restrinja o intervalo de IP de origem",
+		"pt": "Remova as regras de portas de risco das regras de entrada do grupo de segurança ou restrinja o intervalo de IP de origem"
 	},
+	"resource_types": ["ALIYUN::ECS::SecurityGroup"]
 }
 
 # Risky port ranges to check (common sensitive ports)

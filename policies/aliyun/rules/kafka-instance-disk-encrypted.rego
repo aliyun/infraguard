@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata with i18n support
 rule_meta := {
 	"id": "kafka-instance-disk-encrypted",
+	"severity": "high",
 	"name": {
 		"en": "Kafka Instance Disk Encrypted",
 		"zh": "Kafka 实例部署时启用了云盘加密",
@@ -14,9 +15,8 @@ rule_meta := {
 		"de": "Kafka-Instanz Festplatte verschlüsselt",
 		"es": "Disco de Instancia Kafka Cifrado",
 		"fr": "Disque d'Instance Kafka Chiffré",
-		"pt": "Disco de Instância Kafka Criptografado",
+		"pt": "Disco de Instância Kafka Criptografado"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Kafka instance should have disk encryption enabled during deployment for data protection.",
 		"zh": "Kafka 实例部署时启用了云盘加密，视为合规。Serverless 或非服务中的实例视为不适用。",
@@ -24,7 +24,7 @@ rule_meta := {
 		"de": "Kafka-Instanz sollte während der Bereitstellung Festplattenverschlüsselung für den Datenschutz aktiviert haben.",
 		"es": "La instancia Kafka debe tener cifrado de disco habilitado durante la implementación para protección de datos.",
 		"fr": "L'instance Kafka doit avoir le chiffrement de disque activé lors du déploiement pour la protection des données.",
-		"pt": "A instância Kafka deve ter criptografia de disco habilitada durante a implantação para proteção de dados.",
+		"pt": "A instância Kafka deve ter criptografia de disco habilitada durante a implantação para proteção de dados."
 	},
 	"reason": {
 		"en": "Kafka instance does not have disk encryption enabled, which may expose data to security risks.",
@@ -33,7 +33,7 @@ rule_meta := {
 		"de": "Kafka-Instanz hat keine Festplattenverschlüsselung aktiviert, was Daten Sicherheitsrisiken aussetzen kann.",
 		"es": "La instancia Kafka no tiene cifrado de disco habilitado, lo que puede exponer los datos a riesgos de seguridad.",
 		"fr": "L'instance Kafka n'a pas le chiffrement de disque activé, ce qui peut exposer les données à des risques de sécurité.",
-		"pt": "A instância Kafka não tem criptografia de disco habilitada, o que pode expor os dados a riscos de segurança.",
+		"pt": "A instância Kafka não tem criptografia de disco habilitada, o que pode expor os dados a riscos de segurança."
 	},
 	"recommendation": {
 		"en": "Enable disk encryption by configuring KMSKeyId in DeployOption when deploying the Kafka instance.",
@@ -42,9 +42,9 @@ rule_meta := {
 		"de": "Aktivieren Sie die Festplattenverschlüsselung, indem Sie KMSKeyId in DeployOption konfigurieren, wenn Sie die Kafka-Instanz bereitstellen.",
 		"es": "Habilite el cifrado de disco configurando KMSKeyId en DeployOption al implementar la instancia Kafka.",
 		"fr": "Activez le chiffrement de disque en configurant KMSKeyId dans DeployOption lors du déploiement de l'instance Kafka.",
-		"pt": "Habilite a criptografia de disco configurando KMSKeyId em DeployOption ao implantar a instância Kafka.",
+		"pt": "Habilite a criptografia de disco configurando KMSKeyId em DeployOption ao implantar a instância Kafka."
 	},
-	"resource_types": ["ALIYUN::KAFKA::Instance"],
+	"resource_types": ["ALIYUN::KAFKA::Instance"]
 }
 
 # Check if the instance is serverless (not applicable)

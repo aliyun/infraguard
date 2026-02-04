@@ -5,6 +5,7 @@ import rego.v1
 
 rule_meta := {
 	"id": "ram-policy-no-statements-with-admin-access-check",
+	"severity": "high",
 	"name": {
 		"en": "RAM Policy No Admin Access",
 		"zh": "禁止 RAM 策略包含管理员权限",
@@ -12,9 +13,8 @@ rule_meta := {
 		"de": "RAM-Richtlinie kein Admin-Zugriff",
 		"es": "Política RAM Sin Acceso de Administrador",
 		"fr": "Politique RAM Sans Accès Administrateur",
-		"pt": "Política RAM Sem Acesso de Administrador",
+		"pt": "Política RAM Sem Acesso de Administrador"
 	},
-	"severity": "high",
 	"description": {
 		"en": "Ensures custom RAM policies do not grant full AdministratorAccess.",
 		"zh": "确保自定义 RAM 策略未授予完全的管理员权限（AdministratorAccess）。",
@@ -22,7 +22,7 @@ rule_meta := {
 		"de": "Stellt sicher, dass benutzerdefinierte RAM-Richtlinien keinen vollständigen AdministratorAccess gewähren.",
 		"es": "Garantiza que las políticas RAM personalizadas no otorguen acceso completo de administrador.",
 		"fr": "Garantit que les politiques RAM personnalisées n'accordent pas un accès administrateur complet.",
-		"pt": "Garante que políticas RAM personalizadas não concedam acesso completo de administrador.",
+		"pt": "Garante que políticas RAM personalizadas não concedam acesso completo de administrador."
 	},
 	"reason": {
 		"en": "Granting excessive permissions increases the impact of a compromised account.",
@@ -31,7 +31,7 @@ rule_meta := {
 		"de": "Das Gewähren übermäßiger Berechtigungen erhöht die Auswirkungen eines kompromittierten Kontos.",
 		"es": "Otorgar permisos excesivos aumenta el impacto de una cuenta comprometida.",
 		"fr": "Accorder des permissions excessives augmente l'impact d'un compte compromis.",
-		"pt": "Conceder permissões excessivas aumenta o impacto de uma conta comprometida.",
+		"pt": "Conceder permissões excessivas aumenta o impacto de uma conta comprometida."
 	},
 	"recommendation": {
 		"en": "Follow the principle of least privilege. Do not use '*' for both Action and Resource in the same statement.",
@@ -40,9 +40,9 @@ rule_meta := {
 		"de": "Befolgen Sie das Prinzip der geringsten Berechtigung. Verwenden Sie nicht '*' für sowohl Action als auch Resource in derselben Anweisung.",
 		"es": "Siga el principio de menor privilegio. No use '*' para tanto Action como Resource en la misma declaración.",
 		"fr": "Suivez le principe du moindre privilège. N'utilisez pas '*' pour Action et Resource dans la même déclaration.",
-		"pt": "Siga o princípio do menor privilégio. Não use '*' para Action e Resource na mesma declaração.",
+		"pt": "Siga o princípio do menor privilégio. Não use '*' para Action e Resource na mesma declaração."
 	},
-	"resource_types": ["ALIYUN::RAM::ManagedPolicy"],
+	"resource_types": ["ALIYUN::RAM::ManagedPolicy"]
 }
 
 is_compliant(resource) if {

@@ -14,7 +14,7 @@ pack_meta := {
 		"de": "Netzwerk- und Datensicherheit Best Practices",
 		"es": "Mejores Prácticas de Seguridad de Red y Datos",
 		"fr": "Meilleures Pratiques de Sécurité Réseau et Données",
-		"pt": "Melhores Práticas de Segurança de Rede e Dados",
+		"pt": "Melhores Práticas de Segurança de Rede e Dados"
 	},
 	"description": {
 		"en": "Best practices for network and data security including ECS instance security, OSS bucket encryption and access control, RDS instance security configurations.",
@@ -23,16 +23,16 @@ pack_meta := {
 		"de": "Best Practices für Netzwerk- und Datensicherheit, einschließlich ECS-Instanz-Sicherheit, OSS-Bucket-Verschlüsselung und Zugriffskontrolle, RDS-Instanz-Sicherheitskonfigurationen.",
 		"es": "Mejores prácticas para la seguridad de red y datos, incluyendo seguridad de instancias ECS, cifrado y control de acceso de buckets OSS, configuraciones de seguridad de instancias RDS.",
 		"fr": "Meilleures pratiques pour la sécurité réseau et des données, incluant la sécurité des instances ECS, le chiffrement et le contrôle d'accès des buckets OSS, les configurations de sécurité des instances RDS.",
-		"pt": "Melhores práticas para segurança de rede e dados, incluindo segurança de instâncias ECS, criptografia e controle de acesso de buckets OSS, configurações de segurança de instâncias RDS.",
+		"pt": "Melhores práticas para segurança de rede e dados, incluindo segurança de instâncias ECS, criptografia e controle de acesso de buckets OSS, configurações de segurança de instâncias RDS."
 	},
 	"rules": [
 		"ecs-in-use-disk-encrypted",
 		"ecs-instances-in-vpc",
-		"oss-bucket-server-side-encryption-enabled",
-		"oss-bucket-public-write-prohibited",
-		"oss-bucket-public-read-prohibited",
 		"oss-bucket-logging-enabled",
+		"oss-bucket-public-read-prohibited",
+		"oss-bucket-public-write-prohibited",
+		"oss-bucket-server-side-encryption-enabled",
 		"oss-encryption-byok-check",
-		"rds-public-access-check",
-	],
+		"rds-public-access-check"
+	]
 }

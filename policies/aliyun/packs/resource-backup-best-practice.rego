@@ -11,7 +11,7 @@ pack_meta := {
 		"de": "Ressourcen-Backup Best Practices",
 		"es": "Mejores Prácticas de Respaldo de Recursos",
 		"fr": "Meilleures Pratiques de Sauvegarde des Ressources",
-		"pt": "Melhores Práticas de Backup de Recursos",
+		"pt": "Melhores Práticas de Backup de Recursos"
 	},
 	"description": {
 		"en": "Best practices for enabling backup features on cloud resources to ensure data protection and disaster recovery.",
@@ -20,22 +20,22 @@ pack_meta := {
 		"de": "Best Practices zur Aktivierung von Backup-Funktionen für Cloud-Ressourcen, um Datenschutz und Disaster Recovery sicherzustellen.",
 		"es": "Mejores prácticas para habilitar funciones de respaldo en recursos en la nube para garantizar la protección de datos y la recuperación ante desastres.",
 		"fr": "Meilleures pratiques pour activer les fonctions de sauvegarde sur les ressources cloud afin d'assurer la protection des données et la récupération d'urgence.",
-		"pt": "Melhores práticas para habilitar recursos de backup em recursos em nuvem para garantir proteção de dados e recuperação de desastres.",
+		"pt": "Melhores práticas para habilitar recursos de backup em recursos em nuvem para garantir proteção de dados e recuperação de desastres."
 	},
 	"rules": [
 		# "adb-cluster-log-backup-enabled",
 		# "eci-container-group-volumn-mounts",
 		# "ecs-instance-backup-enable",
-		# "elasticsearch-instance-snapshot-enabled",  # Commented: ROS does not support AutoSnapshot property for ALIYUN::ElasticSearch::Instance
+		# "elasticsearch-instance-snapshot-enabled",  # Commented: ROS does not support AutoSnapshot property for ALIYUN::ElasticSearch::Instance,
 		# "gpdb-has-backup-set",
 		# "hologram-instance-remote-backup-enable",
-		# "mongodb-instance-backup-log-enabled",  # Commented: ROS does not support ALIYUN::MongoDB::DBInstance resource type
+		# "mongodb-instance-backup-log-enabled",  # Commented: ROS does not support ALIYUN::MongoDB::DBInstance resource type,
 		# "nas-filesystem-enable-backup-plan",
 		"oss-bucket-versioning-enabled",
 		# "ots-instance-remote-replication",
-		# "polardb-cluster-log-backup-retention",  # ROS does not support LogBackupRetentionPeriod property
 		# "polardb-cluster-level-two-backup-retention",
+		# "polardb-cluster-log-backup-retention",  # ROS does not support LogBackupRetentionPeriod property,
 		"rds-instance-enabled-log-backup",
-		"redis-instance-backup-log-enabled",
-	],
+		"redis-instance-backup-log-enabled"
+	]
 }

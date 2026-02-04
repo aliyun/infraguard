@@ -6,6 +6,7 @@ import data.infraguard.helpers
 
 rule_meta := {
 	"id": "ess-scaling-configuration-image-type-check",
+	"severity": "medium",
 	"name": {
 		"en": "ESS Scaling Configuration Image Type Check",
 		"zh": "弹性伸缩配置中使用指定来源的镜像",
@@ -13,9 +14,8 @@ rule_meta := {
 		"de": "ESS-Skalierungskonfiguration Bildtyp-Prüfung",
 		"es": "Verificación de Tipo de Imagen de Configuración de Escalado ESS",
 		"fr": "Vérification du Type d'Image de Configuration de Mise à l'Échelle ESS",
-		"pt": "Verificação de Tipo de Imagem de Configuração de Escalonamento ESS",
+		"pt": "Verificação de Tipo de Imagem de Configuração de Escalonamento ESS"
 	},
-	"severity": "medium",
 	"description": {
 		"en": "ESS scaling configurations should use images from specified sources for better security and management.",
 		"zh": "弹性伸缩配置中镜像来源为指定类型的来源，视为合规。参数默认值为共享类型。",
@@ -23,7 +23,7 @@ rule_meta := {
 		"de": "ESS-Skalierungskonfigurationen sollten Bilder aus angegebenen Quellen für bessere Sicherheit und Verwaltung verwenden.",
 		"es": "Las configuraciones de escalado ESS deben usar imágenes de fuentes especificadas para mayor seguridad y gestión.",
 		"fr": "Les configurations de mise à l'échelle ESS doivent utiliser des images provenant de sources spécifiées pour une meilleure sécurité et gestion.",
-		"pt": "As configurações de escalonamento ESS devem usar imagens de fontes especificadas para melhor segurança e gerenciamento.",
+		"pt": "As configurações de escalonamento ESS devem usar imagens de fontes especificadas para melhor segurança e gerenciamento."
 	},
 	"reason": {
 		"en": "The ESS scaling configuration is not using an image from the specified source type.",
@@ -41,9 +41,9 @@ rule_meta := {
 		"de": "Verwenden Sie Bilder aus vertrauenswürdigen Quellen. Legen Sie den Bildquelltyp gemäß Ihren Sicherheitsanforderungen fest.",
 		"es": "Use imágenes de fuentes confiables. Establezca el tipo de fuente de imagen según sus requisitos de seguridad.",
 		"fr": "Utilisez des images provenant de sources de confiance. Définissez le type de source d'image selon vos exigences de sécurité.",
-		"pt": "Use imagens de fontes confiáveis. Defina o tipo de fonte da imagem de acordo com seus requisitos de segurança.",
+		"pt": "Use imagens de fontes confiáveis. Defina o tipo de fonte da imagem de acordo com seus requisitos de segurança."
 	},
-	"resource_types": ["ALIYUN::ESS::ScalingConfiguration"],
+	"resource_types": ["ALIYUN::ESS::ScalingConfiguration"]
 }
 
 has_specified_image_type(resource) if {

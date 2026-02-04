@@ -7,6 +7,7 @@ import data.infraguard.helpers
 # Rule metadata
 rule_meta := {
 	"id": "ecs-disk-regional-auto-check",
+	"severity": "low",
 	"name": {
 		"en": "ECS Disk Zone-Redundant ESSD Storage",
 		"zh": "使用同城冗余类型的 ESSD 数据盘",
@@ -16,7 +17,6 @@ rule_meta := {
 		"fr": "Stockage ESSD Redondant par Zone de Disque ECS",
 		"pt": "Armazenamento ESSD com Redundância de Zona de Disco ECS"
 	},
-	"severity": "low",
 	"description": {
 		"en": "ECS data disks should use zone-redundant ESSD storage for high availability. System disks are not applicable to this rule.",
 		"zh": "使用同城冗余类型的 ESSD 数据盘，视为合规。系统盘视为不适用。",
@@ -44,7 +44,7 @@ rule_meta := {
 		"fr": "Utilisez le stockage ESSD redondant par zone en définissant DiskCategory sur 'cloud_regional_disk_auto' ou 'cloud_essd' avec une configuration de redondance appropriée.",
 		"pt": "Use armazenamento ESSD com redundância de zona definindo DiskCategory como 'cloud_regional_disk_auto' ou 'cloud_essd' com configuração de redundância apropriada."
 	},
-	"resource_types": ["ALIYUN::ECS::Disk"],
+	"resource_types": ["ALIYUN::ECS::Disk"]
 }
 
 # Check if disk is zone-redundant
