@@ -7,20 +7,40 @@ rule_meta := {
 	"id": "ram-user-has-specified-policy",
 	"name": {
 		"en": "RAM User Has Specified Policy",
-		"zh": "RAM 用户及所属用户组绑定指定条件的权限策略"
+		"zh": "RAM 用户及所属用户组绑定指定条件的权限策略",
+		"ja": "RAM ユーザーに指定されたポリシーがある",
+		"de": "RAM-Benutzer hat angegebene Richtlinie",
+		"es": "El Usuario RAM Tiene Política Especificada",
+		"fr": "L'Utilisateur RAM a une Politique Spécifiée",
+		"pt": "O Usuário RAM Tem Política Especificada",
 	},
 	"severity": "medium",
 	"description": {
 		"en": "Ensures RAM users have the required policies attached, including those inherited from groups.",
-		"zh": "确保 RAM 用户绑定了符合参数条件的权限策略，包括继承自用户组的权限。"
+		"zh": "确保 RAM 用户绑定了符合参数条件的权限策略，包括继承自用户组的权限。",
+		"ja": "RAM ユーザーに必要なポリシーがアタッチされていることを確認します（グループから継承されたポリシーを含む）。",
+		"de": "Stellt sicher, dass RAM-Benutzer die erforderlichen Richtlinien angehängt haben, einschließlich derer, die von Gruppen geerbt wurden.",
+		"es": "Garantiza que los usuarios RAM tengan las políticas requeridas adjuntas, incluidas las heredadas de grupos.",
+		"fr": "Garantit que les utilisateurs RAM ont les politiques requises attachées, y compris celles héritées des groupes.",
+		"pt": "Garante que os usuários RAM tenham as políticas necessárias anexadas, incluindo as herdadas de grupos.",
 	},
 	"reason": {
 		"en": "Proper policy attachment ensures users have necessary permissions.",
-		"zh": "正确绑定策略可确保用户具有必要的权限。"
+		"zh": "正确绑定策略可确保用户具有必要的权限。",
+		"ja": "適切なポリシーのアタッチにより、ユーザーに必要な権限があることが保証されます。",
+		"de": "Die ordnungsgemäße Anheftung von Richtlinien stellt sicher, dass Benutzer die erforderlichen Berechtigungen haben.",
+		"es": "La adjunción adecuada de políticas garantiza que los usuarios tengan los permisos necesarios.",
+		"fr": "L'attachement approprié des politiques garantit que les utilisateurs ont les permissions nécessaires.",
+		"pt": "O anexo adequado de políticas garante que os usuários tenham as permissões necessárias.",
 	},
 	"recommendation": {
 		"en": "Attach the required policies to the RAM user or their groups.",
-		"zh": "向 RAM 用户或其所属用户组绑定所需的策略。"
+		"zh": "向 RAM 用户或其所属用户组绑定所需的策略。",
+		"ja": "必要なポリシーを RAM ユーザーまたはそのグループにアタッチします。",
+		"de": "Hängen Sie die erforderlichen Richtlinien an den RAM-Benutzer oder deren Gruppen an.",
+		"es": "Adjunte las políticas requeridas al usuario RAM o sus grupos.",
+		"fr": "Attachez les politiques requises à l'utilisateur RAM ou à leurs groupes.",
+		"pt": "Anexe as políticas necessárias ao usuário RAM ou seus grupos.",
 	},
 	"resource_types": ["ALIYUN::RAM::User"],
 }

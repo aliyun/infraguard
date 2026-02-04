@@ -11,10 +11,20 @@ pack_meta := {
 	"name": {
 		"en": "Resource Stability Best Practice",
 		"zh": "资源稳定性最佳实践",
+		"ja": "リソース安定性のベストプラクティス",
+		"de": "Ressourcenstabilität Best Practices",
+		"es": "Mejores Prácticas de Estabilidad de Recursos",
+		"fr": "Meilleures Pratiques de Stabilité des Ressources",
+		"pt": "Melhores Práticas de Estabilidade de Recursos",
 	},
 	"description": {
 		"en": "Detect resource stability from six dimensions: high availability architecture, capacity protection, change management, monitoring management, backup management, and fault isolation, which helps to identify risks in advance and improve stability and O&M efficiency.",
 		"zh": "从高可用基础架构、容量保护、变更管理、监控管理、备份管理、故障隔离六大维度对云上资源的稳定性做检测，有助于提前发现隐患，提升稳定性和运维效率。",
+		"ja": "高可用性アーキテクチャ、容量保護、変更管理、監視管理、バックアップ管理、障害分離の6つの次元からリソースの安定性を検出し、リスクを事前に特定し、安定性と運用効率を向上させます。",
+		"de": "Erkennung der Ressourcenstabilität aus sechs Dimensionen: Hochverfügbarkeitsarchitektur, Kapazitätsschutz, Änderungsmanagement, Monitoring-Management, Backup-Management und Fehlerisolierung, was hilft, Risiken im Voraus zu identifizieren und die Stabilität und Betriebseffizienz zu verbessern.",
+		"es": "Detectar la estabilidad de los recursos desde seis dimensiones: arquitectura de alta disponibilidad, protección de capacidad, gestión de cambios, gestión de monitoreo, gestión de respaldo y aislamiento de fallas, lo que ayuda a identificar riesgos con anticipación y mejorar la estabilidad y la eficiencia operativa.",
+		"fr": "Détecter la stabilité des ressources à partir de six dimensions : architecture haute disponibilité, protection de capacité, gestion des changements, gestion de la surveillance, gestion de la sauvegarde et isolation des pannes, ce qui aide à identifier les risques à l'avance et à améliorer la stabilité et l'efficacité opérationnelle.",
+		"pt": "Detectar estabilidade de recursos a partir de seis dimensões: arquitetura de alta disponibilidade, proteção de capacidade, gestão de mudanças, gestão de monitoramento, gestão de backup e isolamento de falhas, o que ajuda a identificar riscos com antecedência e melhorar a estabilidade e a eficiência operacional.",
 	},
 	"rules": [
 		# "region-vswitch-no-crossed-cidr",

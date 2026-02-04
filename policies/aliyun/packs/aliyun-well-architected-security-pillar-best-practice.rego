@@ -7,10 +7,20 @@ pack_meta := {
 	"name": {
 		"en": "Aliyun Well-Architected Security Pillar Best Practice",
 		"zh": "阿里云卓越架构安全支柱最佳实践",
+		"ja": "Alibaba Cloud ウェルアーキテクチャセキュリティのベストプラクティス",
+		"de": "Alibaba Cloud Well-Architected Sicherheitssäule Best Practices",
+		"es": "Mejores Prácticas del Pilar de Seguridad de Arquitectura Bien Diseñada de Aliyun",
+		"fr": "Meilleures Pratiques du Pilier de Sécurité de l'Architecture Bien Conçue d'Aliyun",
+		"pt": "Melhores Práticas do Pilar de Segurança de Arquitetura Bem Projetada do Aliyun",
 	},
 	"description": {
 		"en": "Best practices for Aliyun well-architected security pillar",
 		"zh": "阿里云卓越架构安全支柱最佳实践",
+		"ja": "Alibaba Cloud ウェルアーキテクチャセキュリティのベストプラクティス",
+		"de": "Best Practices für die Alibaba Cloud Well-Architected Sicherheitssäule",
+		"es": "Mejores prácticas para el pilar de seguridad de arquitectura bien diseñada de Aliyun",
+		"fr": "Meilleures pratiques pour le pilier de sécurité de l'architecture bien conçue d'Aliyun",
+		"pt": "Melhores práticas para o pilar de segurança de arquitetura bem projetada do Aliyun",
 	},
 	"rules": [
 		"actiontrail-trail-intact-enabled",

@@ -7,10 +7,20 @@ pack_meta := {
 	"name": {
 		"en": "GxP EU Annex 11 Compliance",
 		"zh": "GxP 欧盟附录 11 标准合规包",
+		"ja": "GxP EU 附属書 11 コンプライアンス",
+		"de": "GxP EU Anhang 11 Compliance",
+		"es": "Cumplimiento del Anexo 11 GxP de la UE",
+		"fr": "Conformité à l'Annexe 11 GxP de l'UE",
+		"pt": "Conformidade com o Anexo 11 GxP da UE",
 	},
 	"description": {
 		"en": "Compliance pack for pharmaceutical, biotechnology and medical device companies using cloud services that need to meet GxP EU Annex 11 standards. This pack provides mappings between standard requirements and Alibaba Cloud product settings.",
 		"zh": "在制药、生物技术和医疗器械领域中使用计算机化系统的企业和组织，在用云过程需要满足 GxP 欧盟标准。本合规包模板提供了标准细则与阿里云的产品设置的对应关系。",
+		"ja": "GxP EU 附属書 11 基準を満たす必要があるクラウドサービスを使用する製薬、バイオテクノロジー、医療機器企業向けのコンプライアンスパック。このパックは、標準要件と Alibaba Cloud 製品設定の間のマッピングを提供します。",
+		"de": "Compliance-Paket für pharmazeutische, biotechnologische und Medizinprodukteunternehmen, die Cloud-Dienste nutzen und die GxP EU Anhang 11-Standards erfüllen müssen. Dieses Paket bietet Zuordnungen zwischen Standardanforderungen und Alibaba Cloud Produkteinstellungen.",
+		"es": "Paquete de cumplimiento para empresas farmacéuticas, biotecnológicas y de dispositivos médicos que utilizan servicios en la nube y necesitan cumplir con los estándares del Anexo 11 GxP de la UE. Este paquete proporciona mapeos entre los requisitos estándar y la configuración de productos de Alibaba Cloud.",
+		"fr": "Pack de conformité pour les entreprises pharmaceutiques, biotechnologiques et de dispositifs médicaux utilisant des services cloud qui doivent répondre aux normes de l'Annexe 11 GxP de l'UE. Ce pack fournit des correspondances entre les exigences standard et les paramètres des produits Alibaba Cloud.",
+		"pt": "Pacote de conformidade para empresas farmacêuticas, de biotecnologia e de dispositivos médicos que usam serviços em nuvem e precisam atender aos padrões do Anexo 11 GxP da UE. Este pacote fornece mapeamentos entre os requisitos padrão e as configurações de produtos do Alibaba Cloud.",
 	},
 	"rules": [
 		"ack-cluster-rrsa-enabled",

@@ -8,20 +8,40 @@ rule_meta := {
 	"id": "polardb-dbcluster-in-vpc",
 	"name": {
 		"en": "PolarDB Cluster in VPC",
-		"zh": "推荐使用专有网络类型的 PolarDB 实例"
+		"zh": "推荐使用专有网络类型的 PolarDB 实例",
+		"ja": "VPC 内の PolarDB クラスター",
+		"de": "PolarDB-Cluster in VPC",
+		"es": "Clúster PolarDB en VPC",
+		"fr": "Cluster PolarDB dans VPC",
+		"pt": "Cluster PolarDB em VPC"
 	},
 	"severity": "medium",
 	"description": {
 		"en": "Ensures PolarDB cluster is deployed in a VPC.",
-		"zh": "确保 PolarDB 实例部署在专有网络中。"
+		"zh": "确保 PolarDB 实例部署在专有网络中。",
+		"ja": "PolarDB クラスターが VPC に展開されていることを確認します。",
+		"de": "Stellt sicher, dass der PolarDB-Cluster in einem VPC bereitgestellt wird.",
+		"es": "Garantiza que el clúster PolarDB se despliegue en una VPC.",
+		"fr": "Garantit que le cluster PolarDB est déployé dans un VPC.",
+		"pt": "Garante que o cluster PolarDB seja implantado em uma VPC."
 	},
 	"reason": {
 		"en": "VPC provides better network isolation and security.",
-		"zh": "VPC 提供更好的网络隔离和安全性。"
+		"zh": "VPC 提供更好的网络隔离和安全性。",
+		"ja": "VPC はより優れたネットワーク分離とセキュリティを提供します。",
+		"de": "VPC bietet bessere Netzwerkisolation und Sicherheit.",
+		"es": "VPC proporciona mejor aislamiento de red y seguridad.",
+		"fr": "VPC offre une meilleure isolation réseau et sécurité.",
+		"pt": "VPC fornece melhor isolamento de rede e segurança."
 	},
 	"recommendation": {
 		"en": "Deploy PolarDB cluster in a VPC.",
-		"zh": "将 PolarDB 部署在专有网络中。"
+		"zh": "将 PolarDB 部署在专有网络中。",
+		"ja": "VPC に PolarDB クラスターを展開します。",
+		"de": "Stellen Sie den PolarDB-Cluster in einem VPC bereit.",
+		"es": "Despliegue el clúster PolarDB en una VPC.",
+		"fr": "Déployez le cluster PolarDB dans un VPC.",
+		"pt": "Implante o cluster PolarDB em uma VPC."
 	},
 	"resource_types": ["ALIYUN::POLARDB::DBCluster"],
 }

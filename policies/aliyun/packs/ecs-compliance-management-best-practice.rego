@@ -7,10 +7,20 @@ pack_meta := {
 	"name": {
 		"en": "ECS Compliance Management Best Practice",
 		"zh": "ECS 合规管理最佳实践",
+		"ja": "ECS コンプライアンス管理のベストプラクティス",
+		"de": "ECS-Compliance-Management Best Practices",
+		"es": "Mejores Prácticas de Gestión de Cumplimiento de ECS",
+		"fr": "Meilleures Pratiques de Gestion de la Conformité ECS",
+		"pt": "Melhores Práticas de Gestão de Conformidade ECS",
 	},
 	"description": {
 		"en": "Best practices for ECS compliance management",
 		"zh": "ECS 合规管理最佳实践",
+		"ja": "ECS コンプライアンス管理のベストプラクティス",
+		"de": "Best Practices für das ECS-Compliance-Management",
+		"es": "Mejores prácticas para la gestión de cumplimiento de ECS",
+		"fr": "Meilleures pratiques pour la gestion de la conformité ECS",
+		"pt": "Melhores práticas para gestão de conformidade ECS",
 	},
 	"rules": [
 		# "ecs-all-updated-security-vul",

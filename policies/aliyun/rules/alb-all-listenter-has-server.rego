@@ -7,20 +7,40 @@ rule_meta := {
 	"id": "alb-all-listenter-has-server",
 	"name": {
 		"en": "ALB Listener Has Backend Server",
-		"zh": "ALB 监听绑定后端服务器"
+		"zh": "ALB 监听绑定后端服务器",
+		"ja": "ALB リスナーにバックエンドサーバーがある",
+		"de": "ALB-Listener hat Backend-Server",
+		"es": "El Oyente ALB Tiene Servidor Backend",
+		"fr": "L'Écouteur ALB a un Serveur Backend",
+		"pt": "O Ouvinte ALB Tem Servidor Backend",
 	},
 	"severity": "medium",
 	"description": {
 		"en": "Ensures all ALB listeners are associated with a non-empty server group.",
-		"zh": "确保所有 ALB 监听均关联了非空的服务器组。"
+		"zh": "确保所有 ALB 监听均关联了非空的服务器组。",
+		"ja": "すべての ALB リスナーが空でないサーバーグループに関連付けられていることを確認します。",
+		"de": "Stellt sicher, dass alle ALB-Listener einer nicht leeren Servergruppe zugeordnet sind.",
+		"es": "Garantiza que todos los oyentes ALB estén asociados con un grupo de servidores no vacío.",
+		"fr": "Garantit que tous les écouteurs ALB sont associés à un groupe de serveurs non vide.",
+		"pt": "Garante que todos os ouvintes ALB estejam associados a um grupo de servidores não vazio.",
 	},
 	"reason": {
 		"en": "A listener without backend servers cannot handle any traffic, leading to service unavailability.",
-		"zh": "未绑定后端服务器的监听无法处理任何流量，会导致服务不可用。"
+		"zh": "未绑定后端服务器的监听无法处理任何流量，会导致服务不可用。",
+		"ja": "バックエンドサーバーがないリスナーはトラフィックを処理できず、サービスが利用できなくなります。",
+		"de": "Ein Listener ohne Backend-Server kann keinen Datenverkehr verarbeiten, was zu Dienstunverfügbarkeit führt.",
+		"es": "Un oyente sin servidores backend no puede manejar ningún tráfico, lo que lleva a la indisponibilidad del servicio.",
+		"fr": "Un écouteur sans serveurs backend ne peut gérer aucun trafic, ce qui entraîne l'indisponibilité du service.",
+		"pt": "Um ouvinte sem servidores backend não pode lidar com nenhum tráfego, levando à indisponibilidade do serviço.",
 	},
 	"recommendation": {
 		"en": "Associate the listener with a server group that contains healthy backend servers.",
-		"zh": "将监听关联到包含健康后端服务器的服务器组。"
+		"zh": "将监听关联到包含健康后端服务器的服务器组。",
+		"ja": "リスナーを正常なバックエンドサーバーを含むサーバーグループに関連付けます。",
+		"de": "Ordnen Sie den Listener einer Servergruppe zu, die gesunde Backend-Server enthält.",
+		"es": "Asocie el oyente con un grupo de servidores que contenga servidores backend saludables.",
+		"fr": "Associez l'écouteur à un groupe de serveurs contenant des serveurs backend sains.",
+		"pt": "Associe o ouvinte a um grupo de servidores que contenha servidores backend saudáveis.",
 	},
 	"resource_types": ["ALIYUN::ALB::Listener"],
 }

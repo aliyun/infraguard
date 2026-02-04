@@ -10,10 +10,20 @@ pack_meta := {
 	"name": {
 		"en": "Security Group Best Practice",
 		"zh": "安全组最佳实践",
+		"ja": "セキュリティグループのベストプラクティス",
+		"de": "Sicherheitsgruppe Best Practices",
+		"es": "Mejores Prácticas de Grupo de Seguridad",
+		"fr": "Meilleures Pratiques de Groupe de Sécurité",
+		"pt": "Melhores Práticas de Grupo de Segurança",
 	},
 	"description": {
 		"en": "Continuously check security group rules for compliance to reduce security risks.",
 		"zh": "持续检查安全组规则的合规性，降低安全风险。",
+		"ja": "セキュリティリスクを低減するために、セキュリティグループルールのコンプライアンスを継続的にチェックします。",
+		"de": "Kontinuierliche Überprüfung der Sicherheitsgruppen-Regeln auf Compliance, um Sicherheitsrisiken zu reduzieren.",
+		"es": "Verificar continuamente las reglas del grupo de seguridad para cumplimiento y reducir los riesgos de seguridad.",
+		"fr": "Vérifier continuellement les règles du groupe de sécurité pour la conformité et réduire les risques de sécurité.",
+		"pt": "Verificar continuamente as regras do grupo de segurança para conformidade e reduzir riscos de segurança.",
 	},
 	"rules": [
 		"ecs-instance-attached-security-group",

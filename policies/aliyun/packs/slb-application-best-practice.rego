@@ -7,10 +7,20 @@ pack_meta := {
 	"name": {
 		"en": "SLB Application Best Practice",
 		"zh": "负载均衡应用最佳实践",
+		"ja": "SLB アプリケーションのベストプラクティス",
+		"de": "SLB-Anwendung Best Practices",
+		"es": "Mejores Prácticas de Aplicación SLB",
+		"fr": "Meilleures Pratiques d'Application SLB",
+		"pt": "Melhores Práticas de Aplicação SLB",
 	},
 	"description": {
 		"en": "Best practices for SLB and ALB configuration, covering high availability, security, health checks, and operational settings.",
 		"zh": "SLB 和 ALB 配置最佳实践,涵盖高可用、安全、健康检查和运维设置。",
+		"ja": "高可用性、セキュリティ、ヘルスチェック、運用設定をカバーする SLB および ALB 設定のベストプラクティス。",
+		"de": "Best Practices für SLB- und ALB-Konfiguration, einschließlich Hochverfügbarkeit, Sicherheit, Health Checks und Betriebseinstellungen.",
+		"es": "Mejores prácticas para la configuración de SLB y ALB, que cubren alta disponibilidad, seguridad, verificaciones de salud y configuraciones operativas.",
+		"fr": "Meilleures pratiques pour la configuration SLB et ALB, couvrant la haute disponibilité, la sécurité, les contrôles de santé et les paramètres opérationnels.",
+		"pt": "Melhores práticas para configuração SLB e ALB, cobrindo alta disponibilidade, segurança, verificações de saúde e configurações operacionais.",
 	},
 	"rules": [
 		# "alb-instance-idle-check",

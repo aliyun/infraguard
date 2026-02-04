@@ -7,20 +7,40 @@ rule_meta := {
 	"id": "alb-all-listener-health-check-enabled",
 	"name": {
 		"en": "ALB All Listeners Health Check Enabled",
-		"zh": "ALB 所有监听开启健康检查"
+		"zh": "ALB 所有监听开启健康检查",
+		"ja": "ALB すべてのリスナーヘルスチェックが有効",
+		"de": "ALB Alle Listener Health Check aktiviert",
+		"es": "Verificación de Salud de Todos los Oyentes ALB Habilitada",
+		"fr": "Vérification de Santé de Tous les Écouteurs ALB Activée",
+		"pt": "Verificação de Integridade de Todos os Ouvintes ALB Habilitada",
 	},
 	"severity": "high",
 	"description": {
 		"en": "Ensures all ALB listeners have health checks enabled.",
-		"zh": "确保所有 ALB 监听均开启了健康检查。"
+		"zh": "确保所有 ALB 监听均开启了健康检查。",
+		"ja": "すべての ALB リスナーでヘルスチェックが有効になっていることを確認します。",
+		"de": "Stellt sicher, dass alle ALB-Listener Health Checks aktiviert haben.",
+		"es": "Garantiza que todos los oyentes ALB tengan verificaciones de salud habilitadas.",
+		"fr": "Garantit que tous les écouteurs ALB ont des vérifications de santé activées.",
+		"pt": "Garante que todos os ouvintes ALB tenham verificações de integridade habilitadas.",
 	},
 	"reason": {
 		"en": "Health checks are vital for detecting and bypassing unhealthy backend servers.",
-		"zh": "健康检查对于发现和避开不健康的后端服务器至关重要。"
+		"zh": "健康检查对于发现和避开不健康的后端服务器至关重要。",
+		"ja": "ヘルスチェックは、異常なバックエンドサーバーを検出して回避するために不可欠です。",
+		"de": "Health Checks sind entscheidend für die Erkennung und Umgehung ungesunder Backend-Server.",
+		"es": "Las verificaciones de salud son vitales para detectar y evitar servidores backend no saludables.",
+		"fr": "Les vérifications de santé sont essentielles pour détecter et contourner les serveurs backend malsains.",
+		"pt": "As verificações de integridade são vitais para detectar e contornar servidores backend não saudáveis.",
 	},
 	"recommendation": {
 		"en": "Enable health checks for all ALB listeners.",
-		"zh": "为所有 ALB 监听开启健康检查。"
+		"zh": "为所有 ALB 监听开启健康检查。",
+		"ja": "すべての ALB リスナーのヘルスチェックを有効にします。",
+		"de": "Aktivieren Sie Health Checks für alle ALB-Listener.",
+		"es": "Habilite las verificaciones de salud para todos los oyentes ALB.",
+		"fr": "Activez les vérifications de santé pour tous les écouteurs ALB.",
+		"pt": "Habilite verificações de integridade para todos os ouvintes ALB.",
 	},
 	"resource_types": ["ALIYUN::ALB::Listener"],
 }

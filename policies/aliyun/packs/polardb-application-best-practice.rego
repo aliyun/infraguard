@@ -7,10 +7,20 @@ pack_meta := {
 	"name": {
 		"en": "PolarDB Application Best Practice",
 		"zh": "PolarDB 应用最佳实践",
+		"ja": "PolarDB アプリケーションのベストプラクティス",
+		"de": "PolarDB-Anwendung Best Practices",
+		"es": "Mejores Prácticas de Aplicación PolarDB",
+		"fr": "Meilleures Pratiques d'Application PolarDB",
+		"pt": "Melhores Práticas de Aplicação PolarDB",
 	},
 	"description": {
 		"en": "Best practices for PolarDB cluster configuration, covering security, backup, version management, and operational settings.",
 		"zh": "PolarDB 集群配置最佳实践,涵盖安全、备份、版本管理和运维设置。",
+		"ja": "セキュリティ、バックアップ、バージョン管理、運用設定をカバーする PolarDB クラスタ設定のベストプラクティス。",
+		"de": "Best Practices für die PolarDB-Cluster-Konfiguration, einschließlich Sicherheit, Backup, Versionsverwaltung und Betriebseinstellungen.",
+		"es": "Mejores prácticas para la configuración de clústeres PolarDB, que cubre seguridad, respaldo, gestión de versiones y configuraciones operativas.",
+		"fr": "Meilleures pratiques pour la configuration des clusters PolarDB, couvrant la sécurité, la sauvegarde, la gestion des versions et les configurations opérationnelles.",
+		"pt": "Melhores práticas para configuração de cluster PolarDB, cobrindo segurança, backup, gerenciamento de versão e configurações operacionais.",
 	},
 	"rules": [
 		# "polardb-revision-version-used-check",

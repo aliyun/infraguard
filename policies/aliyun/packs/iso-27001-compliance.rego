@@ -7,10 +7,20 @@ pack_meta := {
 	"name": {
 		"en": "ISO-27001 Security Management Standard Compliance",
 		"zh": "ISO-27001 安全管理标准合规包",
+		"ja": "ISO-27001 セキュリティ管理標準コンプライアンス",
+		"de": "ISO-27001 Sicherheitsmanagementsstandard Compliance",
+		"es": "Cumplimiento del Estándar de Gestión de Seguridad ISO-27001",
+		"fr": "Conformité à la Norme de Gestion de la Sécurité ISO-27001",
+		"pt": "Conformidade com o Padrão de Gestão de Segurança ISO-27001",
 	},
 	"description": {
 		"en": "Compliance pack for ISO-27001 Information Security Management System standard. This pack helps organizations verify their cloud resources meet ISO-27001 security requirements.",
 		"zh": "ISO-27001 信息安全管理体系标准合规包。本合规包帮助组织验证其云资源是否符合 ISO-27001 安全要求。",
+		"ja": "ISO-27001 情報セキュリティマネジメントシステム標準のコンプライアンスパック。このパックは、組織がクラウドリソースが ISO-27001 セキュリティ要件を満たしていることを確認するのに役立ちます。",
+		"de": "Compliance-Paket für den ISO-27001 Informationssicherheitsmanagementsystem-Standard. Dieses Paket hilft Organisationen zu überprüfen, ob ihre Cloud-Ressourcen die ISO-27001 Sicherheitsanforderungen erfüllen.",
+		"es": "Paquete de cumplimiento para el estándar ISO-27001 del Sistema de Gestión de Seguridad de la Información. Este paquete ayuda a las organizaciones a verificar que sus recursos en la nube cumplan con los requisitos de seguridad ISO-27001.",
+		"fr": "Pack de conformité pour la norme ISO-27001 du Système de Gestion de la Sécurité de l'Information. Ce pack aide les organisations à vérifier que leurs ressources cloud répondent aux exigences de sécurité ISO-27001.",
+		"pt": "Pacote de conformidade para o padrão ISO-27001 do Sistema de Gestão de Segurança da Informação. Este pacote ajuda as organizações a verificar se seus recursos em nuvem atendem aos requisitos de segurança ISO-27001.",
 	},
 	"rules": [
 		"ack-cluster-public-endpoint-check",

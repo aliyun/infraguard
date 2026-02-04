@@ -7,10 +7,20 @@ pack_meta := {
 	"name": {
 		"en": "MLPS Level 2 Pre-check Compliance Pack",
 		"zh": "等保二级预检合规包",
+		"ja": "MLPS レベル 2 事前チェックコンプライアンスパック",
+		"de": "MLPS Level 2 Vorprüfung Compliance-Paket",
+		"es": "Paquete de Cumplimiento de Verificación Previa MLPS Nivel 2",
+		"fr": "Pack de Conformité de Vérification Préalable MLPS Niveau 2",
+		"pt": "Pacote de Conformidade de Verificação Prévia MLPS Nível 2",
 	},
 	"description": {
 		"en": "Compliance pack for MLPS level 2 pre-check",
 		"zh": "等保二级预检合规包",
+		"ja": "MLPS レベル 2 事前チェック用のコンプライアンスパック",
+		"de": "Compliance-Paket für MLPS Level 2 Vorprüfung",
+		"es": "Paquete de cumplimiento para verificación previa MLPS nivel 2",
+		"fr": "Pack de conformité pour vérification préalable MLPS niveau 2",
+		"pt": "Pacote de conformidade para verificação prévia MLPS nível 2",
 	},
 	"rules": [
 		# "use-ddos-instance-for-security-protection",

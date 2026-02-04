@@ -7,10 +7,20 @@ pack_meta := {
 	"name": {
 		"en": "RMiT Financial Standard Compliance Pack",
 		"zh": "RMiT 金融标准检查合规包",
+		"ja": "RMiT 金融標準コンプライアンスパック",
+		"de": "RMiT Finanzstandard-Compliance-Paket",
+		"es": "Paquete de Cumplimiento del Estándar Financiero RMiT",
+		"fr": "Pack de Conformité à la Norme Financière RMiT",
+		"pt": "Pacote de Conformidade com Padrão Financeiro RMiT",
 	},
 	"description": {
 		"en": "Compliance pack for RMiT financial standards",
 		"zh": "RMiT 金融标准检查合规包",
+		"ja": "RMiT 金融標準のコンプライアンスパック",
+		"de": "Compliance-Paket für RMiT-Finanzstandards",
+		"es": "Paquete de cumplimiento para estándares financieros RMiT",
+		"fr": "Pack de conformité pour les normes financières RMiT",
+		"pt": "Pacote de conformidade para padrões financeiros RMiT",
 	},
 	"rules": [
 		"actiontrail-trail-intact-enabled",

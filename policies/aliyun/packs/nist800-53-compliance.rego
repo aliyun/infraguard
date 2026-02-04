@@ -7,10 +7,20 @@ pack_meta := {
 	"name": {
 		"en": "NIST 800-53 Compliance",
 		"zh": "NIST800-53 合规包",
+		"ja": "NIST 800-53 コンプライアンス",
+		"de": "NIST 800-53 Compliance",
+		"es": "Cumplimiento NIST 800-53",
+		"fr": "Conformité NIST 800-53",
+		"pt": "Conformidade NIST 800-53",
 	},
 	"description": {
 		"en": "Compliance pack for NIST 800-53 Security and Privacy Controls. This pack helps organizations verify their cloud resources meet NIST 800-53 security control requirements.",
 		"zh": "NIST 800-53 安全与隐私控制合规包。本合规包帮助组织验证其云资源是否符合 NIST 800-53 安全控制要求。",
+		"ja": "NIST 800-53 セキュリティおよびプライバシー制御のコンプライアンスパック。このパックは、組織がクラウドリソースが NIST 800-53 セキュリティ制御要件を満たしていることを確認するのに役立ちます。",
+		"de": "Compliance-Paket für NIST 800-53 Sicherheits- und Datenschutzkontrollen. Dieses Paket hilft Organisationen zu überprüfen, ob ihre Cloud-Ressourcen die NIST 800-53 Sicherheitskontrollanforderungen erfüllen.",
+		"es": "Paquete de cumplimiento para los Controles de Seguridad y Privacidad NIST 800-53. Este paquete ayuda a las organizaciones a verificar que sus recursos en la nube cumplan con los requisitos de control de seguridad NIST 800-53.",
+		"fr": "Pack de conformité pour les Contrôles de Sécurité et de Confidentialité NIST 800-53. Ce pack aide les organisations à vérifier que leurs ressources cloud répondent aux exigences de contrôle de sécurité NIST 800-53.",
+		"pt": "Pacote de conformidade para Controles de Segurança e Privacidade NIST 800-53. Este pacote ajuda as organizações a verificar se seus recursos em nuvem atendem aos requisitos de controle de segurança NIST 800-53.",
 	},
 	"rules": [
 		"ack-cluster-public-endpoint-check",

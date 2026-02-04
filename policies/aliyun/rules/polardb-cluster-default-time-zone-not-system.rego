@@ -8,20 +8,40 @@ rule_meta := {
 	"id": "polardb-cluster-default-time-zone-not-system",
 	"name": {
 		"en": "PolarDB Cluster Default Time Zone Not System",
-		"zh": "PolarDB 集群默认时区参数值非 SYSTEM"
+		"zh": "PolarDB 集群默认时区参数值非 SYSTEM",
+		"ja": "PolarDB クラスタデフォルトタイムゾーンがシステムではない",
+		"de": "PolarDB-Cluster Standard-Zeitzone nicht System",
+		"es": "Zona Horaria Predeterminada del Clúster PolarDB No es Sistema",
+		"fr": "Fuseau Horaire par Défaut du Cluster PolarDB N'est Pas Système",
+		"pt": "Fuso Horário Padrão do Cluster PolarDB Não é Sistema",
 	},
 	"severity": "medium",
 	"description": {
 		"en": "Ensures PolarDB cluster default time zone is not set to SYSTEM.",
-		"zh": "确保 PolarDB 集群的默认时区参数值不等于 SYSTEM。"
+		"zh": "确保 PolarDB 集群的默认时区参数值不等于 SYSTEM。",
+		"ja": "PolarDB クラスタのデフォルトタイムゾーンが SYSTEM に設定されていないことを確認します。",
+		"de": "Stellt sicher, dass die Standard-Zeitzone des PolarDB-Clusters nicht auf SYSTEM gesetzt ist.",
+		"es": "Garantiza que la zona horaria predeterminada del clúster PolarDB no esté establecida en SYSTEM.",
+		"fr": "Garantit que le fuseau horaire par défaut du cluster PolarDB n'est pas défini sur SYSTEM.",
+		"pt": "Garante que o fuso horário padrão do cluster PolarDB não esteja definido como SYSTEM.",
 	},
 	"reason": {
 		"en": "Using explicit timezone ensures consistent time configuration.",
-		"zh": "使用明确的时区确保时间配置一致。"
+		"zh": "使用明确的时区确保时间配置一致。",
+		"ja": "明示的なタイムゾーンを使用することで、一貫した時間設定が確保されます。",
+		"de": "Die Verwendung einer expliziten Zeitzone gewährleistet eine konsistente Zeitkonfiguration.",
+		"es": "Usar una zona horaria explícita garantiza una configuración de tiempo consistente.",
+		"fr": "L'utilisation d'un fuseau horaire explicite garantit une configuration de temps cohérente.",
+		"pt": "Usar fuso horário explícito garante configuração de tempo consistente.",
 	},
 	"recommendation": {
 		"en": "Set an explicit timezone for the PolarDB cluster.",
-		"zh": "为 PolarDB 集群设置明确的时区。"
+		"zh": "为 PolarDB 集群设置明确的时区。",
+		"ja": "PolarDB クラスタに明示的なタイムゾーンを設定します。",
+		"de": "Setzen Sie eine explizite Zeitzone für den PolarDB-Cluster.",
+		"es": "Establezca una zona horaria explícita para el clúster PolarDB.",
+		"fr": "Définissez un fuseau horaire explicite pour le cluster PolarDB.",
+		"pt": "Defina um fuso horário explícito para o cluster PolarDB.",
 	},
 	"resource_types": ["ALIYUN::POLARDB::DBCluster"],
 }

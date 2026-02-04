@@ -7,10 +7,20 @@ pack_meta := {
 	"name": {
 		"en": "Cloud Governance Center Compliance Practice",
 		"zh": "云治理中心合规实践",
+		"ja": "クラウドガバナンスセンターコンプライアンス実践",
+		"de": "Cloud-Governance-Center-Compliance-Praxis",
+		"es": "Práctica de Cumplimiento del Centro de Gobernanza en la Nube",
+		"fr": "Pratique de Conformité du Centre de Gouvernance Cloud",
+		"pt": "Prática de Conformidade do Centro de Governança em Nuvem",
 	},
 	"description": {
 		"en": "Compliance practices for cloud governance center",
 		"zh": "云治理中心合规实践",
+		"ja": "クラウドガバナンスセンターのコンプライアンス実践",
+		"de": "Compliance-Praktiken für das Cloud-Governance-Center",
+		"es": "Prácticas de cumplimiento para el centro de gobernanza en la nube",
+		"fr": "Pratiques de conformité pour le centre de gouvernance cloud",
+		"pt": "Práticas de conformidade para o centro de governança em nuvem",
 	},
 	"rules": [
 		"root-ak-check",

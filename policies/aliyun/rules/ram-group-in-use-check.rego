@@ -7,20 +7,40 @@ rule_meta := {
 	"id": "ram-group-in-use-check",
 	"name": {
 		"en": "RAM Group In Use Check",
-		"zh": "RAM 用户组使用检测"
+		"zh": "RAM 用户组使用检测",
+		"ja": "RAM グループ使用中チェック",
+		"de": "RAM-Gruppe In Verwendung Prüfung",
+		"es": "Verificación de Grupo RAM en Uso",
+		"fr": "Vérification du Groupe RAM en Utilisation",
+		"pt": "Verificação de Grupo RAM em Uso",
 	},
 	"severity": "low",
 	"description": {
 		"en": "Ensures RAM groups are not idle - must have at least one member and at least one attached policy.",
-		"zh": "确保 RAM 用户组处于使用状态 - 必须至少包含一个成员且绑定了至少一个权限策略。"
+		"zh": "确保 RAM 用户组处于使用状态 - 必须至少包含一个成员且绑定了至少一个权限策略。",
+		"ja": "RAM グループがアイドル状態でないことを確認します - 少なくとも 1 つのメンバーと少なくとも 1 つのアタッチされたポリシーが必要です。",
+		"de": "Stellt sicher, dass RAM-Gruppen nicht im Leerlauf sind - müssen mindestens ein Mitglied und mindestens eine angehängte Richtlinie haben.",
+		"es": "Garantiza que los grupos RAM no estén inactivos - deben tener al menos un miembro y al menos una política adjunta.",
+		"fr": "Garantit que les groupes RAM ne sont pas inactifs - doivent avoir au moins un membre et au moins une politique attachée.",
+		"pt": "Garante que os grupos RAM não estejam ociosos - devem ter pelo menos um membro e pelo menos uma política anexada.",
 	},
 	"reason": {
 		"en": "Idle RAM groups increase management complexity and should be removed.",
-		"zh": "闲置的 RAM 用户组会增加管理复杂性，应予以移除。"
+		"zh": "闲置的 RAM 用户组会增加管理复杂性，应予以移除。",
+		"ja": "アイドル状態の RAM グループは管理の複雑さを増し、削除する必要があります。",
+		"de": "Leerlaufende RAM-Gruppen erhöhen die Verwaltungskomplexität und sollten entfernt werden.",
+		"es": "Los grupos RAM inactivos aumentan la complejidad de gestión y deben eliminarse.",
+		"fr": "Les groupes RAM inactifs augmentent la complexité de gestion et doivent être supprimés.",
+		"pt": "Grupos RAM ociosos aumentam a complexidade de gerenciamento e devem ser removidos.",
 	},
 	"recommendation": {
 		"en": "Add members to the group or attach policies, or remove the unused group.",
-		"zh": "向该组添加成员或绑定策略，或移除未使用的组。"
+		"zh": "向该组添加成员或绑定策略，或移除未使用的组。",
+		"ja": "グループにメンバーを追加するか、ポリシーをアタッチするか、未使用のグループを削除します。",
+		"de": "Fügen Sie Mitglieder zur Gruppe hinzu oder hängen Sie Richtlinien an, oder entfernen Sie die ungenutzte Gruppe.",
+		"es": "Agregue miembros al grupo o adjunte políticas, o elimine el grupo no utilizado.",
+		"fr": "Ajoutez des membres au groupe ou attachez des politiques, ou supprimez le groupe non utilisé.",
+		"pt": "Adicione membros ao grupo ou anexe políticas, ou remova o grupo não utilizado.",
 	},
 	"resource_types": ["ALIYUN::RAM::Group"],
 }

@@ -7,10 +7,20 @@ pack_meta := {
 	"name": {
 		"en": "Resource Protection Best Practice",
 		"zh": "资源开启保护最佳实践",
+		"ja": "リソース保護のベストプラクティス",
+		"de": "Ressourcenschutz Best Practices",
+		"es": "Mejores Prácticas de Protección de Recursos",
+		"fr": "Meilleures Pratiques de Protection des Ressources",
+		"pt": "Melhores Práticas de Proteção de Recursos",
 	},
 	"description": {
 		"en": "Best practices for enabling protection features on cloud resources to prevent accidental deletion or modification.",
 		"zh": "为云资源开启保护功能的最佳实践,防止意外删除或修改。",
+		"ja": "誤削除や変更を防ぐために、クラウドリソースで保護機能を有効にするベストプラクティス。",
+		"de": "Best Practices zur Aktivierung von Schutzfunktionen für Cloud-Ressourcen, um versehentliches Löschen oder Ändern zu verhindern.",
+		"es": "Mejores prácticas para habilitar funciones de protección en recursos en la nube para prevenir eliminación o modificación accidental.",
+		"fr": "Meilleures pratiques pour activer les fonctions de protection sur les ressources cloud afin de prévenir la suppression ou la modification accidentelle.",
+		"pt": "Melhores práticas para habilitar recursos de proteção em recursos em nuvem para prevenir exclusão ou modificação acidental.",
 	},
 	"rules": [
 		# "ack-cluster-deletion-protection-enabled",

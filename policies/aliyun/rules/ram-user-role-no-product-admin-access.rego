@@ -7,20 +7,40 @@ rule_meta := {
 	"id": "ram-user-role-no-product-admin-access",
 	"name": {
 		"en": "RAM User Role No Product Admin Access",
-		"zh": "ram 用户定义的角色不包括产品管理权限"
+		"zh": "ram 用户定义的角色不包括产品管理权限",
+		"ja": "RAM ユーザーロールに製品管理アクセスがない",
+		"de": "RAM-Benutzerrolle Kein Produkt-Admin-Zugriff",
+		"es": "El Rol de Usuario RAM No Tiene Acceso de Administrador de Producto",
+		"fr": "Le Rôle d'Utilisateur RAM N'a Pas d'Accès Administrateur Produit",
+		"pt": "A Função de Usuário RAM Não Tem Acesso de Administrador de Produto",
 	},
 	"severity": "medium",
 	"description": {
 		"en": "Ensures RAM user-defined roles do not have product administrative permissions.",
-		"zh": "确保 RAM 用户创建的角色未拥有管理员权限或者某个云产品的管理员权限。"
+		"zh": "确保 RAM 用户创建的角色未拥有管理员权限或者某个云产品的管理员权限。",
+		"ja": "RAM ユーザー定義のロールが製品管理権限を持っていないことを確認します。",
+		"de": "Stellt sicher, dass RAM-benutzerdefinierte Rollen keine Produkt-Administratorberechtigungen haben.",
+		"es": "Garantiza que los roles definidos por el usuario RAM no tengan permisos administrativos de producto.",
+		"fr": "Garantit que les rôles définis par l'utilisateur RAM n'ont pas de permissions administratives de produit.",
+		"pt": "Garante que as funções definidas pelo usuário RAM não tenham permissões administrativas de produto.",
 	},
 	"reason": {
 		"en": "Custom roles with admin permissions increase security risks.",
-		"zh": "具有管理权限的自定义角色会增加安全风险。"
+		"zh": "具有管理权限的自定义角色会增加安全风险。",
+		"ja": "管理権限を持つカスタムロールはセキュリティリスクを増加させます。",
+		"de": "Benutzerdefinierte Rollen mit Admin-Berechtigungen erhöhen die Sicherheitsrisiken.",
+		"es": "Los roles personalizados con permisos de administrador aumentan los riesgos de seguridad.",
+		"fr": "Les rôles personnalisés avec des permissions d'administrateur augmentent les risques de sécurité.",
+		"pt": "Funções personalizadas com permissões de administrador aumentam os riscos de segurança.",
 	},
 	"recommendation": {
 		"en": "Review role permissions and remove excessive privileges.",
-		"zh": "审查角色权限并移除过多的权限。"
+		"zh": "审查角色权限并移除过多的权限。",
+		"ja": "ロール権限を確認し、過剰な権限を削除します。",
+		"de": "Überprüfen Sie Rollenberechtigungen und entfernen Sie übermäßige Berechtigungen.",
+		"es": "Revise los permisos del rol y elimine los privilegios excesivos.",
+		"fr": "Examinez les permissions du rôle et supprimez les privilèges excessifs.",
+		"pt": "Revise as permissões da função e remova privilégios excessivos.",
 	},
 	"resource_types": ["ALIYUN::RAM::Role"],
 }

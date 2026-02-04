@@ -7,10 +7,20 @@ pack_meta := {
 	"name": {
 		"en": "PCI-DSS Data Security Standard Compliance",
 		"zh": "PCI-DSS 数据安全标准合规包",
+		"ja": "PCI-DSS データセキュリティ標準コンプライアンス",
+		"de": "PCI-DSS Datensicherheitsstandard Compliance",
+		"es": "Cumplimiento del Estándar de Seguridad de Datos PCI-DSS",
+		"fr": "Conformité à la Norme de Sécurité des Données PCI-DSS",
+		"pt": "Conformidade com o Padrão de Segurança de Dados PCI-DSS",
 	},
 	"description": {
 		"en": "Compliance pack for Payment Card Industry Data Security Standard (PCI-DSS). This pack helps organizations verify their cloud resources meet PCI-DSS requirements for protecting cardholder data.",
 		"zh": "支付卡行业数据安全标准(PCI-DSS)合规包。本合规包帮助组织验证其云资源是否符合 PCI-DSS 保护持卡人数据的要求。",
+		"ja": "決済カード業界データセキュリティ標準（PCI-DSS）のコンプライアンスパック。このパックは、組織がクラウドリソースがカード所有者データを保護するための PCI-DSS 要件を満たしていることを確認するのに役立ちます。",
+		"de": "Compliance-Paket für den Payment Card Industry Data Security Standard (PCI-DSS). Dieses Paket hilft Organisationen zu überprüfen, ob ihre Cloud-Ressourcen die PCI-DSS-Anforderungen zum Schutz von Karteninhaberdaten erfüllen.",
+		"es": "Paquete de cumplimiento para el Estándar de Seguridad de Datos de la Industria de Tarjetas de Pago (PCI-DSS). Este paquete ayuda a las organizaciones a verificar que sus recursos en la nube cumplan con los requisitos PCI-DSS para proteger los datos de los titulares de tarjetas.",
+		"fr": "Pack de conformité pour la Norme de Sécurité des Données de l'Industrie des Cartes de Paiement (PCI-DSS). Ce pack aide les organisations à vérifier que leurs ressources cloud répondent aux exigences PCI-DSS pour protéger les données des titulaires de cartes.",
+		"pt": "Pacote de conformidade para o Padrão de Segurança de Dados da Indústria de Cartões de Pagamento (PCI-DSS). Este pacote ajuda as organizações a verificar se seus recursos em nuvem atendem aos requisitos PCI-DSS para proteger dados de portadores de cartão.",
 	},
 	"rules": [
 		"api-gateway-api-internet-request-https",

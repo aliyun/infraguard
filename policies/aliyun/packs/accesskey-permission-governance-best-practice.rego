@@ -7,10 +7,20 @@ pack_meta := {
 	"name": {
 		"en": "AccessKey and Permission Governance Best Practice",
 		"zh": "AccessKey 及权限治理最佳实践",
+		"ja": "AccessKey および権限ガバナンスのベストプラクティス",
+		"de": "AccessKey- und Berechtigungs-Governance Best Practices",
+		"es": "Mejores Prácticas de Gobernanza de AccessKey y Permisos",
+		"fr": "Meilleures Pratiques de Gouvernance des AccessKey et des Permissions",
+		"pt": "Melhores Práticas de Governança de AccessKey e Permissões",
 	},
 	"description": {
 		"en": "Best practices for AccessKey and permission governance",
 		"zh": "AccessKey 及权限治理最佳实践",
+		"ja": "AccessKey および権限ガバナンスのベストプラクティス",
+		"de": "Best Practices für AccessKey- und Berechtigungs-Governance",
+		"es": "Mejores prácticas para la gobernanza de AccessKey y permisos",
+		"fr": "Meilleures pratiques pour la gouvernance des AccessKey et des permissions",
+		"pt": "Melhores práticas para governança de AccessKey e permissões",
 	},
 	"rules": [
 		"ram-password-policy-check",

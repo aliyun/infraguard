@@ -7,10 +7,20 @@ pack_meta := {
 	"name": {
 		"en": "MLPS Level 3 Pre-check Compliance Pack",
 		"zh": "等保三级预检合规包",
+		"ja": "MLPS レベル 3 事前チェックコンプライアンスパック",
+		"de": "MLPS Level 3 Vorprüfung Compliance-Paket",
+		"es": "Paquete de Cumplimiento de Verificación Previa MLPS Nivel 3",
+		"fr": "Pack de Conformité de Vérification Préalable MLPS Niveau 3",
+		"pt": "Pacote de Conformidade de Verificação Prévia MLPS Nível 3",
 	},
 	"description": {
 		"en": "Compliance pack for MLPS level 3 pre-check requirements on Aliyun resources.",
 		"zh": "基于等保三级的部分要求，对阿里云上资源的合规性做检测。",
+		"ja": "Alibaba Cloud リソースに対する MLPS レベル 3 事前チェック要件のコンプライアンスパック。",
+		"de": "Compliance-Paket für MLPS Level 3 Vorprüfungsanforderungen für Alibaba Cloud Ressourcen.",
+		"es": "Paquete de cumplimiento para requisitos de verificación previa MLPS nivel 3 en recursos de Aliyun.",
+		"fr": "Pack de conformité pour les exigences de vérification préalable MLPS niveau 3 sur les ressources Aliyun.",
+		"pt": "Pacote de conformidade para requisitos de verificação prévia MLPS nível 3 em recursos do Aliyun.",
 	},
 	"rules": [
 		"use-waf-instance-for-security-protection",

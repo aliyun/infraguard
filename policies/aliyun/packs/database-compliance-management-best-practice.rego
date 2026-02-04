@@ -7,10 +7,20 @@ pack_meta := {
 	"name": {
 		"en": "Database Compliance Management Best Practice",
 		"zh": "数据库合规管理最佳实践",
+		"ja": "データベースコンプライアンス管理のベストプラクティス",
+		"de": "Datenbank-Compliance-Management Best Practices",
+		"es": "Mejores Prácticas de Gestión de Cumplimiento de Bases de Datos",
+		"fr": "Meilleures Pratiques de Gestion de la Conformité des Bases de Données",
+		"pt": "Melhores Práticas de Gestão de Conformidade de Banco de Dados",
 	},
 	"description": {
 		"en": "Best practices for database compliance management",
 		"zh": "数据库合规管理最佳实践",
+		"ja": "データベースコンプライアンス管理のベストプラクティス",
+		"de": "Best Practices für das Datenbank-Compliance-Management",
+		"es": "Mejores prácticas para la gestión de cumplimiento de bases de datos",
+		"fr": "Meilleures pratiques pour la gestion de la conformité des bases de données",
+		"pt": "Melhores práticas para gestão de conformidade de banco de dados",
 	},
 	"rules": [
 		"hbase-cluster-expired-check",

@@ -7,10 +7,20 @@ pack_meta := {
 	"name": {
 		"en": "Aliyun Platform Security Best Practice",
 		"zh": "阿里云平台安全最佳实践",
+		"ja": "Alibaba Cloud プラットフォームセキュリティのベストプラクティス",
+		"de": "Alibaba Cloud Plattform-Sicherheit Best Practices",
+		"es": "Mejores Prácticas de Seguridad de la Plataforma Aliyun",
+		"fr": "Meilleures Pratiques de Sécurité de la Plateforme Aliyun",
+		"pt": "Melhores Práticas de Segurança da Plataforma Aliyun",
 	},
 	"description": {
 		"en": "Best practices for Aliyun platform security",
 		"zh": "阿里云平台安全最佳实践",
+		"ja": "Alibaba Cloud プラットフォームセキュリティのベストプラクティス",
+		"de": "Best Practices für Alibaba Cloud Plattform-Sicherheit",
+		"es": "Mejores prácticas para la seguridad de la plataforma Aliyun",
+		"fr": "Meilleures pratiques pour la sécurité de la plateforme Aliyun",
+		"pt": "Melhores práticas para segurança da plataforma Aliyun",
 	},
 	"rules": [
 		"root-mfa-check",

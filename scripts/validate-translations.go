@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 	"sort"
 	"strings"
 
@@ -84,6 +85,13 @@ func main() {
 		if len(missingKeys) == 0 && len(extraKeys) == 0 {
 			fmt.Printf("  ✅ All keys present\n")
 		}
+	}
+
+	// Validate policies translations
+	fmt.Println("\nValidating policies translations...")
+	policyErrors := validatePoliciesTranslations()
+	if policyErrors {
+		hasErrors = true
 	}
 
 	if hasErrors {
@@ -218,4 +226,295 @@ func validateLanguageConsistency() error {
 	fmt.Printf("   Config languages: %v\n", configSorted)
 	fmt.Printf("   i18n languages:   %v\n", i18nSorted)
 	return nil
+}
+
+// PolicyMeta represents metadata extracted from rego files
+type PolicyMeta struct {
+	Type           string            // "rule" or "pack"
+	File           string            // file path
+	ID             string            // policy id
+	Name           map[string]string // language -> translation
+	Description    map[string]string // language -> translation
+	Reason         map[string]string // language -> translation (only for rules)
+	Recommendation map[string]string // language -> translation (only for rules)
+}
+
+// validatePoliciesTranslations validates i18n support in policy rego files
+func validatePoliciesTranslations() bool {
+	validLangs := make(map[string]bool)
+	for _, lang := range config.ValidLangValues {
+		validLangs[lang] = true
+	}
+
+	hasErrors := false
+
+	// Check rules
+	rulesDir := "policies/aliyun/rules"
+	rules, err := scanPolicyFiles(rulesDir, "rule")
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error scanning rules: %v\n", err)
+		return true
+	}
+
+	if len(rules) > 0 {
+		fmt.Printf("\nChecking %d rule files...\n", len(rules))
+		ruleErrorCount := 0
+		for _, rule := range rules {
+			ruleErrors := validatePolicyMeta(rule, validLangs, []string{"name", "description", "reason", "recommendation"})
+			if ruleErrors {
+				hasErrors = true
+				ruleErrorCount++
+			}
+		}
+		if ruleErrorCount == 0 {
+			fmt.Printf("  ✅ All rule files have complete translations\n")
+		} else {
+			fmt.Printf("  ⚠️  %d rule files have missing translations\n", ruleErrorCount)
+		}
+	}
+
+	// Check packs
+	packsDir := "policies/aliyun/packs"
+	packs, err := scanPolicyFiles(packsDir, "pack")
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error scanning packs: %v\n", err)
+		return true
+	}
+
+	if len(packs) > 0 {
+		fmt.Printf("\nChecking %d pack files...\n", len(packs))
+		packErrorCount := 0
+		for _, pack := range packs {
+			packErrors := validatePolicyMeta(pack, validLangs, []string{"name", "description"})
+			if packErrors {
+				hasErrors = true
+				packErrorCount++
+			}
+		}
+		if packErrorCount == 0 {
+			fmt.Printf("  ✅ All pack files have complete translations\n")
+		} else {
+			fmt.Printf("  ⚠️  %d pack files have missing translations\n", packErrorCount)
+		}
+	}
+
+	return hasErrors
+}
+
+// validatePolicyMeta validates that a policy meta has all required language translations
+func validatePolicyMeta(meta PolicyMeta, validLangs map[string]bool, requiredFields []string) bool {
+	hasErrors := false
+	fileDisplay := filepath.Base(meta.File)
+	var fieldErrors []string
+
+	for _, field := range requiredFields {
+		var translations map[string]string
+		switch field {
+		case "name":
+			translations = meta.Name
+		case "description":
+			translations = meta.Description
+		case "reason":
+			translations = meta.Reason
+		case "recommendation":
+			translations = meta.Recommendation
+		default:
+			continue
+		}
+
+		if translations == nil || len(translations) == 0 {
+			fieldErrors = append(fieldErrors, fmt.Sprintf("    - %s: missing field", field))
+			hasErrors = true
+			continue
+		}
+
+		// Check for missing languages
+		var missingLangs []string
+		for lang := range validLangs {
+			if _, exists := translations[lang]; !exists {
+				missingLangs = append(missingLangs, lang)
+			}
+		}
+
+		if len(missingLangs) > 0 {
+			sort.Strings(missingLangs)
+			fieldErrors = append(fieldErrors, fmt.Sprintf("    - %s missing languages: %v", field, missingLangs))
+			hasErrors = true
+		}
+
+		// Check for invalid languages
+		var invalidLangs []string
+		for lang := range translations {
+			if !validLangs[lang] {
+				invalidLangs = append(invalidLangs, lang)
+			}
+		}
+
+		if len(invalidLangs) > 0 {
+			sort.Strings(invalidLangs)
+			fieldErrors = append(fieldErrors, fmt.Sprintf("    - %s has invalid languages: %v", field, invalidLangs))
+			hasErrors = true
+		}
+	}
+
+	// Output errors grouped by file
+	if len(fieldErrors) > 0 {
+		fmt.Printf("  ❌ %s:\n", fileDisplay)
+		for _, err := range fieldErrors {
+			fmt.Println(err)
+		}
+	}
+
+	return hasErrors
+}
+
+// scanPolicyFiles scans a directory for rego files and extracts metadata
+func scanPolicyFiles(dir string, metaType string) ([]PolicyMeta, error) {
+	var metas []PolicyMeta
+
+	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
+		if info.IsDir() || !strings.HasSuffix(path, ".rego") {
+			return nil
+		}
+
+		data, err := os.ReadFile(path)
+		if err != nil {
+			return fmt.Errorf("failed to read %s: %w", path, err)
+		}
+
+		meta, err := extractPolicyMeta(string(data), path, metaType)
+		if err != nil {
+			// Skip files that don't have the expected meta structure
+			return nil
+		}
+
+		if meta != nil {
+			metas = append(metas, *meta)
+		}
+
+		return nil
+	})
+
+	return metas, err
+}
+
+// extractPolicyMeta extracts metadata from rego file content
+func extractPolicyMeta(content, filePath, metaType string) (*PolicyMeta, error) {
+	var metaName string
+	if metaType == "rule" {
+		metaName = "rule_meta"
+	} else {
+		metaName = "pack_meta"
+	}
+
+	// Find the start of meta object: "meta_name := {"
+	metaStartPattern := regexp.MustCompile(fmt.Sprintf(`%s\s*:=\s*\{`, regexp.QuoteMeta(metaName)))
+	startMatch := metaStartPattern.FindStringIndex(content)
+	if startMatch == nil {
+		return nil, nil // No meta found, skip
+	}
+
+	// Find the matching closing brace by counting braces
+	startPos := startMatch[1] - 1 // Position of opening brace
+	braceCount := 0
+	endPos := -1
+
+	for i := startPos; i < len(content); i++ {
+		char := content[i]
+		if char == '{' {
+			braceCount++
+		} else if char == '}' {
+			braceCount--
+			if braceCount == 0 {
+				endPos = i
+				break
+			}
+		}
+	}
+
+	if endPos == -1 {
+		return nil, nil // Could not find matching brace
+	}
+
+	metaContent := content[startPos+1 : endPos]
+
+	meta := &PolicyMeta{
+		Type:           metaType,
+		File:           filePath,
+		Name:           make(map[string]string),
+		Description:    make(map[string]string),
+		Reason:         make(map[string]string),
+		Recommendation: make(map[string]string),
+	}
+
+	// Extract ID
+	idPattern := regexp.MustCompile(`"id"\s*:\s*"([^"]+)"`)
+	if idMatch := idPattern.FindStringSubmatch(metaContent); len(idMatch) > 1 {
+		meta.ID = idMatch[1]
+	}
+
+	// Extract name translations
+	meta.Name = extractI18nField(metaContent, "name")
+	meta.Description = extractI18nField(metaContent, "description")
+	if metaType == "rule" {
+		meta.Reason = extractI18nField(metaContent, "reason")
+		meta.Recommendation = extractI18nField(metaContent, "recommendation")
+	}
+
+	return meta, nil
+}
+
+// extractI18nField extracts i18n translations from a field in rego content
+func extractI18nField(content, fieldName string) map[string]string {
+	translations := make(map[string]string)
+
+	// Pattern to match: "field_name": { ... }
+	fieldStartPattern := regexp.MustCompile(fmt.Sprintf(`"%s"\s*:\s*\{`, regexp.QuoteMeta(fieldName)))
+	startMatch := fieldStartPattern.FindStringIndex(content)
+	if startMatch == nil {
+		return translations
+	}
+
+	// Find the matching closing brace
+	startPos := startMatch[1] - 1 // Position of opening brace
+	braceCount := 0
+	endPos := -1
+
+	for i := startPos; i < len(content); i++ {
+		char := content[i]
+		if char == '{' {
+			braceCount++
+		} else if char == '}' {
+			braceCount--
+			if braceCount == 0 {
+				endPos = i
+				break
+			}
+		}
+	}
+
+	if endPos == -1 {
+		return translations
+	}
+
+	fieldContent := content[startPos+1 : endPos]
+
+	// Extract language -> value pairs: "lang": "value"
+	// Handle both single-line and multi-line formats
+	langPattern := regexp.MustCompile(`"([a-z]{2})"\s*:\s*"([^"]*)"`)
+	langMatches := langPattern.FindAllStringSubmatch(fieldContent, -1)
+
+	for _, match := range langMatches {
+		if len(match) >= 3 {
+			lang := match[1]
+			value := match[2]
+			translations[lang] = value
+		}
+	}
+
+	return translations
 }

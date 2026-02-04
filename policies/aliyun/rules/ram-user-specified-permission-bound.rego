@@ -7,20 +7,40 @@ rule_meta := {
 	"id": "ram-user-specified-permission-bound",
 	"name": {
 		"en": "RAM User Specified Permission Bound",
-		"zh": "RAM 用户未绑定指定的高危权限"
+		"zh": "RAM 用户未绑定指定的高危权限",
+		"ja": "RAM ユーザー指定の権限バウンド",
+		"de": "RAM-Benutzer Angegebene Berechtigungsgrenze",
+		"es": "Límite de Permiso Especificado del Usuario RAM",
+		"fr": "Limite de Permission Spécifiée de l'Utilisateur RAM",
+		"pt": "Limite de Permissão Especificada do Usuário RAM",
 	},
 	"severity": "medium",
 	"description": {
 		"en": "Ensures RAM users do not have specified high-risk permissions bound.",
-		"zh": "确保 RAM 用户绑定的权限策略配置中，不包含规则入参指定的高危权限配置。"
+		"zh": "确保 RAM 用户绑定的权限策略配置中，不包含规则入参指定的高危权限配置。",
+		"ja": "RAM ユーザーに指定された高リスク権限がバインドされていないことを確認します。",
+		"de": "Stellt sicher, dass RAM-Benutzer keine angegebenen Hochrisiko-Berechtigungen gebunden haben.",
+		"es": "Garantiza que los usuarios RAM no tengan permisos de alto riesgo especificados vinculados.",
+		"fr": "Garantit que les utilisateurs RAM n'ont pas de permissions à haut risque spécifiées liées.",
+		"pt": "Garante que os usuários RAM não tenham permissões de alto risco especificadas vinculadas.",
 	},
 	"reason": {
 		"en": "High-risk permissions can cause significant damage if misused.",
-		"zh": "高危权限一旦被滥用可能造成重大损失。"
+		"zh": "高危权限一旦被滥用可能造成重大损失。",
+		"ja": "高リスク権限は誤用されると重大な損害を引き起こす可能性があります。",
+		"de": "Hochrisiko-Berechtigungen können bei Missbrauch erheblichen Schaden verursachen.",
+		"es": "Los permisos de alto riesgo pueden causar daños significativos si se usan mal.",
+		"fr": "Les permissions à haut risque peuvent causer des dommages importants en cas d'abus.",
+		"pt": "Permissões de alto risco podem causar danos significativos se mal utilizadas.",
 	},
 	"recommendation": {
 		"en": "Review and restrict user permissions to only what's necessary.",
-		"zh": "审查并限制用户权限，仅授予必要的权限。"
+		"zh": "审查并限制用户权限，仅授予必要的权限。",
+		"ja": "ユーザー権限を確認し、必要なもののみに制限します。",
+		"de": "Überprüfen und beschränken Sie Benutzerberechtigungen auf das Notwendige.",
+		"es": "Revise y restrinja los permisos del usuario solo a lo necesario.",
+		"fr": "Examinez et restreignez les permissions utilisateur uniquement à ce qui est nécessaire.",
+		"pt": "Revise e restrinja as permissões do usuário apenas ao necessário.",
 	},
 	"resource_types": ["ALIYUN::RAM::User"],
 }

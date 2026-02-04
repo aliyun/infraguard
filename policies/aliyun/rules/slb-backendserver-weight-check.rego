@@ -7,20 +7,40 @@ rule_meta := {
 	"id": "slb-backendserver-weight-check",
 	"name": {
 		"en": "SLB Backend Server Weight Check",
-		"zh": "SLB 后端服务器权重配置核查"
+		"zh": "SLB 后端服务器权重配置核查",
+		"ja": "SLB バックエンドサーバーの重みチェック",
+		"de": "SLB-Backend-Server-Gewichtsprüfung",
+		"es": "Verificación de Peso del Servidor Backend SLB",
+		"fr": "Vérification du Poids du Serveur Backend SLB",
+		"pt": "Verificação de Peso do Servidor Backend SLB"
 	},
 	"severity": "low",
 	"description": {
 		"en": "Ensures SLB backend servers have reasonable weight configurations.",
-		"zh": "确保 SLB 后端服务器具有合理的权重配置。"
+		"zh": "确保 SLB 后端服务器具有合理的权重配置。",
+		"ja": "SLB バックエンドサーバーに合理的な重み設定があることを確認します。",
+		"de": "Stellt sicher, dass SLB-Backend-Server vernünftige Gewichtskonfigurationen haben.",
+		"es": "Garantiza que los servidores backend SLB tengan configuraciones de peso razonables.",
+		"fr": "Garantit que les serveurs backend SLB ont des configurations de poids raisonnables.",
+		"pt": "Garante que os servidores backend SLB tenham configurações de peso razoáveis."
 	},
 	"reason": {
 		"en": "Uneven weight distribution can lead to unbalanced traffic and potential overload.",
-		"zh": "权重分配不均可能导致流量失衡和潜在的负载过载。"
+		"zh": "权重分配不均可能导致流量失衡和潜在的负载过载。",
+		"ja": "不均一な重み分布により、トラフィックの不均衡や潜在的な過負荷が発生する可能性があります。",
+		"de": "Ungleichmäßige Gewichtsverteilung kann zu unausgewogenem Datenverkehr und potenzieller Überlastung führen.",
+		"es": "La distribución desigual del peso puede provocar tráfico desequilibrado y sobrecarga potencial.",
+		"fr": "Une distribution de poids inégale peut entraîner un trafic déséquilibré et une surcharge potentielle.",
+		"pt": "A distribuição desigual de peso pode levar a tráfego desequilibrado e sobrecarga potencial."
 	},
 	"recommendation": {
 		"en": "Ensure backend server weights are set correctly.",
-		"zh": "确保后端服务器权重设置正确。"
+		"zh": "确保后端服务器权重设置正确。",
+		"ja": "バックエンドサーバーの重みが正しく設定されていることを確認します。",
+		"de": "Stellen Sie sicher, dass die Gewichte der Backend-Server korrekt eingestellt sind.",
+		"es": "Asegúrese de que los pesos de los servidores backend estén configurados correctamente.",
+		"fr": "Assurez-vous que les poids des serveurs backend sont correctement définis.",
+		"pt": "Garanta que os pesos dos servidores backend estejam configurados corretamente."
 	},
 	"resource_types": ["ALIYUN::SLB::BackendServerAttachment"],
 }

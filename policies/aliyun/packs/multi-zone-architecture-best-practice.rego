@@ -7,10 +7,20 @@ pack_meta := {
 	"name": {
 		"en": "Multi-zone Architecture Best Practice",
 		"zh": "多可用区架构最佳实践",
+		"ja": "マルチゾーンアーキテクチャのベストプラクティス",
+		"de": "Multi-Zone-Architektur Best Practices",
+		"es": "Mejores Prácticas de Arquitectura Multi-zona",
+		"fr": "Meilleures Pratiques d'Architecture Multi-zones",
+		"pt": "Melhores Práticas de Arquitetura Multi-zona",
 	},
 	"description": {
 		"en": "Best practices for high availability architecture of products such as relational databases, NoSQL databases, and load balancers to build availability zone-level disaster recovery capabilities and ensure service availability and data reliability.",
 		"zh": "关系型数据库、NoSQL 数据库、负载均衡等产品高可用架构最佳实践，构建可用区级别的容灾能力，保障服务可用性和数据可靠性。",
+		"ja": "リレーショナルデータベース、NoSQL データベース、ロードバランサーなどの製品の高可用性アーキテクチャのベストプラクティス。可用性ゾーンレベルの災害復旧機能を構築し、サービスの可用性とデータの信頼性を確保します。",
+		"de": "Best Practices für hochverfügbare Architekturen von Produkten wie relationalen Datenbanken, NoSQL-Datenbanken und Load Balancern, um Disaster-Recovery-Fähigkeiten auf Verfügbarkeitszonenebene aufzubauen und Service-Verfügbarkeit und Datenzuverlässigkeit sicherzustellen.",
+		"es": "Mejores prácticas para arquitecturas de alta disponibilidad de productos como bases de datos relacionales, bases de datos NoSQL y equilibradores de carga para construir capacidades de recuperación ante desastres a nivel de zona de disponibilidad y garantizar la disponibilidad del servicio y la confiabilidad de los datos.",
+		"fr": "Meilleures pratiques pour les architectures haute disponibilité de produits tels que les bases de données relationnelles, les bases de données NoSQL et les équilibreurs de charge afin de construire des capacités de récupération d'urgence au niveau de la zone de disponibilité et garantir la disponibilité du service et la fiabilité des données.",
+		"pt": "Melhores práticas para arquitetura de alta disponibilidade de produtos como bancos de dados relacionais, bancos de dados NoSQL e balanceadores de carga para construir capacidades de recuperação de desastres em nível de zona de disponibilidade e garantir disponibilidade de serviço e confiabilidade de dados.",
 	},
 	"rules": [
 		"ack-cluster-node-multi-zone",

@@ -7,10 +7,20 @@ pack_meta := {
 	"name": {
 		"en": "AI Model Training Architecture Best Practice",
 		"zh": "AI 模型训练架构检测最佳实践",
+		"ja": "AI モデル訓練アーキテクチャのベストプラクティス",
+		"de": "KI-Modelltrainingsarchitektur Best Practices",
+		"es": "Mejores Prácticas de Arquitectura de Entrenamiento de Modelos de IA",
+		"fr": "Meilleures Pratiques d'Architecture d'Entraînement de Modèles d'IA",
+		"pt": "Melhores Práticas de Arquitetura de Treinamento de Modelos de IA",
 	},
 	"description": {
 		"en": "Best practices for AI model training architecture, covering ACK, ECS, NAS, OSS, VPC, and other resources.",
 		"zh": "AI 模型训练架构最佳实践,涵盖 ACK、ECS、NAS、OSS、VPC 等资源。",
+		"ja": "AI モデル訓練アーキテクチャのベストプラクティス。ACK、ECS、NAS、OSS、VPC などのリソースをカバーします。",
+		"de": "Best Practices für KI-Modelltrainingsarchitekturen, die ACK, ECS, NAS, OSS, VPC und andere Ressourcen abdecken.",
+		"es": "Mejores prácticas para la arquitectura de entrenamiento de modelos de IA, que cubre ACK, ECS, NAS, OSS, VPC y otros recursos.",
+		"fr": "Meilleures pratiques pour l'architecture d'entraînement de modèles d'IA, couvrant ACK, ECS, NAS, OSS, VPC et d'autres ressources.",
+		"pt": "Melhores práticas para arquitetura de treinamento de modelos de IA, cobrindo ACK, ECS, NAS, OSS, VPC e outros recursos.",
 	},
 	"rules": [
 		"ack-cluster-upgrade-latest-version",

@@ -7,10 +7,20 @@ pack_meta := {
 	"name": {
 		"en": "SOC 2 Audit Standard Compliance",
 		"zh": "SOC2 审计标准实践合规包",
+		"ja": "SOC 2 監査標準コンプライアンス",
+		"de": "SOC 2 Audit-Standard Compliance",
+		"es": "Cumplimiento del Estándar de Auditoría SOC 2",
+		"fr": "Conformité à la Norme d'Audit SOC 2",
+		"pt": "Conformidade com Padrão de Auditoria SOC 2",
 	},
 	"description": {
 		"en": "Compliance pack for SOC 2 (Service Organization Control 2) audit standards. This pack helps organizations verify their cloud resources meet SOC 2 trust principles for security, availability, and confidentiality.",
 		"zh": "SOC 2(服务组织控制 2)审计标准合规包。本合规包帮助组织验证其云资源是否符合 SOC 2 安全性、可用性和保密性信任原则。",
+		"ja": "SOC 2（サービス組織制御 2）監査標準のコンプライアンスパック。このパックは、組織がクラウドリソースがセキュリティ、可用性、機密性に関する SOC 2 信頼原則を満たしていることを確認するのに役立ちます。",
+		"de": "Compliance-Paket für SOC 2 (Service Organization Control 2) Audit-Standards. Dieses Paket hilft Organisationen zu überprüfen, ob ihre Cloud-Ressourcen die SOC 2 Vertrauensprinzipien für Sicherheit, Verfügbarkeit und Vertraulichkeit erfüllen.",
+		"es": "Paquete de cumplimiento para los estándares de auditoría SOC 2 (Service Organization Control 2). Este paquete ayuda a las organizaciones a verificar que sus recursos en la nube cumplan con los principios de confianza SOC 2 para seguridad, disponibilidad y confidencialidad.",
+		"fr": "Pack de conformité pour les normes d'audit SOC 2 (Service Organization Control 2). Ce pack aide les organisations à vérifier que leurs ressources cloud répondent aux principes de confiance SOC 2 pour la sécurité, la disponibilité et la confidentialité.",
+		"pt": "Pacote de conformidade para padrões de auditoria SOC 2 (Service Organization Control 2). Este pacote ajuda as organizações a verificar se seus recursos em nuvem atendem aos princípios de confiança SOC 2 para segurança, disponibilidade e confidencialidade.",
 	},
 	"rules": [
 		# "ack-running-cluster-node-monitorenabled",
