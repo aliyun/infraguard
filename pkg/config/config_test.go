@@ -109,13 +109,23 @@ func TestConfig(t *testing.T) {
 		Convey("IsValidLang", func() {
 			So(IsValidLang("en"), ShouldBeTrue)
 			So(IsValidLang("zh"), ShouldBeTrue)
-			So(IsValidLang("fr"), ShouldBeFalse)
+			So(IsValidLang("es"), ShouldBeTrue)
+			So(IsValidLang("fr"), ShouldBeTrue)
+			So(IsValidLang("de"), ShouldBeTrue)
+			So(IsValidLang("ja"), ShouldBeTrue)
+			So(IsValidLang("pt"), ShouldBeTrue)
+			So(IsValidLang("invalid"), ShouldBeFalse)
 		})
 
 		Convey("ValidateValue", func() {
 			Convey("should accept valid lang values", func() {
 				So(ValidateValue("lang", "en"), ShouldBeNil)
 				So(ValidateValue("lang", "zh"), ShouldBeNil)
+				So(ValidateValue("lang", "es"), ShouldBeNil)
+				So(ValidateValue("lang", "fr"), ShouldBeNil)
+				So(ValidateValue("lang", "de"), ShouldBeNil)
+				So(ValidateValue("lang", "ja"), ShouldBeNil)
+				So(ValidateValue("lang", "pt"), ShouldBeNil)
 			})
 
 			Convey("should reject invalid lang values", func() {

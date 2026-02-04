@@ -4,8 +4,11 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 
+	"github.com/aliyun/infraguard/pkg/config"
+	"github.com/aliyun/infraguard/pkg/i18n"
 	"gopkg.in/yaml.v3"
 )
 
@@ -18,6 +21,12 @@ type TranslationFile struct {
 
 func main() {
 	localesDir := "pkg/i18n/locales"
+
+	// Validate language consistency between config and i18n
+	if err := validateLanguageConsistency(); err != nil {
+		fmt.Fprintf(os.Stderr, "❌ Language consistency check failed: %v\n", err)
+		os.Exit(1)
+	}
 
 	// Load all translation files
 	files, err := loadTranslationFiles(localesDir)
@@ -149,4 +158,64 @@ func findMissingKeys(reference, target map[string]interface{}, prefix string) []
 	}
 
 	return missing
+}
+
+// validateLanguageConsistency checks that config.ValidLangValues and i18n supported languages match exactly
+func validateLanguageConsistency() error {
+	configLangs := config.ValidLangValues
+	i18nLangs := i18n.GetSupportedLanguages()
+
+	// Create maps for efficient lookup
+	configMap := make(map[string]bool)
+	for _, lang := range configLangs {
+		configMap[lang] = true
+	}
+
+	i18nMap := make(map[string]bool)
+	for _, lang := range i18nLangs {
+		i18nMap[lang] = true
+	}
+
+	// Find languages in config but not in i18n
+	var missingInI18n []string
+	for _, lang := range configLangs {
+		if !i18nMap[lang] {
+			missingInI18n = append(missingInI18n, lang)
+		}
+	}
+
+	// Find languages in i18n but not in config
+	var missingInConfig []string
+	for _, lang := range i18nLangs {
+		if !configMap[lang] {
+			missingInConfig = append(missingInConfig, lang)
+		}
+	}
+
+	if len(missingInI18n) > 0 || len(missingInConfig) > 0 {
+		var issues []string
+		if len(missingInI18n) > 0 {
+			sort.Strings(missingInI18n)
+			issues = append(issues, fmt.Sprintf("languages in config.ValidLangValues but not in i18n: %v", missingInI18n))
+		}
+		if len(missingInConfig) > 0 {
+			sort.Strings(missingInConfig)
+			issues = append(issues, fmt.Sprintf("languages in i18n but not in config.ValidLangValues: %v", missingInConfig))
+		}
+		return fmt.Errorf("language mismatch: %s", strings.Join(issues, "; "))
+	}
+
+	// Sort for display
+	configSorted := make([]string, len(configLangs))
+	copy(configSorted, configLangs)
+	sort.Strings(configSorted)
+
+	i18nSorted := make([]string, len(i18nLangs))
+	copy(i18nSorted, i18nLangs)
+	sort.Strings(i18nSorted)
+
+	fmt.Println("✅ Language consistency check passed:")
+	fmt.Printf("   Config languages: %v\n", configSorted)
+	fmt.Printf("   i18n languages:   %v\n", i18nSorted)
+	return nil
 }

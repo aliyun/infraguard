@@ -20,7 +20,7 @@ type Config struct {
 var ValidKeys = []string{"lang"}
 
 // ValidLangValues contains valid values for the lang key.
-var ValidLangValues = []string{"en", "zh"}
+var ValidLangValues = []string{"en", "zh", "es", "fr", "de", "ja", "pt"}
 
 // configFileName is the name of the configuration file.
 const configFileName = "config.yaml"
