@@ -36,8 +36,8 @@ jobs:
       - name: Run policy tests
         run: make test-policy
 
-  check-generated:
-    name: Check Generated Files
+  check:
+    name: Check Generated Files, Lint and Validate Translations
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -65,17 +65,8 @@ jobs:
           
           echo "✓ pkg/policy/index_gen.go is up to date"
 
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: '1.24'
-
       - name: Run go vet
         run: make lint
+
+      - name: Validate translations
+        run: make validate-translations

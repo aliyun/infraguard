@@ -94,8 +94,15 @@ check-gen: ## Check if generated files are up to date
 	@rm -f pkg/policy/index_gen.go.bak
 	@echo "✓ pkg/policy/index_gen.go is up to date"
 
-format: ## Format code
+format: ## Format code and policies
 	$(GOFMT) ./...
+	@if [ -f $(BUILD_DIR)/$(BINARY_NAME) ]; then \
+		./$(BINARY_NAME) policy format policies --write; \
+	else \
+		echo "Building $(BINARY_NAME)..."; \
+		$(MAKE) build; \
+		./$(BINARY_NAME) policy format policies --write; \
+	fi
 
 lint: ## Run go vet
 	$(GOVET) ./...
