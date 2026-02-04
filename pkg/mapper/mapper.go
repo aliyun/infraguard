@@ -30,6 +30,13 @@ const MaxPathLength = 1024
 func MapViolationsWithLang(violations []models.OPAViolation, yamlRoot interface{}, filePath string, lang string) []models.RichViolation {
 	var rich []models.RichViolation
 
+	// Extract language code prefix (e.g., "ja-JP" -> "ja", "fr-FR" -> "fr")
+	// Rule metadata uses short language codes (ja, fr, etc.), not BCP 47 format
+	langCode := lang
+	if parts := strings.Split(lang, "-"); len(parts) > 0 {
+		langCode = strings.ToLower(parts[0])
+	}
+
 	for _, v := range violations {
 		rv := models.RichViolation{
 			Severity:          v.Meta.Severity,
@@ -40,8 +47,8 @@ func MapViolationsWithLang(violations []models.OPAViolation, yamlRoot interface{
 			Line:              1, // Default to line 1 if mapping fails
 			Snippet:           "",
 			SnippetLines:      nil,
-			Reason:            i18n.FormatMessage(v.Meta.Reason, lang),
-			Recommendation:    i18n.FormatMessage(v.Meta.Recommendation, lang),
+			Reason:            i18n.FormatMessage(v.Meta.Reason, langCode),
+			Recommendation:    i18n.FormatMessage(v.Meta.Recommendation, langCode),
 			ReasonRaw:         v.Meta.Reason,
 			RecommendationRaw: v.Meta.Recommendation,
 		}

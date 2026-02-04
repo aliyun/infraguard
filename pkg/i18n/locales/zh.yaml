@@ -339,7 +339,7 @@ lang_flag: "输出语言（en, zh, es, fr, de, ja, pt，默认：自动检测）
 # Error messages
 errors:
   invalid_format: "无效的格式 %q：必须是 table、json 或 html。"
-  invalid_lang: "无效的语言 %q：必须是 zh 或 en。"
+  invalid_lang: "无效的语言 %q：必须是 en、zh、es、fr、de、ja、pt 之一。"
   invalid_mode: "无效的模式 %q：必须是 static 或 preview。"
   
   # 语言标签验证错误

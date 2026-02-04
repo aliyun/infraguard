@@ -340,7 +340,7 @@ lang_flag: "出力言語（en, zh, es, fr, de, ja, pt、デフォルト: 自動�
 # エラーメッセージ
 errors:
   invalid_format: "無効な形式%q: table、json、htmlのいずれかである必要があります。"
-  invalid_lang: "無効な言語%q: enまたはzhである必要があります。"
+  invalid_lang: "無効な言語%q: en、zh、es、fr、de、ja、ptのいずれかである必要があります。"
   invalid_mode: "無効なモード%q: staticまたはpreviewである必要があります。"
   
   # 言語タグ検証エラー

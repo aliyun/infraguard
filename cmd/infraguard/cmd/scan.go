@@ -132,8 +132,27 @@ func runScan(cmd *cobra.Command, args []string) error {
 	}
 
 	// Validate global language flag if provided
-	if globalLang != "" && globalLang != "zh" && globalLang != "en" {
-		return fmt.Errorf(msg.Errors.InvalidLang, globalLang)
+	if globalLang != "" {
+		supportedLangs := i18n.GetSupportedLanguages()
+
+		// Extract language code prefix (e.g., "fr-FR" -> "fr", "fr" -> "fr")
+		langCode := strings.ToLower(globalLang)
+		if parts := strings.Split(langCode, "-"); len(parts) > 0 {
+			langCode = parts[0]
+		}
+
+		// Check if the language code is in the supported languages list
+		isSupported := false
+		for _, lang := range supportedLangs {
+			if lang == langCode {
+				isSupported = true
+				break
+			}
+		}
+
+		if !isSupported {
+			return fmt.Errorf(msg.Errors.InvalidLang, globalLang)
+		}
 	}
 
 	// Parse policy specifications

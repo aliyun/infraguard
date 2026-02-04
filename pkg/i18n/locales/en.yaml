@@ -340,7 +340,7 @@ lang_flag: "Output language (en, zh, es, fr, de, ja, pt, default: auto-detect)"
 # Error messages
 errors:
   invalid_format: "invalid format %q: must be one of table, json, html."
-  invalid_lang: "invalid language %q: must be en or zh."
+  invalid_lang: "invalid language %q: must be one of en, zh, es, fr, de, ja, pt."
   invalid_mode: "invalid mode %q: must be static or preview."
   
   # Language tag validation errors
