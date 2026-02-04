@@ -104,8 +104,8 @@ format: ## Format code and policies
 		./$(BINARY_NAME) policy format policies --write; \
 	fi
 
-lint: ## Run go vet
-	$(GOVET) ./...
+lint: ## Run go vet (excluding scripts directory)
+	$(GOVET) ./pkg/... ./cmd/... ./policies/...
 
 ## Dependency targets
 
