@@ -54,11 +54,11 @@ infraguard scan template.yaml -p pack:aliyun:mlps-level-3-pre-check-compliance-p
 
 ## 📚 Dokumentation
 
-Für detaillierte Dokumentation besuchen Sie bitte unsere [Dokumentationsseite](https://aliyun.github.io/infraguard)
+Für detaillierte Dokumentation besuchen Sie bitte unsere [Dokumentationsseite](https://aliyun.github.io/infraguard/de/)
 
-- **[Erste Schritte](https://aliyun.github.io/infraguard/docs/getting-started/installation)** - Installations- und Schnellstart-Anleitung
-- **[Benutzerhandbuch](https://aliyun.github.io/infraguard/docs/user-guide/scanning-templates)** - Erfahren Sie, wie Sie Vorlagen scannen und Richtlinien verwalten
-- **[Richtlinienreferenz](https://aliyun.github.io/infraguard/docs/policies/aliyun/rules)** - Durchsuchen Sie alle verfügbaren Regeln und Compliance-Pakete
-- **[Entwicklungsleitfaden](https://aliyun.github.io/infraguard/docs/development/writing-rules)** - Schreiben Sie benutzerdefinierte Regeln und Pakete
-- **[CLI-Referenz](https://aliyun.github.io/infraguard/docs/cli/scan)** - Dokumentation der Befehlszeilenschnittstelle
-- **[FAQ](https://aliyun.github.io/infraguard/docs/faq)** - Häufig gestellte Fragen
+- **[Erste Schritte](https://aliyun.github.io/infraguard/de/docs/getting-started/installation)** - Installations- und Schnellstart-Anleitung
+- **[Benutzerhandbuch](https://aliyun.github.io/infraguard/de/docs/user-guide/scanning-templates)** - Erfahren Sie, wie Sie Vorlagen scannen und Richtlinien verwalten
+- **[Richtlinienreferenz](https://aliyun.github.io/infraguard/de/docs/policies/aliyun/rules)** - Durchsuchen Sie alle verfügbaren Regeln und Compliance-Pakete
+- **[Entwicklungsleitfaden](https://aliyun.github.io/infraguard/de/docs/development/writing-rules)** - Schreiben Sie benutzerdefinierte Regeln und Pakete
+- **[CLI-Referenz](https://aliyun.github.io/infraguard/de/docs/cli/scan)** - Dokumentation der Befehlszeilenschnittstelle
+- **[FAQ](https://aliyun.github.io/infraguard/de/docs/faq)** - Häufig gestellte Fragen

@@ -54,11 +54,11 @@ infraguard scan template.yaml -p pack:aliyun:mlps-level-3-pre-check-compliance-p
 
 ## 📚 ドキュメント
 
-詳細なドキュメントについては、[ドキュメントサイト](https://aliyun.github.io/infraguard)をご覧ください
+詳細なドキュメントについては、[ドキュメントサイト](https://aliyun.github.io/infraguard/ja/)をご覧ください
 
-- **[はじめに](https://aliyun.github.io/infraguard/docs/getting-started/installation)** - インストールとクイックスタートガイド
-- **[ユーザーガイド](https://aliyun.github.io/infraguard/docs/user-guide/scanning-templates)** - テンプレートのスキャンとポリシーの管理方法を学ぶ
-- **[ポリシーリファレンス](https://aliyun.github.io/infraguard/docs/policies/aliyun/rules)** - 利用可能なすべてのルールとコンプライアンスパックを閲覧
-- **[開発ガイド](https://aliyun.github.io/infraguard/docs/development/writing-rules)** - カスタムルールとパックを記述
-- **[CLIリファレンス](https://aliyun.github.io/infraguard/docs/cli/scan)** - コマンドラインインターフェースのドキュメント
-- **[FAQ](https://aliyun.github.io/infraguard/docs/faq)** - よくある質問
+- **[はじめに](https://aliyun.github.io/infraguard/ja/docs/getting-started/installation)** - インストールとクイックスタートガイド
+- **[ユーザーガイド](https://aliyun.github.io/infraguard/ja/docs/user-guide/scanning-templates)** - テンプレートのスキャンとポリシーの管理方法を学ぶ
+- **[ポリシーリファレンス](https://aliyun.github.io/infraguard/ja/docs/policies/aliyun/rules)** - 利用可能なすべてのルールとコンプライアンスパックを閲覧
+- **[開発ガイド](https://aliyun.github.io/infraguard/ja/docs/development/writing-rules)** - カスタムルールとパックを記述
+- **[CLIリファレンス](https://aliyun.github.io/infraguard/ja/docs/cli/scan)** - コマンドラインインターフェースのドキュメント
+- **[FAQ](https://aliyun.github.io/infraguard/ja/docs/faq)** - よくある質問
