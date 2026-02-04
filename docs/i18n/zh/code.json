@@ -56,7 +56,7 @@
     "description": "Internationalization feature title"
   },
   "homepage.features.i18n.description": {
-    "message": "完整支持英文和中文。所有规则、策略包和文档均提供双语支持。",
+    "message": "完整支持 7 种语言：英语、中文、西班牙语、法语、德语、日语和葡萄牙语。所有规则、策略包和文档均提供多语言支持。",
     "description": "Internationalization feature description"
   },
   "homepage.features.fast.title": {

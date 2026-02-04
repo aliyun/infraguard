@@ -38,7 +38,7 @@ infraguard config unset lang
 
 ## Available Settings
 
-- `lang`: Output language (`en` or `zh`)
+- `lang`: Output language (`en`, `zh`, `es`, `fr`, `de`, `ja`, or `pt`)
 
 For more details, see [Configuration](../user-guide/configuration).
 

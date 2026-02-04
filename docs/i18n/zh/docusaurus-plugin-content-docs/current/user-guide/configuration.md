@@ -40,8 +40,15 @@ infraguard config unset lang
 
 ```bash
 infraguard config set lang zh  # 中文
-infraguard config set lang en  # 英文
+infraguard config set lang en  # English（英语）
+infraguard config set lang es  # Spanish（西班牙语）
+infraguard config set lang fr  # French（法语）
+infraguard config set lang de  # German（德语）
+infraguard config set lang ja  # Japanese（日语）
+infraguard config set lang pt  # Portuguese（葡萄牙语）
 ```
+
+InfraGuard 支持 7 种语言：`en`、`zh`、`es`、`fr`、`de`、`ja`、`pt`。默认根据系统语言环境自动检测。
 
 ## 配置文件
 

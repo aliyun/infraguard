@@ -98,7 +98,7 @@ infraguard scan template.yaml \
 
 ### Set Language Preference
 
-InfraGuard supports both English and Chinese:
+InfraGuard supports 7 languages:
 
 ```bash
 # Chinese output
@@ -106,6 +106,8 @@ infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack --lang 
 
 # English output
 infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack --lang en
+
+# Other supported languages: es (Spanish), fr (French), de (German), ja (Japanese), pt (Portuguese)
 ```
 
 You can also set the language permanently:
@@ -113,6 +115,8 @@ You can also set the language permanently:
 ```bash
 infraguard config set lang zh
 ```
+
+Supported language codes: `en`, `zh`, `es`, `fr`, `de`, `ja`, `pt`. The default is auto-detected based on your system locale.
 
 ## Next Steps
 

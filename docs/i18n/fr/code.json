@@ -1,0 +1,102 @@
+{
+  "homepage.tagline": {
+    "message": "Politique Définie. Infraestructura Sécurisée.",
+    "description": "The homepage tagline"
+  },
+  "homepage.getStarted": {
+    "message": "Commencer →",
+    "description": "Get started button text"
+  },
+  "homepage.browsePolicies": {
+    "message": "Explorer les Politiques",
+    "description": "Browse policies button text"
+  },
+  "homepage.title": {
+    "message": "CLI de Pré-vérification de Conformité IaC",
+    "description": "The homepage title"
+  },
+  "homepage.description": {
+    "message": "CLI de pré-vérification de conformité Infrastructure as Code conçu pour les modèles Alibaba Cloud ROS. Détectez les problèmes de sécurité et de conformité avant le déploiement.",
+    "description": "The homepage description"
+  },
+  "homepage.features.preDeployment.title": {
+    "message": "Validation Pré-déploiement",
+    "description": "Pre-deployment validation feature title"
+  },
+  "homepage.features.preDeployment.description": {
+    "message": "Détectez les problèmes de conformité et de sécurité avant qu'ils n'atteignent la production. Scannez vos modèles ROS localement pendant le développement, économisez du temps et réduisez les risques.",
+    "description": "Pre-deployment validation feature description"
+  },
+  "homepage.features.builtInRules.title": {
+    "message": "Des Centaines de Règles Intégrées",
+    "description": "Built-in rules feature title"
+  },
+  "homepage.features.builtInRules.description": {
+    "message": "Couverture complète pour les services Aliyun, y compris ECS, RDS, OSS, ACK et plus encore. Des dizaines de packs de conformité conformes aux normes de l'industrie.",
+    "description": "Built-in rules feature description"
+  },
+  "homepage.features.outputFormats.title": {
+    "message": "Plusieurs Formats",
+    "description": "Output formats feature title"
+  },
+  "homepage.features.outputFormats.description": {
+    "message": "Obtenez des résultats en format tableau, JSON ou rapports HTML interactifs. Intégrez facilement dans les pipelines CI/CD ou partagez les résultats avec les parties prenantes.",
+    "description": "Output formats feature description"
+  },
+  "homepage.features.extensible.title": {
+    "message": "Extensible et Open Source",
+    "description": "Extensible feature title"
+  },
+  "homepage.features.extensible.description": {
+    "message": "Écrivez des politiques personnalisées en utilisant Rego (Open Policy Agent). Construit sur des technologies éprouvées et entièrement open source sous licence Apache 2.0.",
+    "description": "Extensible feature description"
+  },
+  "homepage.features.i18n.title": {
+    "message": "Internationalisation",
+    "description": "Internationalization feature title"
+  },
+  "homepage.features.i18n.description": {
+    "message": "Support complet pour 7 langues : Anglais, Chinois, Espagnol, Français, Allemand, Japonais et Portugais. Toutes les règles, packs et documentation disponibles en plusieurs langues.",
+    "description": "Internationalization feature description"
+  },
+  "homepage.features.fast.title": {
+    "message": "Rapide et Léger",
+    "description": "Fast feature title"
+  },
+  "homepage.features.fast.description": {
+    "message": "Construit en Go pour la vitesse et l'efficacité. Binaire unique sans dépendances. Scannez de grands modèles en quelques secondes avec une utilisation minimale des ressources.",
+    "description": "Fast feature description"
+  },
+  "homepage.codeExample.title": {
+    "message": "Détectez les Problèmes Tôt",
+    "description": "Code example section title"
+  },
+  "homepage.codeExample.description": {
+    "message": "InfraGuard vous aide à identifier les risques de sécurité, les erreurs de configuration et les violations de conformité directement dans votre flux de travail de développement ou votre pipeline CI/CD.",
+    "description": "Code example section description"
+  },
+  "homepage.codeExample.feature1": {
+    "message": "Empêcher les déploiements non sécurisés",
+    "description": "Code example feature 1"
+  },
+  "homepage.codeExample.feature2": {
+    "message": "Standardiser l'infrastructure entre les équipes",
+    "description": "Code example feature 2"
+  },
+  "homepage.codeExample.feature3": {
+    "message": "Automatiser les audits de conformité",
+    "description": "Code example feature 3"
+  },
+  "homepage.standardize.title": {
+    "message": "Standardisez Votre Infrastructure",
+    "description": "Standardize section title"
+  },
+  "homepage.standardize.description": {
+    "message": "InfraGuard fournit un moyen unifié de faire respecter les meilleures pratiques dans toute votre organisation. Que vous utilisiez des packs de conformité standard Aliyun ou vos propres règles personnalisées, InfraGuard garantit la cohérence et la sécurité.",
+    "description": "Standardize section description"
+  },
+  "homepage.standardize.learnMore": {
+    "message": "En Savoir Plus",
+    "description": "Learn more button text"
+  }
+}

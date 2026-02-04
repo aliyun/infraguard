@@ -53,6 +53,15 @@ infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack --lang 
 infraguard config set lang zh
 ```
 
+InfraGuard supports 7 languages:
+- `en` - English
+- `zh` - Chinese (中文)
+- `es` - Spanish (Español)
+- `fr` - French (Français)
+- `de` - German (Deutsch)
+- `ja` - Japanese (日本語)
+- `pt` - Portuguese (Português)
+
 ## Policies
 
 ### Where are policies stored?

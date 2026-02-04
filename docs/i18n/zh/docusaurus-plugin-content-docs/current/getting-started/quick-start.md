@@ -98,7 +98,7 @@ infraguard scan template.yaml \
 
 ### 设置语言偏好
 
-InfraGuard 支持英文和中文：
+InfraGuard 支持 7 种语言：
 
 ```bash
 # 中文输出
@@ -106,6 +106,8 @@ infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack --lang 
 
 # 英文输出
 infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack --lang en
+
+# 其他支持的语言：es（西班牙语）、fr（法语）、de（德语）、ja（日语）、pt（葡萄牙语）
 ```
 
 您也可以永久设置语言：
@@ -113,6 +115,8 @@ infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack --lang 
 ```bash
 infraguard config set lang zh
 ```
+
+支持的语言代码：`en`、`zh`、`es`、`fr`、`de`、`ja`、`pt`。默认根据系统语言环境自动检测。
 
 ## 下一步
 

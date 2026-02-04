@@ -30,7 +30,7 @@ InfraGuard embraces the **Policy as Code** approach - treating compliance polici
 
 - **Pre-deployment Validation** - Catch compliance issues before they reach production
 - **Policy Packs** - Pre-built compliance packs (MLPS, ISO 27001, PCI-DSS, etc.)
-- **Internationalization** - Full support for English and Chinese
+- **Internationalization** - Full support for 7 languages (English, Chinese, Spanish, French, German, Japanese, Portuguese)
 - **Multiple Output Formats** - Table, JSON, and HTML reports
 - **Extensible** - Write custom policies in Rego
 - **Fast** - Built in Go for speed and efficiency

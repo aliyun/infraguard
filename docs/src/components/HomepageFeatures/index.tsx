@@ -53,7 +53,7 @@ const FeatureList: FeatureItem[] = [
     iconPath: "/img/features/i18n.svg",
     descriptionId: "homepage.features.i18n.description",
     descriptionDefault:
-      "Full support for English and Chinese languages. All rules, packs, and documentation available in both languages.",
+      "Full support for 7 languages: English, Chinese, Spanish, French, German, Japanese, and Portuguese. All rules, packs, and documentation available in multiple languages.",
   },
   {
     titleId: "homepage.features.fast.title",

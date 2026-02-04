@@ -1,0 +1,46 @@
+{
+  "link.title.Documentation": {
+    "message": "Documentación",
+    "description": "The title of the footer links column with title=Documentation in the footer"
+  },
+  "link.title.Policies": {
+    "message": "Políticas",
+    "description": "The title of the footer links column with title=Policies in the footer"
+  },
+  "link.title.More": {
+    "message": "Más",
+    "description": "The title of the footer links column with title=More in the footer"
+  },
+  "link.item.label.Getting Started": {
+    "message": "Primeros Pasos",
+    "description": "The label of footer link with label=Getting Started linking to /getting-started/installation"
+  },
+  "link.item.label.User Guide": {
+    "message": "Guía de Usuario",
+    "description": "The label of footer link with label=User Guide linking to /user-guide/scanning-templates"
+  },
+  "link.item.label.Development": {
+    "message": "Guía de Desarrollo",
+    "description": "The label of footer link with label=Development linking to /development/writing-rules"
+  },
+  "link.item.label.Aliyun Rules": {
+    "message": "Reglas de Aliyun",
+    "description": "The label of footer link with label=Aliyun Rules linking to /policies/aliyun/rules"
+  },
+  "link.item.label.Aliyun Packs": {
+    "message": "Paquetes de Aliyun",
+    "description": "The label of footer link with label=Aliyun Packs linking to /policies/aliyun/packs"
+  },
+  "link.item.label.GitHub": {
+    "message": "GitHub",
+    "description": "The label of footer link with label=GitHub linking to https://github.com/aliyun/infraguard"
+  },
+  "link.item.label.License": {
+    "message": "Licencia",
+    "description": "The label of footer link with label=License linking to https://github.com/aliyun/infraguard/blob/main/LICENSE"
+  },
+  "copyright": {
+    "message": "Copyright © 2026 InfraGuard. Construido con Docusaurus.",
+    "description": "The footer copyright"
+  }
+}

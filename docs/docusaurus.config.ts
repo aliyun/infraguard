@@ -11,7 +11,18 @@ const config: Config = {
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
-    v4: true, // Improve compatibility with the upcoming Docusaurus v4
+    v4: {
+      removeLegacyPostBuildHeadAttribute: true, // Required for ssgWorkerThreads
+    },
+    experimental_faster: {
+      swcJsLoader: true,
+      swcJsMinimizer: true,
+      swcHtmlMinimizer: true,
+      lightningCssMinimizer: true,
+      rspackBundler: false,
+      mdxCrossCompilerCache: true,
+      ssgWorkerThreads: true,
+    },
   },
 
   // Set the production url of your site here
@@ -33,10 +44,10 @@ const config: Config = {
     },
   },
 
-  // Internationalization: English and Chinese
+  // Internationalization: 7 languages
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'zh'],
+    locales: ['en', 'zh', 'es', 'fr', 'de', 'ja', 'pt'],
     localeConfigs: {
       en: {
         label: 'English',
@@ -47,6 +58,31 @@ const config: Config = {
         label: '中文',
         direction: 'ltr',
         htmlLang: 'zh-CN',
+      },
+      es: {
+        label: 'Español',
+        direction: 'ltr',
+        htmlLang: 'es-ES',
+      },
+      fr: {
+        label: 'Français',
+        direction: 'ltr',
+        htmlLang: 'fr-FR',
+      },
+      de: {
+        label: 'Deutsch',
+        direction: 'ltr',
+        htmlLang: 'de-DE',
+      },
+      ja: {
+        label: '日本語',
+        direction: 'ltr',
+        htmlLang: 'ja-JP',
+      },
+      pt: {
+        label: 'Português',
+        direction: 'ltr',
+        htmlLang: 'pt-BR',
       },
     },
   },
@@ -74,7 +110,7 @@ const config: Config = {
       require.resolve("@easyops-cn/docusaurus-search-local"),
       {
         hashed: true,
-        language: ["en", "zh"],
+        language: ["en", "zh", "es", "fr", "de", "ja", "pt"],
         highlightSearchTermsOnTargetPage: true,
         explicitSearchResultPath: true,
       },

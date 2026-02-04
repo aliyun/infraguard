@@ -1,0 +1,102 @@
+{
+  "homepage.tagline": {
+    "message": "Richtlinie Definiert. Infrastruktur Gesichert.",
+    "description": "The homepage tagline"
+  },
+  "homepage.getStarted": {
+    "message": "Loslegen →",
+    "description": "Get started button text"
+  },
+  "homepage.browsePolicies": {
+    "message": "Richtlinien Durchsuchen",
+    "description": "Browse policies button text"
+  },
+  "homepage.title": {
+    "message": "IaC-Compliance-Vorprüfung CLI",
+    "description": "The homepage title"
+  },
+  "homepage.description": {
+    "message": "Infrastructure as Code Compliance-Vorprüfung CLI für Alibaba Cloud ROS-Vorlagen. Erkennen Sie Sicherheits- und Compliance-Probleme vor dem Deployment.",
+    "description": "The homepage description"
+  },
+  "homepage.features.preDeployment.title": {
+    "message": "Pre-Deployment-Validierung",
+    "description": "Pre-deployment validation feature title"
+  },
+  "homepage.features.preDeployment.description": {
+    "message": "Erkennen Sie Compliance- und Sicherheitsprobleme, bevor sie die Produktion erreichen. Scannen Sie Ihre ROS-Vorlagen lokal während der Entwicklung, sparen Sie Zeit und reduzieren Sie Risiken.",
+    "description": "Pre-deployment validation feature description"
+  },
+  "homepage.features.builtInRules.title": {
+    "message": "Hunderte Integrierte Regeln",
+    "description": "Built-in rules feature title"
+  },
+  "homepage.features.builtInRules.description": {
+    "message": "Umfassende Abdeckung für Aliyun-Dienste, einschließlich ECS, RDS, OSS, ACK und mehr. Dutzende von Compliance-Paketen, die Industriestandards entsprechen.",
+    "description": "Built-in rules feature description"
+  },
+  "homepage.features.outputFormats.title": {
+    "message": "Mehrere Formate",
+    "description": "Output formats feature title"
+  },
+  "homepage.features.outputFormats.description": {
+    "message": "Erhalten Sie Ergebnisse in Tabellen-, JSON- oder interaktiven HTML-Berichten. Einfache Integration in CI/CD-Pipelines oder Teilen von Ergebnissen mit Stakeholdern.",
+    "description": "Output formats feature description"
+  },
+  "homepage.features.extensible.title": {
+    "message": "Erweiterbar und Open Source",
+    "description": "Extensible feature title"
+  },
+  "homepage.features.extensible.description": {
+    "message": "Schreiben Sie benutzerdefinierte Richtlinien mit Rego (Open Policy Agent). Auf bewährten Technologien aufgebaut und vollständig Open Source unter Apache-2.0-Lizenz.",
+    "description": "Extensible feature description"
+  },
+  "homepage.features.i18n.title": {
+    "message": "Internationalisierung",
+    "description": "Internationalization feature title"
+  },
+  "homepage.features.i18n.description": {
+    "message": "Vollständige Unterstützung für 7 Sprachen: Englisch, Chinesisch, Spanisch, Französisch, Deutsch, Japanisch und Portugiesisch. Alle Regeln, Pakete und Dokumentation in mehreren Sprachen verfügbar.",
+    "description": "Internationalization feature description"
+  },
+  "homepage.features.fast.title": {
+    "message": "Schnell und Leicht",
+    "description": "Fast feature title"
+  },
+  "homepage.features.fast.description": {
+    "message": "In Go für Geschwindigkeit und Effizienz entwickelt. Einzelnes Binär ohne Abhängigkeiten. Scannen Sie große Vorlagen in Sekunden mit minimalem Ressourcenverbrauch.",
+    "description": "Fast feature description"
+  },
+  "homepage.codeExample.title": {
+    "message": "Probleme Früh Erkennen",
+    "description": "Code example section title"
+  },
+  "homepage.codeExample.description": {
+    "message": "InfraGuard hilft Ihnen, Sicherheitsrisiken, Konfigurationsfehler und Compliance-Verstöße direkt in Ihrem Entwicklungs-Workflow oder CI/CD-Pipeline zu identifizieren.",
+    "description": "Code example section description"
+  },
+  "homepage.codeExample.feature1": {
+    "message": "Unsichere Bereitstellungen verhindern",
+    "description": "Code example feature 1"
+  },
+  "homepage.codeExample.feature2": {
+    "message": "Infrastruktur zwischen Teams standardisieren",
+    "description": "Code example feature 2"
+  },
+  "homepage.codeExample.feature3": {
+    "message": "Compliance-Audits automatisieren",
+    "description": "Code example feature 3"
+  },
+  "homepage.standardize.title": {
+    "message": "Standardisieren Sie Ihre Infrastruktur",
+    "description": "Standardize section title"
+  },
+  "homepage.standardize.description": {
+    "message": "InfraGuard bietet eine einheitliche Möglichkeit, Best Practices in Ihrer gesamten Organisation durchzusetzen. Ob Sie Standard-Aliyun-Compliance-Pakete oder Ihre eigenen benutzerdefinierten Regeln verwenden, InfraGuard gewährleistet Konsistenz und Sicherheit.",
+    "description": "Standardize section description"
+  },
+  "homepage.standardize.learnMore": {
+    "message": "Mehr Erfahren",
+    "description": "Learn more button text"
+  }
+}

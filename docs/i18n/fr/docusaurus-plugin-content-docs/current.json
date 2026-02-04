@@ -1,0 +1,46 @@
+{
+  "version.label": {
+    "message": "Dernière",
+    "description": "The label for version current"
+  },
+  "sidebar.docsSidebar.category.Getting Started": {
+    "message": "Premiers Pas",
+    "description": "The label for category 'Getting Started' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.User Guide": {
+    "message": "Guide Utilisateur",
+    "description": "The label for category 'User Guide' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Policy Reference": {
+    "message": "Référence des Politiques",
+    "description": "The label for category 'Policy Reference' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Aliyun": {
+    "message": "Aliyun",
+    "description": "The label for category 'Aliyun' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Rules": {
+    "message": "Règles",
+    "description": "The label for category 'Rules' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Packs": {
+    "message": "Packs",
+    "description": "The label for category 'Packs' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Development": {
+    "message": "Développement",
+    "description": "The label for category 'Development' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.CLI Reference": {
+    "message": "Référence CLI",
+    "description": "The label for category 'CLI Reference' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.doc.Introduction": {
+    "message": "Introduction",
+    "description": "The label for the doc item 'Introduction' in sidebar 'docsSidebar', linking to the doc intro"
+  },
+  "sidebar.docsSidebar.doc.FAQ": {
+    "message": "Questions Fréquemment Posées",
+    "description": "The label for the doc item 'FAQ' in sidebar 'docsSidebar', linking to the doc faq"
+  }
+}

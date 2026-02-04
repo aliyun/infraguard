@@ -1,0 +1,102 @@
+{
+  "homepage.tagline": {
+    "message": "ポリシー定義。インフラストラクチャ保護。",
+    "description": "The homepage tagline"
+  },
+  "homepage.getStarted": {
+    "message": "始める →",
+    "description": "Get started button text"
+  },
+  "homepage.browsePolicies": {
+    "message": "ポリシーを閲覧",
+    "description": "Browse policies button text"
+  },
+  "homepage.title": {
+    "message": "IaCコンプライアンス事前チェックCLI",
+    "description": "The homepage title"
+  },
+  "homepage.description": {
+    "message": "Alibaba Cloud ROSテンプレート向けに設計されたInfrastructure as Codeコンプライアンス事前チェックCLI。デプロイ前にセキュリティとコンプライアンスの問題を検出します。",
+    "description": "The homepage description"
+  },
+  "homepage.features.preDeployment.title": {
+    "message": "デプロイ前検証",
+    "description": "Pre-deployment validation feature title"
+  },
+  "homepage.features.preDeployment.description": {
+    "message": "本番環境に到達する前にコンプライアンスとセキュリティの問題を検出します。開発中にROSテンプレートをローカルでスキャンし、時間を節約し、リスクを軽減します。",
+    "description": "Pre-deployment validation feature description"
+  },
+  "homepage.features.builtInRules.title": {
+    "message": "数百の組み込みルール",
+    "description": "Built-in rules feature title"
+  },
+  "homepage.features.builtInRules.description": {
+    "message": "ECS、RDS、OSS、ACKなどを含むAliyunサービスの包括的なカバレッジ。業界標準に準拠した数十のコンプライアンスパック。",
+    "description": "Built-in rules feature description"
+  },
+  "homepage.features.outputFormats.title": {
+    "message": "複数の形式",
+    "description": "Output formats feature title"
+  },
+  "homepage.features.outputFormats.description": {
+    "message": "テーブル、JSON、またはインタラクティブなHTMLレポートで結果を取得します。CI/CDパイプラインに簡単に統合したり、ステークホルダーと結果を共有できます。",
+    "description": "Output formats feature description"
+  },
+  "homepage.features.extensible.title": {
+    "message": "拡張可能でオープンソース",
+    "description": "Extensible feature title"
+  },
+  "homepage.features.extensible.description": {
+    "message": "Rego（Open Policy Agent）を使用してカスタムポリシーを記述します。実績のある技術に基づいて構築され、Apache 2.0ライセンスの下で完全にオープンソースです。",
+    "description": "Extensible feature description"
+  },
+  "homepage.features.i18n.title": {
+    "message": "国際化",
+    "description": "Internationalization feature title"
+  },
+  "homepage.features.i18n.description": {
+    "message": "7言語を完全サポート：英語、中国語、スペイン語、フランス語、ドイツ語、日本語、ポルトガル語。すべてのルール、パック、ドキュメントが複数言語で利用可能です。",
+    "description": "Internationalization feature description"
+  },
+  "homepage.features.fast.title": {
+    "message": "高速で軽量",
+    "description": "Fast feature title"
+  },
+  "homepage.features.fast.description": {
+    "message": "速度と効率のためにGoで構築。依存関係のない単一のバイナリ。数秒で大きなテンプレートをスキャンし、リソース使用量を最小限に抑えます。",
+    "description": "Fast feature description"
+  },
+  "homepage.codeExample.title": {
+    "message": "問題を早期に発見",
+    "description": "Code example section title"
+  },
+  "homepage.codeExample.description": {
+    "message": "InfraGuardは、開発ワークフローやCI/CDパイプラインで直接セキュリティリスク、設定エラー、コンプライアンス違反を特定するのに役立ちます。",
+    "description": "Code example section description"
+  },
+  "homepage.codeExample.feature1": {
+    "message": "安全でないデプロイを防止",
+    "description": "Code example feature 1"
+  },
+  "homepage.codeExample.feature2": {
+    "message": "チーム間でインフラストラクチャを標準化",
+    "description": "Code example feature 2"
+  },
+  "homepage.codeExample.feature3": {
+    "message": "コンプライアンス監査を自動化",
+    "description": "Code example feature 3"
+  },
+  "homepage.standardize.title": {
+    "message": "インフラストラクチャを標準化",
+    "description": "Standardize section title"
+  },
+  "homepage.standardize.description": {
+    "message": "InfraGuardは、組織全体でベストプラクティスを実施するための統一された方法を提供します。標準のAliyunコンプライアンスパックを使用している場合でも、独自のカスタムルールを使用している場合でも、InfraGuardは一貫性とセキュリティを保証します。",
+    "description": "Standardize section description"
+  },
+  "homepage.standardize.learnMore": {
+    "message": "詳細を見る",
+    "description": "Learn more button text"
+  }
+}
