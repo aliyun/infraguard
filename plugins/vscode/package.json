@@ -1,0 +1,110 @@
+{
+  "name": "infraguard",
+  "displayName": "InfraGuard",
+  "description": "ROS (Resource Orchestration Service) template support - autocompletion, validation, and hover documentation",
+  "version": "0.1.0",
+  "publisher": "aliyun",
+  "icon": "icon.png",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Linters",
+    "Snippets"
+  ],
+  "keywords": [
+    "ROS",
+    "Alibaba Cloud",
+    "IaC",
+    "Infrastructure as Code",
+    "Resource Orchestration Service"
+  ],
+  "activationEvents": [
+    "onLanguage:ros-template-yaml",
+    "onLanguage:ros-template-json",
+    "onLanguage:yaml",
+    "onLanguage:json"
+  ],
+  "main": "./out/extension.js",
+  "l10n": "./l10n",
+  "contributes": {
+    "languages": [
+      {
+        "id": "ros-template-yaml",
+        "aliases": [
+          "ROS Template (YAML)"
+        ],
+        "extensions": [
+          ".ros.yaml",
+          ".ros.yml"
+        ],
+        "configuration": "./language-configuration-yaml.json"
+      },
+      {
+        "id": "ros-template-json",
+        "aliases": [
+          "ROS Template (JSON)"
+        ],
+        "extensions": [
+          ".ros.json"
+        ],
+        "configuration": "./language-configuration-json.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "ros-template-yaml",
+        "scopeName": "source.ros-template.yaml",
+        "path": "./syntaxes/ros-template-yaml.tmLanguage.json"
+      },
+      {
+        "language": "ros-template-json",
+        "scopeName": "source.ros-template.json",
+        "path": "./syntaxes/ros-template-json.tmLanguage.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "infraguard.schemaUpdate",
+        "title": "%command.schemaUpdate%",
+        "category": "InfraGuard"
+      }
+    ],
+    "configurationDefaults": {
+      "[ros-template-yaml]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false,
+        "editor.autoIndent": "full",
+        "editor.quickSuggestions": {
+          "other": true,
+          "comments": false,
+          "strings": true
+        }
+      },
+      "[ros-template-json]": {
+        "editor.quickSuggestions": {
+          "other": true,
+          "comments": false,
+          "strings": true
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1",
+    "@vscode/l10n": "^0.0.18"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0"
+  }
+}
