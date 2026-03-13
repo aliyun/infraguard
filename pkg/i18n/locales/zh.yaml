@@ -491,3 +491,39 @@ errors:
   policy_path_does_not_exist: "策略路径不存在：%s。"
   no_rego_files_in_policy_directory: "在策略目录中未找到 .rego 文件：%s。"
 
+# Schema command
+schema:
+  short: "管理 ROS 资源类型 Schema"
+  long: "管理 LSP 服务器用于自动补全、校验和悬停提示的 ROS 资源类型 Schema。"
+  update:
+    short: "从 API 更新 ROS 资源类型 Schema"
+    long: "从阿里云 ROS API 获取最新的 ROS 资源类型 Schema 并保存到本地。"
+  updating: "正在更新 ROS 资源类型 Schema..."
+  update_success: "Schema 更新成功（%d 个资源类型）"
+  update_failed: "Schema 更新失败"
+
+# LSP command
+lsp:
+  short: "启动 ROS Language Server"
+  long: "通过标准输入输出（stdio）启动 ROS Language Server Protocol (LSP) 服务器，用于编辑器集成。"
+
+# LSP diagnostic messages
+lsp_diag:
+  missing_format_version: "缺少必填字段：ROSTemplateFormatVersion"
+  invalid_format_version: "无效的 ROSTemplateFormatVersion：%q（应为 \"2015-09-01\"）"
+  unknown_top_level_key: "未知的顶层键：%q"
+  did_you_mean: "（您是否想输入 %q？）"
+  missing_type: "资源 %q 缺少必填的 Type 字段"
+  unknown_resource_type: "未知的资源类型：%q"
+  missing_required_property: "资源 %q 缺少必填属性：%s"
+  type_mismatch: "资源 %q 的属性 %q：期望类型 %s"
+  duplicate_key: "重复的键 %q（首次定义于第 %d 行）"
+  param_attr_type_mismatch: "参数 %q 的属性 %q：期望类型 %s，实际为 %s"
+  param_invalid_type: "参数 %q：无效的 Type 值 %q"
+  param_missing_type: "参数 %q 缺少必填的 Type 字段"
+  local_missing_value: "局部变量 %q（类型 %s）缺少必填的 Value 字段"
+  local_datasource_missing_properties: "局部变量 %q（类型 %s）缺少 Properties 字段"
+  mappings_invalid_structure: "Mappings 条目 %q 必须是两层映射表"
+  conditions_invalid_expression: "条件 %q 必须使用条件函数（Fn::Equals、Fn::And、Fn::Or、Fn::Not）"
+  undefined_condition: "未定义的条件 %q，被 %s %q 引用"
+

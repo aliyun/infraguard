@@ -60,8 +60,13 @@ openspec
 /report.html
 coverage.html
 
+# VS Code extension
+*.vsix
+
+# Dependencies
+node_modules/
+
 # Documentation
-docs/node_modules/
 docs/build/
 docs/.docusaurus/
 docs/.cache/

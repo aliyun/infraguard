@@ -66,6 +66,8 @@ func init() {
 	rootCmd.AddCommand(versionCmd)
 	rootCmd.AddCommand(updateCmd)
 	rootCmd.AddCommand(configCmd)
+	rootCmd.AddCommand(schemaCmd)
+	rootCmd.AddCommand(lspCmd)
 }
 
 // updateCommandDescriptions updates all command descriptions based on current language.
@@ -123,6 +125,15 @@ func updateCommandDescriptions() {
 
 	// Update policy format command flags
 	updatePolicyFormatFlagDescriptions()
+
+	// Schema command
+	schemaCmd.Short = i18n.Get(func(m *i18n.Messages) string { return m.Schema.Short })
+	schemaCmd.Long = strings.TrimSpace(i18n.Get(func(m *i18n.Messages) string { return m.Schema.Long }))
+	schemaUpdateCmd.Short = i18n.Get(func(m *i18n.Messages) string { return m.Schema.Update.Short })
+	schemaUpdateCmd.Long = strings.TrimSpace(i18n.Get(func(m *i18n.Messages) string { return m.Schema.Update.Long }))
+
+	// LSP command
+	updateLSPCommandDescriptions()
 
 	// Update config command descriptions
 	updateConfigCommandDescriptions()

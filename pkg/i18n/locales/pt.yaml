@@ -491,3 +491,39 @@ errors:
   download_policies: "falha ao baixar políticas: %w."
   policy_path_does_not_exist: "caminho de política não existe: %s."
   no_rego_files_in_policy_directory: "nenhum arquivo .rego encontrado no diretório de políticas: %s."
+
+# Schema command
+schema:
+  short: "Gerenciar esquema de tipos de recursos ROS"
+  long: "Gerenciar o esquema de tipos de recursos ROS usado pelo servidor LSP para autocompletar, validação e hover."
+  update:
+    short: "Atualizar esquema de tipos de recursos ROS da API"
+    long: "Buscar o esquema mais recente de tipos de recursos ROS da API Alibaba Cloud ROS e salvá-lo localmente."
+  updating: "Atualizando esquema de tipos de recursos ROS..."
+  update_success: "Esquema atualizado com sucesso (%d tipos de recursos)"
+  update_failed: "Falha ao atualizar esquema"
+
+# LSP command
+lsp:
+  short: "Iniciar servidor de linguagem ROS"
+  long: "Iniciar o servidor de protocolo de linguagem ROS (LSP) via stdio para integração com editores."
+
+# LSP diagnostic messages
+lsp_diag:
+  missing_format_version: "Campo obrigatório ausente: ROSTemplateFormatVersion"
+  invalid_format_version: "ROSTemplateFormatVersion inválido: %q (esperado \"2015-09-01\")"
+  unknown_top_level_key: "Chave de nível superior desconhecida: %q"
+  did_you_mean: " (você quis dizer %q?)"
+  missing_type: "O recurso %q está sem o campo Type obrigatório"
+  unknown_resource_type: "Tipo de recurso desconhecido: %q"
+  missing_required_property: "O recurso %q está sem a propriedade obrigatória: %s"
+  type_mismatch: "Propriedade %q do recurso %q: tipo esperado %s"
+  duplicate_key: "Chave duplicada %q (definida primeiro na linha %d)"
+  param_attr_type_mismatch: "Parâmetro %q propriedade %q: tipo esperado %s, obtido %s"
+  param_invalid_type: "Parâmetro %q: valor Type inválido %q"
+  param_missing_type: "Parâmetro %q está faltando o campo Type obrigatório"
+  local_missing_value: "Variável local %q (tipo %s) não possui o campo Value obrigatório"
+  local_datasource_missing_properties: "Variável local %q (tipo %s) não possui o campo Properties"
+  mappings_invalid_structure: "A entrada Mappings %q deve ser um mapa de dois níveis"
+  conditions_invalid_expression: "A condição %q deve usar uma função de condição (Fn::Equals, Fn::And, Fn::Or, Fn::Not)"
+  undefined_condition: "Condição indefinida %q referenciada em %s %q"

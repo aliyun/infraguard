@@ -491,3 +491,39 @@ errors:
   download_policies: "Fehler beim Herunterladen der Richtlinien: %w."
   policy_path_does_not_exist: "Richtlinienpfad existiert nicht: %s."
   no_rego_files_in_policy_directory: "keine .rego-Dateien im Richtlinienverzeichnis gefunden: %s."
+
+# Schema command
+schema:
+  short: "ROS-Ressourcentyp-Schema verwalten"
+  long: "Das ROS-Ressourcentyp-Schema verwalten, das vom LSP-Server für Autovervollständigung, Validierung und Hover verwendet wird."
+  update:
+    short: "ROS-Ressourcentyp-Schema von API aktualisieren"
+    long: "Das neueste ROS-Ressourcentyp-Schema von der Alibaba Cloud ROS API abrufen und lokal speichern."
+  updating: "ROS-Ressourcentyp-Schema wird aktualisiert..."
+  update_success: "Schema erfolgreich aktualisiert (%d Ressourcentypen)"
+  update_failed: "Schema-Aktualisierung fehlgeschlagen"
+
+# LSP command
+lsp:
+  short: "ROS Language Server starten"
+  long: "Den ROS Language Server Protocol (LSP) Server über stdio für die Editor-Integration starten."
+
+# LSP diagnostic messages
+lsp_diag:
+  missing_format_version: "Erforderliches Feld fehlt: ROSTemplateFormatVersion"
+  invalid_format_version: "Ungültige ROSTemplateFormatVersion: %q (erwartet \"2015-09-01\")"
+  unknown_top_level_key: "Unbekannter Top-Level-Schlüssel: %q"
+  did_you_mean: " (meinten Sie %q?)"
+  missing_type: "Ressource %q fehlt das erforderliche Type-Feld"
+  unknown_resource_type: "Unbekannter Ressourcentyp: %q"
+  missing_required_property: "Ressource %q fehlt erforderliche Eigenschaft: %s"
+  type_mismatch: "Eigenschaft %q der Ressource %q: erwarteter Typ %s"
+  duplicate_key: "Doppelter Schlüssel %q (zuerst definiert in Zeile %d)"
+  param_attr_type_mismatch: "Parameter %q Eigenschaft %q: erwarteter Typ %s, erhalten %s"
+  param_invalid_type: "Parameter %q: ungültiger Type-Wert %q"
+  param_missing_type: "Parameter %q fehlt das erforderliche Type-Feld"
+  local_missing_value: "Lokale Variable %q (Typ %s) fehlt das erforderliche Value-Feld"
+  local_datasource_missing_properties: "Lokale Variable %q (Typ %s) fehlt das Properties-Feld"
+  mappings_invalid_structure: "Mappings-Eintrag %q muss eine zweistufige Map sein"
+  conditions_invalid_expression: "Bedingung %q muss eine Bedingungsfunktion verwenden (Fn::Equals, Fn::And, Fn::Or, Fn::Not)"
+  undefined_condition: "Undefinierte Bedingung %q in %s %q referenziert"

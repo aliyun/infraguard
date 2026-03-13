@@ -25,7 +25,7 @@ MAIN_PATH := ./cmd/infraguard
 # Default target
 .DEFAULT_GOAL := help
 
-.PHONY: all build run clean test test-policy test-all test-web test-coverage format lint tidy deps help install doc-gen doc-dev doc-serve doc-build doc-clean validate-translations validate-doc-translations
+.PHONY: all build run clean test test-policy test-all test-web test-coverage format lint tidy deps help install doc-gen doc-dev doc-serve doc-build doc-clean validate-translations validate-doc-translations plugin-install plugin-build plugin-clean
 
 ## Build targets
 
@@ -165,8 +165,35 @@ doc-build: doc-gen validate-doc-translations ## Build static documentation site
 	@echo "Building documentation site..."
 	cd $(DOCS_DIR) && $(NPM) run build
 
-## Help target
+## Plugin targets
 
+PLUGINS_DIR := plugins
+
+plugin-install: ## Install dependencies for all plugins
+	@for dir in $(PLUGINS_DIR)/*/; do \
+		if [ -f "$$dir/Makefile" ]; then \
+			echo "Installing $$(basename $$dir) plugin dependencies..."; \
+			$(MAKE) -C $$dir install; \
+		fi; \
+	done
+
+plugin-build: ## Build all plugins
+	@for dir in $(PLUGINS_DIR)/*/; do \
+		if [ -f "$$dir/Makefile" ]; then \
+			echo "Building $$(basename $$dir) plugin..."; \
+			$(MAKE) -C $$dir build ROOT_DIR=$(CURDIR); \
+		fi; \
+	done
+
+plugin-clean: ## Clean all plugin build artifacts
+	@for dir in $(PLUGINS_DIR)/*/; do \
+		if [ -f "$$dir/Makefile" ]; then \
+			echo "Cleaning $$(basename $$dir) plugin..."; \
+			$(MAKE) -C $$dir clean; \
+		fi; \
+	done
+
+## Help target
 help: ## Show this help message
 	@echo "Usage: make [target]"
 	@echo ""

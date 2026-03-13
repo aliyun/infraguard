@@ -1,0 +1,2012 @@
+{
+  "version": "2026-03-13",
+  "associationProperties": {
+    "ALIYUN::Resource::Data::API": {
+      "description": "Queries data from Alibaba Cloud product OpenAPI based on parameters.",
+      "category": "Custom",
+      "metadata": {
+        "APIAction": {
+          "description": "The cloud product and API information."
+        },
+        "OptionsGetter": {
+          "description": "Defines the data hierarchy parsing mode."
+        },
+        "ValueGetter": {
+          "description": "Defines the name of the attribute to parse."
+        },
+        "LabelGetter": {
+          "description": "Defines the attribute displayed in the query results."
+        },
+        "PageFilterKeys": {
+          "description": "Pagination filter attributes."
+        },
+        "PageSize": {
+          "description": "The page size for pagination."
+        },
+        "PageNumber": {
+          "description": "The page number."
+        },
+        "TotalCount": {
+          "description": "The total count of records."
+        },
+        "Pagination": {
+          "description": "The pagination method."
+        }
+      }
+    },
+    "Auto": {
+      "description": "ROS automatically generates AssociationProperty and AssociationPropertyMetadata fields based on the Terraform original data structure. Only applies to JSON-type parameters in Terraform templates.",
+      "category": "Basic",
+      "metadata": {
+        "Overwrite": {
+          "description": "Supplements or overwrites nested parameter definitions. Dictionary type."
+        }
+      }
+    },
+    "AutoCompleteInput": {
+      "description": "Automatically generates a random string.",
+      "category": "Basic",
+      "metadata": {
+        "CharacterClasses": {
+          "description": "List of character types, each containing Class (lowercase/uppercase/number/specialCharacter), Min, etc."
+        },
+        "Prefix": {
+          "description": "The string prefix."
+        },
+        "Suffix": {
+          "description": "The string suffix."
+        },
+        "Length": {
+          "description": "The string length."
+        }
+      }
+    },
+    "ChargeType": {
+      "description": "The billing method. Values: PayAsYouGo, Subscription.",
+      "category": "Basic",
+      "metadata": {}
+    },
+    "Code": {
+      "description": "Code input.",
+      "category": "Basic",
+      "metadata": {}
+    },
+    "CommaDelimitedList": {
+      "description": "Input a comma-delimited array.",
+      "category": "Basic",
+      "metadata": {}
+    },
+    "Cron": {
+      "description": "A cron expression string that specifies the execution time of a scheduled task.",
+      "category": "Basic",
+      "metadata": {}
+    },
+    "DateTime": {
+      "description": "Date selection.",
+      "category": "Basic",
+      "metadata": {
+        "GMTZone": {
+          "description": "The GMT zone."
+        },
+        "TimeZone": {
+          "description": "The time zone description."
+        }
+      }
+    },
+    "FileContent": {
+      "description": "Reads content from a local file.",
+      "category": "Basic",
+      "metadata": {
+        "AcceptFileSuffixes": {
+          "description": "Accepted file types for upload. Multiple types are separated by commas."
+        }
+      }
+    },
+    "GMTZone": {
+      "description": "GMT zone selection.",
+      "category": "Basic",
+      "metadata": {}
+    },
+    "Json": {
+      "description": "JSON object input.",
+      "category": "Basic",
+      "metadata": {}
+    },
+    "List[Parameter]": {
+      "description": "Parameter list with indented layout. Only applies to Json-type parameters.",
+      "category": "Basic",
+      "metadata": {
+        "Parameter": {
+          "description": "The parameter definition."
+        },
+        "Mode": {
+          "description": "Display style. Collapse: collapsed style (default). Table: table style."
+        }
+      }
+    },
+    "List[Parameters]": {
+      "description": "Parameter group list with table layout. Only applies to Json-type parameters.",
+      "category": "Basic",
+      "metadata": {
+        "Parameters": {
+          "description": "Dictionary type, required. Represents a group of parameter definitions. Key: parameter name. Value: parameter definition."
+        },
+        "ListMetadata": {
+          "description": "Dictionary type for controlling table display, including ShowHeader, ShowRemove, ShowAddition, Order, etc."
+        }
+      }
+    },
+    "OOSServiceRole": {
+      "description": "The OOS service role.",
+      "category": "Basic",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "Password": {
+      "description": "Password input.",
+      "category": "Basic",
+      "metadata": {}
+    },
+    "RateControl": {
+      "description": "The OOS execution rate.",
+      "category": "Basic",
+      "metadata": {}
+    },
+    "Tags": {
+      "description": "Tags.",
+      "category": "Basic",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ResourceType": {
+          "description": "The resource type for tag statistics. Default: ALIYUN::ECS::INSTANCE."
+        }
+      }
+    },
+    "Targets": {
+      "description": "ECS instance targets. Supports selecting instances by instance ID, tags, or resource groups.",
+      "category": "Basic",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "TextArea": {
+      "description": "Rich text input.",
+      "category": "Basic",
+      "metadata": {}
+    },
+    "TimeTriggerWeekly": {
+      "description": "Weekly time selection.",
+      "category": "Basic",
+      "metadata": {}
+    },
+    "TimeZone": {
+      "description": "Time zone selection.",
+      "category": "Basic",
+      "metadata": {}
+    },
+    "UploadFilesToUserBucket": {
+      "description": "OSS file upload component.",
+      "category": "OSS",
+      "metadata": {
+        "Mode": {
+          "description": "The component display mode. Values: normal, dragger (default)."
+        },
+        "RegionId": {
+          "description": "The region of the bucket. Defaults to the current environment region."
+        },
+        "BucketName": {
+          "description": "The bucket name."
+        },
+        "Multiple": {
+          "description": "Whether to upload multiple files at once. Value: true."
+        },
+        "Directory": {
+          "description": "Whether to support folder upload. Value: true."
+        },
+        "ValueType": {
+          "description": "The return value type. Default: OSS Url."
+        },
+        "ObjectNamePrefix": {
+          "description": "The upload file path prefix."
+        },
+        "AddSuffix": {
+          "description": "Whether to append a timestamp suffix to the file name. Value: true."
+        },
+        "SuffixFormat": {
+          "description": "The timestamp suffix format, e.g. YYYY-MM-DD."
+        }
+      }
+    },
+    "ALIYUN::ACR::Namespace::Name": {
+      "description": "Queries ACR image namespaces.",
+      "category": "ACR",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "Status": {
+          "description": "The namespace status. Values: NORMAL, DELETING."
+        }
+      }
+    },
+    "ALIYUN::ACR::Repo::RepoAttribute": {
+      "description": "Queries ACR personal edition image repositories.",
+      "category": "ACR",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "ALIYUN::ACR::Repo::Tag": {
+      "description": "Queries ACR image tag information.",
+      "category": "ACR",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "RepoName": {
+          "description": "The image repository name."
+        },
+        "RepoNamespace": {
+          "description": "The namespace name."
+        }
+      }
+    },
+    "ALIYUN::APIG::Gateway::GatewayId": {
+      "description": "Queries cloud-native API gateway information.",
+      "category": "APIG",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "Keyword": {
+          "description": "Search keyword, case-insensitive exact match."
+        }
+      }
+    },
+    "ALIYUN::ALB::ACL::ACLId": {
+      "description": "ALB access control list.",
+      "category": "ALB",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "ALIYUN::ALB::Instance::InstanceId": {
+      "description": "ALB instance.",
+      "category": "ALB",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "VpcId": {
+          "description": "The VPC ID."
+        },
+        "AddressType": {
+          "description": "The network type."
+        },
+        "ZoneId": {
+          "description": "The zone ID."
+        },
+        "PayType": {
+          "description": "The billing method of the ALB instance."
+        }
+      }
+    },
+    "ALIYUN::ALB::LoadBalancer::LoadBalancerId": {
+      "description": "ALB load balancer ID.",
+      "category": "ALB",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "VpcId": {
+          "description": "The VPC ID."
+        },
+        "AddressType": {
+          "description": "The network type."
+        },
+        "ZoneId": {
+          "description": "The zone ID."
+        },
+        "PayType": {
+          "description": "The billing method of the ALB instance."
+        }
+      }
+    },
+    "ALIYUN::Bailian::ApiKey::ApiKeyInfo": {
+      "description": "Queries Alibaba Cloud Bailian API-KEY information.",
+      "category": "Bailian",
+      "metadata": {
+        "OnlyKey": {
+          "description": "Whether to return only the API key itself."
+        }
+      }
+    },
+    "ALIYUN::BSS::PricingModule::ModuleCode": {
+      "description": "Queries the pricing module information of an Alibaba Cloud product.",
+      "category": "BSS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ProductCode": {
+          "description": "The product code."
+        },
+        "ProductType": {
+          "description": "The product type."
+        },
+        "SubscriptionType": {
+          "description": "The subscription type. Values: Subscription (prepaid), PayAsYouGo (postpaid)."
+        }
+      }
+    },
+    "ALIYUN::CAS::Certificate::CertificateId": {
+      "description": "SLB instance certificate.",
+      "category": "CAS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "ALIYUN::CEN::Instance::CenId": {
+      "description": "Queries CEN (Cloud Enterprise Network) instance information under the current account.",
+      "category": "CEN",
+      "metadata": {
+        "ResourceGroupId": {
+          "description": "The resource group ID of the CEN instance."
+        }
+      }
+    },
+    "ALIYUN::CEN::TransitRouter::TransitRouterId": {
+      "description": "Queries transit router instance information under a CEN instance.",
+      "category": "CEN",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "CenId": {
+          "description": "The CEN instance ID."
+        }
+      }
+    },
+    "ALIYUN::CMS::Alarm::MetricSelector": {
+      "description": "Queries CloudMonitor metric details.",
+      "category": "CMS",
+      "metadata": {}
+    },
+    "ALIYUN::CMS::Alarm::Rule": {
+      "description": "Threshold alarm rule.",
+      "category": "CMS",
+      "metadata": {}
+    },
+    "ALIYUN::CMS::Alarm::SilenceTime": {
+      "description": "Alarm silence period.",
+      "category": "CMS",
+      "metadata": {}
+    },
+    "ALIYUN::CMS::Alarm::TriggerResources": {
+      "description": "Alarm resource trigger.",
+      "category": "CMS",
+      "metadata": {}
+    },
+    "ALIYUN::CMS::Event::EventFilterRule": {
+      "description": "Event alarm rule.",
+      "category": "CMS",
+      "metadata": {}
+    },
+    "ALIYUN::CMS::Event::EventLevel": {
+      "description": "Event alarm level.",
+      "category": "CMS",
+      "metadata": {}
+    },
+    "ALIYUN::CMS::Event::EventName": {
+      "description": "Event alarm name.",
+      "category": "CMS",
+      "metadata": {}
+    },
+    "ALIYUN::CMS::Product::ProductType": {
+      "description": "Cloud services that support events.",
+      "category": "CMS",
+      "metadata": {}
+    },
+    "ALIYUN::CR::Instance::InstanceId": {
+      "description": "Queries Container Registry Enterprise Edition instance information.",
+      "category": "CR",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "InstanceStatus": {
+          "description": "The instance status. Values: PENDING, INIT_ERROR, STARTING, RUNNING, STOPPING, STOPPED, DELETING, DELETED."
+        }
+      }
+    },
+    "ALIYUN::CR::NameSpace::Name": {
+      "description": "Queries Container Registry Enterprise Edition namespace information.",
+      "category": "CR",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "NamespaceStatus": {
+          "description": "The namespace status. Values: NORMAL, DELETING."
+        },
+        "InstanceId": {
+          "description": "The instance ID."
+        }
+      }
+    },
+    "ALIYUN::CR::Repository::RepoName": {
+      "description": "Queries Container Registry Enterprise Edition repository information.",
+      "category": "CR",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "RepoStatus": {
+          "description": "The repository status. Values: NORMAL, DELETING, DELETED, ALL."
+        },
+        "InstanceId": {
+          "description": "The instance ID."
+        }
+      }
+    },
+    "ALIYUN::CR::Repository::Tag": {
+      "description": "Queries Container Registry Enterprise Edition image tag information.",
+      "category": "CR",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "RepoId": {
+          "description": "The repository ID."
+        },
+        "InstanceId": {
+          "description": "The instance ID."
+        }
+      }
+    },
+    "ALIYUN::CS::Cluster::ClusterId": {
+      "description": "Container Service cluster ID.",
+      "category": "CS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ClusterState": {
+          "description": "The cluster state. Values: running, initial, unavailable, all."
+        }
+      }
+    },
+    "ALIYUN::CS::Cluster::ClusterNodePool": {
+      "description": "Node pool within a Container Service cluster.",
+      "category": "CS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ClusterId": {
+          "description": "The Container Service cluster ID."
+        }
+      }
+    },
+    "ALIYUN::CS::Cluster::KubernetesVersion": {
+      "description": "Queries Kubernetes version information.",
+      "category": "CS",
+      "metadata": {
+        "ClusterType": {
+          "description": "The cluster type. Values: Kubernetes, ManagedKubernetes, ExternalKubernetes."
+        },
+        "Profile": {
+          "description": "The cluster profile. Values: Default, Edge, Serverless."
+        },
+        "Runtime": {
+          "description": "The runtime type. Values: docker, containerd, Sandboxed-Container.runv."
+        },
+        "KubernetesVersionPrefix": {
+          "description": "The Kubernetes version prefix."
+        },
+        "AutoSelectLastest": {
+          "description": "Whether to automatically select the latest version."
+        }
+      }
+    },
+    "ALIYUN::CS::ManagedKubernetesCluster::ServiceCidr": {
+      "description": "Queries the Service CIDR of a managed Kubernetes cluster.",
+      "category": "CS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ClusterType": {
+          "description": "The cluster type."
+        },
+        "VpcId": {
+          "description": "The VPC ID."
+        },
+        "NodeCidrMask": {
+          "description": "The maximum number of IP addresses per node."
+        },
+        "ContainerCidr": {
+          "description": "The container CIDR block."
+        }
+      }
+    },
+    "ALIYUN::ComputeNest::Artifact::ArtifactId": {
+      "description": "Queries ComputeNest artifact information.",
+      "category": "ComputeNest",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ArtifactType": {
+          "description": "The artifact type."
+        }
+      }
+    },
+    "ALIYUN::ComputeNest::Artifact::ArtifactIdVersion": {
+      "description": "Queries ComputeNest artifact version information.",
+      "category": "ComputeNest",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ArtifactId": {
+          "description": "The artifact ID."
+        }
+      }
+    },
+    "ALIYUN::ComputeNest::Service::ServiceId": {
+      "description": "ComputeNest service ID.",
+      "category": "ComputeNest",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "InUsed": {
+          "description": "Whether the service is in use."
+        },
+        "IsVendor": {
+          "description": "Whether the service has a vendor."
+        }
+      }
+    },
+    "ALIYUN::ComputeNest::ServiceInstance::ServiceInstanceId": {
+      "description": "ComputeNest service instance ID.",
+      "category": "ComputeNest",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ServiceType": {
+          "description": "The service type."
+        },
+        "DeployType": {
+          "description": "The deployment type."
+        },
+        "Status": {
+          "description": "The service status."
+        },
+        "ServiceId": {
+          "description": "The service ID."
+        },
+        "Version": {
+          "description": "The service version."
+        },
+        "IsVendor": {
+          "description": "Whether the service has a vendor."
+        }
+      }
+    },
+    "ALIYUN::ComputeNestSupplier::Service::ServiceVersion": {
+      "description": "ComputeNest service version.",
+      "category": "ComputeNest",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ServiceId": {
+          "description": "The service ID."
+        }
+      }
+    },
+    "ALIYUN::DNS::Domain::ValidateDomain": {
+      "description": "Validates DNS domain availability.",
+      "category": "DNS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "DomainType": {
+          "description": "The domain type."
+        }
+      }
+    },
+    "ALIYUN::DashVector::ApiKey": {
+      "description": "Queries DashVector API-KEY.",
+      "category": "DashVector",
+      "metadata": {}
+    },
+    "ALIYUN::Domain::DomainName": {
+      "description": "Queries domain name information.",
+      "category": "Domain",
+      "metadata": {
+        "ShowDomainPrefixInput": {
+          "description": "Whether to allow inputting a domain prefix."
+        },
+        "MaxLength": {
+          "description": "The maximum domain name length."
+        },
+        "CheckICP": {
+          "description": "Whether to check ICP filing status."
+        }
+      }
+    },
+    "ALIYUN::EAS::Instance::InstanceType": {
+      "description": "Queries EAS instance types.",
+      "category": "EAS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "SubscriptionType": {
+          "description": "The billing type. Values: Subscription (prepaid), PayAsYouGo (postpaid)."
+        }
+      }
+    },
+    "ALIYUN::EAS::Resource::ResourceId": {
+      "description": "Queries EAS resource group information.",
+      "category": "EAS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "ALIYUN::ECD::Bundle::DesktopType": {
+      "description": "Queries cloud desktop specification details.",
+      "category": "ECD",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "ALIYUN::ECI::ContainerGroup::ContainerGroupId": {
+      "description": "Queries ECI container group information.",
+      "category": "ECI",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "VSwitchId": {
+          "description": "The vSwitch ID of the instance."
+        },
+        "ZoneId": {
+          "description": "The zone ID of the instance."
+        },
+        "SecurityGroupId": {
+          "description": "The security group ID of the instance."
+        },
+        "ComputeCategory": {
+          "description": "The compute category."
+        },
+        "Status": {
+          "description": "The instance status. Values: Pending, Running, Succeeded, Failed, Scheduling, ScheduleFailed, Restarting, Updating, Terminating, Expired."
+        }
+      }
+    },
+    "ALIYUN::ECS::ZoneId": {
+      "description": "Queries ECS availability zone IDs.",
+      "category": "ECS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "SystemDiskCategory": {
+          "description": "The system disk category."
+        },
+        "InstanceType": {
+          "description": "The instance type."
+        },
+        "InstanceChargeType": {
+          "description": "The instance billing method."
+        },
+        "WithAvailableResource": {
+          "description": "Whether to filter zones with available instance type inventory."
+        }
+      }
+    },
+    "ALIYUN::ECS::Command::CommandId": {
+      "description": "Cloud Assistant command or Alibaba Cloud command ID.",
+      "category": "ECS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ImageId": {
+          "description": "The image ID. Filters commands by the image OS type."
+        }
+      }
+    },
+    "ALIYUN::ECS::DeploymentSet::DeploymentSetId": {
+      "description": "Queries ECS deployment set IDs.",
+      "category": "ECS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "Strategy": {
+          "description": "The deployment strategy. Values: Availability, AvailabilityGroup."
+        }
+      }
+    },
+    "ALIYUN::ECS::Disk::DataDiskCategory": {
+      "description": "Data disk category.",
+      "category": "ECS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ZoneId": {
+          "description": "The zone ID."
+        },
+        "InstanceType": {
+          "description": "The instance type."
+        }
+      }
+    },
+    "ALIYUN::ECS::Disk::DiskId": {
+      "description": "Disk ID.",
+      "category": "ECS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ZoneId": {
+          "description": "The zone ID."
+        },
+        "InstanceId": {
+          "description": "The instance ID."
+        },
+        "DiskType": {
+          "description": "The disk type."
+        },
+        "Category": {
+          "description": "The disk category."
+        },
+        "SnapshotId": {
+          "description": "The snapshot ID."
+        },
+        "DiskChargeType": {
+          "description": "The disk billing method."
+        }
+      }
+    },
+    "ALIYUN::ECS::Disk::SystemDiskCategory": {
+      "description": "System disk category.",
+      "category": "ECS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ZoneId": {
+          "description": "The zone ID."
+        },
+        "InstanceType": {
+          "description": "The instance type."
+        }
+      }
+    },
+    "ALIYUN::ECS::Image::ImageId": {
+      "description": "Image ID.",
+      "category": "ECS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "SupportedImageOwnerAlias": {
+          "description": "Supported image owner aliases."
+        },
+        "InstanceType": {
+          "description": "The instance type."
+        },
+        "ImageFamily": {
+          "description": "The image family name."
+        },
+        "IsSupportIoOptimized": {
+          "description": "Whether the image supports I/O optimized instances."
+        },
+        "OSType": {
+          "description": "The operating system type."
+        },
+        "Architecture": {
+          "description": "The image architecture."
+        },
+        "Usage": {
+          "description": "Whether the image is running on an ECS instance."
+        }
+      }
+    },
+    "ALIYUN::ECS::Instance::AttributeSelector": {
+      "description": "ECS attribute selector.",
+      "category": "ECS",
+      "metadata": {}
+    },
+    "ALIYUN::ECS::Instance::InstanceId": {
+      "description": "ECS instance ID.",
+      "category": "ECS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "InstanceType": {
+          "description": "The instance type."
+        },
+        "InstanceTypeFamily": {
+          "description": "The instance type family."
+        },
+        "Platform": {
+          "description": "The operating system platform."
+        },
+        "OSType": {
+          "description": "The operating system type."
+        },
+        "Status": {
+          "description": "The instance status."
+        },
+        "NetworkType": {
+          "description": "The network type."
+        },
+        "DisabledNetworkType": {
+          "description": "The disabled network type."
+        },
+        "ShowNetworkType": {
+          "description": "Whether to show the network type."
+        },
+        "InternetChargeType": {
+          "description": "The internet billing method."
+        },
+        "DisabledInternetChargeType": {
+          "description": "The disabled internet billing method."
+        },
+        "ShowInternetChargeType": {
+          "description": "Whether to show the internet billing method."
+        },
+        "ChargeType": {
+          "description": "The instance billing method."
+        },
+        "DisabledChargeType": {
+          "description": "The disabled billing method."
+        },
+        "ShowChargeType": {
+          "description": "Whether to show the billing method."
+        }
+      }
+    },
+    "ALIYUN::ECS::Instance::InstancePropertyEditor": {
+      "description": "ECS instance property editor.",
+      "category": "ECS",
+      "metadata": {}
+    },
+    "ALIYUN::ECS::Instance::InstanceType": {
+      "description": "ECS instance type.",
+      "category": "ECS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ZoneId": {
+          "description": "The zone ID."
+        },
+        "InstanceChargeType": {
+          "description": "The instance billing method."
+        },
+        "SpotStrategy": {
+          "description": "The spot pricing strategy for pay-as-you-go instances."
+        },
+        "CreateACKClusterParams": {
+          "description": "Filters ECS instance types supported by Container Service."
+        },
+        "NetworkPlugin": {
+          "description": "The network plugin, e.g. terway-eniip."
+        },
+        "Constraints": {
+          "description": "Instance type filter conditions (supports multiple conditions), including InstanceType, InstanceTypeFamily, vCPU, Memory, Architecture, CustomizeFamily, etc."
+        }
+      }
+    },
+    "ALIYUN::ECS::Instance::MaxBandwidthIn": {
+      "description": "ECS maximum inbound public bandwidth.",
+      "category": "ECS",
+      "metadata": {}
+    },
+    "ALIYUN::ECS::Instance::OSType": {
+      "description": "Queries the OS type of an ECS instance.",
+      "category": "ECS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "InstanceId": {
+          "description": "The ECS instance ID."
+        }
+      }
+    },
+    "ALIYUN::ECS::Instance::Password": {
+      "description": "ECS instance password component. Password must be 8-30 characters and contain at least three of: uppercase letters, lowercase letters, digits, and special characters.",
+      "category": "ECS",
+      "metadata": {}
+    },
+    "ALIYUN::ECS::Instance::RenewPeriod": {
+      "description": "ECS renewal period.",
+      "category": "ECS",
+      "metadata": {}
+    },
+    "ALIYUN::ECS::Instance::StopMode": {
+      "description": "ECS stop mode.",
+      "category": "ECS",
+      "metadata": {}
+    },
+    "ALIYUN::ECS::InstanceType::AvailableInstanceType": {
+      "description": "Available ECS instance types.",
+      "category": "ECS",
+      "metadata": {}
+    },
+    "ALIYUN::ECS::KeyPair::KeyPairName": {
+      "description": "Key pair.",
+      "category": "ECS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "ALIYUN::ECS::LaunchTemplate::LaunchTemplateId": {
+      "description": "Instance launch template ID.",
+      "category": "ECS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "ALIYUN::ECS::LaunchTemplate::LaunchTemplateVersion": {
+      "description": "Instance launch template version.",
+      "category": "ECS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "LaunchTemplateId": {
+          "description": "The launch template ID."
+        }
+      }
+    },
+    "ALIYUN::ECS::ManagedInstance::InstanceId": {
+      "description": "ECS managed instance ID.",
+      "category": "ECS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "OsType": {
+          "description": "The OS type of the managed instance."
+        }
+      }
+    },
+    "ALIYUN::ECS::RAM::Role": {
+      "description": "RAM role assigned to the ECS instance.",
+      "category": "ECS",
+      "metadata": {}
+    },
+    "ALIYUN::ECS::RegionId": {
+      "description": "Region ID (defaults to the region of the stack).",
+      "category": "ECS",
+      "metadata": {}
+    },
+    "ALIYUN::ECS::RegionId::RegionDeploy": {
+      "description": "Sets the ECS deployment region.",
+      "category": "ECS",
+      "metadata": {}
+    },
+    "ALIYUN::ECS::RegionId::TargetRegionIds": {
+      "description": "ECS instance target region IDs.",
+      "category": "ECS",
+      "metadata": {}
+    },
+    "ALIYUN::ECS::ResourceGroup::ResourceGroupId": {
+      "description": "Resource group.",
+      "category": "ECS",
+      "metadata": {}
+    },
+    "ALIYUN::ECS::SecurityGroup::PortRange": {
+      "description": "Sets ECS security group port range based on IP protocol.",
+      "category": "ECS",
+      "metadata": {
+        "IpProtocol": {
+          "description": "The IP protocol. Values: ALL, TCP, UDP, ICMP, GRE, ICMPv6."
+        }
+      }
+    },
+    "ALIYUN::ECS::SecurityGroup::SecurityGroupId": {
+      "description": "Security group ID.",
+      "category": "ECS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "VpcId": {
+          "description": "The VPC ID."
+        }
+      }
+    },
+    "ALIYUN::ECS::Snapshot::AutoSnapshotPolicyId": {
+      "description": "Auto snapshot policy ID.",
+      "category": "ECS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "ALIYUN::ECS::Snapshot::SnapshotId": {
+      "description": "ECS disk snapshot ID.",
+      "category": "ECS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "InstanceId": {
+          "description": "The ECS instance ID."
+        },
+        "DiskId": {
+          "description": "The disk ID."
+        },
+        "Status": {
+          "description": "The snapshot status."
+        },
+        "SnapshotType": {
+          "description": "The snapshot creation type."
+        },
+        "Category": {
+          "description": "The snapshot category."
+        }
+      }
+    },
+    "ALIYUN::ECS::TAG": {
+      "description": "Tags bound to ECS instances.",
+      "category": "ECS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ResourceType": {
+          "description": "The resource type."
+        }
+      }
+    },
+    "ALIYUN::ECS::VPC::VPCId": {
+      "description": "VPC ID.",
+      "category": "ECS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "ALIYUN::ECS::VSwitch": {
+      "description": "VSwitch object.",
+      "category": "ECS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ZoneId": {
+          "description": "The zone ID."
+        },
+        "VpcId": {
+          "description": "The VPC ID."
+        },
+        "InstanceType": {
+          "description": "The instance type."
+        }
+      }
+    },
+    "ALIYUN::EHPC::Cluster::ClusterId": {
+      "description": "EHPC cluster selection.",
+      "category": "EHPC",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "ALIYUN::EHPC::FileSystem::FileSystemId": {
+      "description": "File system ID.",
+      "category": "EHPC",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "ALIYUN::EHPC::FileSystem::MountTargetDomain": {
+      "description": "Mount target.",
+      "category": "EHPC",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "VolumeId": {
+          "description": "The Alibaba Cloud NAS instance ID."
+        },
+        "VpcId": {
+          "description": "The VPC ID."
+        },
+        "VSwitchId": {
+          "description": "The vSwitch ID."
+        }
+      }
+    },
+    "ALIYUN::ESS::AutoScalingGroup::AutoScalingGroupId": {
+      "description": "ESS auto scaling group ID.",
+      "category": "ESS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "ALIYUN::ESS::ECIScalingConfiguration::ContainerName": {
+      "description": "Queries ECI-type scaling configuration information.",
+      "category": "ESS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ScalingGroupId": {
+          "description": "The scaling group ID."
+        },
+        "ScalingConfigurationId": {
+          "description": "The scaling configuration ID."
+        }
+      }
+    },
+    "ALIYUN::ESS::ECIScalingConfiguration::ScalingConfigurationId": {
+      "description": "Queries the scaling configuration ID.",
+      "category": "ESS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ScalingGroupId": {
+          "description": "The scaling group ID."
+        },
+        "AutoSelectFirst": {
+          "description": "Whether to auto-select the first item."
+        }
+      }
+    },
+    "ALIYUN::ESS::ScalingConfiguration::ScalingConfigurationId": {
+      "description": "Auto Scaling configuration ID.",
+      "category": "ESS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "ALIYUN::Elasticsearch::Instance::InstanceType": {
+      "description": "Elasticsearch instance type.",
+      "category": "Elasticsearch",
+      "metadata": {}
+    },
+    "ALIYUN::Emr::ECSCluster::ClusterId": {
+      "description": "Queries EMR cluster list.",
+      "category": "Emr",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ClusterTypes": {
+          "description": "Cluster type list. Values: DATALAKE, OLAP, DATAFLOW, DATASERVING, CUSTOM, HADOOP."
+        },
+        "ClusterStates": {
+          "description": "Cluster state array. Values: STARTING, START_FAILED, BOOTSTRAPPING, RUNNING, TERMINATING, TERMINATED, TERMINATED_WITH_ERRORS, TERMINATE_FAILED."
+        },
+        "PaymentTypes": {
+          "description": "Payment types. Values: Subscription (prepaid), PayAsYouGo (postpaid)."
+        }
+      }
+    },
+    "ALIYUN::FC3::Function::FunctionName": {
+      "description": "Queries Function Compute 3.0 function information.",
+      "category": "FC3",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "Prefix": {
+          "description": "The function name prefix."
+        }
+      }
+    },
+    "ALIYUN::FC::Function::FunctionName": {
+      "description": "Queries legacy Function Compute function information.",
+      "category": "FC",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "Prefix": {
+          "description": "The function name prefix."
+        },
+        "ServiceName": {
+          "description": "The function service name."
+        },
+        "Qualifier": {
+          "description": "The function service version or alias."
+        },
+        "StartKey": {
+          "description": "Returns results starting from this key (inclusive) in alphabetical order."
+        }
+      }
+    },
+    "ALIYUN::FC::Service::ServiceName": {
+      "description": "Queries legacy Function Compute service information.",
+      "category": "FC",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "Prefix": {
+          "description": "The service name prefix."
+        },
+        "StartKey": {
+          "description": "Returns results starting from this key (inclusive) in alphabetical order."
+        }
+      }
+    },
+    "ALIYUN::Flow::Connection::ConnectionId": {
+      "description": "Lists service connections in Alibaba Cloud DevOps Flow.",
+      "category": "Flow",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "organizationId": {
+          "description": "The organization ID (enterprise ID)."
+        },
+        "sericeConnectionType": {
+          "description": "The service connection type."
+        }
+      }
+    },
+    "ALIYUN::Flow::Organization::OrganizationId": {
+      "description": "Queries the organization list of the current user.",
+      "category": "Flow",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "accessLevel": {
+          "description": "The user access level."
+        },
+        "minAccessLevel": {
+          "description": "The minimum access level for querying organizations with access level greater than or equal to this value."
+        }
+      }
+    },
+    "ALIYUN::Hologres::Instance::InstanceId": {
+      "description": "Queries Hologres instance ID.",
+      "category": "Hologres",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "cmsInstanceType": {
+          "description": "The CloudMonitor instance type. Values: standard, follower, mc-acceleration, warehouse, high-memory."
+        }
+      }
+    },
+    "ALIYUN::InfluxDB::Instance::InstanceType": {
+      "description": "InfluxDB instance type.",
+      "category": "InfluxDB",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ZoneId": {
+          "description": "The zone ID."
+        }
+      }
+    },
+    "ALIYUN::Kafka::Instance::InstanceId": {
+      "description": "Queries Kafka instance information in a specified region.",
+      "category": "Kafka",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "OrderId": {
+          "description": "The order ID."
+        }
+      }
+    },
+    "ALIYUN::Lindorm::Instance::InstanceId": {
+      "description": "Lists Lindorm instances.",
+      "category": "Lindorm",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "SupportEngine": {
+          "description": "The supported data engine type. Values: 1 (search), 2 (time series), 4 (wide column), 8 (file)."
+        },
+        "ServiceType": {
+          "description": "The instance type. Values: lindorm, lindorm_multizone, serverless_lindorm, lindorm_standalone, lts."
+        }
+      }
+    },
+    "ALIYUN::MongoDB::Instance::InstanceType": {
+      "description": "MongoDB instance type.",
+      "category": "MongoDB",
+      "metadata": {}
+    },
+    "ALIYUN::NAS::FileSystem::FileSystemId": {
+      "description": "Queries file system information.",
+      "category": "NAS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "FileSystemType": {
+          "description": "The file system type. Values: all (default), standard, extreme, cpfs."
+        },
+        "VpcId": {
+          "description": "The VPC ID."
+        }
+      }
+    },
+    "ALIYUN::NAS::FileSystem::MountTargetDomain": {
+      "description": "Queries mount target address.",
+      "category": "NAS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "FileSystemId": {
+          "description": "The file system ID."
+        }
+      }
+    },
+    "ALIYUN::NLB::LoadBalancer::LoadBalancerId": {
+      "description": "Network Load Balancer instance ID.",
+      "category": "NLB",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "VpcIds": {
+          "description": "The VPC ID list."
+        },
+        "AddressType": {
+          "description": "The network type."
+        },
+        "ZoneId": {
+          "description": "The zone ID."
+        }
+      }
+    },
+    "ALIYUN::NLB::Zone::ZoneId": {
+      "description": "Network Load Balancer availability zone.",
+      "category": "NLB",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ShowRandom": {
+          "description": "Whether to show the random allocation option."
+        }
+      }
+    },
+    "ALIYUN::OOS::Command::CommandContent": {
+      "description": "OOS execution script.",
+      "category": "OOS",
+      "metadata": {
+        "CommandType": {
+          "description": "The command type. Values: RunBatScript, RunPowerShellScript, RunShellScript, RunPythonScript, RunPerlScript."
+        }
+      }
+    },
+    "ALIYUN::OOS::Component::TimerTrigger": {
+      "description": "OOS timer trigger component.",
+      "category": "OOS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "ALIYUN::OOS::File::FileUrl": {
+      "description": "Uploaded file URL.",
+      "category": "OOS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "FileType": {
+          "description": "The export format. Values: local, https, github, oss."
+        }
+      }
+    },
+    "ALIYUN::OOS::Package::PackageName": {
+      "description": "OOS software package name.",
+      "category": "OOS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "ALIYUN::OOS::Package::PackageVersion": {
+      "description": "OOS software package version.",
+      "category": "OOS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "TemplateName": {
+          "description": "The template name."
+        }
+      }
+    },
+    "ALIYUN::OOS::Parameter::Value": {
+      "description": "OOS common parameter.",
+      "category": "OOS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "ALIYUN::OOS::PatchBaseline::PatchBaselineName": {
+      "description": "Queries OOS patch baseline information.",
+      "category": "OOS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "Name": {
+          "description": "The patch baseline name."
+        }
+      }
+    },
+    "ALIYUN::OOS::SecretParameter::Value": {
+      "description": "OOS encrypted parameter.",
+      "category": "OOS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "ALIYUN::OOS::Template::Content": {
+      "description": "OOS template content.",
+      "category": "OOS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "TemplateVersion": {
+          "description": "The OOS template version."
+        },
+        "TemplateReadOnly": {
+          "description": "Whether the template is read-only."
+        },
+        "TemplateName": {
+          "description": "The OOS template name."
+        }
+      }
+    },
+    "ALIYUN::OOS::Template::TemplateName": {
+      "description": "OOS template name.",
+      "category": "OOS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "ALIYUN::OOS::Template::TemplateVersion": {
+      "description": "OOS template version.",
+      "category": "OOS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "TemplateName": {
+          "description": "The template name."
+        }
+      }
+    },
+    "ALIYUN::OSS::Bucket::BucketName": {
+      "description": "OSS bucket name.",
+      "category": "OSS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "ALIYUN::OSS::Bucket::Object": {
+      "description": "OSS storage object.",
+      "category": "OSS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ObjectType": {
+          "description": "The object storage class."
+        },
+        "ValueType": {
+          "description": "The object value type."
+        }
+      }
+    },
+    "ALIYUN::OSS::Object::ObjectName": {
+      "description": "OSS object name.",
+      "category": "OSS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "BucketName": {
+          "description": "The bucket name."
+        },
+        "ValueType": {
+          "description": "The return address type. Default: OSSUrl."
+        }
+      }
+    },
+    "ALIYUN::POLARDB::DBCluster::DBClusterId": {
+      "description": "PolarDB instance ID.",
+      "category": "PolarDB",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "ALIYUN::POLARDB::DBCluster::DBNodeClass": {
+      "description": "Queries PolarDB cluster available resources.",
+      "category": "PolarDB",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ZoneId": {
+          "description": "The zone ID."
+        },
+        "DBType": {
+          "description": "The database engine type. Values: MySQL, PostgreSQL, Oracle."
+        },
+        "DBVersion": {
+          "description": "The database engine version."
+        },
+        "PayType": {
+          "description": "The billing method. Values: Postpaid (pay-as-you-go), Prepaid (subscription)."
+        }
+      }
+    },
+    "ALIYUN::RAM::Role": {
+      "description": "RAM role.",
+      "category": "RAM",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "ALIYUN::RAM::User": {
+      "description": "RAM user.",
+      "category": "RAM",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "ALIYUN::RDS::Engine::EngineId": {
+      "description": "RDS database engine type.",
+      "category": "RDS",
+      "metadata": {}
+    },
+    "ALIYUN::RDS::Engine::EngineVersion": {
+      "description": "RDS database engine version.",
+      "category": "RDS",
+      "metadata": {
+        "Engine": {
+          "description": "The database engine type."
+        }
+      }
+    },
+    "ALIYUN::RDS::Instance::AccountPassword": {
+      "description": "RDS database account password.",
+      "category": "RDS",
+      "metadata": {}
+    },
+    "ALIYUN::RDS::Instance::InstanceId": {
+      "description": "RDS instance ID.",
+      "category": "RDS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ZoneId": {
+          "description": "The zone ID."
+        }
+      }
+    },
+    "ALIYUN::RDS::Instance::InstanceType": {
+      "description": "RDS instance type.",
+      "category": "RDS",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ZoneId": {
+          "description": "The zone ID."
+        },
+        "InstanceChargeType": {
+          "description": "The instance billing method."
+        },
+        "Category": {
+          "description": "The instance series."
+        },
+        "Engine": {
+          "description": "The database engine type."
+        },
+        "EngineVersion": {
+          "description": "The database engine version."
+        },
+        "DBInstanceClass": {
+          "description": "The instance class."
+        },
+        "OrderType": {
+          "description": "The order type."
+        },
+        "DBInstanceStorageType": {
+          "description": "The instance storage type."
+        },
+        "DispenseMode": {
+          "description": "The allocation mode."
+        }
+      }
+    },
+    "ALIYUN::Redis::Instance::InstanceId": {
+      "description": "Redis instance ID.",
+      "category": "Redis",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "InstanceType": {
+          "description": "The instance type."
+        },
+        "ChargeType": {
+          "description": "The billing method."
+        },
+        "EditionType": {
+          "description": "The edition type."
+        },
+        "InstanceClass": {
+          "description": "The instance class."
+        },
+        "NetworkType": {
+          "description": "The network type."
+        },
+        "InstanceStatus": {
+          "description": "The instance status."
+        }
+      }
+    },
+    "ALIYUN::Redis::Instance::InstanceType": {
+      "description": "Redis instance type.",
+      "category": "Redis",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ZoneId": {
+          "description": "The zone ID."
+        },
+        "InstanceChargeType": {
+          "description": "The instance billing method."
+        },
+        "Engine": {
+          "description": "The database engine type."
+        },
+        "ProductType": {
+          "description": "The product type."
+        },
+        "OrderType": {
+          "description": "The order type."
+        }
+      }
+    },
+    "ALIYUN::ResourceManager::Account": {
+      "description": "Resource Manager account.",
+      "category": "ResourceManager",
+      "metadata": {}
+    },
+    "ALIYUN::ResourceManager::Folder": {
+      "description": "Resource Manager folder.",
+      "category": "ResourceManager",
+      "metadata": {}
+    },
+    "ALIYUN::SAE::Namespace::NamespaceId": {
+      "description": "SAE namespace.",
+      "category": "SAE",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "ALIYUN::SLB::ACL::ACLId": {
+      "description": "SLB access control list ID.",
+      "category": "SLB",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "AddressIPVersion": {
+          "description": "The IP address version."
+        }
+      }
+    },
+    "ALIYUN::SLB::Instance::InstanceType": {
+      "description": "SLB instance type.",
+      "category": "SLB",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ZoneId": {
+          "description": "The zone ID."
+        },
+        "InstanceChargeType": {
+          "description": "The instance billing method."
+        },
+        "SpotStrategy": {
+          "description": "The spot pricing strategy for pay-as-you-go instances."
+        }
+      }
+    },
+    "ALIYUN::SLB::LoadBalancer::LoadBalancerId": {
+      "description": "SLB instance ID.",
+      "category": "SLB",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "VpcId": {
+          "description": "The VPC ID."
+        },
+        "VSwitchId": {
+          "description": "The vSwitch ID."
+        },
+        "NetworkType": {
+          "description": "The network type."
+        },
+        "InstanceChargeType": {
+          "description": "The instance billing method."
+        },
+        "AddressType": {
+          "description": "The address type."
+        },
+        "MasterZoneId": {
+          "description": "The primary zone ID of the SLB instance."
+        },
+        "SlaveZoneId": {
+          "description": "The secondary zone ID of the SLB instance."
+        },
+        "PayType": {
+          "description": "The billing method of the SLB instance."
+        }
+      }
+    },
+    "ALIYUN::SLB::LoadBalancer::ZoneId": {
+      "description": "Queries SLB availability zone information.",
+      "category": "SLB",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "MasterZoneId": {
+          "description": "The primary zone ID."
+        },
+        "ZoneType": {
+          "description": "The zone type. Values: Master (primary, default), Slave (secondary)."
+        }
+      }
+    },
+    "ALIYUN::ServiceCatalog::LaunchOption::PortfolioId": {
+      "description": "Service Catalog portfolio ID.",
+      "category": "ServiceCatalog",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ProductId": {
+          "description": "The product ID."
+        }
+      }
+    },
+    "ALIYUN::ServiceCatalog::ProductVersion::ProductVersionId": {
+      "description": "Product version ID.",
+      "category": "ServiceCatalog",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ProductId": {
+          "description": "The product ID."
+        },
+        "Active": {
+          "description": "Whether the version is active."
+        }
+      }
+    },
+    "ALIYUN::Tag::TagKey": {
+      "description": "Queries tag key information.",
+      "category": "Tag",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ResourceType": {
+          "description": "The resource type."
+        },
+        "ShowSystem": {
+          "description": "Whether to filter system tags."
+        }
+      }
+    },
+    "ALIYUN::Tag::TagValue": {
+      "description": "Queries tag values for a specified tag key.",
+      "category": "Tag",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ResourceType": {
+          "description": "The resource type."
+        },
+        "Key": {
+          "description": "The tag key."
+        }
+      }
+    },
+    "ALIYUN::User::Account::AccountIds": {
+      "description": "User account IDs.",
+      "category": "User",
+      "metadata": {}
+    },
+    "ALIYUN::User::AccountId": {
+      "description": "Gets the Alibaba Cloud primary account ID.",
+      "category": "User",
+      "metadata": {}
+    },
+    "ALIYUN::User::UserId": {
+      "description": "Gets the current Alibaba Cloud user ID.",
+      "category": "User",
+      "metadata": {}
+    },
+    "ALIYUN::VPC::EIP::AllocationId": {
+      "description": "Queries Elastic IP address information.",
+      "category": "VPC",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "EIPStatus": {
+          "description": "The EIP status. Values: Associating, Unassociating, InUse, Available, Releasing."
+        }
+      }
+    },
+    "ALIYUN::VPC::NatGateway::NatGatewayId": {
+      "description": "NAT Gateway ID.",
+      "category": "VPC",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ZoneId": {
+          "description": "The zone ID."
+        },
+        "VpcId": {
+          "description": "The VPC ID."
+        },
+        "InstanceChargeType": {
+          "description": "The instance billing method."
+        },
+        "NatType": {
+          "description": "The NAT gateway type."
+        },
+        "NetworkType": {
+          "description": "The NAT gateway network type."
+        }
+      }
+    },
+    "ALIYUN::VPC::VPC::CidrBlock": {
+      "description": "CIDR block for a new VPC.",
+      "category": "VPC",
+      "metadata": {}
+    },
+    "ALIYUN::VPC::VSwitch::CidrBlock": {
+      "description": "CIDR block for a new vSwitch.",
+      "category": "VPC",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "VpcId": {
+          "description": "The VPC ID."
+        },
+        "VpcCidrBlock": {
+          "description": "The VPC CIDR block."
+        }
+      }
+    },
+    "ALIYUN::VPC::VSwitch::VSwitchId": {
+      "description": "VSwitch ID.",
+      "category": "VPC",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        },
+        "ZoneId": {
+          "description": "The zone ID."
+        },
+        "VpcId": {
+          "description": "The VPC ID."
+        },
+        "InstanceType": {
+          "description": "The instance type."
+        }
+      }
+    },
+    "ALIYUN::VPC::VirtualBorderRouter::RouteTableId": {
+      "description": "Virtual Border Router ID.",
+      "category": "VPC",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    },
+    "ALIYUN::VPC::Zone::ZoneId": {
+      "description": "Queries VPC availability zone information.",
+      "category": "VPC",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack)."
+        }
+      }
+    }
+  }
+}
