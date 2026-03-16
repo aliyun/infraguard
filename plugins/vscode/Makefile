@@ -30,7 +30,7 @@ CURRENT_PLATFORM := $(CURRENT_OS)-$(CURRENT_ARCH)
 
 .DEFAULT_GOAL := help
 
-.PHONY: install build build-all clean help
+.PHONY: install build build-all build-universal clean help
 
 install: ## Install dependencies
 	npm install
@@ -66,6 +66,22 @@ build-all: ## Build extension for all platforms
 		(cd $(ROOT_DIR) && GOOS=$$goos GOARCH=$$goarch $(GOBUILD) -ldflags "$(LDFLAGS)" -o $(CURDIR)/bin/infraguard$$ext $(MAIN_PATH)) && \
 		yes | npx --yes vsce package --target $$platform --no-git-tag-version 2>/dev/null && mv -f *-$$platform-*.vsix build/ || true; \
 	done
+
+build-universal: ## Build a single universal package containing all platform binaries
+	@mkdir -p build bin
+	@for platform in $(ALL_PLATFORMS); do \
+		echo "Building binary for $$platform..."; \
+		os=$$(echo $$platform | cut -d'-' -f1); \
+		arch=$$(echo $$platform | cut -d'-' -f2); \
+		goarch=$$arch; \
+		goos=$$os; \
+		ext=""; \
+		if [ "$$os" = "win32" ]; then goos="windows"; ext=".exe"; fi; \
+		if [ "$$arch" = "x64" ]; then goarch="amd64"; fi; \
+		(cd $(ROOT_DIR) && GOOS=$$goos GOARCH=$$goarch $(GOBUILD) -ldflags "$(LDFLAGS)" -o $(CURDIR)/bin/infraguard-$$platform$$ext $(MAIN_PATH)) || exit 1; \
+	done
+	@echo "Packaging universal VSIX..."
+	@yes | npx --yes vsce package --no-git-tag-version 2>/dev/null && mv -f *.vsix build/ || true
 
 clean: ## Clean build artifacts
 	rm -rf build/ bin/ out/

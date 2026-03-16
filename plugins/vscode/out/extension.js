@@ -41,11 +41,32 @@ const vscode = __importStar(require("vscode"));
 const node_1 = require("vscode-languageclient/node");
 let client;
 const OUTPUT_CHANNEL_NAME = 'InfraGuard';
+const PLATFORM_MAP = {
+    'linux-x64': 'linux-x64',
+    'darwin-x64': 'darwin-x64',
+    'darwin-arm64': 'darwin-arm64',
+    'win32-x64': 'win32-x64',
+};
+function resolveLspBinary(context) {
+    const ext = process.platform === 'win32' ? '.exe' : '';
+    const singleBinary = context.asAbsolutePath(path.join('bin', `infraguard${ext}`));
+    if (fs.existsSync(singleBinary)) {
+        return singleBinary;
+    }
+    const platformKey = `${process.platform}-${process.arch === 'arm64' ? 'arm64' : 'x64'}`;
+    const mapped = PLATFORM_MAP[platformKey];
+    if (mapped) {
+        const platformBinary = context.asAbsolutePath(path.join('bin', `infraguard-${mapped}${ext}`));
+        if (fs.existsSync(platformBinary)) {
+            return platformBinary;
+        }
+    }
+    return undefined;
+}
 function activate(context) {
     const outputChannel = vscode.window.createOutputChannel(OUTPUT_CHANNEL_NAME);
     outputChannel.appendLine('[InfraGuard] Extension activating...');
-    const bundledPath = context.asAbsolutePath(path.join('bin', 'infraguard'));
-    const serverCommand = fs.existsSync(bundledPath) ? bundledPath : 'infraguard';
+    const serverCommand = resolveLspBinary(context) ?? 'infraguard';
     outputChannel.appendLine(`[InfraGuard] Using LSP command: ${serverCommand}`);
     const serverOptions = {
         command: serverCommand,

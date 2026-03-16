@@ -81,9 +81,59 @@ jobs:
           name: vsix-${{ matrix.platform }}
           path: plugins/vscode/build/*.vsix
 
+  build-universal:
+    name: Build universal extension
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build all platform binaries
+        working-directory: plugins/vscode
+        run: |
+          platforms=("linux-x64:linux:amd64:" "darwin-x64:darwin:amd64:" "darwin-arm64:darwin:arm64:" "win32-x64:windows:amd64:.exe")
+          mkdir -p bin
+          for entry in "${platforms[@]}"; do
+            IFS=: read -r platform goos goarch ext <<< "$entry"
+            echo "Building binary for $platform..."
+            GOOS=$goos GOARCH=$goarch CGO_ENABLED=0 \
+              go build -ldflags "-s -w" -o bin/infraguard-${platform}${ext} ../../cmd/infraguard
+          done
+
+      - name: Install dependencies and compile
+        working-directory: plugins/vscode
+        run: |
+          npm install
+          npm run compile
+
+      - name: Package universal VSIX
+        working-directory: plugins/vscode
+        run: |
+          npx vsce package --no-git-tag-version
+          mkdir -p build
+          mv -f *.vsix build/
+
+      - name: Upload universal VSIX artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: vsix-universal
+          path: plugins/vscode/build/*.vsix
+
   release:
     name: Create Release
-    needs: build
+    needs: [build, build-universal]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
