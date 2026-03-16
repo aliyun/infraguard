@@ -10,7 +10,7 @@ InfraGuard fournit une intégration éditeur via un serveur Language Server Prot
 
 ### Installation
 
-Installez l'extension **InfraGuard** depuis le [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=aliyun.infraguard), ou recherchez "InfraGuard" dans le panneau Extensions de VS Code.
+Installez l'extension **InfraGuard** depuis le [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=AlibabaCloudROS.infraguard), ou recherchez "InfraGuard" dans le panneau Extensions de VS Code.
 
 L'extension nécessite que le CLI `infraguard` soit installé et disponible dans votre PATH. Voir [Installation](../getting-started/installation) pour plus de détails.
 

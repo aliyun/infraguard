@@ -44,7 +44,7 @@ infraguard lsp --stdio
 
 ## 编辑器集成
 
-LSP 服务器通常由编辑器扩展自动启动。对于 VS Code，请安装 [InfraGuard 扩展](https://marketplace.visualstudio.com/items?itemName=aliyun.infraguard)，该扩展负责 LSP 生命周期管理。
+LSP 服务器通常由编辑器扩展自动启动。对于 VS Code，请安装 [InfraGuard 扩展](https://marketplace.visualstudio.com/items?itemName=AlibabaCloudROS.infraguard)，该扩展负责 LSP 生命周期管理。
 
 有关更多详细信息，请参阅[编辑器集成](../user-guide/editor-integration)。
 

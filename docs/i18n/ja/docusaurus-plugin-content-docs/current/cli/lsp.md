@@ -44,7 +44,7 @@ infraguard lsp --stdio
 
 ## エディタ統合
 
-LSPサーバーは通常、エディタ拡張機能によって自動的に起動されます。VS Codeの場合は、LSPライフサイクル管理を行う[InfraGuard拡張機能](https://marketplace.visualstudio.com/items?itemName=aliyun.infraguard)をインストールしてください。
+LSPサーバーは通常、エディタ拡張機能によって自動的に起動されます。VS Codeの場合は、LSPライフサイクル管理を行う[InfraGuard拡張機能](https://marketplace.visualstudio.com/items?itemName=AlibabaCloudROS.infraguard)をインストールしてください。
 
 詳細については、[エディタ統合](../user-guide/editor-integration)を参照してください。
 

@@ -44,7 +44,7 @@ infraguard lsp --stdio
 
 ## Integración del Editor
 
-El servidor LSP normalmente se inicia automáticamente por extensiones del editor. Para VS Code, instale la [extensión InfraGuard](https://marketplace.visualstudio.com/items?itemName=aliyun.infraguard) que gestiona el ciclo de vida del LSP.
+El servidor LSP normalmente se inicia automáticamente por extensiones del editor. Para VS Code, instale la [extensión InfraGuard](https://marketplace.visualstudio.com/items?itemName=AlibabaCloudROS.infraguard) que gestiona el ciclo de vida del LSP.
 
 Para más detalles, consulte [Integración del Editor](../user-guide/editor-integration).
 

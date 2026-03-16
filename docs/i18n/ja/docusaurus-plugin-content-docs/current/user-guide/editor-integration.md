@@ -10,7 +10,7 @@ InfraGuard は、組み込みの Language Server Protocol (LSP) サーバーと 
 
 ### インストール
 
-[VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=aliyun.infraguard) から **InfraGuard** 拡張機能をインストールするか、VS Code の拡張機能パネルで「InfraGuard」を検索してください。
+[VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=AlibabaCloudROS.infraguard) から **InfraGuard** 拡張機能をインストールするか、VS Code の拡張機能パネルで「InfraGuard」を検索してください。
 
 この拡張機能には、`infraguard` CLI がインストールされ、PATH で利用可能である必要があります。詳細は [インストール](../getting-started/installation) を参照してください。
 
