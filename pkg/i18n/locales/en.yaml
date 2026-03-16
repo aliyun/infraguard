@@ -492,3 +492,39 @@ errors:
   policy_path_does_not_exist: "policy path does not exist: %s."
   no_rego_files_in_policy_directory: "no .rego files found in policy directory: %s."
 
+# Schema command
+schema:
+  short: "Manage ROS resource type schema"
+  long: "Manage the ROS resource type schema used by the LSP server for autocompletion, validation, and hover."
+  update:
+    short: "Update ROS resource type schema from API"
+    long: "Fetch the latest ROS resource type schema from Alibaba Cloud ROS API and save it locally."
+  updating: "Updating ROS resource type schema..."
+  update_success: "Schema updated successfully (%d resource types)"
+  update_failed: "Failed to update schema"
+
+# LSP command
+lsp:
+  short: "Start ROS Language Server"
+  long: "Start the ROS Language Server Protocol (LSP) server via stdio for editor integration."
+
+# LSP diagnostic messages
+lsp_diag:
+  missing_format_version: "Missing required field: ROSTemplateFormatVersion"
+  invalid_format_version: "Invalid ROSTemplateFormatVersion: %q (expected \"2015-09-01\")"
+  unknown_top_level_key: "Unknown top-level key: %q"
+  did_you_mean: " (did you mean %q?)"
+  missing_type: "Resource %q is missing required Type field"
+  unknown_resource_type: "Unknown resource type: %q"
+  missing_required_property: "Resource %q missing required property: %s"
+  type_mismatch: "Property %q of resource %q: expected type %s"
+  duplicate_key: "Duplicate key %q (first defined at line %d)"
+  param_attr_type_mismatch: "Parameter %q property %q: expected type %s, got %s"
+  param_invalid_type: "Parameter %q: invalid Type value %q"
+  param_missing_type: "Parameter %q is missing required Type field"
+  local_missing_value: "Local %q (type %s) is missing required Value field"
+  local_datasource_missing_properties: "Local %q (type %s) is missing Properties field"
+  mappings_invalid_structure: "Mappings entry %q must be a two-level map"
+  conditions_invalid_expression: "Condition %q must use a condition function (Fn::Equals, Fn::And, Fn::Or, Fn::Not)"
+  undefined_condition: "Undefined condition %q referenced in %s %q"
+

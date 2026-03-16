@@ -1,0 +1,17 @@
+changelog:
+  categories:
+    - title: "🚀 CLI Changes"
+      labels:
+        - "cli"
+    - title: "🧩 VSCode Extension Changes"
+      labels:
+        - "vscode"
+    - title: "📦 Dependencies"
+      labels:
+        - "dependencies"
+    - title: "📝 Other Changes"
+      labels:
+        - "*"
+  exclude:
+    labels:
+      - "skip-changelog"

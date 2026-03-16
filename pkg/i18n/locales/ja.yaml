@@ -491,3 +491,39 @@ errors:
   download_policies: "ポリシーのダウンロードに失敗しました: %w。"
   policy_path_does_not_exist: "ポリシーパスが存在しません: %s。"
   no_rego_files_in_policy_directory: "ポリシーディレクトリに.regoファイルが見つかりません: %s。"
+
+# Schema command
+schema:
+  short: "ROSリソースタイプスキーマを管理"
+  long: "LSPサーバーの自動補完、検証、ホバーに使用されるROSリソースタイプスキーマを管理します。"
+  update:
+    short: "APIからROSリソースタイプスキーマを更新"
+    long: "Alibaba Cloud ROS APIから最新のROSリソースタイプスキーマを取得し、ローカルに保存します。"
+  updating: "ROSリソースタイプスキーマを更新中..."
+  update_success: "スキーマが正常に更新されました（%d リソースタイプ）"
+  update_failed: "スキーマの更新に失敗しました"
+
+# LSP command
+lsp:
+  short: "ROS Language Serverを起動"
+  long: "エディタ統合のためにstdio経由でROS Language Server Protocol (LSP) サーバーを起動します。"
+
+# LSP diagnostic messages
+lsp_diag:
+  missing_format_version: "必須フィールドがありません: ROSTemplateFormatVersion"
+  invalid_format_version: "無効なROSTemplateFormatVersion: %q（期待値 \"2015-09-01\"）"
+  unknown_top_level_key: "不明なトップレベルキー: %q"
+  did_you_mean: "（%q のことですか？）"
+  missing_type: "リソース %q に必須のTypeフィールドがありません"
+  unknown_resource_type: "不明なリソースタイプ: %q"
+  missing_required_property: "リソース %q に必須プロパティがありません: %s"
+  type_mismatch: "リソース %q のプロパティ %q: 期待される型 %s"
+  duplicate_key: "重複キー %q（最初の定義は %d 行目）"
+  param_attr_type_mismatch: "パラメータ %q のプロパティ %q: 期待される型 %s、実際の型 %s"
+  param_invalid_type: "パラメータ %q: 無効な Type 値 %q"
+  param_missing_type: "パラメータ %q に必須の Type フィールドがありません"
+  local_missing_value: "ローカル変数 %q（タイプ %s）に必須の Value フィールドがありません"
+  local_datasource_missing_properties: "ローカル変数 %q（タイプ %s）に Properties フィールドがありません"
+  mappings_invalid_structure: "Mappingsエントリ %q は2階層のマップでなければなりません"
+  conditions_invalid_expression: "条件 %q は条件関数（Fn::Equals、Fn::And、Fn::Or、Fn::Not）を使用する必要があります"
+  undefined_condition: "%s %q で未定義の条件 %q が参照されています"

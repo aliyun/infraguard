@@ -491,3 +491,39 @@ errors:
   download_policies: "error al descargar políticas: %w."
   policy_path_does_not_exist: "la ruta de política no existe: %s."
   no_rego_files_in_policy_directory: "no se encontraron archivos .rego en directorio de políticas: %s."
+
+# Schema command
+schema:
+  short: "Gestionar esquema de tipos de recursos ROS"
+  long: "Gestionar el esquema de tipos de recursos ROS utilizado por el servidor LSP para autocompletado, validación y hover."
+  update:
+    short: "Actualizar esquema de tipos de recursos ROS desde API"
+    long: "Obtener el esquema más reciente de tipos de recursos ROS de la API de Alibaba Cloud ROS y guardarlo localmente."
+  updating: "Actualizando esquema de tipos de recursos ROS..."
+  update_success: "Esquema actualizado exitosamente (%d tipos de recursos)"
+  update_failed: "Error al actualizar esquema"
+
+# LSP command
+lsp:
+  short: "Iniciar servidor de lenguaje ROS"
+  long: "Iniciar el servidor de protocolo de lenguaje ROS (LSP) a través de stdio para integración con editores."
+
+# LSP diagnostic messages
+lsp_diag:
+  missing_format_version: "Falta campo requerido: ROSTemplateFormatVersion"
+  invalid_format_version: "ROSTemplateFormatVersion inválido: %q (esperado \"2015-09-01\")"
+  unknown_top_level_key: "Clave de nivel superior desconocida: %q"
+  did_you_mean: " (¿quiso decir %q?)"
+  missing_type: "El recurso %q no tiene el campo Type requerido"
+  unknown_resource_type: "Tipo de recurso desconocido: %q"
+  missing_required_property: "El recurso %q no tiene la propiedad requerida: %s"
+  type_mismatch: "Propiedad %q del recurso %q: tipo esperado %s"
+  duplicate_key: "Clave duplicada %q (definida primero en la línea %d)"
+  param_attr_type_mismatch: "Parámetro %q propiedad %q: tipo esperado %s, obtenido %s"
+  param_invalid_type: "Parámetro %q: valor Type inválido %q"
+  param_missing_type: "Parámetro %q falta el campo Type requerido"
+  local_missing_value: "La variable local %q (tipo %s) no tiene el campo Value obligatorio"
+  local_datasource_missing_properties: "La variable local %q (tipo %s) no tiene el campo Properties"
+  mappings_invalid_structure: "La entrada de Mappings %q debe ser un mapa de dos niveles"
+  conditions_invalid_expression: "La condición %q debe usar una función de condición (Fn::Equals, Fn::And, Fn::Or, Fn::Not)"
+  undefined_condition: "Condición indefinida %q referenciada en %s %q"

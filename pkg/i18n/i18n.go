@@ -264,6 +264,46 @@ type Messages struct {
 		Low    string `yaml:"low"`
 	} `yaml:"severity"`
 
+	// Schema command
+	Schema struct {
+		Short        string `yaml:"short"`
+		Long         string `yaml:"long"`
+		Update       struct {
+			Short string `yaml:"short"`
+			Long  string `yaml:"long"`
+		} `yaml:"update"`
+		Updating     string `yaml:"updating"`
+		UpdateSuccess string `yaml:"update_success"`
+		UpdateFailed  string `yaml:"update_failed"`
+	} `yaml:"schema"`
+
+	// LSP command
+	LSP struct {
+		Short string `yaml:"short"`
+		Long  string `yaml:"long"`
+	} `yaml:"lsp"`
+
+	// LSP diagnostic messages
+	LSPDiag struct {
+		MissingFormatVersion    string `yaml:"missing_format_version"`
+		InvalidFormatVersion    string `yaml:"invalid_format_version"`
+		UnknownTopLevelKey      string `yaml:"unknown_top_level_key"`
+		DidYouMean              string `yaml:"did_you_mean"`
+		MissingType             string `yaml:"missing_type"`
+		UnknownResourceType     string `yaml:"unknown_resource_type"`
+		MissingRequiredProperty string `yaml:"missing_required_property"`
+		TypeMismatch            string `yaml:"type_mismatch"`
+		DuplicateKey            string `yaml:"duplicate_key"`
+		ParamAttrTypeMismatch              string `yaml:"param_attr_type_mismatch"`
+		ParamInvalidType                   string `yaml:"param_invalid_type"`
+		ParamMissingType                   string `yaml:"param_missing_type"`
+		LocalMissingValue                  string `yaml:"local_missing_value"`
+		LocalDatasourceMissingProperties   string `yaml:"local_datasource_missing_properties"`
+		MappingsInvalidStructure           string `yaml:"mappings_invalid_structure"`
+		ConditionsInvalidExpression        string `yaml:"conditions_invalid_expression"`
+		UndefinedCondition                 string `yaml:"undefined_condition"`
+	} `yaml:"lsp_diag"`
+
 	// Global flags
 	LangFlag string `yaml:"lang_flag"`
 

@@ -491,3 +491,39 @@ errors:
   download_policies: "échec du téléchargement des politiques: %w."
   policy_path_does_not_exist: "le chemin de politique n'existe pas: %s."
   no_rego_files_in_policy_directory: "aucun fichier .rego trouvé dans le répertoire de politiques: %s."
+
+# Schema command
+schema:
+  short: "Gérer le schéma des types de ressources ROS"
+  long: "Gérer le schéma des types de ressources ROS utilisé par le serveur LSP pour l'autocomplétion, la validation et le survol."
+  update:
+    short: "Mettre à jour le schéma des types de ressources ROS depuis l'API"
+    long: "Récupérer le dernier schéma des types de ressources ROS depuis l'API Alibaba Cloud ROS et le sauvegarder localement."
+  updating: "Mise à jour du schéma des types de ressources ROS..."
+  update_success: "Schéma mis à jour avec succès (%d types de ressources)"
+  update_failed: "Échec de la mise à jour du schéma"
+
+# LSP command
+lsp:
+  short: "Démarrer le serveur de langage ROS"
+  long: "Démarrer le serveur de protocole de langage ROS (LSP) via stdio pour l'intégration éditeur."
+
+# LSP diagnostic messages
+lsp_diag:
+  missing_format_version: "Champ requis manquant : ROSTemplateFormatVersion"
+  invalid_format_version: "ROSTemplateFormatVersion invalide : %q (attendu \"2015-09-01\")"
+  unknown_top_level_key: "Clé de niveau supérieur inconnue : %q"
+  did_you_mean: " (vouliez-vous dire %q ?)"
+  missing_type: "La ressource %q n'a pas le champ Type requis"
+  unknown_resource_type: "Type de ressource inconnu : %q"
+  missing_required_property: "La ressource %q manque la propriété requise : %s"
+  type_mismatch: "Propriété %q de la ressource %q : type attendu %s"
+  duplicate_key: "Clé dupliquée %q (d'abord définie à la ligne %d)"
+  param_attr_type_mismatch: "Paramètre %q propriété %q : type attendu %s, obtenu %s"
+  param_invalid_type: "Paramètre %q : valeur Type invalide %q"
+  param_missing_type: "Paramètre %q : champ Type requis manquant"
+  local_missing_value: "La variable locale %q (type %s) n'a pas le champ Value requis"
+  local_datasource_missing_properties: "La variable locale %q (type %s) n'a pas le champ Properties"
+  mappings_invalid_structure: "L'entrée Mappings %q doit être un dictionnaire à deux niveaux"
+  conditions_invalid_expression: "La condition %q doit utiliser une fonction de condition (Fn::Equals, Fn::And, Fn::Or, Fn::Not)"
+  undefined_condition: "Condition indéfinie %q référencée dans %s %q"

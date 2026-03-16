@@ -1,0 +1,29 @@
+{
+  "name": "ROS Template (JSON)",
+  "scopeName": "source.ros-template.json",
+  "patterns": [
+    { "include": "#ros-functions" },
+    { "include": "#ros-resource-types" },
+    { "include": "#ros-pseudo-params" },
+    { "include": "#ros-keywords" },
+    { "include": "source.json" }
+  ],
+  "repository": {
+    "ros-functions": {
+      "match": "\"(Fn::(GetAtt|Join|Sub|Select|Split|Base64Encode|Base64Decode|FindInMap|If|Equals|And|Or|Not|Replace|GetAZs|GetJsonValue|MergeMapToList|ListMerge|SelectMapList|Add|Avg|Max|Min|Calculate|Length|Contains|Any|EachMemberIn|MatchPattern|Str|Index|Indent|GetStackOutput|Jq|FormatTime|MarketplaceImage)|Ref)\"",
+      "name": "support.function.ros"
+    },
+    "ros-resource-types": {
+      "match": "\"ALIYUN::[A-Za-z]+::[A-Za-z]+\"",
+      "name": "entity.name.type.ros"
+    },
+    "ros-pseudo-params": {
+      "match": "\"ALIYUN::(StackName|StackId|Region|AccountId|TenantId|ResourceGroupId|NoValue|Index)\"",
+      "name": "constant.language.ros"
+    },
+    "ros-keywords": {
+      "match": "\"(ROSTemplateFormatVersion|Description|Metadata|Parameters|Mappings|Conditions|Resources|Outputs|Rules|Locals|Transform|Workspace)\"",
+      "name": "keyword.control.ros"
+    }
+  }
+}
