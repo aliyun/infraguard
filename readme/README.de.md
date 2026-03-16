@@ -18,6 +18,7 @@
 - 🎯 **Dual-Scan-Modi** - Statische Analyse oder cloud-basierte Preview-Validierung
 - 📦 **Integrierte Regeln** - Umfassende Abdeckung für Aliyun-Dienste
 - 🏆 **Compliance-Pakete** - MLPS, ISO 27001, PCI-DSS, SOC 2 und mehr
+- ✏️ **Editor-Integration** - VS Code-Erweiterung mit Auto-Vervollständigung, Echtzeit-Diagnose und Hover-Dokumentation für ROS-Templates
 - 🌍 **Mehrsprachige Unterstützung** - Verfügbar in 7 Sprachen (Deutsch, Englisch, Chinesisch, Spanisch, Französisch, Japanisch, Portugiesisch)
 - 🎨 **Mehrere Ausgabeformate** - Tabellen-, JSON- und interaktive HTML-Berichte
 - 🔧 **Erweiterbar** - Schreiben Sie benutzerdefinierte Richtlinien in Rego (Open Policy Agent)

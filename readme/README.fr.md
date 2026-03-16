@@ -18,6 +18,7 @@
 - 🎯 **Modes de Scan Double** - Analyse statique ou validation de prévisualisation basée sur le cloud
 - 📦 **Règles Intégrées** - Couverture complète pour les services Aliyun
 - 🏆 **Packs de Conformité** - MLPS, ISO 27001, PCI-DSS, SOC 2 et plus
+- ✏️ **Intégration Éditeur** - Extension VS Code avec auto-complétion, diagnostics en temps réel et documentation au survol pour les templates ROS
 - 🌍 **Support Multilingue** - Disponible en 7 langues (Français, Anglais, Chinois, Espagnol, Allemand, Japonais, Portugais)
 - 🎨 **Plusieurs Formats de Sortie** - Tableaux, JSON et rapports HTML interactifs
 - 🔧 **Extensible** - Écrivez des politiques personnalisées en Rego (Open Policy Agent)

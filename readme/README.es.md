@@ -18,6 +18,7 @@
 - 🎯 **Modos de Escaneo Dual** - Análisis estático o validación de vista previa basada en la nube
 - 📦 **Reglas Integradas** - Cobertura integral para servicios de Aliyun
 - 🏆 **Paquetes de Cumplimiento** - MLPS, ISO 27001, PCI-DSS, SOC 2 y más
+- ✏️ **Integración con Editores** - Extensión de VS Code con autocompletado, diagnósticos en tiempo real y documentación al pasar el cursor para plantillas ROS
 - 🌍 **Soporte Multilingüe** - Disponible en 7 idiomas (Español, Inglés, Chino, Francés, Alemán, Japonés, Portugués)
 - 🎨 **Múltiples Formatos de Salida** - Tablas, JSON e informes HTML interactivos
 - 🔧 **Extensible** - Escriba políticas personalizadas en Rego (Open Policy Agent)

@@ -30,6 +30,7 @@ InfraGuard folgt dem Prinzip **Policy as Code** - Compliance-Richtlinien als ver
 
 - **Pre-Deployment-Validierung** - Erkennen Sie Compliance-Probleme, bevor sie die Produktion erreichen
 - **Richtlinienpakete** - Vorgefertigte Compliance-Pakete (MLPS, ISO 27001, PCI-DSS, etc.)
+- **Editor-Integration** - VS Code-Erweiterung mit Auto-Vervollständigung, Echtzeit-Diagnose und Hover-Dokumentation für ROS-Templates
 - **Internationalisierung** - Vollständige Unterstützung für 7 Sprachen (Englisch, Chinesisch, Spanisch, Französisch, Deutsch, Japanisch, Portugiesisch)
 - **Mehrere Ausgabeformate** - Tabellen-, JSON- und HTML-Berichte
 - **Erweiterbar** - Schreiben Sie benutzerdefinierte Richtlinien in Rego

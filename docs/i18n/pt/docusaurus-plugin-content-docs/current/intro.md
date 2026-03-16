@@ -30,6 +30,7 @@ InfraGuard adota a abordagem **Policy as Code** - tratando políticas de conform
 
 - **Validação Pré-implantação** - Detecte problemas de conformidade antes que cheguem à produção
 - **Pacotes de Políticas** - Pacotes de conformidade pré-construídos (MLPS, ISO 27001, PCI-DSS, etc.)
+- **Integração com Editores** - Extensão VS Code com autocompletar, diagnósticos em tempo real e documentação ao passar o cursor para templates ROS
 - **Internacionalização** - Suporte completo para 7 idiomas (Inglês, Chinês, Espanhol, Francês, Alemão, Japonês, Português)
 - **Múltiplos Formatos de Saída** - Tabelas, JSON e relatórios HTML
 - **Extensível** - Escreva políticas personalizadas em Rego

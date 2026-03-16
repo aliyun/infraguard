@@ -18,6 +18,7 @@
 - 🎯 **Modos de Varredura Dupla** - Análise estática ou validação de visualização baseada em nuvem
 - 📦 **Regras Integradas** - Cobertura abrangente para serviços Aliyun
 - 🏆 **Pacotes de Conformidade** - MLPS, ISO 27001, PCI-DSS, SOC 2 e mais
+- ✏️ **Integração com Editores** - Extensão VS Code com autocompletar, diagnósticos em tempo real e documentação ao passar o cursor para templates ROS
 - 🌍 **Suporte Multilíngue** - Disponível em 7 idiomas (Português, Inglês, Chinês, Espanhol, Francês, Alemão, Japonês)
 - 🎨 **Múltiplos Formatos de Saída** - Tabelas, JSON e relatórios HTML interativos
 - 🔧 **Extensível** - Escreva políticas personalizadas em Rego (Open Policy Agent)

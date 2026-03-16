@@ -32,6 +32,7 @@ const sidebars: SidebarsConfig = {
         'user-guide/output-formats',
         'user-guide/configuration',
         'user-guide/ros-features',
+        'user-guide/editor-integration',
       ],
     },
     {
@@ -93,6 +94,8 @@ const sidebars: SidebarsConfig = {
         'cli/policy',
         'cli/config',
         'cli/update',
+        'cli/lsp',
+        'cli/schema',
         'cli/version',
       ],
     },
