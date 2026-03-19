@@ -328,6 +328,8 @@ func (h *jsonFormatHandler) BuildParameterPropertySnippet(item *protocol.Complet
 		newTextInner = fmt.Sprintf("AllowedValues\": [\n%s$0\n]", s1)
 	case "Description":
 		newTextInner = fmt.Sprintf("Description\": {\n%s\"en\": \"${1:Description}\",\n%s\"zh-cn\": \"${2:描述}\"\n}", s1, s1)
+	case "ConstraintDescription":
+		newTextInner = fmt.Sprintf("ConstraintDescription\": {\n%s\"en\": \"${1:ConstraintDescription}\",\n%s\"zh-cn\": \"${2:约束描述}\"\n}", s1, s1)
 	case "Label":
 		newTextInner = fmt.Sprintf("Label\": {\n%s\"en\": \"${1:Label}\",\n%s\"zh-cn\": \"${2:标签}\"\n}", s1, s1)
 	case "Placeholder":

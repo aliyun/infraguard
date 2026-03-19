@@ -138,7 +138,7 @@ var ROSParameterProperties = []ROSParameterProperty{
 	{Name: "NoEcho", Required: false, Description: "If true, the parameter value is masked with asterisks (*)", ValueType: "Boolean"},
 	{Name: "Confirm", Required: false, Description: "If true, requires a second input confirmation when NoEcho is true", ValueType: "Boolean"},
 	{Name: "Description", Required: false, Description: "A description of the parameter, supports zh-cn and en keys", ValueType: "String/Map"},
-	{Name: "ConstraintDescription", Required: false, Description: "A message explaining the constraint when validation fails", ValueType: "String"},
+	{Name: "ConstraintDescription", Required: false, Description: "A message explaining the constraint when validation fails, supports zh-cn and en keys", ValueType: "String/Map"},
 	{Name: "Label", Required: false, Description: "An alias for the parameter, mapped to a label in web forms", ValueType: "String/Map"},
 	{Name: "AssociationProperty", Required: false, Description: "Automatically validates parameter values and provides selectable options", ValueType: "String"},
 	{Name: "AssociationPropertyMetadata", Required: false, Description: "Defines constraints for AssociationProperty filtering", ValueType: "Map"},

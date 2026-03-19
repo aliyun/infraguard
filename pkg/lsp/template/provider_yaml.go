@@ -137,6 +137,8 @@ func (h *yamlFormatHandler) BuildParameterPropertySnippet(item *protocol.Complet
 		item.InsertText = "AllowedValues:\n  - $0"
 	case "Description":
 		item.InsertText = "Description:\n  en: ${1:Description}\n  zh-cn: ${2:描述}"
+	case "ConstraintDescription":
+		item.InsertText = "ConstraintDescription:\n  en: ${1:ConstraintDescription}\n  zh-cn: ${2:约束描述}"
 	case "Label":
 		item.InsertText = "Label:\n  en: ${1:Label}\n  zh-cn: ${2:标签}"
 	case "Placeholder":
@@ -289,17 +291,20 @@ func (h *yamlFormatHandler) FindConditionValueRange(content, section, entryName 
 
 func (h *yamlFormatHandler) ExtractKeyFromLine(line string) string {
 	trimmed := strings.TrimSpace(line)
-	key := strings.SplitN(trimmed, ":", 2)[0]
-	return strings.TrimSpace(key)
+	colonIdx := findYAMLKeySepColon(trimmed)
+	if colonIdx <= 0 {
+		return trimmed
+	}
+	return strings.TrimSpace(trimmed[:colonIdx])
 }
 
 func (h *yamlFormatHandler) ExtractValueFromLine(line string) string {
 	trimmed := strings.TrimSpace(line)
-	parts := strings.SplitN(trimmed, ":", 2)
-	if len(parts) < 2 {
+	colonIdx := findYAMLKeySepColon(trimmed)
+	if colonIdx < 0 || colonIdx >= len(trimmed)-1 {
 		return ""
 	}
-	return strings.TrimSpace(parts[1])
+	return strings.TrimSpace(trimmed[colonIdx+1:])
 }
 
 func (h *yamlFormatHandler) ValidateFormat(ctx ValidationContext) []protocol.Diagnostic {
@@ -630,6 +635,19 @@ func findConditionValueRangeYAML(content, section, entryName string) protocol.Ra
 	return protocol.Range{}
 }
 
+// findYAMLKeySepColon returns the index of the YAML key-value separator colon.
+// In YAML, a colon is a key-value separator only when followed by a space/tab
+// or at the end of the string. Colons inside keys (e.g. ALIYUN::ROS::Interface)
+// are not separators.
+func findYAMLKeySepColon(s string) int {
+	for i := 0; i < len(s); i++ {
+		if s[i] == ':' && (i == len(s)-1 || s[i+1] == ' ' || s[i+1] == '\t') {
+			return i
+		}
+	}
+	return -1
+}
+
 // --- YAML-specific validation ---
 
 func validateDuplicateKeys(ctx ValidationContext) []protocol.Diagnostic {
@@ -650,7 +668,7 @@ func validateDuplicateKeys(ctx ValidationContext) []protocol.Diagnostic {
 
 		indent := countIndent(line)
 
-		colonIdx := strings.Index(trimmed, ":")
+		colonIdx := findYAMLKeySepColon(trimmed)
 		if colonIdx <= 0 {
 			continue
 		}

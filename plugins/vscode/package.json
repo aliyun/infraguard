@@ -2,7 +2,7 @@
   "name": "infraguard",
   "displayName": "InfraGuard",
   "description": "ROS (Resource Orchestration Service) template support - autocompletion, validation, and hover documentation",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "AlibabaCloudROS",
   "icon": "icon.png",
   "engines": {
