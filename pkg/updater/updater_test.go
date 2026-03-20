@@ -75,6 +75,42 @@ func TestUpdater(t *testing.T) {
 		})
 	})
 
+	Convey("parseCLITag", t, func() {
+		Convey("Should parse cli/ prefixed tags", func() {
+			v, ok := parseCLITag("cli/v0.2.0")
+			So(ok, ShouldBeTrue)
+			So(v, ShouldEqual, "0.2.0")
+		})
+
+		Convey("Should parse cli/ tag without v prefix", func() {
+			v, ok := parseCLITag("cli/0.3.0")
+			So(ok, ShouldBeTrue)
+			So(v, ShouldEqual, "0.3.0")
+		})
+
+		Convey("Should accept plain v-prefixed tags for backward compatibility", func() {
+			v, ok := parseCLITag("v0.1.0")
+			So(ok, ShouldBeTrue)
+			So(v, ShouldEqual, "0.1.0")
+		})
+
+		Convey("Should accept plain version tags without v prefix", func() {
+			v, ok := parseCLITag("0.1.0")
+			So(ok, ShouldBeTrue)
+			So(v, ShouldEqual, "0.1.0")
+		})
+
+		Convey("Should reject vscode/ prefixed tags", func() {
+			_, ok := parseCLITag("vscode/v0.2.0")
+			So(ok, ShouldBeFalse)
+		})
+
+		Convey("Should reject other prefixed tags", func() {
+			_, ok := parseCLITag("server/v1.0.0")
+			So(ok, ShouldBeFalse)
+		})
+	})
+
 	Convey("Platform detection", t, func() {
 		Convey("Should detect OS and architecture", func() {
 			goos, goarch := DetectPlatform()

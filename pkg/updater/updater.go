@@ -19,6 +19,7 @@ const (
 	githubAPIURL     = "https://api.github.com/repos/aliyun/infraguard/releases"
 	downloadTimeout  = 5 * time.Minute
 	progressInterval = 100 * time.Millisecond
+	cliTagPrefix     = "cli/"
 )
 
 // Release represents a GitHub release
@@ -72,12 +73,13 @@ func (u *Updater) GetLatestVersion() (string, error) {
 		return "", err
 	}
 
-	// Find the latest non-prerelease version
 	for _, release := range releases {
 		if !release.Prerelease && release.TagName != "" {
-			// Remove 'v' prefix if present
-			version := strings.TrimPrefix(release.TagName, "v")
-			return version, nil
+			v, ok := parseCLITag(release.TagName)
+			if !ok {
+				continue
+			}
+			return v, nil
 		}
 	}
 
@@ -91,17 +93,35 @@ func (u *Updater) GetSpecificVersion(targetVersion string) (*Release, error) {
 		return nil, err
 	}
 
-	// Normalize target version (remove 'v' prefix if present)
 	targetVersion = strings.TrimPrefix(targetVersion, "v")
 
 	for _, release := range releases {
-		releaseVersion := strings.TrimPrefix(release.TagName, "v")
-		if releaseVersion == targetVersion {
+		v, ok := parseCLITag(release.TagName)
+		if !ok {
+			continue
+		}
+		if v == targetVersion {
 			return &release, nil
 		}
 	}
 
 	return nil, fmt.Errorf("version %s not found", targetVersion)
+}
+
+// parseCLITag checks if a tag belongs to the CLI component (prefixed with "cli/")
+// and returns the clean version string. For backward compatibility, tags in the
+// plain "v0.x.x" format (without any "/" prefix) are also accepted.
+func parseCLITag(tag string) (string, bool) {
+	if strings.HasPrefix(tag, cliTagPrefix) {
+		v := strings.TrimPrefix(tag, cliTagPrefix)
+		v = strings.TrimPrefix(v, "v")
+		return v, true
+	}
+	if !strings.Contains(tag, "/") {
+		v := strings.TrimPrefix(tag, "v")
+		return v, true
+	}
+	return "", false
 }
 
 // fetchReleases fetches all releases from GitHub API
