@@ -17,11 +17,12 @@ type ResourceType struct {
 
 // Property represents a resource property definition.
 type Property struct {
-	Type        string      `json:"type"`
-	Required    bool        `json:"required"`
-	Updatable   bool        `json:"updatable"`
-	Description string      `json:"description"`
-	Constraints *Constraint `json:"constraints,omitempty"`
+	Type        string               `json:"type"`
+	Required    bool                 `json:"required"`
+	Updatable   bool                 `json:"updatable"`
+	Description string               `json:"description"`
+	Constraints *Constraint          `json:"constraints,omitempty"`
+	Properties  map[string]*Property `json:"properties,omitempty"`
 }
 
 // Attribute represents a resource attribute (output) definition.
@@ -31,11 +32,12 @@ type Attribute struct {
 
 // Constraint represents optional constraints on a property value.
 type Constraint struct {
-	AllowedValues []interface{} `json:"allowedValues,omitempty"`
-	MinValue      *float64      `json:"minValue,omitempty"`
-	MaxValue      *float64      `json:"maxValue,omitempty"`
-	MinLength     *int          `json:"minLength,omitempty"`
-	MaxLength     *int          `json:"maxLength,omitempty"`
+	AllowedValues  []interface{} `json:"allowedValues,omitempty"`
+	AllowedPattern string        `json:"allowedPattern,omitempty"`
+	MinValue       *float64      `json:"minValue,omitempty"`
+	MaxValue       *float64      `json:"maxValue,omitempty"`
+	MinLength      *int          `json:"minLength,omitempty"`
+	MaxLength      *int          `json:"maxLength,omitempty"`
 }
 
 // AssociationPropertyFile represents the top-level schema file for AssociationProperty values.
@@ -46,12 +48,16 @@ type AssociationPropertyFile struct {
 
 // AssociationProperty represents a single AssociationProperty definition.
 type AssociationProperty struct {
-	Description string                                `json:"description"`
-	Category    string                                `json:"category"`
-	Metadata    map[string]*AssociationPropertyMeta   `json:"metadata,omitempty"`
+	Description string                              `json:"description"`
+	Category    string                              `json:"category"`
+	Metadata    map[string]*AssociationPropertyMeta `json:"metadata,omitempty"`
 }
 
 // AssociationPropertyMeta represents a metadata key for an AssociationProperty.
 type AssociationPropertyMeta struct {
 	Description string `json:"description"`
+	// ValueType indicates the expected type of this metadata value.
+	// Common values: "String", "Boolean", "Integer", "Number", "Map", "List",
+	// "String/Map", "${Parameter}" (value supports ${ParameterName} references).
+	ValueType string `json:"valueType,omitempty"`
 }

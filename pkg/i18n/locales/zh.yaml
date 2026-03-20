@@ -526,4 +526,13 @@ lsp_diag:
   mappings_invalid_structure: "Mappings 条目 %q 必须是两层映射表"
   conditions_invalid_expression: "条件 %q 必须使用条件函数（Fn::Equals、Fn::And、Fn::Or、Fn::Not）"
   undefined_condition: "未定义的条件 %q，被 %s %q 引用"
+  assoc_meta_undefined_param_ref: "参数 %q 的 AssociationPropertyMetadata 引用了未定义的参数 %q"
+  assoc_meta_value_type_mismatch: "参数 %q 的 AssociationPropertyMetadata 键 %q：期望类型 %s，实际为 %s"
+  undefined_ref: "Ref 引用了未定义的目标 %q（不是参数、资源、本地变量或伪参数）"
+  undefined_getatt_resource: "Fn::GetAtt 引用了未定义的资源 %q"
+  undefined_getatt_attribute: "Fn::GetAtt 属性 %q 不是资源 %q（类型 %s）的有效属性"
+  allowed_values_violation: "资源 %q 的属性 %q：值 %v 不在允许的值列表 %v 中"
+  range_violation: "资源 %q 的属性 %q：值 %v 超出范围 [%v, %v]"
+  length_violation: "资源 %q 的属性 %q：长度 %d 超出范围 [%v, %v]"
+  pattern_violation: "资源 %q 的属性 %q：值 %q 不匹配模式 %q"
 

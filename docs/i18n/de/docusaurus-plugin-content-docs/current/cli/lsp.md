@@ -19,6 +19,7 @@ Der Befehl `lsp` startet einen Language Server Protocol (LSP)-Server, der über 
 - **Auto-Vervollständigung** — Ressourcentypen, Eigenschaften, intrinsische Funktionen, Ref/GetAtt-Ziele
 - **Echtzeit-Diagnose** — Formatversion, Ressourcentypen, erforderliche Eigenschaften, Typfehler
 - **Hover-Dokumentation** — Beschreibungen, Typinformationen, Einschränkungen für Ressourcen und Eigenschaften
+- **Gehe zu Definition** — Springe von Referenzen zu Parameter- und Ressourcendefinitionen
 
 Der LSP-Server unterstützt sowohl YAML- als auch JSON-Vorlagenformate.
 

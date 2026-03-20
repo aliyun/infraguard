@@ -189,6 +189,34 @@ func (r *Registry) GetAttributes(typeName string) map[string]*Attribute {
 	return rt.Attributes
 }
 
+// GetPropertyByPath navigates nested properties using a path of property names.
+func (r *Registry) GetPropertyByPath(typeName string, path []string) *Property {
+	if len(path) == 0 {
+		return nil
+	}
+	prop := r.GetProperty(typeName, path[0])
+	for _, name := range path[1:] {
+		if prop == nil || prop.Properties == nil {
+			return nil
+		}
+		prop = prop.Properties[name]
+	}
+	return prop
+}
+
+// GetSubProperties returns properties at the given path within a resource type.
+// An empty path returns top-level properties.
+func (r *Registry) GetSubProperties(typeName string, path []string) map[string]*Property {
+	if len(path) == 0 {
+		return r.GetProperties(typeName)
+	}
+	prop := r.GetPropertyByPath(typeName, path)
+	if prop == nil {
+		return nil
+	}
+	return prop.Properties
+}
+
 // RequiredProperties returns the names of required properties for a resource type.
 func (r *Registry) RequiredProperties(typeName string) []string {
 	props := r.GetProperties(typeName)

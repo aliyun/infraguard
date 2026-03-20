@@ -266,13 +266,13 @@ type Messages struct {
 
 	// Schema command
 	Schema struct {
-		Short        string `yaml:"short"`
-		Long         string `yaml:"long"`
-		Update       struct {
+		Short  string `yaml:"short"`
+		Long   string `yaml:"long"`
+		Update struct {
 			Short string `yaml:"short"`
 			Long  string `yaml:"long"`
 		} `yaml:"update"`
-		Updating     string `yaml:"updating"`
+		Updating      string `yaml:"updating"`
 		UpdateSuccess string `yaml:"update_success"`
 		UpdateFailed  string `yaml:"update_failed"`
 	} `yaml:"schema"`
@@ -285,23 +285,32 @@ type Messages struct {
 
 	// LSP diagnostic messages
 	LSPDiag struct {
-		MissingFormatVersion    string `yaml:"missing_format_version"`
-		InvalidFormatVersion    string `yaml:"invalid_format_version"`
-		UnknownTopLevelKey      string `yaml:"unknown_top_level_key"`
-		DidYouMean              string `yaml:"did_you_mean"`
-		MissingType             string `yaml:"missing_type"`
-		UnknownResourceType     string `yaml:"unknown_resource_type"`
-		MissingRequiredProperty string `yaml:"missing_required_property"`
-		TypeMismatch            string `yaml:"type_mismatch"`
-		DuplicateKey            string `yaml:"duplicate_key"`
-		ParamAttrTypeMismatch              string `yaml:"param_attr_type_mismatch"`
-		ParamInvalidType                   string `yaml:"param_invalid_type"`
-		ParamMissingType                   string `yaml:"param_missing_type"`
-		LocalMissingValue                  string `yaml:"local_missing_value"`
-		LocalDatasourceMissingProperties   string `yaml:"local_datasource_missing_properties"`
-		MappingsInvalidStructure           string `yaml:"mappings_invalid_structure"`
-		ConditionsInvalidExpression        string `yaml:"conditions_invalid_expression"`
-		UndefinedCondition                 string `yaml:"undefined_condition"`
+		MissingFormatVersion             string `yaml:"missing_format_version"`
+		InvalidFormatVersion             string `yaml:"invalid_format_version"`
+		UnknownTopLevelKey               string `yaml:"unknown_top_level_key"`
+		DidYouMean                       string `yaml:"did_you_mean"`
+		MissingType                      string `yaml:"missing_type"`
+		UnknownResourceType              string `yaml:"unknown_resource_type"`
+		MissingRequiredProperty          string `yaml:"missing_required_property"`
+		TypeMismatch                     string `yaml:"type_mismatch"`
+		DuplicateKey                     string `yaml:"duplicate_key"`
+		ParamAttrTypeMismatch            string `yaml:"param_attr_type_mismatch"`
+		ParamInvalidType                 string `yaml:"param_invalid_type"`
+		ParamMissingType                 string `yaml:"param_missing_type"`
+		LocalMissingValue                string `yaml:"local_missing_value"`
+		LocalDatasourceMissingProperties string `yaml:"local_datasource_missing_properties"`
+		MappingsInvalidStructure         string `yaml:"mappings_invalid_structure"`
+		ConditionsInvalidExpression      string `yaml:"conditions_invalid_expression"`
+		UndefinedCondition               string `yaml:"undefined_condition"`
+		AssocMetaUndefinedParamRef       string `yaml:"assoc_meta_undefined_param_ref"`
+		AssocMetaValueTypeMismatch       string `yaml:"assoc_meta_value_type_mismatch"`
+		UndefinedRef                     string `yaml:"undefined_ref"`
+		UndefinedGetAttResource          string `yaml:"undefined_getatt_resource"`
+		UndefinedGetAttAttribute         string `yaml:"undefined_getatt_attribute"`
+		AllowedValuesViolation           string `yaml:"allowed_values_violation"`
+		RangeViolation                   string `yaml:"range_violation"`
+		LengthViolation                  string `yaml:"length_violation"`
+		PatternViolation                 string `yaml:"pattern_violation"`
 	} `yaml:"lsp_diag"`
 
 	// Global flags

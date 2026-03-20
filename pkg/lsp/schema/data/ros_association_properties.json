@@ -1,238 +1,21 @@
 {
   "version": "2026-03-13",
   "associationProperties": {
-    "ALIYUN::Resource::Data::API": {
-      "description": "Queries data from Alibaba Cloud product OpenAPI based on parameters.",
-      "category": "Custom",
-      "metadata": {
-        "APIAction": {
-          "description": "The cloud product and API information."
-        },
-        "OptionsGetter": {
-          "description": "Defines the data hierarchy parsing mode."
-        },
-        "ValueGetter": {
-          "description": "Defines the name of the attribute to parse."
-        },
-        "LabelGetter": {
-          "description": "Defines the attribute displayed in the query results."
-        },
-        "PageFilterKeys": {
-          "description": "Pagination filter attributes."
-        },
-        "PageSize": {
-          "description": "The page size for pagination."
-        },
-        "PageNumber": {
-          "description": "The page number."
-        },
-        "TotalCount": {
-          "description": "The total count of records."
-        },
-        "Pagination": {
-          "description": "The pagination method."
-        }
-      }
-    },
-    "Auto": {
-      "description": "ROS automatically generates AssociationProperty and AssociationPropertyMetadata fields based on the Terraform original data structure. Only applies to JSON-type parameters in Terraform templates.",
-      "category": "Basic",
-      "metadata": {
-        "Overwrite": {
-          "description": "Supplements or overwrites nested parameter definitions. Dictionary type."
-        }
-      }
-    },
-    "AutoCompleteInput": {
-      "description": "Automatically generates a random string.",
-      "category": "Basic",
-      "metadata": {
-        "CharacterClasses": {
-          "description": "List of character types, each containing Class (lowercase/uppercase/number/specialCharacter), Min, etc."
-        },
-        "Prefix": {
-          "description": "The string prefix."
-        },
-        "Suffix": {
-          "description": "The string suffix."
-        },
-        "Length": {
-          "description": "The string length."
-        }
-      }
-    },
-    "ChargeType": {
-      "description": "The billing method. Values: PayAsYouGo, Subscription.",
-      "category": "Basic",
-      "metadata": {}
-    },
-    "Code": {
-      "description": "Code input.",
-      "category": "Basic",
-      "metadata": {}
-    },
-    "CommaDelimitedList": {
-      "description": "Input a comma-delimited array.",
-      "category": "Basic",
-      "metadata": {}
-    },
-    "Cron": {
-      "description": "A cron expression string that specifies the execution time of a scheduled task.",
-      "category": "Basic",
-      "metadata": {}
-    },
-    "DateTime": {
-      "description": "Date selection.",
-      "category": "Basic",
-      "metadata": {
-        "GMTZone": {
-          "description": "The GMT zone."
-        },
-        "TimeZone": {
-          "description": "The time zone description."
-        }
-      }
-    },
-    "FileContent": {
-      "description": "Reads content from a local file.",
-      "category": "Basic",
-      "metadata": {
-        "AcceptFileSuffixes": {
-          "description": "Accepted file types for upload. Multiple types are separated by commas."
-        }
-      }
-    },
-    "GMTZone": {
-      "description": "GMT zone selection.",
-      "category": "Basic",
-      "metadata": {}
-    },
-    "Json": {
-      "description": "JSON object input.",
-      "category": "Basic",
-      "metadata": {}
-    },
-    "List[Parameter]": {
-      "description": "Parameter list with indented layout. Only applies to Json-type parameters.",
-      "category": "Basic",
-      "metadata": {
-        "Parameter": {
-          "description": "The parameter definition."
-        },
-        "Mode": {
-          "description": "Display style. Collapse: collapsed style (default). Table: table style."
-        }
-      }
-    },
-    "List[Parameters]": {
-      "description": "Parameter group list with table layout. Only applies to Json-type parameters.",
-      "category": "Basic",
-      "metadata": {
-        "Parameters": {
-          "description": "Dictionary type, required. Represents a group of parameter definitions. Key: parameter name. Value: parameter definition."
-        },
-        "ListMetadata": {
-          "description": "Dictionary type for controlling table display, including ShowHeader, ShowRemove, ShowAddition, Order, etc."
-        }
-      }
-    },
-    "OOSServiceRole": {
-      "description": "The OOS service role.",
-      "category": "Basic",
-      "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        }
-      }
-    },
-    "Password": {
-      "description": "Password input.",
-      "category": "Basic",
-      "metadata": {}
-    },
-    "RateControl": {
-      "description": "The OOS execution rate.",
-      "category": "Basic",
-      "metadata": {}
-    },
-    "Tags": {
-      "description": "Tags.",
-      "category": "Basic",
-      "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
-        "ResourceType": {
-          "description": "The resource type for tag statistics. Default: ALIYUN::ECS::INSTANCE."
-        }
-      }
-    },
-    "Targets": {
-      "description": "ECS instance targets. Supports selecting instances by instance ID, tags, or resource groups.",
-      "category": "Basic",
-      "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        }
-      }
-    },
-    "TextArea": {
-      "description": "Rich text input.",
-      "category": "Basic",
-      "metadata": {}
-    },
-    "TimeTriggerWeekly": {
-      "description": "Weekly time selection.",
-      "category": "Basic",
-      "metadata": {}
-    },
-    "TimeZone": {
-      "description": "Time zone selection.",
-      "category": "Basic",
-      "metadata": {}
-    },
-    "UploadFilesToUserBucket": {
-      "description": "OSS file upload component.",
-      "category": "OSS",
-      "metadata": {
-        "Mode": {
-          "description": "The component display mode. Values: normal, dragger (default)."
-        },
-        "RegionId": {
-          "description": "The region of the bucket. Defaults to the current environment region."
-        },
-        "BucketName": {
-          "description": "The bucket name."
-        },
-        "Multiple": {
-          "description": "Whether to upload multiple files at once. Value: true."
-        },
-        "Directory": {
-          "description": "Whether to support folder upload. Value: true."
-        },
-        "ValueType": {
-          "description": "The return value type. Default: OSS Url."
-        },
-        "ObjectNamePrefix": {
-          "description": "The upload file path prefix."
-        },
-        "AddSuffix": {
-          "description": "Whether to append a timestamp suffix to the file name. Value: true."
-        },
-        "SuffixFormat": {
-          "description": "The timestamp suffix format, e.g. YYYY-MM-DD."
-        }
-      }
-    },
     "ALIYUN::ACR::Namespace::Name": {
       "description": "Queries ACR image namespaces.",
       "category": "ACR",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
         "Status": {
-          "description": "The namespace status. Values: NORMAL, DELETING."
+          "description": "The namespace status. Values: NORMAL, DELETING.",
+          "valueType": "String"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -241,7 +24,12 @@
       "category": "ACR",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -250,25 +38,20 @@
       "category": "ACR",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
         "RepoName": {
-          "description": "The image repository name."
+          "description": "The image repository name.",
+          "valueType": "${Parameter}"
         },
         "RepoNamespace": {
-          "description": "The namespace name."
-        }
-      }
-    },
-    "ALIYUN::APIG::Gateway::GatewayId": {
-      "description": "Queries cloud-native API gateway information.",
-      "category": "APIG",
-      "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The namespace name.",
+          "valueType": "${Parameter}"
         },
-        "Keyword": {
-          "description": "Search keyword, case-insensitive exact match."
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -277,7 +60,12 @@
       "category": "ALB",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -285,20 +73,29 @@
       "description": "ALB instance.",
       "category": "ALB",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
-        "VpcId": {
-          "description": "The VPC ID."
-        },
         "AddressType": {
-          "description": "The network type."
-        },
-        "ZoneId": {
-          "description": "The zone ID."
+          "description": "The network type.",
+          "valueType": "String"
         },
         "PayType": {
-          "description": "The billing method of the ALB instance."
+          "description": "The billing method of the ALB instance.",
+          "valueType": "String"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        },
+        "VpcId": {
+          "description": "The VPC ID.",
+          "valueType": "${Parameter}"
+        },
+        "ZoneId": {
+          "description": "The zone ID.",
+          "valueType": "${Parameter}"
         }
       }
     },
@@ -306,20 +103,73 @@
       "description": "ALB load balancer ID.",
       "category": "ALB",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
-        "VpcId": {
-          "description": "The VPC ID."
-        },
         "AddressType": {
-          "description": "The network type."
-        },
-        "ZoneId": {
-          "description": "The zone ID."
+          "description": "The network type.",
+          "valueType": "String"
         },
         "PayType": {
-          "description": "The billing method of the ALB instance."
+          "description": "The billing method of the ALB instance.",
+          "valueType": "String"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        },
+        "VpcId": {
+          "description": "The VPC ID.",
+          "valueType": "${Parameter}"
+        },
+        "ZoneId": {
+          "description": "The zone ID.",
+          "valueType": "${Parameter}"
+        }
+      }
+    },
+    "ALIYUN::APIG::Gateway::GatewayId": {
+      "description": "Queries cloud-native API gateway information.",
+      "category": "APIG",
+      "metadata": {
+        "Keyword": {
+          "description": "Search keyword, case-insensitive exact match.",
+          "valueType": "String"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
+    },
+    "ALIYUN::BSS::PricingModule::ModuleCode": {
+      "description": "Queries the pricing module information of an Alibaba Cloud product.",
+      "category": "BSS",
+      "metadata": {
+        "ProductCode": {
+          "description": "The product code.",
+          "valueType": "${Parameter}"
+        },
+        "ProductType": {
+          "description": "The product type.",
+          "valueType": "${Parameter}"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "SubscriptionType": {
+          "description": "The subscription type. Values: Subscription (prepaid), PayAsYouGo (postpaid).",
+          "valueType": "String"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -328,25 +178,12 @@
       "category": "Bailian",
       "metadata": {
         "OnlyKey": {
-          "description": "Whether to return only the API key itself."
-        }
-      }
-    },
-    "ALIYUN::BSS::PricingModule::ModuleCode": {
-      "description": "Queries the pricing module information of an Alibaba Cloud product.",
-      "category": "BSS",
-      "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "Whether to return only the API key itself.",
+          "valueType": "Boolean"
         },
-        "ProductCode": {
-          "description": "The product code."
-        },
-        "ProductType": {
-          "description": "The product type."
-        },
-        "SubscriptionType": {
-          "description": "The subscription type. Values: Subscription (prepaid), PayAsYouGo (postpaid)."
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -355,7 +192,12 @@
       "category": "CAS",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -364,7 +206,12 @@
       "category": "CEN",
       "metadata": {
         "ResourceGroupId": {
-          "description": "The resource group ID of the CEN instance."
+          "description": "The resource group ID of the CEN instance.",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -372,63 +219,115 @@
       "description": "Queries transit router instance information under a CEN instance.",
       "category": "CEN",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "CenId": {
-          "description": "The CEN instance ID."
+          "description": "The CEN instance ID.",
+          "valueType": "${Parameter}"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
     "ALIYUN::CMS::Alarm::MetricSelector": {
       "description": "Queries CloudMonitor metric details.",
       "category": "CMS",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::CMS::Alarm::Rule": {
       "description": "Threshold alarm rule.",
       "category": "CMS",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::CMS::Alarm::SilenceTime": {
       "description": "Alarm silence period.",
       "category": "CMS",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::CMS::Alarm::TriggerResources": {
       "description": "Alarm resource trigger.",
       "category": "CMS",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::CMS::Event::EventFilterRule": {
       "description": "Event alarm rule.",
       "category": "CMS",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::CMS::Event::EventLevel": {
       "description": "Event alarm level.",
       "category": "CMS",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::CMS::Event::EventName": {
       "description": "Event alarm name.",
       "category": "CMS",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::CMS::Product::ProductType": {
       "description": "Cloud services that support events.",
       "category": "CMS",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::CR::Instance::InstanceId": {
       "description": "Queries Container Registry Enterprise Edition instance information.",
       "category": "CR",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "InstanceStatus": {
-          "description": "The instance status. Values: PENDING, INIT_ERROR, STARTING, RUNNING, STOPPING, STOPPED, DELETING, DELETED."
+          "description": "The instance status. Values: PENDING, INIT_ERROR, STARTING, RUNNING, STOPPING, STOPPED, DELETING, DELETED.",
+          "valueType": "String"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -436,14 +335,21 @@
       "description": "Queries Container Registry Enterprise Edition namespace information.",
       "category": "CR",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+        "InstanceId": {
+          "description": "The instance ID.",
+          "valueType": "${Parameter}"
         },
         "NamespaceStatus": {
-          "description": "The namespace status. Values: NORMAL, DELETING."
+          "description": "The namespace status. Values: NORMAL, DELETING.",
+          "valueType": "String"
         },
-        "InstanceId": {
-          "description": "The instance ID."
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -451,14 +357,21 @@
       "description": "Queries Container Registry Enterprise Edition repository information.",
       "category": "CR",
       "metadata": {
+        "InstanceId": {
+          "description": "The instance ID.",
+          "valueType": "${Parameter}"
+        },
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
         "RepoStatus": {
-          "description": "The repository status. Values: NORMAL, DELETING, DELETED, ALL."
+          "description": "The repository status. Values: NORMAL, DELETING, DELETED, ALL.",
+          "valueType": "String"
         },
-        "InstanceId": {
-          "description": "The instance ID."
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -466,14 +379,21 @@
       "description": "Queries Container Registry Enterprise Edition image tag information.",
       "category": "CR",
       "metadata": {
+        "InstanceId": {
+          "description": "The instance ID.",
+          "valueType": "${Parameter}"
+        },
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
         "RepoId": {
-          "description": "The repository ID."
+          "description": "The repository ID.",
+          "valueType": "${Parameter}"
         },
-        "InstanceId": {
-          "description": "The instance ID."
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -481,11 +401,17 @@
       "description": "Container Service cluster ID.",
       "category": "CS",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "ClusterState": {
-          "description": "The cluster state. Values: running, initial, unavailable, all."
+          "description": "The cluster state. Values: running, initial, unavailable, all.",
+          "valueType": "String"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -493,11 +419,17 @@
       "description": "Node pool within a Container Service cluster.",
       "category": "CS",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "ClusterId": {
-          "description": "The Container Service cluster ID."
+          "description": "The Container Service cluster ID.",
+          "valueType": "${Parameter}"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -505,20 +437,29 @@
       "description": "Queries Kubernetes version information.",
       "category": "CS",
       "metadata": {
+        "AutoSelectLastest": {
+          "description": "Whether to automatically select the latest version.",
+          "valueType": "Boolean"
+        },
         "ClusterType": {
-          "description": "The cluster type. Values: Kubernetes, ManagedKubernetes, ExternalKubernetes."
-        },
-        "Profile": {
-          "description": "The cluster profile. Values: Default, Edge, Serverless."
-        },
-        "Runtime": {
-          "description": "The runtime type. Values: docker, containerd, Sandboxed-Container.runv."
+          "description": "The cluster type. Values: Kubernetes, ManagedKubernetes, ExternalKubernetes.",
+          "valueType": "String"
         },
         "KubernetesVersionPrefix": {
-          "description": "The Kubernetes version prefix."
+          "description": "The Kubernetes version prefix.",
+          "valueType": "String"
         },
-        "AutoSelectLastest": {
-          "description": "Whether to automatically select the latest version."
+        "Profile": {
+          "description": "The cluster profile. Values: Default, Edge, Serverless.",
+          "valueType": "String"
+        },
+        "Runtime": {
+          "description": "The runtime type. Values: docker, containerd, Sandboxed-Container.runv.",
+          "valueType": "String"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -526,20 +467,29 @@
       "description": "Queries the Service CIDR of a managed Kubernetes cluster.",
       "category": "CS",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "ClusterType": {
-          "description": "The cluster type."
-        },
-        "VpcId": {
-          "description": "The VPC ID."
-        },
-        "NodeCidrMask": {
-          "description": "The maximum number of IP addresses per node."
+          "description": "The cluster type.",
+          "valueType": "String"
         },
         "ContainerCidr": {
-          "description": "The container CIDR block."
+          "description": "The container CIDR block.",
+          "valueType": "${Parameter}"
+        },
+        "NodeCidrMask": {
+          "description": "The maximum number of IP addresses per node.",
+          "valueType": "Integer"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        },
+        "VpcId": {
+          "description": "The VPC ID.",
+          "valueType": "${Parameter}"
         }
       }
     },
@@ -547,11 +497,17 @@
       "description": "Queries ComputeNest artifact information.",
       "category": "ComputeNest",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "ArtifactType": {
-          "description": "The artifact type."
+          "description": "The artifact type.",
+          "valueType": "String"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -559,11 +515,17 @@
       "description": "Queries ComputeNest artifact version information.",
       "category": "ComputeNest",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "ArtifactId": {
-          "description": "The artifact ID."
+          "description": "The artifact ID.",
+          "valueType": "${Parameter}"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -571,14 +533,21 @@
       "description": "ComputeNest service ID.",
       "category": "ComputeNest",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "InUsed": {
-          "description": "Whether the service is in use."
+          "description": "Whether the service is in use.",
+          "valueType": "Boolean"
         },
         "IsVendor": {
-          "description": "Whether the service has a vendor."
+          "description": "Whether the service has a vendor.",
+          "valueType": "Boolean"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -586,26 +555,37 @@
       "description": "ComputeNest service instance ID.",
       "category": "ComputeNest",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
-        "ServiceType": {
-          "description": "The service type."
-        },
         "DeployType": {
-          "description": "The deployment type."
-        },
-        "Status": {
-          "description": "The service status."
-        },
-        "ServiceId": {
-          "description": "The service ID."
-        },
-        "Version": {
-          "description": "The service version."
+          "description": "The deployment type.",
+          "valueType": "String"
         },
         "IsVendor": {
-          "description": "Whether the service has a vendor."
+          "description": "Whether the service has a vendor.",
+          "valueType": "Boolean"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "ServiceId": {
+          "description": "The service ID.",
+          "valueType": "${Parameter}"
+        },
+        "ServiceType": {
+          "description": "The service type.",
+          "valueType": "String"
+        },
+        "Status": {
+          "description": "The service status.",
+          "valueType": "String"
+        },
+        "Version": {
+          "description": "The service version.",
+          "valueType": "String"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -614,10 +594,16 @@
       "category": "ComputeNest",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
         "ServiceId": {
-          "description": "The service ID."
+          "description": "The service ID.",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -625,31 +611,49 @@
       "description": "Validates DNS domain availability.",
       "category": "DNS",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "DomainType": {
-          "description": "The domain type."
+          "description": "The domain type.",
+          "valueType": "String"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
     "ALIYUN::DashVector::ApiKey": {
       "description": "Queries DashVector API-KEY.",
       "category": "DashVector",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::Domain::DomainName": {
       "description": "Queries domain name information.",
       "category": "Domain",
       "metadata": {
-        "ShowDomainPrefixInput": {
-          "description": "Whether to allow inputting a domain prefix."
+        "CheckICP": {
+          "description": "Whether to check ICP filing status.",
+          "valueType": "Boolean"
         },
         "MaxLength": {
-          "description": "The maximum domain name length."
+          "description": "The maximum domain name length.",
+          "valueType": "Integer"
         },
-        "CheckICP": {
-          "description": "Whether to check ICP filing status."
+        "ShowDomainPrefixInput": {
+          "description": "Whether to allow inputting a domain prefix.",
+          "valueType": "Boolean"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -658,10 +662,16 @@
       "category": "EAS",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
         "SubscriptionType": {
-          "description": "The billing type. Values: Subscription (prepaid), PayAsYouGo (postpaid)."
+          "description": "The billing type. Values: Subscription (prepaid), PayAsYouGo (postpaid).",
+          "valueType": "String"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -670,7 +680,12 @@
       "category": "EAS",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -679,7 +694,12 @@
       "category": "ECD",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -687,44 +707,33 @@
       "description": "Queries ECI container group information.",
       "category": "ECI",
       "metadata": {
+        "ComputeCategory": {
+          "description": "The compute category.",
+          "valueType": "String"
+        },
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
-        "VSwitchId": {
-          "description": "The vSwitch ID of the instance."
-        },
-        "ZoneId": {
-          "description": "The zone ID of the instance."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
         "SecurityGroupId": {
-          "description": "The security group ID of the instance."
-        },
-        "ComputeCategory": {
-          "description": "The compute category."
+          "description": "The security group ID of the instance.",
+          "valueType": "${Parameter}"
         },
         "Status": {
-          "description": "The instance status. Values: Pending, Running, Succeeded, Failed, Scheduling, ScheduleFailed, Restarting, Updating, Terminating, Expired."
-        }
-      }
-    },
-    "ALIYUN::ECS::ZoneId": {
-      "description": "Queries ECS availability zone IDs.",
-      "category": "ECS",
-      "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The instance status. Values: Pending, Running, Succeeded, Failed, Scheduling, ScheduleFailed, Restarting, Updating, Terminating, Expired.",
+          "valueType": "String"
         },
-        "SystemDiskCategory": {
-          "description": "The system disk category."
+        "VSwitchId": {
+          "description": "The vSwitch ID of the instance.",
+          "valueType": "${Parameter}"
         },
-        "InstanceType": {
-          "description": "The instance type."
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         },
-        "InstanceChargeType": {
-          "description": "The instance billing method."
-        },
-        "WithAvailableResource": {
-          "description": "Whether to filter zones with available instance type inventory."
+        "ZoneId": {
+          "description": "The zone ID of the instance.",
+          "valueType": "${Parameter}"
         }
       }
     },
@@ -732,11 +741,17 @@
       "description": "Cloud Assistant command or Alibaba Cloud command ID.",
       "category": "ECS",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "ImageId": {
-          "description": "The image ID. Filters commands by the image OS type."
+          "description": "The image ID. Filters commands by the image OS type.",
+          "valueType": "${Parameter}"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -745,10 +760,16 @@
       "category": "ECS",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
         "Strategy": {
-          "description": "The deployment strategy. Values: Availability, AvailabilityGroup."
+          "description": "The deployment strategy. Values: Availability, AvailabilityGroup.",
+          "valueType": "String"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -756,14 +777,21 @@
       "description": "Data disk category.",
       "category": "ECS",
       "metadata": {
+        "InstanceType": {
+          "description": "The instance type.",
+          "valueType": "${Parameter}"
+        },
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         },
         "ZoneId": {
-          "description": "The zone ID."
-        },
-        "InstanceType": {
-          "description": "The instance type."
+          "description": "The zone ID.",
+          "valueType": "${Parameter}"
         }
       }
     },
@@ -771,26 +799,37 @@
       "description": "Disk ID.",
       "category": "ECS",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
-        "ZoneId": {
-          "description": "The zone ID."
-        },
-        "InstanceId": {
-          "description": "The instance ID."
-        },
-        "DiskType": {
-          "description": "The disk type."
-        },
         "Category": {
-          "description": "The disk category."
-        },
-        "SnapshotId": {
-          "description": "The snapshot ID."
+          "description": "The disk category.",
+          "valueType": "String"
         },
         "DiskChargeType": {
-          "description": "The disk billing method."
+          "description": "The disk billing method.",
+          "valueType": "String"
+        },
+        "DiskType": {
+          "description": "The disk type.",
+          "valueType": "String"
+        },
+        "InstanceId": {
+          "description": "The instance ID.",
+          "valueType": "${Parameter}"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "SnapshotId": {
+          "description": "The snapshot ID.",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        },
+        "ZoneId": {
+          "description": "The zone ID.",
+          "valueType": "${Parameter}"
         }
       }
     },
@@ -798,14 +837,21 @@
       "description": "System disk category.",
       "category": "ECS",
       "metadata": {
+        "InstanceType": {
+          "description": "The instance type.",
+          "valueType": "${Parameter}"
+        },
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         },
         "ZoneId": {
-          "description": "The zone ID."
-        },
-        "InstanceType": {
-          "description": "The instance type."
+          "description": "The zone ID.",
+          "valueType": "${Parameter}"
         }
       }
     },
@@ -813,163 +859,251 @@
       "description": "Image ID.",
       "category": "ECS",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
-        "SupportedImageOwnerAlias": {
-          "description": "Supported image owner aliases."
-        },
-        "InstanceType": {
-          "description": "The instance type."
+        "Architecture": {
+          "description": "The image architecture.",
+          "valueType": "String"
         },
         "ImageFamily": {
-          "description": "The image family name."
+          "description": "The image family name.",
+          "valueType": "String"
+        },
+        "InstanceType": {
+          "description": "The instance type.",
+          "valueType": "${Parameter}"
         },
         "IsSupportIoOptimized": {
-          "description": "Whether the image supports I/O optimized instances."
+          "description": "Whether the image supports I/O optimized instances.",
+          "valueType": "Boolean"
         },
         "OSType": {
-          "description": "The operating system type."
+          "description": "The operating system type.",
+          "valueType": "String"
         },
-        "Architecture": {
-          "description": "The image architecture."
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "SupportedImageOwnerAlias": {
+          "description": "Supported image owner aliases.",
+          "valueType": "List"
         },
         "Usage": {
-          "description": "Whether the image is running on an ECS instance."
+          "description": "Whether the image is running on an ECS instance.",
+          "valueType": "Boolean"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
     "ALIYUN::ECS::Instance::AttributeSelector": {
       "description": "ECS attribute selector.",
       "category": "ECS",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::ECS::Instance::InstanceId": {
       "description": "ECS instance ID.",
       "category": "ECS",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
-        "InstanceType": {
-          "description": "The instance type."
-        },
-        "InstanceTypeFamily": {
-          "description": "The instance type family."
-        },
-        "Platform": {
-          "description": "The operating system platform."
-        },
-        "OSType": {
-          "description": "The operating system type."
-        },
-        "Status": {
-          "description": "The instance status."
-        },
-        "NetworkType": {
-          "description": "The network type."
-        },
-        "DisabledNetworkType": {
-          "description": "The disabled network type."
-        },
-        "ShowNetworkType": {
-          "description": "Whether to show the network type."
-        },
-        "InternetChargeType": {
-          "description": "The internet billing method."
-        },
-        "DisabledInternetChargeType": {
-          "description": "The disabled internet billing method."
-        },
-        "ShowInternetChargeType": {
-          "description": "Whether to show the internet billing method."
-        },
         "ChargeType": {
-          "description": "The instance billing method."
+          "description": "The instance billing method.",
+          "valueType": "String"
         },
         "DisabledChargeType": {
-          "description": "The disabled billing method."
+          "description": "The disabled billing method.",
+          "valueType": "Boolean"
+        },
+        "DisabledInternetChargeType": {
+          "description": "The disabled internet billing method.",
+          "valueType": "Boolean"
+        },
+        "DisabledNetworkType": {
+          "description": "The disabled network type.",
+          "valueType": "Boolean"
+        },
+        "InstanceType": {
+          "description": "The instance type.",
+          "valueType": "${Parameter}"
+        },
+        "InstanceTypeFamily": {
+          "description": "The instance type family.",
+          "valueType": "${Parameter}"
+        },
+        "InternetChargeType": {
+          "description": "The internet billing method.",
+          "valueType": "String"
+        },
+        "NetworkType": {
+          "description": "The network type.",
+          "valueType": "String"
+        },
+        "OSType": {
+          "description": "The operating system type.",
+          "valueType": "String"
+        },
+        "Platform": {
+          "description": "The operating system platform.",
+          "valueType": "String"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
         "ShowChargeType": {
-          "description": "Whether to show the billing method."
+          "description": "Whether to show the billing method.",
+          "valueType": "Boolean"
+        },
+        "ShowInternetChargeType": {
+          "description": "Whether to show the internet billing method.",
+          "valueType": "Boolean"
+        },
+        "ShowNetworkType": {
+          "description": "Whether to show the network type.",
+          "valueType": "Boolean"
+        },
+        "Status": {
+          "description": "The instance status.",
+          "valueType": "String"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
     "ALIYUN::ECS::Instance::InstancePropertyEditor": {
       "description": "ECS instance property editor.",
       "category": "ECS",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::ECS::Instance::InstanceType": {
       "description": "ECS instance type.",
       "category": "ECS",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
-        "ZoneId": {
-          "description": "The zone ID."
-        },
-        "InstanceChargeType": {
-          "description": "The instance billing method."
-        },
-        "SpotStrategy": {
-          "description": "The spot pricing strategy for pay-as-you-go instances."
+        "Constraints": {
+          "description": "Instance type filter conditions (supports multiple conditions), including InstanceType, InstanceTypeFamily, vCPU, Memory, Architecture, CustomizeFamily, etc.",
+          "valueType": "Map"
         },
         "CreateACKClusterParams": {
-          "description": "Filters ECS instance types supported by Container Service."
+          "description": "Filters ECS instance types supported by Container Service.",
+          "valueType": "Map"
+        },
+        "InstanceChargeType": {
+          "description": "The instance billing method.",
+          "valueType": "String"
         },
         "NetworkPlugin": {
-          "description": "The network plugin, e.g. terway-eniip."
+          "description": "The network plugin, e.g. terway-eniip.",
+          "valueType": "String"
         },
-        "Constraints": {
-          "description": "Instance type filter conditions (supports multiple conditions), including InstanceType, InstanceTypeFamily, vCPU, Memory, Architecture, CustomizeFamily, etc."
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "SpotStrategy": {
+          "description": "The spot pricing strategy for pay-as-you-go instances.",
+          "valueType": "String"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        },
+        "ZoneId": {
+          "description": "The zone ID.",
+          "valueType": "${Parameter}"
         }
       }
     },
     "ALIYUN::ECS::Instance::MaxBandwidthIn": {
       "description": "ECS maximum inbound public bandwidth.",
       "category": "ECS",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::ECS::Instance::OSType": {
       "description": "Queries the OS type of an ECS instance.",
       "category": "ECS",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "InstanceId": {
-          "description": "The ECS instance ID."
+          "description": "The ECS instance ID.",
+          "valueType": "${Parameter}"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
     "ALIYUN::ECS::Instance::Password": {
       "description": "ECS instance password component. Password must be 8-30 characters and contain at least three of: uppercase letters, lowercase letters, digits, and special characters.",
       "category": "ECS",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::ECS::Instance::RenewPeriod": {
       "description": "ECS renewal period.",
       "category": "ECS",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::ECS::Instance::StopMode": {
       "description": "ECS stop mode.",
       "category": "ECS",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::ECS::InstanceType::AvailableInstanceType": {
       "description": "Available ECS instance types.",
       "category": "ECS",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::ECS::KeyPair::KeyPairName": {
       "description": "Key pair.",
       "category": "ECS",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -978,7 +1112,12 @@
       "category": "ECS",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -986,11 +1125,17 @@
       "description": "Instance launch template version.",
       "category": "ECS",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "LaunchTemplateId": {
-          "description": "The launch template ID."
+          "description": "The launch template ID.",
+          "valueType": "${Parameter}"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -998,45 +1143,81 @@
       "description": "ECS managed instance ID.",
       "category": "ECS",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "OsType": {
-          "description": "The OS type of the managed instance."
+          "description": "The OS type of the managed instance.",
+          "valueType": "String"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
     "ALIYUN::ECS::RAM::Role": {
       "description": "RAM role assigned to the ECS instance.",
       "category": "ECS",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::ECS::RegionId": {
       "description": "Region ID (defaults to the region of the stack).",
       "category": "ECS",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::ECS::RegionId::RegionDeploy": {
       "description": "Sets the ECS deployment region.",
       "category": "ECS",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::ECS::RegionId::TargetRegionIds": {
       "description": "ECS instance target region IDs.",
       "category": "ECS",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::ECS::ResourceGroup::ResourceGroupId": {
       "description": "Resource group.",
       "category": "ECS",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::ECS::SecurityGroup::PortRange": {
       "description": "Sets ECS security group port range based on IP protocol.",
       "category": "ECS",
       "metadata": {
         "IpProtocol": {
-          "description": "The IP protocol. Values: ALL, TCP, UDP, ICMP, GRE, ICMPv6."
+          "description": "The IP protocol. Values: ALL, TCP, UDP, ICMP, GRE, ICMPv6.",
+          "valueType": "String"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1045,10 +1226,16 @@
       "category": "ECS",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         },
         "VpcId": {
-          "description": "The VPC ID."
+          "description": "The VPC ID.",
+          "valueType": "${Parameter}"
         }
       }
     },
@@ -1057,7 +1244,12 @@
       "category": "ECS",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1065,23 +1257,33 @@
       "description": "ECS disk snapshot ID.",
       "category": "ECS",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
-        "InstanceId": {
-          "description": "The ECS instance ID."
+        "Category": {
+          "description": "The snapshot category.",
+          "valueType": "String"
         },
         "DiskId": {
-          "description": "The disk ID."
+          "description": "The disk ID.",
+          "valueType": "${Parameter}"
         },
-        "Status": {
-          "description": "The snapshot status."
+        "InstanceId": {
+          "description": "The ECS instance ID.",
+          "valueType": "${Parameter}"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
         "SnapshotType": {
-          "description": "The snapshot creation type."
+          "description": "The snapshot creation type.",
+          "valueType": "String"
         },
-        "Category": {
-          "description": "The snapshot category."
+        "Status": {
+          "description": "The snapshot status.",
+          "valueType": "String"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1090,10 +1292,16 @@
       "category": "ECS",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
         "ResourceType": {
-          "description": "The resource type."
+          "description": "The resource type.",
+          "valueType": "String"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1102,7 +1310,12 @@
       "category": "ECS",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1110,17 +1323,55 @@
       "description": "VSwitch object.",
       "category": "ECS",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+        "InstanceType": {
+          "description": "The instance type.",
+          "valueType": "${Parameter}"
         },
-        "ZoneId": {
-          "description": "The zone ID."
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         },
         "VpcId": {
-          "description": "The VPC ID."
+          "description": "The VPC ID.",
+          "valueType": "${Parameter}"
+        },
+        "ZoneId": {
+          "description": "The zone ID.",
+          "valueType": "${Parameter}"
+        }
+      }
+    },
+    "ALIYUN::ECS::ZoneId": {
+      "description": "Queries ECS availability zone IDs.",
+      "category": "ECS",
+      "metadata": {
+        "InstanceChargeType": {
+          "description": "The instance billing method.",
+          "valueType": "String"
         },
         "InstanceType": {
-          "description": "The instance type."
+          "description": "The instance type.",
+          "valueType": "${Parameter}"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "SystemDiskCategory": {
+          "description": "The system disk category.",
+          "valueType": "String"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        },
+        "WithAvailableResource": {
+          "description": "Whether to filter zones with available instance type inventory.",
+          "valueType": "Boolean"
         }
       }
     },
@@ -1129,7 +1380,12 @@
       "category": "EHPC",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1138,7 +1394,12 @@
       "category": "EHPC",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1147,16 +1408,24 @@
       "category": "EHPC",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
-        "VolumeId": {
-          "description": "The Alibaba Cloud NAS instance ID."
-        },
-        "VpcId": {
-          "description": "The VPC ID."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
         "VSwitchId": {
-          "description": "The vSwitch ID."
+          "description": "The vSwitch ID.",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        },
+        "VolumeId": {
+          "description": "The Alibaba Cloud NAS instance ID.",
+          "valueType": "${Parameter}"
+        },
+        "VpcId": {
+          "description": "The VPC ID.",
+          "valueType": "${Parameter}"
         }
       }
     },
@@ -1165,7 +1434,12 @@
       "category": "ESS",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1174,13 +1448,20 @@
       "category": "ESS",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
-        "ScalingGroupId": {
-          "description": "The scaling group ID."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
         "ScalingConfigurationId": {
-          "description": "The scaling configuration ID."
+          "description": "The scaling configuration ID.",
+          "valueType": "${Parameter}"
+        },
+        "ScalingGroupId": {
+          "description": "The scaling group ID.",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1188,14 +1469,21 @@
       "description": "Queries the scaling configuration ID.",
       "category": "ESS",
       "metadata": {
+        "AutoSelectFirst": {
+          "description": "Whether to auto-select the first item.",
+          "valueType": "Boolean"
+        },
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
         "ScalingGroupId": {
-          "description": "The scaling group ID."
+          "description": "The scaling group ID.",
+          "valueType": "${Parameter}"
         },
-        "AutoSelectFirst": {
-          "description": "Whether to auto-select the first item."
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1204,30 +1492,48 @@
       "category": "ESS",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
     "ALIYUN::Elasticsearch::Instance::InstanceType": {
       "description": "Elasticsearch instance type.",
       "category": "Elasticsearch",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::Emr::ECSCluster::ClusterId": {
       "description": "Queries EMR cluster list.",
       "category": "Emr",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+        "ClusterStates": {
+          "description": "Cluster state array. Values: STARTING, START_FAILED, BOOTSTRAPPING, RUNNING, TERMINATING, TERMINATED, TERMINATED_WITH_ERRORS, TERMINATE_FAILED.",
+          "valueType": "List"
         },
         "ClusterTypes": {
-          "description": "Cluster type list. Values: DATALAKE, OLAP, DATAFLOW, DATASERVING, CUSTOM, HADOOP."
-        },
-        "ClusterStates": {
-          "description": "Cluster state array. Values: STARTING, START_FAILED, BOOTSTRAPPING, RUNNING, TERMINATING, TERMINATED, TERMINATED_WITH_ERRORS, TERMINATE_FAILED."
+          "description": "Cluster type list. Values: DATALAKE, OLAP, DATAFLOW, DATASERVING, CUSTOM, HADOOP.",
+          "valueType": "List"
         },
         "PaymentTypes": {
-          "description": "Payment types. Values: Subscription (prepaid), PayAsYouGo (postpaid)."
+          "description": "Payment types. Values: Subscription (prepaid), PayAsYouGo (postpaid).",
+          "valueType": "List"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1235,11 +1541,17 @@
       "description": "Queries Function Compute 3.0 function information.",
       "category": "FC3",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "Prefix": {
-          "description": "The function name prefix."
+          "description": "The function name prefix.",
+          "valueType": "String"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1247,20 +1559,29 @@
       "description": "Queries legacy Function Compute function information.",
       "category": "FC",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "Prefix": {
-          "description": "The function name prefix."
-        },
-        "ServiceName": {
-          "description": "The function service name."
+          "description": "The function name prefix.",
+          "valueType": "String"
         },
         "Qualifier": {
-          "description": "The function service version or alias."
+          "description": "The function service version or alias.",
+          "valueType": "String"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "ServiceName": {
+          "description": "The function service name.",
+          "valueType": "${Parameter}"
         },
         "StartKey": {
-          "description": "Returns results starting from this key (inclusive) in alphabetical order."
+          "description": "Returns results starting from this key (inclusive) in alphabetical order.",
+          "valueType": "String"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1268,14 +1589,21 @@
       "description": "Queries legacy Function Compute service information.",
       "category": "FC",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "Prefix": {
-          "description": "The service name prefix."
+          "description": "The service name prefix.",
+          "valueType": "String"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
         "StartKey": {
-          "description": "Returns results starting from this key (inclusive) in alphabetical order."
+          "description": "Returns results starting from this key (inclusive) in alphabetical order.",
+          "valueType": "String"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1284,13 +1612,20 @@
       "category": "Flow",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         },
         "organizationId": {
-          "description": "The organization ID (enterprise ID)."
+          "description": "The organization ID (enterprise ID).",
+          "valueType": "${Parameter}"
         },
         "sericeConnectionType": {
-          "description": "The service connection type."
+          "description": "The service connection type.",
+          "valueType": "String"
         }
       }
     },
@@ -1299,13 +1634,20 @@
       "category": "Flow",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         },
         "accessLevel": {
-          "description": "The user access level."
+          "description": "The user access level.",
+          "valueType": "String"
         },
         "minAccessLevel": {
-          "description": "The minimum access level for querying organizations with access level greater than or equal to this value."
+          "description": "The minimum access level for querying organizations with access level greater than or equal to this value.",
+          "valueType": "String"
         }
       }
     },
@@ -1314,10 +1656,16 @@
       "category": "Hologres",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         },
         "cmsInstanceType": {
-          "description": "The CloudMonitor instance type. Values: standard, follower, mc-acceleration, warehouse, high-memory."
+          "description": "The CloudMonitor instance type. Values: standard, follower, mc-acceleration, warehouse, high-memory.",
+          "valueType": "String"
         }
       }
     },
@@ -1326,10 +1674,16 @@
       "category": "InfluxDB",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         },
         "ZoneId": {
-          "description": "The zone ID."
+          "description": "The zone ID.",
+          "valueType": "${Parameter}"
         }
       }
     },
@@ -1337,11 +1691,17 @@
       "description": "Queries Kafka instance information in a specified region.",
       "category": "Kafka",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "OrderId": {
-          "description": "The order ID."
+          "description": "The order ID.",
+          "valueType": "${Parameter}"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1350,33 +1710,52 @@
       "category": "Lindorm",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
-        "SupportEngine": {
-          "description": "The supported data engine type. Values: 1 (search), 2 (time series), 4 (wide column), 8 (file)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
         "ServiceType": {
-          "description": "The instance type. Values: lindorm, lindorm_multizone, serverless_lindorm, lindorm_standalone, lts."
+          "description": "The instance type. Values: lindorm, lindorm_multizone, serverless_lindorm, lindorm_standalone, lts.",
+          "valueType": "String"
+        },
+        "SupportEngine": {
+          "description": "The supported data engine type. Values: 1 (search), 2 (time series), 4 (wide column), 8 (file).",
+          "valueType": "String"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
     "ALIYUN::MongoDB::Instance::InstanceType": {
       "description": "MongoDB instance type.",
       "category": "MongoDB",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::NAS::FileSystem::FileSystemId": {
       "description": "Queries file system information.",
       "category": "NAS",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "FileSystemType": {
-          "description": "The file system type. Values: all (default), standard, extreme, cpfs."
+          "description": "The file system type. Values: all (default), standard, extreme, cpfs.",
+          "valueType": "String"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         },
         "VpcId": {
-          "description": "The VPC ID."
+          "description": "The VPC ID.",
+          "valueType": "${Parameter}"
         }
       }
     },
@@ -1384,11 +1763,17 @@
       "description": "Queries mount target address.",
       "category": "NAS",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "FileSystemId": {
-          "description": "The file system ID."
+          "description": "The file system ID.",
+          "valueType": "${Parameter}"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1396,17 +1781,25 @@
       "description": "Network Load Balancer instance ID.",
       "category": "NLB",
       "metadata": {
+        "AddressType": {
+          "description": "The network type.",
+          "valueType": "String"
+        },
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         },
         "VpcIds": {
-          "description": "The VPC ID list."
-        },
-        "AddressType": {
-          "description": "The network type."
+          "description": "The VPC ID list.",
+          "valueType": "List"
         },
         "ZoneId": {
-          "description": "The zone ID."
+          "description": "The zone ID.",
+          "valueType": "${Parameter}"
         }
       }
     },
@@ -1415,10 +1808,16 @@
       "category": "NLB",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
         "ShowRandom": {
-          "description": "Whether to show the random allocation option."
+          "description": "Whether to show the random allocation option.",
+          "valueType": "Boolean"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1427,7 +1826,12 @@
       "category": "OOS",
       "metadata": {
         "CommandType": {
-          "description": "The command type. Values: RunBatScript, RunPowerShellScript, RunShellScript, RunPythonScript, RunPerlScript."
+          "description": "The command type. Values: RunBatScript, RunPowerShellScript, RunShellScript, RunPythonScript, RunPerlScript.",
+          "valueType": "String"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1436,7 +1840,12 @@
       "category": "OOS",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1444,11 +1853,17 @@
       "description": "Uploaded file URL.",
       "category": "OOS",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "FileType": {
-          "description": "The export format. Values: local, https, github, oss."
+          "description": "The export format. Values: local, https, github, oss.",
+          "valueType": "String"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1457,7 +1872,12 @@
       "category": "OOS",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1466,10 +1886,16 @@
       "category": "OOS",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
         "TemplateName": {
-          "description": "The template name."
+          "description": "The template name.",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1478,7 +1904,12 @@
       "category": "OOS",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1486,11 +1917,17 @@
       "description": "Queries OOS patch baseline information.",
       "category": "OOS",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "Name": {
-          "description": "The patch baseline name."
+          "description": "The patch baseline name.",
+          "valueType": "String"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1499,7 +1936,12 @@
       "category": "OOS",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1508,16 +1950,24 @@
       "category": "OOS",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
-        "TemplateVersion": {
-          "description": "The OOS template version."
-        },
-        "TemplateReadOnly": {
-          "description": "Whether the template is read-only."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
         "TemplateName": {
-          "description": "The OOS template name."
+          "description": "The OOS template name.",
+          "valueType": "${Parameter}"
+        },
+        "TemplateReadOnly": {
+          "description": "Whether the template is read-only.",
+          "valueType": "Boolean"
+        },
+        "TemplateVersion": {
+          "description": "The OOS template version.",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1526,7 +1976,12 @@
       "category": "OOS",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1535,10 +1990,16 @@
       "category": "OOS",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
         "TemplateName": {
-          "description": "The template name."
+          "description": "The template name.",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1547,7 +2008,12 @@
       "category": "OSS",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1555,14 +2021,21 @@
       "description": "OSS storage object.",
       "category": "OSS",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "ObjectType": {
-          "description": "The object storage class."
+          "description": "The object storage class.",
+          "valueType": "String"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
         "ValueType": {
-          "description": "The object value type."
+          "description": "The object value type.",
+          "valueType": "String"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1570,14 +2043,21 @@
       "description": "OSS object name.",
       "category": "OSS",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "BucketName": {
-          "description": "The bucket name."
+          "description": "The bucket name.",
+          "valueType": "${Parameter}"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
         "ValueType": {
-          "description": "The return address type. Default: OSSUrl."
+          "description": "The return address type. Default: OSSUrl.",
+          "valueType": "String"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1586,7 +2066,12 @@
       "category": "PolarDB",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1594,20 +2079,29 @@
       "description": "Queries PolarDB cluster available resources.",
       "category": "PolarDB",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
-        "ZoneId": {
-          "description": "The zone ID."
-        },
         "DBType": {
-          "description": "The database engine type. Values: MySQL, PostgreSQL, Oracle."
+          "description": "The database engine type. Values: MySQL, PostgreSQL, Oracle.",
+          "valueType": "String"
         },
         "DBVersion": {
-          "description": "The database engine version."
+          "description": "The database engine version.",
+          "valueType": "String"
         },
         "PayType": {
-          "description": "The billing method. Values: Postpaid (pay-as-you-go), Prepaid (subscription)."
+          "description": "The billing method. Values: Postpaid (pay-as-you-go), Prepaid (subscription).",
+          "valueType": "String"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        },
+        "ZoneId": {
+          "description": "The zone ID.",
+          "valueType": "${Parameter}"
         }
       }
     },
@@ -1616,7 +2110,12 @@
       "category": "RAM",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1625,38 +2124,64 @@
       "category": "RAM",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
     "ALIYUN::RDS::Engine::EngineId": {
       "description": "RDS database engine type.",
       "category": "RDS",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::RDS::Engine::EngineVersion": {
       "description": "RDS database engine version.",
       "category": "RDS",
       "metadata": {
         "Engine": {
-          "description": "The database engine type."
+          "description": "The database engine type.",
+          "valueType": "String"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
     "ALIYUN::RDS::Instance::AccountPassword": {
       "description": "RDS database account password.",
       "category": "RDS",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::RDS::Instance::InstanceId": {
       "description": "RDS instance ID.",
       "category": "RDS",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         },
         "ZoneId": {
-          "description": "The zone ID."
+          "description": "The zone ID.",
+          "valueType": "${Parameter}"
         }
       }
     },
@@ -1664,35 +2189,49 @@
       "description": "RDS instance type.",
       "category": "RDS",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
-        "ZoneId": {
-          "description": "The zone ID."
-        },
-        "InstanceChargeType": {
-          "description": "The instance billing method."
-        },
         "Category": {
-          "description": "The instance series."
-        },
-        "Engine": {
-          "description": "The database engine type."
-        },
-        "EngineVersion": {
-          "description": "The database engine version."
+          "description": "The instance series.",
+          "valueType": "String"
         },
         "DBInstanceClass": {
-          "description": "The instance class."
-        },
-        "OrderType": {
-          "description": "The order type."
+          "description": "The instance class.",
+          "valueType": "String"
         },
         "DBInstanceStorageType": {
-          "description": "The instance storage type."
+          "description": "The instance storage type.",
+          "valueType": "String"
         },
         "DispenseMode": {
-          "description": "The allocation mode."
+          "description": "The allocation mode.",
+          "valueType": "String"
+        },
+        "Engine": {
+          "description": "The database engine type.",
+          "valueType": "String"
+        },
+        "EngineVersion": {
+          "description": "The database engine version.",
+          "valueType": "String"
+        },
+        "InstanceChargeType": {
+          "description": "The instance billing method.",
+          "valueType": "String"
+        },
+        "OrderType": {
+          "description": "The order type.",
+          "valueType": "String"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        },
+        "ZoneId": {
+          "description": "The zone ID.",
+          "valueType": "${Parameter}"
         }
       }
     },
@@ -1700,26 +2239,37 @@
       "description": "Redis instance ID.",
       "category": "Redis",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
-        "InstanceType": {
-          "description": "The instance type."
-        },
         "ChargeType": {
-          "description": "The billing method."
+          "description": "The billing method.",
+          "valueType": "String"
         },
         "EditionType": {
-          "description": "The edition type."
+          "description": "The edition type.",
+          "valueType": "String"
         },
         "InstanceClass": {
-          "description": "The instance class."
-        },
-        "NetworkType": {
-          "description": "The network type."
+          "description": "The instance class.",
+          "valueType": "String"
         },
         "InstanceStatus": {
-          "description": "The instance status."
+          "description": "The instance status.",
+          "valueType": "String"
+        },
+        "InstanceType": {
+          "description": "The instance type.",
+          "valueType": "${Parameter}"
+        },
+        "NetworkType": {
+          "description": "The network type.",
+          "valueType": "String"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1727,42 +2277,113 @@
       "description": "Redis instance type.",
       "category": "Redis",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
-        "ZoneId": {
-          "description": "The zone ID."
+        "Engine": {
+          "description": "The database engine type.",
+          "valueType": "String"
         },
         "InstanceChargeType": {
-          "description": "The instance billing method."
-        },
-        "Engine": {
-          "description": "The database engine type."
-        },
-        "ProductType": {
-          "description": "The product type."
+          "description": "The instance billing method.",
+          "valueType": "String"
         },
         "OrderType": {
-          "description": "The order type."
+          "description": "The order type.",
+          "valueType": "String"
+        },
+        "ProductType": {
+          "description": "The product type.",
+          "valueType": "${Parameter}"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        },
+        "ZoneId": {
+          "description": "The zone ID.",
+          "valueType": "${Parameter}"
+        }
+      }
+    },
+    "ALIYUN::Resource::Data::API": {
+      "description": "Queries data from Alibaba Cloud product OpenAPI based on parameters.",
+      "category": "Custom",
+      "metadata": {
+        "APIAction": {
+          "description": "The cloud product and API information.",
+          "valueType": "Map"
+        },
+        "LabelGetter": {
+          "description": "Defines the attribute displayed in the query results.",
+          "valueType": "Map"
+        },
+        "OptionsGetter": {
+          "description": "Defines the data hierarchy parsing mode.",
+          "valueType": "Map"
+        },
+        "PageFilterKeys": {
+          "description": "Pagination filter attributes.",
+          "valueType": "List"
+        },
+        "PageNumber": {
+          "description": "The page number.",
+          "valueType": "Integer"
+        },
+        "PageSize": {
+          "description": "The page size for pagination.",
+          "valueType": "Integer"
+        },
+        "Pagination": {
+          "description": "The pagination method.",
+          "valueType": "Map"
+        },
+        "TotalCount": {
+          "description": "The total count of records.",
+          "valueType": "Integer"
+        },
+        "ValueGetter": {
+          "description": "Defines the name of the attribute to parse.",
+          "valueType": "Map"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
     "ALIYUN::ResourceManager::Account": {
       "description": "Resource Manager account.",
       "category": "ResourceManager",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::ResourceManager::Folder": {
       "description": "Resource Manager folder.",
       "category": "ResourceManager",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::SAE::Namespace::NamespaceId": {
       "description": "SAE namespace.",
       "category": "SAE",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1770,11 +2391,17 @@
       "description": "SLB access control list ID.",
       "category": "SLB",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "AddressIPVersion": {
-          "description": "The IP address version."
+          "description": "The IP address version.",
+          "valueType": "String"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1782,17 +2409,25 @@
       "description": "SLB instance type.",
       "category": "SLB",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
-        "ZoneId": {
-          "description": "The zone ID."
-        },
         "InstanceChargeType": {
-          "description": "The instance billing method."
+          "description": "The instance billing method.",
+          "valueType": "String"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
         "SpotStrategy": {
-          "description": "The spot pricing strategy for pay-as-you-go instances."
+          "description": "The spot pricing strategy for pay-as-you-go instances.",
+          "valueType": "String"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        },
+        "ZoneId": {
+          "description": "The zone ID.",
+          "valueType": "${Parameter}"
         }
       }
     },
@@ -1800,32 +2435,45 @@
       "description": "SLB instance ID.",
       "category": "SLB",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
-        "VpcId": {
-          "description": "The VPC ID."
-        },
-        "VSwitchId": {
-          "description": "The vSwitch ID."
-        },
-        "NetworkType": {
-          "description": "The network type."
+        "AddressType": {
+          "description": "The address type.",
+          "valueType": "String"
         },
         "InstanceChargeType": {
-          "description": "The instance billing method."
-        },
-        "AddressType": {
-          "description": "The address type."
+          "description": "The instance billing method.",
+          "valueType": "String"
         },
         "MasterZoneId": {
-          "description": "The primary zone ID of the SLB instance."
+          "description": "The primary zone ID of the SLB instance.",
+          "valueType": "${Parameter}"
         },
-        "SlaveZoneId": {
-          "description": "The secondary zone ID of the SLB instance."
+        "NetworkType": {
+          "description": "The network type.",
+          "valueType": "String"
         },
         "PayType": {
-          "description": "The billing method of the SLB instance."
+          "description": "The billing method of the SLB instance.",
+          "valueType": "String"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "SlaveZoneId": {
+          "description": "The secondary zone ID of the SLB instance.",
+          "valueType": "${Parameter}"
+        },
+        "VSwitchId": {
+          "description": "The vSwitch ID.",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        },
+        "VpcId": {
+          "description": "The VPC ID.",
+          "valueType": "${Parameter}"
         }
       }
     },
@@ -1833,14 +2481,21 @@
       "description": "Queries SLB availability zone information.",
       "category": "SLB",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "MasterZoneId": {
-          "description": "The primary zone ID."
+          "description": "The primary zone ID.",
+          "valueType": "${Parameter}"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         },
         "ZoneType": {
-          "description": "The zone type. Values: Master (primary, default), Slave (secondary)."
+          "description": "The zone type. Values: Master (primary, default), Slave (secondary).",
+          "valueType": "String"
         }
       }
     },
@@ -1848,11 +2503,17 @@
       "description": "Service Catalog portfolio ID.",
       "category": "ServiceCatalog",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "ProductId": {
-          "description": "The product ID."
+          "description": "The product ID.",
+          "valueType": "${Parameter}"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1860,14 +2521,21 @@
       "description": "Product version ID.",
       "category": "ServiceCatalog",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+        "Active": {
+          "description": "Whether the version is active.",
+          "valueType": "Boolean"
         },
         "ProductId": {
-          "description": "The product ID."
+          "description": "The product ID.",
+          "valueType": "${Parameter}"
         },
-        "Active": {
-          "description": "Whether the version is active."
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1876,13 +2544,20 @@
       "category": "Tag",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
         "ResourceType": {
-          "description": "The resource type."
+          "description": "The resource type.",
+          "valueType": "String"
         },
         "ShowSystem": {
-          "description": "Whether to filter system tags."
+          "description": "Whether to filter system tags.",
+          "valueType": "Boolean"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1890,41 +2565,69 @@
       "description": "Queries tag values for a specified tag key.",
       "category": "Tag",
       "metadata": {
+        "Key": {
+          "description": "The tag key.",
+          "valueType": "${Parameter}"
+        },
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
         "ResourceType": {
-          "description": "The resource type."
+          "description": "The resource type.",
+          "valueType": "String"
         },
-        "Key": {
-          "description": "The tag key."
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
     "ALIYUN::User::Account::AccountIds": {
       "description": "User account IDs.",
       "category": "User",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::User::AccountId": {
       "description": "Gets the Alibaba Cloud primary account ID.",
       "category": "User",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::User::UserId": {
       "description": "Gets the current Alibaba Cloud user ID.",
       "category": "User",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::VPC::EIP::AllocationId": {
       "description": "Queries Elastic IP address information.",
       "category": "VPC",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
         "EIPStatus": {
-          "description": "The EIP status. Values: Associating, Unassociating, InUse, Available, Releasing."
+          "description": "The EIP status. Values: Associating, Unassociating, InUse, Available, Releasing.",
+          "valueType": "String"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -1932,43 +2635,65 @@
       "description": "NAT Gateway ID.",
       "category": "VPC",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
-        },
-        "ZoneId": {
-          "description": "The zone ID."
-        },
-        "VpcId": {
-          "description": "The VPC ID."
-        },
         "InstanceChargeType": {
-          "description": "The instance billing method."
+          "description": "The instance billing method.",
+          "valueType": "String"
         },
         "NatType": {
-          "description": "The NAT gateway type."
+          "description": "The NAT gateway type.",
+          "valueType": "String"
         },
         "NetworkType": {
-          "description": "The NAT gateway network type."
+          "description": "The NAT gateway network type.",
+          "valueType": "String"
+        },
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        },
+        "VpcId": {
+          "description": "The VPC ID.",
+          "valueType": "${Parameter}"
+        },
+        "ZoneId": {
+          "description": "The zone ID.",
+          "valueType": "${Parameter}"
         }
       }
     },
     "ALIYUN::VPC::VPC::CidrBlock": {
       "description": "CIDR block for a new VPC.",
       "category": "VPC",
-      "metadata": {}
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
     },
     "ALIYUN::VPC::VSwitch::CidrBlock": {
       "description": "CIDR block for a new vSwitch.",
       "category": "VPC",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
         },
-        "VpcId": {
-          "description": "The VPC ID."
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         },
         "VpcCidrBlock": {
-          "description": "The VPC CIDR block."
+          "description": "The VPC CIDR block.",
+          "valueType": "${Parameter}"
+        },
+        "VpcId": {
+          "description": "The VPC ID.",
+          "valueType": "${Parameter}"
         }
       }
     },
@@ -1976,17 +2701,25 @@
       "description": "VSwitch ID.",
       "category": "VPC",
       "metadata": {
-        "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+        "InstanceType": {
+          "description": "The instance type.",
+          "valueType": "${Parameter}"
         },
-        "ZoneId": {
-          "description": "The zone ID."
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         },
         "VpcId": {
-          "description": "The VPC ID."
+          "description": "The VPC ID.",
+          "valueType": "${Parameter}"
         },
-        "InstanceType": {
-          "description": "The instance type."
+        "ZoneId": {
+          "description": "The zone ID.",
+          "valueType": "${Parameter}"
         }
       }
     },
@@ -1995,7 +2728,12 @@
       "category": "VPC",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     },
@@ -2004,7 +2742,322 @@
       "category": "VPC",
       "metadata": {
         "RegionId": {
-          "description": "The region ID (defaults to the region of the stack)."
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
+    },
+    "Auto": {
+      "description": "ROS automatically generates AssociationProperty and AssociationPropertyMetadata fields based on the Terraform original data structure. Only applies to JSON-type parameters in Terraform templates.",
+      "category": "Basic",
+      "metadata": {
+        "Overwrite": {
+          "description": "Supplements or overwrites nested parameter definitions. Dictionary type.",
+          "valueType": "Map"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
+    },
+    "AutoCompleteInput": {
+      "description": "Automatically generates a random string.",
+      "category": "Basic",
+      "metadata": {
+        "CharacterClasses": {
+          "description": "List of character types, each containing Class (lowercase/uppercase/number/specialCharacter), Min, etc.",
+          "valueType": "List"
+        },
+        "Length": {
+          "description": "The string length.",
+          "valueType": "Integer"
+        },
+        "Prefix": {
+          "description": "The string prefix.",
+          "valueType": "String"
+        },
+        "Suffix": {
+          "description": "The string suffix.",
+          "valueType": "String"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
+    },
+    "ChargeType": {
+      "description": "The billing method. Values: PayAsYouGo, Subscription.",
+      "category": "Basic",
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
+    },
+    "Code": {
+      "description": "Code input.",
+      "category": "Basic",
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
+    },
+    "CommaDelimitedList": {
+      "description": "Input a comma-delimited array.",
+      "category": "Basic",
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
+    },
+    "Cron": {
+      "description": "A cron expression string that specifies the execution time of a scheduled task.",
+      "category": "Basic",
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
+    },
+    "DateTime": {
+      "description": "Date selection.",
+      "category": "Basic",
+      "metadata": {
+        "GMTZone": {
+          "description": "The GMT zone.",
+          "valueType": "String"
+        },
+        "TimeZone": {
+          "description": "The time zone description.",
+          "valueType": "String"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
+    },
+    "FileContent": {
+      "description": "Reads content from a local file.",
+      "category": "Basic",
+      "metadata": {
+        "AcceptFileSuffixes": {
+          "description": "Accepted file types for upload. Multiple types are separated by commas.",
+          "valueType": "String"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
+    },
+    "GMTZone": {
+      "description": "GMT zone selection.",
+      "category": "Basic",
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
+    },
+    "Json": {
+      "description": "JSON object input.",
+      "category": "Basic",
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
+    },
+    "List[Parameter]": {
+      "description": "Parameter list with indented layout. Only applies to Json-type parameters.",
+      "category": "Basic",
+      "metadata": {
+        "Mode": {
+          "description": "Display style. Collapse: collapsed style (default). Table: table style.",
+          "valueType": "String"
+        },
+        "Parameter": {
+          "description": "The parameter definition.",
+          "valueType": "Map"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
+    },
+    "List[Parameters]": {
+      "description": "Parameter group list with table layout. Only applies to Json-type parameters.",
+      "category": "Basic",
+      "metadata": {
+        "ListMetadata": {
+          "description": "Dictionary type for controlling table display, including ShowHeader, ShowRemove, ShowAddition, Order, etc.",
+          "valueType": "Map"
+        },
+        "Parameters": {
+          "description": "Dictionary type, required. Represents a group of parameter definitions. Key: parameter name. Value: parameter definition.",
+          "valueType": "Map"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
+    },
+    "OOSServiceRole": {
+      "description": "The OOS service role.",
+      "category": "Basic",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
+    },
+    "Password": {
+      "description": "Password input.",
+      "category": "Basic",
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
+    },
+    "RateControl": {
+      "description": "The OOS execution rate.",
+      "category": "Basic",
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
+    },
+    "Tags": {
+      "description": "Tags.",
+      "category": "Basic",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "ResourceType": {
+          "description": "The resource type for tag statistics. Default: ALIYUN::ECS::INSTANCE.",
+          "valueType": "String"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
+    },
+    "Targets": {
+      "description": "ECS instance targets. Supports selecting instances by instance ID, tags, or resource groups.",
+      "category": "Basic",
+      "metadata": {
+        "RegionId": {
+          "description": "The region ID (defaults to the region of the stack).",
+          "valueType": "${Parameter}"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
+    },
+    "TextArea": {
+      "description": "Rich text input.",
+      "category": "Basic",
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
+    },
+    "TimeTriggerWeekly": {
+      "description": "Weekly time selection.",
+      "category": "Basic",
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
+    },
+    "TimeZone": {
+      "description": "Time zone selection.",
+      "category": "Basic",
+      "metadata": {
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
+        }
+      }
+    },
+    "UploadFilesToUserBucket": {
+      "description": "OSS file upload component.",
+      "category": "OSS",
+      "metadata": {
+        "AddSuffix": {
+          "description": "Whether to append a timestamp suffix to the file name. Value: true.",
+          "valueType": "Boolean"
+        },
+        "BucketName": {
+          "description": "The bucket name.",
+          "valueType": "${Parameter}"
+        },
+        "Directory": {
+          "description": "Whether to support folder upload. Value: true.",
+          "valueType": "Boolean"
+        },
+        "Mode": {
+          "description": "The component display mode. Values: normal, dragger (default).",
+          "valueType": "String"
+        },
+        "Multiple": {
+          "description": "Whether to upload multiple files at once. Value: true.",
+          "valueType": "Boolean"
+        },
+        "ObjectNamePrefix": {
+          "description": "The upload file path prefix.",
+          "valueType": "String"
+        },
+        "RegionId": {
+          "description": "The region of the bucket. Defaults to the current environment region.",
+          "valueType": "${Parameter}"
+        },
+        "SuffixFormat": {
+          "description": "The timestamp suffix format, e.g. YYYY-MM-DD.",
+          "valueType": "String"
+        },
+        "ValueType": {
+          "description": "The return value type. Default: OSS Url.",
+          "valueType": "String"
+        },
+        "Visible": {
+          "description": "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references.",
+          "valueType": "Map"
         }
       }
     }

@@ -12,8 +12,6 @@ InfraGuard は、組み込みの Language Server Protocol (LSP) サーバーと 
 
 [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=AlibabaCloudROS.infraguard) から **InfraGuard** 拡張機能をインストールするか、VS Code の拡張機能パネルで「InfraGuard」を検索してください。
 
-この拡張機能には、`infraguard` CLI がインストールされ、PATH で利用可能である必要があります。詳細は [インストール](../getting-started/installation) を参照してください。
-
 ### 機能
 
 #### 自動補完
@@ -48,6 +46,17 @@ InfraGuard は、組み込みの Language Server Protocol (LSP) サーバーと 
 - **リソースタイプ** — 説明と公式ドキュメントへのリンク
 - **プロパティ** — 型、制約、必須またはオプション、更新動作
 - **組み込み関数** — 構文と使用例
+
+#### 定義へ移動
+
+参照から定義へジャンプします：
+
+- **Ref ターゲット** — `!Ref` または `Ref` からパラメータまたはリソース定義へジャンプ
+- **GetAtt ターゲット** — `Fn::GetAtt` からリソース定義へジャンプ
+- **リソース参照** — プロパティ参照からリソース定義へナビゲート
+- **AssociationPropertyMetadata** — メタデータ内の `${Name}` プレースホルダーからパラメータ定義へジャンプ
+
+参照上で `Ctrl+クリック`（macOS では `Cmd+クリック`）または `F12` キーを押すと、定義へジャンプします。
 
 #### シンタックスハイライト
 

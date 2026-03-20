@@ -19,7 +19,7 @@
       "name": "support.function.ros"
     },
     "ros-resource-types": {
-      "match": "\\bALIYUN::[A-Za-z]+::[A-Za-z]+\\b",
+      "match": "\\bALIYUN::[A-Za-z]+(?:::[A-Za-z]+)+\\b",
       "name": "entity.name.type.ros"
     },
     "ros-pseudo-params": {

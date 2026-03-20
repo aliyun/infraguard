@@ -21,6 +21,7 @@ const (
 	ContextParameterTypeValue
 	ContextAssociationPropertyValue
 	ContextAssociationPropertyMetadataKey
+	ContextAssociationPropertyMetadataParamRef // cursor inside ${...} within a metadata value
 	ContextOutputBlock
 	ContextLocalsBlock
 	ContextLocalsTypeValue
@@ -39,12 +40,15 @@ type AnalysisContext struct {
 	ResourceName       string
 	ResourceTypeName   string
 	PropertyName       string
+	PropertyPath       []string // Full path of property names from root Properties to current level
 	ExistingKeys       []string
 	Prefix             string // Text typed so far at cursor position
 	GetAttResourceName string // For ContextGetAttAttribute: the resource logical ID from first param
 	ValueStartCol      int    // Column where the value starts (for TextEdit range)
 	FindInMapMapName   string // For ContextFindInMapFirstKey/SecondKey: the map name
 	FindInMapFirstKey  string // For ContextFindInMapSecondKey: the first-level key
+	ParamRefStart      int    // For ContextAssociationPropertyMetadataParamRef: column after "${"
+	CurrentParamName   string // The parameter that contains the current AssociationPropertyMetadata
 }
 
 // AnalyzePosition determines the semantic context at a given position (0-based line and col).

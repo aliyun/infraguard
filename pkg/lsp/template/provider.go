@@ -2,6 +2,7 @@ package template
 
 import (
 	"fmt"
+	"regexp"
 	"strings"
 
 	"github.com/aliyun/infraguard/pkg/i18n"
@@ -31,6 +32,8 @@ type FormatHandler interface {
 	FindKeyLine(content, key string) int
 	FindParameterRange(content, paramName string) protocol.Range
 	FindParameterAttrValueRange(content, paramName, attrName string) protocol.Range
+	FindAssociationPropertyMetadataKeyRange(content, paramName, metaKey string) protocol.Range
+	FindParamRefInMetadataRange(content, paramName, refName string) protocol.Range
 	FindResourceRange(content, resName string) protocol.Range
 	FindResourceTypeRange(content, resName string) protocol.Range
 	FindResourcePropertyValueRange(content, resName, propName string) protocol.Range
@@ -38,6 +41,9 @@ type FormatHandler interface {
 	FindMappingsRange(content, mapName string) protocol.Range
 	FindConditionsRange(content, condName string) protocol.Range
 	FindConditionValueRange(content, section, entryName string) protocol.Range
+	FindRefValueRange(content, refName string) protocol.Range
+	FindGetAttResourceRange(content, resourceName string) protocol.Range
+	FindGetAttAttributeRange(content, resourceName, attrName string) protocol.Range
 
 	ExtractKeyFromLine(line string) string
 	ExtractValueFromLine(line string) string
@@ -54,6 +60,16 @@ func getFormatHandler(isYAML bool) FormatHandler {
 
 // CompletionContext holds context for generating completions.
 type CompletionContext struct {
+	URI      string
+	Content  string
+	Line     int
+	Col      int
+	IsYAML   bool
+	Registry *schema.Registry
+}
+
+// DefinitionContext holds context for go-to-definition requests.
+type DefinitionContext struct {
 	URI      string
 	Content  string
 	Line     int
@@ -137,6 +153,8 @@ func (p *ROSTemplateProvider) Complete(ctx CompletionContext) []protocol.Complet
 		return p.completeAssociationPropertyValue(analysis, handler, ctx)
 	case ContextAssociationPropertyMetadataKey:
 		return p.completeAssociationPropertyMetadataKey(analysis, handler, ctx)
+	case ContextAssociationPropertyMetadataParamRef:
+		return p.completeAssociationPropertyMetadataParamRef(analysis, handler, ctx)
 	case ContextLocalsBlock:
 		return p.completeLocalsProperties(analysis, handler, ctx)
 	case ContextLocalsTypeValue:
@@ -178,6 +196,8 @@ func (p *ROSTemplateProvider) Hover(ctx HoverContext) *HoverResult {
 		return p.hoverResourceType(currentLine, handler, ctx)
 	case ContextResourceProperties:
 		return p.hoverResourceProperty(currentLine, handler, analysis, ctx)
+	case ContextPropertyValue:
+		return p.hoverPropertyValue(currentLine, handler, analysis, ctx)
 	case ContextResourceBlock:
 		return p.hoverResourceBlock(currentLine, handler)
 	case ContextParameterProperties:
@@ -192,9 +212,128 @@ func (p *ROSTemplateProvider) Hover(ctx HoverContext) *HoverResult {
 		return p.hoverLocalsTypeValue(currentLine, handler)
 	case ContextMappingsBlock:
 		return p.hoverMappingsBlock(currentLine, handler)
+	case ContextGetAttAttribute:
+		return p.hoverGetAttAttribute(analysis, handler, ctx)
 	default:
 		return p.hoverIntrinsicFunction(currentLine)
 	}
+}
+
+// Definition returns the location of the definition for the symbol at the cursor.
+func (p *ROSTemplateProvider) Definition(ctx DefinitionContext) *protocol.Location {
+	lines := strings.Split(ctx.Content, "\n")
+	if ctx.Line < 0 || ctx.Line >= len(lines) {
+		return nil
+	}
+
+	currentLine := lines[ctx.Line]
+	handler := getFormatHandler(ctx.IsYAML)
+	pt := handler.ParseTemplate(ctx.Content)
+
+	// Check for ${ParameterName} reference (e.g. in AssociationPropertyMetadata)
+	if paramName := extractParamRefAtCursor(currentLine, ctx.Col); paramName != "" {
+		return p.findParameterDefinition(paramName, handler, pt, ctx)
+	}
+
+	targetName := ""
+	isGetAttResource := false
+
+	if ctx.IsYAML {
+		targetName, isGetAttResource = extractDefinitionTargetYAML(currentLine, ctx.Col)
+	} else {
+		targetName, isGetAttResource = extractDefinitionTargetJSON(currentLine, lines, ctx.Line, ctx.Col)
+	}
+
+	if targetName == "" {
+		return nil
+	}
+
+	if isGetAttResource {
+		return p.findResourceDefinition(targetName, handler, pt, ctx)
+	}
+
+	// Ref target: try parameters, then locals, then resources
+	if loc := p.findParameterDefinition(targetName, handler, pt, ctx); loc != nil {
+		return loc
+	}
+	if loc := p.findLocalsDefinition(targetName, handler, pt, ctx); loc != nil {
+		return loc
+	}
+	return p.findResourceDefinition(targetName, handler, pt, ctx)
+}
+
+// extractParamRefAtCursor extracts the full parameter name from a ${ParamName} reference
+// at the given cursor position. Returns empty string if the cursor is not inside a ${...}.
+func extractParamRefAtCursor(line string, col int) string {
+	if col > len(line) {
+		col = len(line)
+	}
+	// Find the last "${" before the cursor
+	searchStr := line[:col]
+	start := strings.LastIndex(searchStr, "${")
+	if start < 0 {
+		return ""
+	}
+	// Find the closing "}" after "${"
+	rest := line[start+2:]
+	closeIdx := strings.Index(rest, "}")
+	if closeIdx < 0 {
+		return ""
+	}
+	// Verify cursor is within ${...}
+	if col > start+2+closeIdx {
+		return ""
+	}
+	name := rest[:closeIdx]
+	if name == "" {
+		return ""
+	}
+	return name
+}
+
+func (p *ROSTemplateProvider) findParameterDefinition(name string, handler FormatHandler, pt *ParsedTemplate, ctx DefinitionContext) *protocol.Location {
+	params := pt.GetParameters()
+	if params == nil {
+		return nil
+	}
+	if _, ok := params[name]; !ok {
+		return nil
+	}
+	r := handler.FindParameterRange(ctx.Content, name)
+	if r.Start.Line == 0 && r.Start.Character == 0 && r.End.Line == 0 && r.End.Character == 0 {
+		return nil
+	}
+	return &protocol.Location{URI: ctx.URI, Range: r}
+}
+
+func (p *ROSTemplateProvider) findLocalsDefinition(name string, handler FormatHandler, pt *ParsedTemplate, ctx DefinitionContext) *protocol.Location {
+	locals := pt.GetLocals()
+	if locals == nil {
+		return nil
+	}
+	if _, ok := locals[name]; !ok {
+		return nil
+	}
+	r := handler.FindLocalsRange(ctx.Content, name)
+	if r.Start.Line == 0 && r.Start.Character == 0 && r.End.Line == 0 && r.End.Character == 0 {
+		return nil
+	}
+	return &protocol.Location{URI: ctx.URI, Range: r}
+}
+
+func (p *ROSTemplateProvider) findResourceDefinition(name string, handler FormatHandler, pt *ParsedTemplate, ctx DefinitionContext) *protocol.Location {
+	resources := pt.GetResources()
+	if resources == nil {
+		return nil
+	}
+	if _, ok := resources[name]; !ok {
+		return nil
+	}
+	r := handler.FindResourceRange(ctx.Content, name)
+	if r.Start.Line == 0 && r.Start.Character == 0 && r.End.Line == 0 && r.End.Character == 0 {
+		return nil
+	}
+	return &protocol.Location{URI: ctx.URI, Range: r}
 }
 
 // Validate returns diagnostics for the given context.
@@ -218,6 +357,9 @@ func (p *ROSTemplateProvider) Validate(ctx ValidationContext) []protocol.Diagnos
 	diags = append(diags, p.validateMappings(pt, handler, ctx)...)
 	diags = append(diags, p.validateConditions(pt, handler, ctx)...)
 	diags = append(diags, p.validateConditionRefs(pt, handler, ctx)...)
+	diags = append(diags, p.validateRefTargets(pt, handler, ctx)...)
+	diags = append(diags, p.validateGetAttTargets(pt, handler, ctx)...)
+	diags = append(diags, p.validateGetAttAttributes(pt, handler, ctx)...)
 
 	return diags
 }
@@ -299,7 +441,7 @@ func (p *ROSTemplateProvider) completeResourceProperties(analysis *AnalysisConte
 		return nil
 	}
 
-	props := ctx.Registry.GetProperties(analysis.ResourceTypeName)
+	props := ctx.Registry.GetSubProperties(analysis.ResourceTypeName, analysis.PropertyPath)
 	if props == nil {
 		return nil
 	}
@@ -355,10 +497,105 @@ func (p *ROSTemplateProvider) completeResourceProperties(analysis *AnalysisConte
 }
 
 func (p *ROSTemplateProvider) completePropertyValue(analysis *AnalysisContext, handler FormatHandler, ctx CompletionContext) []protocol.CompletionItem {
+	var items []protocol.CompletionItem
+
+	if analysis.ResourceTypeName != "" && len(analysis.PropertyPath) > 0 {
+		prop := ctx.Registry.GetPropertyByPath(analysis.ResourceTypeName, analysis.PropertyPath)
+		if prop != nil && prop.Properties != nil {
+			subItems := p.completeSubProperties(prop.Properties, analysis, handler, ctx)
+			items = append(items, subItems...)
+		}
+
+		if prop != nil && prop.Constraints != nil && len(prop.Constraints.AllowedValues) > 0 {
+			avItems := p.completeAllowedValues(prop, analysis, handler, ctx)
+			items = append(items, avItems...)
+			if len(items) > 0 {
+				return items
+			}
+		}
+	}
+
 	if analysis.Prefix != "" && !strings.HasPrefix(analysis.Prefix, "!") && !isIntrinsicFunctionPrefix(analysis.Prefix) {
+		if len(items) > 0 {
+			return items
+		}
 		return nil
 	}
-	return p.completeIntrinsicFunctions(handler, ctx)
+	items = append(items, p.completeIntrinsicFunctions(handler, ctx)...)
+	return items
+}
+
+func (p *ROSTemplateProvider) completeSubProperties(props map[string]*schema.Property, analysis *AnalysisContext, handler FormatHandler, ctx CompletionContext) []protocol.CompletionItem {
+	existing := make(map[string]bool)
+	for _, k := range analysis.ExistingKeys {
+		existing[k] = true
+	}
+
+	var items []protocol.CompletionItem
+	sortIdx := 0
+	for name, prop := range props {
+		if existing[name] {
+			continue
+		}
+		if !prop.Required {
+			continue
+		}
+		detail := formatPropertyDetail(prop, true)
+		item := protocol.CompletionItem{
+			Label:            name,
+			Kind:             protocol.CompletionItemKindProperty,
+			Detail:           detail,
+			InsertTextFormat: protocol.InsertTextFormatSnippet,
+			Documentation: &protocol.Markup{
+				Kind:  protocol.MarkupKindMarkdown,
+				Value: formatPropertyDoc(name, prop),
+			},
+			SortText: sortKey(sortIdx),
+		}
+		handler.BuildPropertyCompletion(&item, name, ctx)
+		items = append(items, item)
+		sortIdx++
+	}
+	for name, prop := range props {
+		if existing[name] || prop.Required {
+			continue
+		}
+		detail := formatPropertyDetail(prop, false)
+		item := protocol.CompletionItem{
+			Label:            name,
+			Kind:             protocol.CompletionItemKindProperty,
+			Detail:           detail,
+			InsertTextFormat: protocol.InsertTextFormatSnippet,
+			Documentation: &protocol.Markup{
+				Kind:  protocol.MarkupKindMarkdown,
+				Value: formatPropertyDoc(name, prop),
+			},
+			SortText: sortKey(sortIdx),
+		}
+		handler.BuildPropertyCompletion(&item, name, ctx)
+		items = append(items, item)
+		sortIdx++
+	}
+	return items
+}
+
+func (p *ROSTemplateProvider) completeAllowedValues(prop *schema.Property, analysis *AnalysisContext, handler FormatHandler, ctx CompletionContext) []protocol.CompletionItem {
+	prefix := strings.Trim(strings.ToLower(analysis.Prefix), "'\"")
+	var items []protocol.CompletionItem
+	for i, av := range prop.Constraints.AllowedValues {
+		label := fmt.Sprintf("%v", av)
+		if prefix != "" && !strings.Contains(strings.ToLower(label), prefix) {
+			continue
+		}
+		item := protocol.CompletionItem{
+			Label:    label,
+			Kind:     protocol.CompletionItemKindEnumMember,
+			Detail:   "Allowed value",
+			SortText: sortKey(i),
+		}
+		items = append(items, item)
+	}
+	return items
 }
 
 func isIntrinsicFunctionPrefix(prefix string) bool {
@@ -679,16 +916,11 @@ func (p *ROSTemplateProvider) completeAssociationPropertyValue(analysis *Analysi
 	return items
 }
 
+// visibleMetaDescription is the common description for the Visible metadata key.
+const visibleMetaDescription = "Controls the display condition of this parameter. Uses condition functions (Fn::Equals, Fn::Not, Fn::And, Fn::Or) with ${ParameterName} references."
+
 func (p *ROSTemplateProvider) completeAssociationPropertyMetadataKey(analysis *AnalysisContext, handler FormatHandler, ctx CompletionContext) []protocol.CompletionItem {
 	assocPropName := analysis.ResourceTypeName
-	if assocPropName == "" {
-		return nil
-	}
-
-	ap := ctx.Registry.GetAssociationProperty(assocPropName)
-	if ap == nil || len(ap.Metadata) == 0 {
-		return nil
-	}
 
 	existing := make(map[string]bool)
 	for _, k := range analysis.ExistingKeys {
@@ -697,24 +929,84 @@ func (p *ROSTemplateProvider) completeAssociationPropertyMetadataKey(analysis *A
 
 	var items []protocol.CompletionItem
 	sortIdx := 0
+	addedKeys := make(map[string]bool)
 
-	for key, meta := range ap.Metadata {
-		if existing[key] {
-			continue
+	if assocPropName != "" {
+		if ap := ctx.Registry.GetAssociationProperty(assocPropName); ap != nil && len(ap.Metadata) > 0 {
+			for key, meta := range ap.Metadata {
+				if existing[key] {
+					continue
+				}
+				detail := meta.Description
+				var docBuilder strings.Builder
+				docBuilder.WriteString(fmt.Sprintf("**%s**\n\n%s\n", key, detail))
+				if meta.ValueType != "" {
+					docBuilder.WriteString(fmt.Sprintf("\n- **Type:** `%s`\n", meta.ValueType))
+				}
+				docBuilder.WriteString(fmt.Sprintf("\n*AssociationProperty: %s*", assocPropName))
+				item := protocol.CompletionItem{
+					Label:      key,
+					Kind:       protocol.CompletionItemKindProperty,
+					Detail:     detail,
+					FilterText: key,
+					Documentation: &protocol.Markup{
+						Kind:  protocol.MarkupKindMarkdown,
+						Value: docBuilder.String(),
+					},
+					SortText: sortKey(sortIdx),
+				}
+				handler.BuildAssociationPropertyMetadataKeySnippet(&item, key, ctx)
+				items = append(items, item)
+				addedKeys[key] = true
+				sortIdx++
+			}
 		}
-		detail := meta.Description
+	}
+
+	if !existing["Visible"] && !addedKeys["Visible"] {
 		item := protocol.CompletionItem{
-			Label:      key,
+			Label:      "Visible",
 			Kind:       protocol.CompletionItemKindProperty,
-			Detail:     detail,
-			FilterText: key,
+			Detail:     visibleMetaDescription,
+			FilterText: "Visible",
 			Documentation: &protocol.Markup{
 				Kind:  protocol.MarkupKindMarkdown,
-				Value: fmt.Sprintf("**%s**\n\n%s\n\n*AssociationProperty: %s*", key, detail, assocPropName),
+				Value: "**Visible**\n\n" + visibleMetaDescription + "\n\n- **Type:** `Map`\n",
 			},
 			SortText: sortKey(sortIdx),
 		}
-		handler.BuildAssociationPropertyMetadataKeySnippet(&item, key, ctx)
+		handler.BuildAssociationPropertyMetadataKeySnippet(&item, "Visible", ctx)
+		items = append(items, item)
+	}
+
+	return items
+}
+
+// completeAssociationPropertyMetadataParamRef provides parameter name completions
+// when the cursor is inside a ${...} reference within an AssociationPropertyMetadata value.
+func (p *ROSTemplateProvider) completeAssociationPropertyMetadataParamRef(analysis *AnalysisContext, handler FormatHandler, ctx CompletionContext) []protocol.CompletionItem {
+	pt := handler.ParseTemplate(ctx.Content)
+	var items []protocol.CompletionItem
+	sortIdx := 0
+
+	for _, paramName := range pt.GetParameterNames() {
+		if paramName == analysis.CurrentParamName {
+			continue
+		}
+		item := protocol.CompletionItem{
+			Label:      paramName,
+			Kind:       protocol.CompletionItemKindVariable,
+			Detail:     "Parameter",
+			FilterText: paramName,
+			SortText:   sortKey(sortIdx),
+			TextEdit: &protocol.TextEdit{
+				Range: protocol.Range{
+					Start: protocol.Position{Line: ctx.Line, Character: analysis.ParamRefStart},
+					End:   protocol.Position{Line: ctx.Line, Character: ctx.Col},
+				},
+				NewText: paramName,
+			},
+		}
 		items = append(items, item)
 		sortIdx++
 	}
@@ -1172,8 +1464,51 @@ func formatPropertyDoc(name string, prop *schema.Property) string {
 	} else {
 		sb.WriteString("- **Updatable:** No\n")
 	}
+	if prop.Constraints != nil {
+		sb.WriteString(formatConstraintDoc(prop.Constraints))
+	}
 	if prop.Description != "" {
 		sb.WriteString("\n" + prop.Description)
+	}
+	return sb.String()
+}
+
+func formatConstraintDoc(c *schema.Constraint) string {
+	var sb strings.Builder
+	if len(c.AllowedValues) > 0 {
+		sb.WriteString("- **Allowed Values:** ")
+		for i, v := range c.AllowedValues {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(fmt.Sprintf("`%v`", v))
+		}
+		sb.WriteString("\n")
+	}
+	if c.AllowedPattern != "" {
+		sb.WriteString(fmt.Sprintf("- **Allowed Pattern:** `%s`\n", c.AllowedPattern))
+	}
+	if c.MinValue != nil || c.MaxValue != nil {
+		sb.WriteString("- **Range:** ")
+		if c.MinValue != nil && c.MaxValue != nil {
+			sb.WriteString(fmt.Sprintf("[%v, %v]", *c.MinValue, *c.MaxValue))
+		} else if c.MinValue != nil {
+			sb.WriteString(fmt.Sprintf("[%v, ∞)", *c.MinValue))
+		} else {
+			sb.WriteString(fmt.Sprintf("(-∞, %v]", *c.MaxValue))
+		}
+		sb.WriteString("\n")
+	}
+	if c.MinLength != nil || c.MaxLength != nil {
+		sb.WriteString("- **Length:** ")
+		if c.MinLength != nil && c.MaxLength != nil {
+			sb.WriteString(fmt.Sprintf("[%d, %d]", *c.MinLength, *c.MaxLength))
+		} else if c.MinLength != nil {
+			sb.WriteString(fmt.Sprintf("[%d, ∞)", *c.MinLength))
+		} else {
+			sb.WriteString(fmt.Sprintf("[0, %d]", *c.MaxLength))
+		}
+		sb.WriteString("\n")
 	}
 	return sb.String()
 }
@@ -1221,9 +1556,46 @@ func (p *ROSTemplateProvider) hoverResourceProperty(line string, handler FormatH
 		return nil
 	}
 
-	prop := ctx.Registry.GetProperty(analysis.ResourceTypeName, propName)
+	var prop *schema.Property
+	if len(analysis.PropertyPath) > 0 {
+		parentPath := analysis.PropertyPath
+		prop = ctx.Registry.GetPropertyByPath(analysis.ResourceTypeName, append(parentPath, propName))
+		if prop == nil {
+			prop = ctx.Registry.GetPropertyByPath(analysis.ResourceTypeName, parentPath)
+		}
+	}
+	if prop == nil {
+		prop = ctx.Registry.GetProperty(analysis.ResourceTypeName, propName)
+	}
 	if prop == nil {
 		return nil
+	}
+
+	return &HoverResult{
+		Contents: formatPropertyDoc(propName, prop),
+	}
+}
+
+func (p *ROSTemplateProvider) hoverPropertyValue(line string, handler FormatHandler, analysis *AnalysisContext, ctx HoverContext) *HoverResult {
+	if analysis.ResourceTypeName == "" || len(analysis.PropertyPath) == 0 {
+		return p.hoverIntrinsicFunction(line)
+	}
+
+	propName := handler.ExtractKeyFromLine(line)
+	if propName == "" {
+		return p.hoverIntrinsicFunction(line)
+	}
+
+	path := append(analysis.PropertyPath, propName)
+	prop := ctx.Registry.GetPropertyByPath(analysis.ResourceTypeName, path)
+	if prop == nil {
+		prop = ctx.Registry.GetPropertyByPath(analysis.ResourceTypeName, analysis.PropertyPath)
+		if prop == nil {
+			return p.hoverIntrinsicFunction(line)
+		}
+		return &HoverResult{
+			Contents: formatPropertyDoc(analysis.PropertyName, prop),
+		}
 	}
 
 	return &HoverResult{
@@ -1322,6 +1694,88 @@ func (p *ROSTemplateProvider) hoverAssociationPropertyValue(line string, handler
 		}
 	}
 	return nil
+}
+
+func (p *ROSTemplateProvider) hoverGetAttAttribute(analysis *AnalysisContext, handler FormatHandler, ctx HoverContext) *HoverResult {
+	if analysis.GetAttResourceName == "" {
+		return nil
+	}
+
+	pt := handler.ParseTemplate(ctx.Content)
+	resType := pt.GetResourceType(analysis.GetAttResourceName)
+	if resType == "" {
+		return nil
+	}
+
+	attrs := ctx.Registry.GetAttributes(resType)
+	if attrs == nil {
+		return nil
+	}
+
+	lines := strings.Split(ctx.Content, "\n")
+	if ctx.Line < 0 || ctx.Line >= len(lines) {
+		return nil
+	}
+	attrName := extractGetAttAttributeName(lines, ctx.Line, ctx.Col, ctx.IsYAML)
+	if attrName == "" {
+		return nil
+	}
+
+	attr, ok := attrs[attrName]
+	if !ok {
+		return nil
+	}
+
+	var sb strings.Builder
+	sb.WriteString("**" + attrName + "**\n\n")
+	sb.WriteString("- **Resource:** " + analysis.GetAttResourceName + "\n")
+	sb.WriteString("- **Type:** " + resType + "\n")
+	if attr.Description != "" {
+		sb.WriteString("\n" + attr.Description)
+	}
+	return &HoverResult{Contents: sb.String()}
+}
+
+// extractGetAttAttributeName extracts the full attribute name at the cursor position in a GetAtt context.
+func extractGetAttAttributeName(lines []string, line, col int, isYAML bool) string {
+	currentLine := lines[line]
+
+	if isYAML {
+		// !GetAtt Resource.Attribute
+		if idx := strings.Index(currentLine, "!GetAtt "); idx >= 0 {
+			val := strings.TrimSpace(currentLine[idx+8:])
+			if dotIdx := strings.Index(val, "."); dotIdx >= 0 {
+				return val[dotIdx+1:]
+			}
+		}
+		// Fn::GetAtt: list form — second list item
+		trimmed := strings.TrimSpace(currentLine)
+		if strings.HasPrefix(trimmed, "- ") {
+			return strings.TrimSpace(strings.TrimPrefix(trimmed, "- "))
+		}
+		return ""
+	}
+
+	// JSON: "Fn::GetAtt": ["Resource", "Attribute"]
+	if strings.Contains(currentLine, `"Fn::GetAtt"`) {
+		bracketIdx := strings.Index(currentLine, "[")
+		if bracketIdx >= 0 {
+			elements, _ := extractJSONArrayElements(currentLine[bracketIdx+1:], bracketIdx+1)
+			if len(elements) >= 2 {
+				return elements[1]
+			}
+		}
+		return ""
+	}
+
+	// Multiline JSON: attribute on its own line
+	trimmed := strings.TrimSpace(currentLine)
+	trimmed = strings.TrimRight(trimmed, ",]")
+	trimmed = strings.TrimSpace(trimmed)
+	if len(trimmed) >= 2 && trimmed[0] == '"' && trimmed[len(trimmed)-1] == '"' {
+		return trimmed[1 : len(trimmed)-1]
+	}
+	return ""
 }
 
 func (p *ROSTemplateProvider) hoverIntrinsicFunction(line string) *HoverResult {
@@ -1482,6 +1936,133 @@ func (p *ROSTemplateProvider) validateParameters(pt *ParsedTemplate, handler For
 					Severity: protocol.DiagnosticSeverityWarning,
 					Source:   "ros-lsp",
 					Message:  fmt.Sprintf(tmpl, paramName, attrName, expectedType, DescribeValueType(attrVal)),
+				})
+			}
+		}
+
+		// Validate AssociationPropertyMetadata if present.
+		if metaVal, ok := param["AssociationPropertyMetadata"]; ok {
+			if meta, ok := metaVal.(map[string]interface{}); ok {
+				assocPropName, _ := param["AssociationProperty"].(string)
+				paramNames := make(map[string]bool, len(params))
+				for pn := range params {
+					paramNames[pn] = true
+				}
+				diags = append(diags, p.validateAssociationPropertyMetadata(paramName, meta, assocPropName, paramNames, handler, ctx)...)
+			}
+		}
+	}
+
+	return diags
+}
+
+// extractParamRefs extracts all ${XXX} parameter reference names from a string.
+func extractParamRefs(s string) []string {
+	var refs []string
+	remaining := s
+	for {
+		start := strings.Index(remaining, "${")
+		if start < 0 {
+			break
+		}
+		rest := remaining[start+2:]
+		end := strings.Index(rest, "}")
+		if end < 0 {
+			break
+		}
+		ref := rest[:end]
+		if ref != "" {
+			refs = append(refs, ref)
+		}
+		remaining = rest[end+1:]
+	}
+	return refs
+}
+
+// collectStringRefs recursively traverses a value and collects all ${XXX} references found
+// in string values, along with the metadata key path at which they were found.
+func collectStringRefs(val interface{}, keyPath string) []struct{ ref, path string } {
+	switch v := val.(type) {
+	case string:
+		refs := extractParamRefs(v)
+		var result []struct{ ref, path string }
+		for _, r := range refs {
+			result = append(result, struct{ ref, path string }{ref: r, path: keyPath})
+		}
+		return result
+	case map[string]interface{}:
+		var result []struct{ ref, path string }
+		for k, child := range v {
+			childPath := k
+			if keyPath != "" {
+				childPath = keyPath + "." + k
+			}
+			result = append(result, collectStringRefs(child, childPath)...)
+		}
+		return result
+	case []interface{}:
+		var result []struct{ ref, path string }
+		for _, child := range v {
+			result = append(result, collectStringRefs(child, keyPath)...)
+		}
+		return result
+	}
+	return nil
+}
+
+// validateAssociationPropertyMetadata validates the AssociationPropertyMetadata of a parameter:
+// 1. Checks that each metadata key's value type matches the schema-defined type.
+// 2. Checks that all ${XXX} parameter references point to defined parameters.
+func (p *ROSTemplateProvider) validateAssociationPropertyMetadata(
+	paramName string,
+	meta map[string]interface{},
+	assocPropName string,
+	paramNames map[string]bool,
+	handler FormatHandler,
+	ctx ValidationContext,
+) []protocol.Diagnostic {
+	var diags []protocol.Diagnostic
+
+	// Retrieve schema metadata type info if available.
+	var schemaMetadata map[string]*schema.AssociationPropertyMeta
+	if assocPropName != "" {
+		if ap := ctx.Registry.GetAssociationProperty(assocPropName); ap != nil {
+			schemaMetadata = ap.Metadata
+		}
+	}
+
+	// Validate each metadata key.
+	for key, val := range meta {
+		// 1. Value type check.
+		if schemaMetadata != nil {
+			if metaSchema, ok := schemaMetadata[key]; ok && metaSchema.ValueType != "" && metaSchema.ValueType != "${Parameter}" {
+				if !IsParamAttrTypeValid(val, metaSchema.ValueType) {
+					tmpl := i18n.Get(func(m *i18n.Messages) string { return m.LSPDiag.AssocMetaValueTypeMismatch })
+					if tmpl == "" {
+						tmpl = "AssociationPropertyMetadata of parameter %q, key %q: expected type %s, got %s"
+					}
+					diags = append(diags, protocol.Diagnostic{
+						Range:    handler.FindAssociationPropertyMetadataKeyRange(ctx.Content, paramName, key),
+						Severity: protocol.DiagnosticSeverityWarning,
+						Source:   "ros-lsp",
+						Message:  fmt.Sprintf(tmpl, paramName, key, metaSchema.ValueType, DescribeValueType(val)),
+					})
+				}
+			}
+		}
+
+		// 2. Collect ${XXX} references and validate them.
+		for _, ref := range collectStringRefs(val, key) {
+			if !paramNames[ref.ref] {
+				tmpl := i18n.Get(func(m *i18n.Messages) string { return m.LSPDiag.AssocMetaUndefinedParamRef })
+				if tmpl == "" {
+					tmpl = "AssociationPropertyMetadata of parameter %q references undefined parameter %q"
+				}
+				diags = append(diags, protocol.Diagnostic{
+					Range:    handler.FindParamRefInMetadataRange(ctx.Content, paramName, ref.ref),
+					Severity: protocol.DiagnosticSeverityWarning,
+					Source:   "ros-lsp",
+					Message:  fmt.Sprintf(tmpl, paramName, ref.ref),
 				})
 			}
 		}
@@ -1664,10 +2245,143 @@ func (p *ROSTemplateProvider) validatePropertyTypes(pt *ParsedTemplate, handler 
 				Source:   "ros-lsp",
 				Message:  fmt.Sprintf(tmpl, propName, resName, schemaProp.Type),
 			})
+			continue
+		}
+
+		diags = append(diags, p.validatePropertyConstraints(handler, ctx, resName, propName, propVal, schemaProp)...)
+	}
+
+	return diags
+}
+
+func (p *ROSTemplateProvider) validatePropertyConstraints(handler FormatHandler, ctx ValidationContext, resName, propName string, propVal interface{}, schemaProp *schema.Property) []protocol.Diagnostic {
+	if schemaProp.Constraints == nil {
+		return nil
+	}
+
+	var diags []protocol.Diagnostic
+	c := schemaProp.Constraints
+
+	if len(c.AllowedValues) > 0 {
+		if !isAllowedValue(propVal, c.AllowedValues) {
+			tmpl := i18n.Get(func(m *i18n.Messages) string { return m.LSPDiag.AllowedValuesViolation })
+			if tmpl == "" {
+				tmpl = "Property %q of resource %q: value %v is not in allowed values %v"
+			}
+			diags = append(diags, protocol.Diagnostic{
+				Range:    handler.FindResourcePropertyValueRange(ctx.Content, resName, propName),
+				Severity: protocol.DiagnosticSeverityWarning,
+				Source:   "ros-lsp",
+				Message:  fmt.Sprintf(tmpl, propName, resName, propVal, c.AllowedValues),
+			})
+		}
+	}
+
+	if c.MinValue != nil || c.MaxValue != nil {
+		if numVal, ok := toFloat64Val(propVal); ok {
+			if (c.MinValue != nil && numVal < *c.MinValue) || (c.MaxValue != nil && numVal > *c.MaxValue) {
+				tmpl := i18n.Get(func(m *i18n.Messages) string { return m.LSPDiag.RangeViolation })
+				if tmpl == "" {
+					tmpl = "Property %q of resource %q: value %v is out of range [%v, %v]"
+				}
+				minStr := formatOptionalNum(c.MinValue)
+				maxStr := formatOptionalNum(c.MaxValue)
+				diags = append(diags, protocol.Diagnostic{
+					Range:    handler.FindResourcePropertyValueRange(ctx.Content, resName, propName),
+					Severity: protocol.DiagnosticSeverityWarning,
+					Source:   "ros-lsp",
+					Message:  fmt.Sprintf(tmpl, propName, resName, propVal, minStr, maxStr),
+				})
+			}
+		}
+	}
+
+	if c.MinLength != nil || c.MaxLength != nil {
+		length := -1
+		switch v := propVal.(type) {
+		case string:
+			length = len(v)
+		case []interface{}:
+			length = len(v)
+		}
+		if length >= 0 {
+			if (c.MinLength != nil && length < *c.MinLength) || (c.MaxLength != nil && length > *c.MaxLength) {
+				tmpl := i18n.Get(func(m *i18n.Messages) string { return m.LSPDiag.LengthViolation })
+				if tmpl == "" {
+					tmpl = "Property %q of resource %q: length %d is out of range [%v, %v]"
+				}
+				minStr := formatOptionalInt(c.MinLength)
+				maxStr := formatOptionalInt(c.MaxLength)
+				diags = append(diags, protocol.Diagnostic{
+					Range:    handler.FindResourcePropertyValueRange(ctx.Content, resName, propName),
+					Severity: protocol.DiagnosticSeverityWarning,
+					Source:   "ros-lsp",
+					Message:  fmt.Sprintf(tmpl, propName, resName, length, minStr, maxStr),
+				})
+			}
+		}
+	}
+
+	if c.AllowedPattern != "" {
+		if strVal, ok := propVal.(string); ok {
+			matched, err := regexp.MatchString("^"+c.AllowedPattern+"$", strVal)
+			if err == nil && !matched {
+				tmpl := i18n.Get(func(m *i18n.Messages) string { return m.LSPDiag.PatternViolation })
+				if tmpl == "" {
+					tmpl = "Property %q of resource %q: value %q does not match pattern %q"
+				}
+				diags = append(diags, protocol.Diagnostic{
+					Range:    handler.FindResourcePropertyValueRange(ctx.Content, resName, propName),
+					Severity: protocol.DiagnosticSeverityWarning,
+					Source:   "ros-lsp",
+					Message:  fmt.Sprintf(tmpl, propName, resName, strVal, c.AllowedPattern),
+				})
+			}
 		}
 	}
 
 	return diags
+}
+
+func isAllowedValue(val interface{}, allowed []interface{}) bool {
+	valStr := fmt.Sprintf("%v", val)
+	for _, a := range allowed {
+		if fmt.Sprintf("%v", a) == valStr {
+			return true
+		}
+	}
+	return false
+}
+
+func toFloat64Val(v interface{}) (float64, bool) {
+	switch n := v.(type) {
+	case float64:
+		return n, true
+	case float32:
+		return float64(n), true
+	case int:
+		return float64(n), true
+	case int64:
+		return float64(n), true
+	}
+	return 0, false
+}
+
+func formatOptionalNum(v *float64) string {
+	if v == nil {
+		return "∞"
+	}
+	if *v == float64(int(*v)) {
+		return fmt.Sprintf("%d", int(*v))
+	}
+	return fmt.Sprintf("%v", *v)
+}
+
+func formatOptionalInt(v *int) string {
+	if v == nil {
+		return "∞"
+	}
+	return fmt.Sprintf("%d", *v)
 }
 
 func isTypeCompatible(val interface{}, expectedType string) bool {
@@ -1693,6 +2407,289 @@ func isTypeCompatible(val interface{}, expectedType string) bool {
 	default:
 		return true
 	}
+}
+
+// collectRefNames recursively walks a value tree and returns all Ref target names.
+func collectRefNames(val interface{}) []string {
+	switch v := val.(type) {
+	case map[string]interface{}:
+		var result []string
+		if refVal, ok := v["Ref"]; ok {
+			if name, ok := refVal.(string); ok {
+				result = append(result, name)
+			}
+		}
+		for _, child := range v {
+			result = append(result, collectRefNames(child)...)
+		}
+		return result
+	case []interface{}:
+		var result []string
+		for _, child := range v {
+			result = append(result, collectRefNames(child)...)
+		}
+		return result
+	}
+	return nil
+}
+
+// getAttPair holds a Fn::GetAtt resource name and attribute name.
+type getAttPair struct {
+	resource  string
+	attribute string
+}
+
+// collectGetAttResourceNames recursively walks a value tree and returns all Fn::GetAtt resource names.
+func collectGetAttResourceNames(val interface{}) []string {
+	pairs := collectGetAttPairs(val)
+	var names []string
+	for _, p := range pairs {
+		names = append(names, p.resource)
+	}
+	return names
+}
+
+// collectGetAttPairs recursively walks a value tree and returns all Fn::GetAtt (resource, attribute) pairs.
+func collectGetAttPairs(val interface{}) []getAttPair {
+	switch v := val.(type) {
+	case map[string]interface{}:
+		var result []getAttPair
+		if getAttVal, ok := v["Fn::GetAtt"]; ok {
+			switch ga := getAttVal.(type) {
+			case []interface{}:
+				if len(ga) >= 2 {
+					resName, _ := ga[0].(string)
+					attrName, _ := ga[1].(string)
+					if resName != "" {
+						result = append(result, getAttPair{resource: resName, attribute: attrName})
+					}
+				} else if len(ga) == 1 {
+					if resName, ok := ga[0].(string); ok && resName != "" {
+						result = append(result, getAttPair{resource: resName})
+					}
+				}
+			case string:
+				parts := strings.SplitN(ga, ".", 2)
+				if len(parts) > 0 && parts[0] != "" {
+					pair := getAttPair{resource: parts[0]}
+					if len(parts) == 2 {
+						pair.attribute = parts[1]
+					}
+					result = append(result, pair)
+				}
+			}
+		}
+		for _, child := range v {
+			result = append(result, collectGetAttPairs(child)...)
+		}
+		return result
+	case []interface{}:
+		var result []getAttPair
+		for _, child := range v {
+			result = append(result, collectGetAttPairs(child)...)
+		}
+		return result
+	}
+	return nil
+}
+
+func isZeroRange(r protocol.Range) bool {
+	return r.Start.Line == 0 && r.Start.Character == 0 && r.End.Line == 0 && r.End.Character == 0
+}
+
+// collectYAMLShortTagRefs scans YAML text for !Ref short tag references.
+func collectYAMLShortTagRefs(content string) []string {
+	var refs []string
+	lines := strings.Split(content, "\n")
+	for _, line := range lines {
+		if idx := strings.Index(line, "!Ref "); idx >= 0 {
+			val := strings.TrimSpace(line[idx+5:])
+			if val != "" {
+				refs = append(refs, val)
+			}
+		}
+	}
+	return refs
+}
+
+// collectYAMLShortTagGetAttResources scans YAML text for !GetAtt short tag resource names.
+func collectYAMLShortTagGetAttResources(content string) []string {
+	pairs := collectYAMLShortTagGetAttPairs(content)
+	var resources []string
+	for _, p := range pairs {
+		resources = append(resources, p.resource)
+	}
+	return resources
+}
+
+// collectYAMLShortTagGetAttPairs scans YAML text for !GetAtt short tag (resource, attribute) pairs.
+func collectYAMLShortTagGetAttPairs(content string) []getAttPair {
+	var pairs []getAttPair
+	lines := strings.Split(content, "\n")
+	for _, line := range lines {
+		if idx := strings.Index(line, "!GetAtt "); idx >= 0 {
+			val := strings.TrimSpace(line[idx+8:])
+			if val == "" {
+				continue
+			}
+			pair := getAttPair{}
+			if dotIdx := strings.Index(val, "."); dotIdx >= 0 {
+				pair.resource = val[:dotIdx]
+				pair.attribute = val[dotIdx+1:]
+			} else {
+				pair.resource = val
+			}
+			if pair.resource != "" {
+				pairs = append(pairs, pair)
+			}
+		}
+	}
+	return pairs
+}
+
+func (p *ROSTemplateProvider) validateRefTargets(pt *ParsedTemplate, handler FormatHandler, ctx ValidationContext) []protocol.Diagnostic {
+	validTargets := make(map[string]bool)
+	for _, name := range pt.GetParameterNames() {
+		validTargets[name] = true
+	}
+	for _, name := range pt.GetResourceNames() {
+		validTargets[name] = true
+	}
+	for _, name := range pt.GetLocalsNames() {
+		validTargets[name] = true
+	}
+	for _, pp := range ROSPseudoParameters {
+		validTargets[pp.Name] = true
+	}
+
+	allRefs := collectRefNames(pt.Root)
+	if ctx.IsYAML {
+		allRefs = append(allRefs, collectYAMLShortTagRefs(ctx.Content)...)
+	}
+
+	seen := make(map[string]bool)
+	var diags []protocol.Diagnostic
+	for _, refName := range allRefs {
+		if validTargets[refName] || seen[refName] {
+			continue
+		}
+		seen[refName] = true
+
+		r := handler.FindRefValueRange(ctx.Content, refName)
+		if isZeroRange(r) {
+			continue
+		}
+		tmpl := i18n.Get(func(m *i18n.Messages) string { return m.LSPDiag.UndefinedRef })
+		if tmpl == "" {
+			tmpl = "Ref references undefined target %q (not a parameter, resource, local, or pseudo parameter)"
+		}
+		diags = append(diags, protocol.Diagnostic{
+			Range:    r,
+			Severity: protocol.DiagnosticSeverityWarning,
+			Source:   "ros-lsp",
+			Message:  fmt.Sprintf(tmpl, refName),
+		})
+	}
+	return diags
+}
+
+func (p *ROSTemplateProvider) validateGetAttTargets(pt *ParsedTemplate, handler FormatHandler, ctx ValidationContext) []protocol.Diagnostic {
+	resourceNames := make(map[string]bool)
+	for _, name := range pt.GetResourceNames() {
+		resourceNames[name] = true
+	}
+
+	allGetAttRes := collectGetAttResourceNames(pt.Root)
+	if ctx.IsYAML {
+		allGetAttRes = append(allGetAttRes, collectYAMLShortTagGetAttResources(ctx.Content)...)
+	}
+
+	seen := make(map[string]bool)
+	var diags []protocol.Diagnostic
+	for _, resName := range allGetAttRes {
+		if resourceNames[resName] || seen[resName] {
+			continue
+		}
+		seen[resName] = true
+
+		r := handler.FindGetAttResourceRange(ctx.Content, resName)
+		if isZeroRange(r) {
+			continue
+		}
+		tmpl := i18n.Get(func(m *i18n.Messages) string { return m.LSPDiag.UndefinedGetAttResource })
+		if tmpl == "" {
+			tmpl = "Fn::GetAtt references undefined resource %q"
+		}
+		diags = append(diags, protocol.Diagnostic{
+			Range:    r,
+			Severity: protocol.DiagnosticSeverityWarning,
+			Source:   "ros-lsp",
+			Message:  fmt.Sprintf(tmpl, resName),
+		})
+	}
+	return diags
+}
+
+func (p *ROSTemplateProvider) validateGetAttAttributes(pt *ParsedTemplate, handler FormatHandler, ctx ValidationContext) []protocol.Diagnostic {
+	resources := pt.GetResources()
+	if resources == nil {
+		return nil
+	}
+
+	allPairs := collectGetAttPairs(pt.Root)
+	if ctx.IsYAML {
+		allPairs = append(allPairs, collectYAMLShortTagGetAttPairs(ctx.Content)...)
+	}
+
+	type pairKey struct{ res, attr string }
+	seen := make(map[pairKey]bool)
+	var diags []protocol.Diagnostic
+
+	for _, pair := range allPairs {
+		if pair.attribute == "" {
+			continue
+		}
+		if _, ok := resources[pair.resource]; !ok {
+			continue
+		}
+		pk := pairKey{pair.resource, pair.attribute}
+		if seen[pk] {
+			continue
+		}
+		seen[pk] = true
+
+		resType := pt.GetResourceType(pair.resource)
+		if resType == "" {
+			continue
+		}
+
+		if ctx.Registry == nil {
+			continue
+		}
+		attrs := ctx.Registry.GetAttributes(resType)
+		if attrs == nil {
+			continue
+		}
+		if _, ok := attrs[pair.attribute]; ok {
+			continue
+		}
+
+		r := handler.FindGetAttAttributeRange(ctx.Content, pair.resource, pair.attribute)
+		if isZeroRange(r) {
+			continue
+		}
+		tmpl := i18n.Get(func(m *i18n.Messages) string { return m.LSPDiag.UndefinedGetAttAttribute })
+		if tmpl == "" {
+			tmpl = "Fn::GetAtt attribute %q is not a valid attribute of resource %q (type %s)"
+		}
+		diags = append(diags, protocol.Diagnostic{
+			Range:    r,
+			Severity: protocol.DiagnosticSeverityWarning,
+			Source:   "ros-lsp",
+			Message:  fmt.Sprintf(tmpl, pair.attribute, pair.resource, resType),
+		})
+	}
+	return diags
 }
 
 func findClosestMatch(input string, validKeys map[string]bool) string {

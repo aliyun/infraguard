@@ -19,6 +19,7 @@ El comando `lsp` inicia un servidor del Protocolo de Servidor de Lenguaje (LSP) 
 - **Autocompletado** — Tipos de recursos, propiedades, funciones intrínsecas, objetivos Ref/GetAtt
 - **Diagnósticos en tiempo real** — Versión de formato, tipos de recursos, propiedades requeridas, incompatibilidades de tipo
 - **Documentación al pasar el cursor** — Descripciones, información de tipo, restricciones para recursos y propiedades
+- **Ir a Definición** — Salta desde referencias a definiciones de parámetros y recursos
 
 El servidor LSP admite formatos de plantilla tanto YAML como JSON.
 

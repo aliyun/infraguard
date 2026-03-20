@@ -247,7 +247,119 @@ func parsePropertyValue(val interface{}) *Property {
 	if v, ok := m["Description"].(string); ok {
 		p.Description = v
 	}
+
+	if constraints, ok := m["Constraints"].([]interface{}); ok {
+		p.Constraints = parseConstraints(constraints)
+	}
+
+	if schema, ok := m["Schema"].(map[string]interface{}); ok {
+		p.Properties = parseSchemaProperties(schema)
+	}
+
 	return p
+}
+
+func parseConstraints(constraints []interface{}) *Constraint {
+	c := &Constraint{}
+	hasConstraint := false
+	for _, item := range constraints {
+		cm, ok := item.(map[string]interface{})
+		if !ok {
+			continue
+		}
+		if _, has := cm["CustomConstraint"]; has {
+			continue
+		}
+		if av, ok := cm["AllowedValues"].([]interface{}); ok {
+			c.AllowedValues = av
+			hasConstraint = true
+		}
+		if ap, ok := cm["AllowedPattern"].(string); ok {
+			c.AllowedPattern = ap
+			hasConstraint = true
+		}
+		if r, ok := cm["Range"].(map[string]interface{}); ok {
+			if min, ok := toFloat64(r["Min"]); ok {
+				c.MinValue = &min
+				hasConstraint = true
+			}
+			if max, ok := toFloat64(r["Max"]); ok {
+				c.MaxValue = &max
+				hasConstraint = true
+			}
+		}
+		if l, ok := cm["Length"].(map[string]interface{}); ok {
+			if min, ok := toInt(l["Min"]); ok {
+				c.MinLength = &min
+				hasConstraint = true
+			}
+			if max, ok := toInt(l["Max"]); ok {
+				c.MaxLength = &max
+				hasConstraint = true
+			}
+		}
+	}
+	if !hasConstraint {
+		return nil
+	}
+	return c
+}
+
+func parseSchemaProperties(schema map[string]interface{}) map[string]*Property {
+	props := make(map[string]*Property)
+	for key, val := range schema {
+		if key == "*" {
+			subMap, ok := val.(map[string]interface{})
+			if !ok {
+				continue
+			}
+			innerSchema, ok := subMap["Schema"].(map[string]interface{})
+			if !ok {
+				continue
+			}
+			for innerKey, innerVal := range innerSchema {
+				if p := parsePropertyValue(innerVal); p != nil {
+					props[innerKey] = p
+				}
+			}
+			continue
+		}
+		if p := parsePropertyValue(val); p != nil {
+			props[key] = p
+		}
+	}
+	if len(props) == 0 {
+		return nil
+	}
+	return props
+}
+
+func toFloat64(v interface{}) (float64, bool) {
+	switch n := v.(type) {
+	case float64:
+		return n, true
+	case float32:
+		return float64(n), true
+	case int:
+		return float64(n), true
+	case int64:
+		return float64(n), true
+	}
+	return 0, false
+}
+
+func toInt(v interface{}) (int, bool) {
+	switch n := v.(type) {
+	case float64:
+		return int(n), true
+	case float32:
+		return int(n), true
+	case int:
+		return n, true
+	case int64:
+		return int(n), true
+	}
+	return 0, false
 }
 
 func parseAttributeValue(val interface{}) *Attribute {

@@ -52,15 +52,16 @@ func (s *Server) Run() error {
 
 func (s *Server) buildMux() handler.Map {
 	return handler.Map{
-		"initialize":             handler.New(s.handleInitialize),
-		"initialized":           handler.New(s.handleInitialized),
-		"shutdown":              handler.New(s.handleShutdown),
-		"exit":                  handler.New(s.handleExit),
-		"textDocument/didOpen":  handler.New(s.handleDidOpen),
-		"textDocument/didChange": handler.New(s.handleDidChange),
-		"textDocument/didClose": handler.New(s.handleDidClose),
+		"initialize":              handler.New(s.handleInitialize),
+		"initialized":             handler.New(s.handleInitialized),
+		"shutdown":                handler.New(s.handleShutdown),
+		"exit":                    handler.New(s.handleExit),
+		"textDocument/didOpen":    handler.New(s.handleDidOpen),
+		"textDocument/didChange":  handler.New(s.handleDidChange),
+		"textDocument/didClose":   handler.New(s.handleDidClose),
 		"textDocument/completion": handler.New(s.handleCompletion),
-		"textDocument/hover":    handler.New(s.handleHover),
+		"textDocument/hover":      handler.New(s.handleHover),
+		"textDocument/definition": handler.New(s.handleDefinition),
 	}
 }
 
@@ -80,7 +81,8 @@ func (s *Server) handleInitialize(ctx context.Context, params *protocol.Initiali
 			CompletionProvider: &protocol.CompletionOptions{
 				TriggerCharacters: []string{":", ".", "!", " "},
 			},
-			HoverProvider: true,
+			HoverProvider:      true,
+			DefinitionProvider: true,
 		},
 	}, nil
 }
@@ -196,6 +198,23 @@ func (s *Server) handleHover(ctx context.Context, params *protocol.HoverParams) 
 		},
 		Range: result.Range,
 	}, nil
+}
+
+func (s *Server) handleDefinition(ctx context.Context, params *protocol.DefinitionParams) (*protocol.Location, error) {
+	doc := s.store.Get(params.TextDocument.URI)
+	if doc == nil || !doc.IsROSTemplate() {
+		return nil, nil
+	}
+
+	dctx := template.DefinitionContext{
+		URI:      doc.URI,
+		Content:  doc.Content,
+		Line:     params.Position.Line,
+		Col:      params.Position.Character,
+		IsYAML:   doc.IsYAML(),
+		Registry: s.registry,
+	}
+	return s.provider.Definition(dctx), nil
 }
 
 // --- Diagnostics ---

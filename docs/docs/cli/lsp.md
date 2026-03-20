@@ -19,6 +19,7 @@ The `lsp` command starts a Language Server Protocol (LSP) server that communicat
 - **Auto-completion** — Resource types, properties, intrinsic functions, Ref/GetAtt targets
 - **Real-time diagnostics** — Format version, resource types, required properties, type mismatches
 - **Hover documentation** — Descriptions, type info, constraints for resources and properties
+- **Go to Definition** — Jump to parameter and resource definitions from references
 
 The LSP server supports both YAML and JSON template formats.
 

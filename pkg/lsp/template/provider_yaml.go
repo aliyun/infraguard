@@ -203,7 +203,12 @@ func (h *yamlFormatHandler) BuildAssociationPropertyValueSnippet(item *protocol.
 
 func (h *yamlFormatHandler) BuildAssociationPropertyMetadataKeySnippet(item *protocol.CompletionItem, key string, _ CompletionContext) {
 	item.InsertTextFormat = protocol.InsertTextFormatSnippet
-	item.InsertText = key + ": $0"
+	switch key {
+	case "Visible":
+		item.InsertText = "Visible:\n  Condition:\n    Fn::Not:\n      Fn::Equals:\n        - ${${1:ParameterName}}\n        - ${2:value}"
+	default:
+		item.InsertText = key + ": $0"
+	}
 }
 
 func (h *yamlFormatHandler) BuildIntrinsicFunctionSnippet(item *protocol.CompletionItem, fn IntrinsicFunction, isShortTag bool, ctx CompletionContext) {
@@ -261,6 +266,14 @@ func (h *yamlFormatHandler) FindParameterAttrValueRange(content, paramName, attr
 	return findParameterAttrValueRangeYAML(content, paramName, attrName)
 }
 
+func (h *yamlFormatHandler) FindAssociationPropertyMetadataKeyRange(content, paramName, metaKey string) protocol.Range {
+	return findAssociationPropertyMetadataKeyRangeYAML(content, paramName, metaKey)
+}
+
+func (h *yamlFormatHandler) FindParamRefInMetadataRange(content, paramName, refName string) protocol.Range {
+	return findParamRefInMetadataRangeYAML(content, paramName, refName)
+}
+
 func (h *yamlFormatHandler) FindLocalsRange(content, localName string) protocol.Range {
 	return findLocalsRangeYAML(content, localName)
 }
@@ -289,6 +302,18 @@ func (h *yamlFormatHandler) FindConditionValueRange(content, section, entryName 
 	return findConditionValueRangeYAML(content, section, entryName)
 }
 
+func (h *yamlFormatHandler) FindRefValueRange(content, refName string) protocol.Range {
+	return findRefValueRangeYAML(content, refName)
+}
+
+func (h *yamlFormatHandler) FindGetAttResourceRange(content, resourceName string) protocol.Range {
+	return findGetAttResourceRangeYAML(content, resourceName)
+}
+
+func (h *yamlFormatHandler) FindGetAttAttributeRange(content, resourceName, attrName string) protocol.Range {
+	return findGetAttAttributeRangeYAML(content, resourceName, attrName)
+}
+
 func (h *yamlFormatHandler) ExtractKeyFromLine(line string) string {
 	trimmed := strings.TrimSpace(line)
 	colonIdx := findYAMLKeySepColon(trimmed)
@@ -313,6 +338,17 @@ func (h *yamlFormatHandler) ValidateFormat(ctx ValidationContext) []protocol.Dia
 
 // --- YAML-specific range finding ---
 
+// isYAMLKey checks whether the trimmed line starts with exactly the given key
+// followed by a YAML key separator (": ", ":\t", or ":" at end of line).
+// This avoids false prefix matches like "EcsPeriodUnit:" matching "EcsPeriod:".
+func isYAMLKey(trimmed, key string) bool {
+	if !strings.HasPrefix(trimmed, key) {
+		return false
+	}
+	rest := trimmed[len(key):]
+	return rest == ":" || strings.HasPrefix(rest, ": ") || strings.HasPrefix(rest, ":\t")
+}
+
 func findParameterRangeYAML(content, paramName string) protocol.Range {
 	lines := strings.Split(content, "\n")
 	inParameters := false
@@ -323,7 +359,7 @@ func findParameterRangeYAML(content, paramName string) protocol.Range {
 			inParameters = strings.HasPrefix(trimmed, "Parameters:") || trimmed == "Parameters"
 			continue
 		}
-		if inParameters && strings.HasPrefix(trimmed, paramName+":") {
+		if inParameters && isYAMLKey(trimmed, paramName) {
 			col := strings.Index(line, paramName)
 			return protocol.Range{
 				Start: protocol.Position{Line: i, Character: col},
@@ -360,7 +396,7 @@ func findParameterAttrValueRangeYAML(content, paramName, attrName string) protoc
 		}
 
 		if !foundParam {
-			if strings.HasPrefix(trimmed, paramName+":") {
+			if isYAMLKey(trimmed, paramName) {
 				foundParam = true
 				paramIndent = ind
 			}
@@ -635,6 +671,137 @@ func findConditionValueRangeYAML(content, section, entryName string) protocol.Ra
 	return protocol.Range{}
 }
 
+// findAssociationPropertyMetadataKeyRangeYAML finds the range of a specific key
+// inside the AssociationPropertyMetadata block of a named parameter in YAML.
+// Falls back to the parameter's AssociationPropertyMetadata line range if not found.
+func findAssociationPropertyMetadataKeyRangeYAML(content, paramName, metaKey string) protocol.Range {
+	lines := strings.Split(content, "\n")
+	inParameters := false
+	foundParam := false
+	paramIndent := 0
+	inMeta := false
+	metaIndent := 0
+
+	for i, line := range lines {
+		trimmed := strings.TrimSpace(line)
+		if trimmed == "" {
+			continue
+		}
+		ind := countIndent(line)
+
+		if ind == 0 {
+			if foundParam {
+				break
+			}
+			inParameters = strings.HasPrefix(trimmed, "Parameters:") || trimmed == "Parameters"
+			continue
+		}
+
+		if !inParameters {
+			continue
+		}
+
+		if !foundParam {
+			if isYAMLKey(trimmed, paramName) {
+				foundParam = true
+				paramIndent = ind
+			}
+			continue
+		}
+
+		if ind <= paramIndent {
+			break
+		}
+
+		if !inMeta {
+			if strings.HasPrefix(trimmed, "AssociationPropertyMetadata:") || trimmed == "AssociationPropertyMetadata" {
+				inMeta = true
+				metaIndent = ind
+			}
+			continue
+		}
+
+		if ind <= metaIndent {
+			break
+		}
+
+		if strings.HasPrefix(trimmed, metaKey+":") || strings.HasPrefix(trimmed, metaKey+" :") {
+			col := strings.Index(line, metaKey)
+			return protocol.Range{
+				Start: protocol.Position{Line: i, Character: col},
+				End:   protocol.Position{Line: i, Character: col + len(metaKey)},
+			}
+		}
+	}
+	// Fall back to the AssociationPropertyMetadata attr range.
+	return findParameterAttrValueRangeYAML(content, paramName, "AssociationPropertyMetadata")
+}
+
+// findParamRefInMetadataRangeYAML finds the range of ${refName} within the
+// AssociationPropertyMetadata block of a named parameter in YAML.
+func findParamRefInMetadataRangeYAML(content, paramName, refName string) protocol.Range {
+	lines := strings.Split(content, "\n")
+	inParameters := false
+	foundParam := false
+	paramIndent := 0
+	inMeta := false
+	metaIndent := 0
+	needle := "${" + refName + "}"
+
+	for i, line := range lines {
+		trimmed := strings.TrimSpace(line)
+		if trimmed == "" {
+			continue
+		}
+		ind := countIndent(line)
+
+		if ind == 0 {
+			if foundParam {
+				break
+			}
+			inParameters = strings.HasPrefix(trimmed, "Parameters:") || trimmed == "Parameters"
+			continue
+		}
+
+		if !inParameters {
+			continue
+		}
+
+		if !foundParam {
+			if isYAMLKey(trimmed, paramName) {
+				foundParam = true
+				paramIndent = ind
+			}
+			continue
+		}
+
+		if ind <= paramIndent {
+			break
+		}
+
+		if !inMeta {
+			if strings.HasPrefix(trimmed, "AssociationPropertyMetadata:") || trimmed == "AssociationPropertyMetadata" {
+				inMeta = true
+				metaIndent = ind
+			}
+			continue
+		}
+
+		if ind <= metaIndent {
+			break
+		}
+
+		col := strings.Index(line, needle)
+		if col >= 0 {
+			return protocol.Range{
+				Start: protocol.Position{Line: i, Character: col},
+				End:   protocol.Position{Line: i, Character: col + len(needle)},
+			}
+		}
+	}
+	return findAssociationPropertyMetadataKeyRangeYAML(content, paramName, "AssociationPropertyMetadata")
+}
+
 // findYAMLKeySepColon returns the index of the YAML key-value separator colon.
 // In YAML, a colon is a key-value separator only when followed by a space/tab
 // or at the end of the string. Colons inside keys (e.g. ALIYUN::ROS::Interface)
@@ -724,4 +891,130 @@ func validateDuplicateKeys(ctx ValidationContext) []protocol.Diagnostic {
 	}
 
 	return diags
+}
+
+func findRefValueRangeYAML(content, refName string) protocol.Range {
+	lines := strings.Split(content, "\n")
+	for i, line := range lines {
+		trimmed := strings.TrimSpace(line)
+		// Ref: Name
+		if strings.HasPrefix(trimmed, "Ref:") {
+			val := strings.TrimSpace(strings.TrimPrefix(trimmed, "Ref:"))
+			if val == refName {
+				col := strings.Index(line, refName)
+				if col >= 0 {
+					return protocol.Range{
+						Start: protocol.Position{Line: i, Character: col},
+						End:   protocol.Position{Line: i, Character: col + len(refName)},
+					}
+				}
+			}
+		}
+		// !Ref Name
+		if idx := strings.Index(line, "!Ref "); idx >= 0 {
+			val := strings.TrimSpace(line[idx+5:])
+			if val == refName {
+				col := idx + 5 + strings.Index(line[idx+5:], refName)
+				return protocol.Range{
+					Start: protocol.Position{Line: i, Character: col},
+					End:   protocol.Position{Line: i, Character: col + len(refName)},
+				}
+			}
+		}
+	}
+	return protocol.Range{}
+}
+
+func findGetAttResourceRangeYAML(content, resourceName string) protocol.Range {
+	lines := strings.Split(content, "\n")
+	for i, line := range lines {
+		trimmed := strings.TrimSpace(line)
+		// !GetAtt Resource.Attr
+		if idx := strings.Index(line, "!GetAtt "); idx >= 0 {
+			val := strings.TrimSpace(line[idx+8:])
+			dotIdx := strings.Index(val, ".")
+			resName := val
+			if dotIdx >= 0 {
+				resName = val[:dotIdx]
+			}
+			if resName == resourceName {
+				col := idx + 8 + strings.Index(line[idx+8:], resourceName)
+				return protocol.Range{
+					Start: protocol.Position{Line: i, Character: col},
+					End:   protocol.Position{Line: i, Character: col + len(resourceName)},
+				}
+			}
+		}
+		// Fn::GetAtt: list form — first list item
+		if strings.HasPrefix(trimmed, "- "+resourceName) {
+			col := strings.Index(line, resourceName)
+			if col >= 0 {
+				return protocol.Range{
+					Start: protocol.Position{Line: i, Character: col},
+					End:   protocol.Position{Line: i, Character: col + len(resourceName)},
+				}
+			}
+		}
+		// Fn::GetAtt: inline value
+		if strings.HasPrefix(trimmed, "Fn::GetAtt:") {
+			val := strings.TrimSpace(strings.TrimPrefix(trimmed, "Fn::GetAtt:"))
+			if val == resourceName {
+				col := strings.Index(line, resourceName)
+				if col >= 0 {
+					return protocol.Range{
+						Start: protocol.Position{Line: i, Character: col},
+						End:   protocol.Position{Line: i, Character: col + len(resourceName)},
+					}
+				}
+			}
+		}
+	}
+	return protocol.Range{}
+}
+
+func findGetAttAttributeRangeYAML(content, resourceName, attrName string) protocol.Range {
+	lines := strings.Split(content, "\n")
+	for i, line := range lines {
+		// !GetAtt Resource.Attribute
+		if idx := strings.Index(line, "!GetAtt "); idx >= 0 {
+			val := strings.TrimSpace(line[idx+8:])
+			expected := resourceName + "." + attrName
+			if val == expected {
+				dotPos := idx + 8 + strings.Index(line[idx+8:], ".") + 1
+				return protocol.Range{
+					Start: protocol.Position{Line: i, Character: dotPos},
+					End:   protocol.Position{Line: i, Character: dotPos + len(attrName)},
+				}
+			}
+		}
+		// Fn::GetAtt list form — second list item is the attribute
+		trimmed := strings.TrimSpace(line)
+		if strings.HasPrefix(trimmed, "- "+attrName) {
+			attrVal := strings.TrimSpace(strings.TrimPrefix(trimmed, "- "))
+			if attrVal != attrName {
+				continue
+			}
+			// Check that the previous list item is the matching resource
+			for j := i - 1; j >= 0; j-- {
+				jt := strings.TrimSpace(lines[j])
+				if strings.HasPrefix(jt, "- ") {
+					prevVal := strings.TrimSpace(strings.TrimPrefix(jt, "- "))
+					if prevVal == resourceName {
+						col := strings.Index(line, attrName)
+						if col >= 0 {
+							return protocol.Range{
+								Start: protocol.Position{Line: i, Character: col},
+								End:   protocol.Position{Line: i, Character: col + len(attrName)},
+							}
+						}
+					}
+					break
+				}
+				if strings.HasPrefix(jt, "Fn::GetAtt") {
+					break
+				}
+			}
+		}
+	}
+	return protocol.Range{}
 }

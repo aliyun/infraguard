@@ -35,7 +35,8 @@ func analyzeJSONPosition(content string, line, col int) *AnalysisContext {
 		if ctx := checkJSONAssociationPropertyContext(lines, line, col); ctx != nil {
 			return ctx
 		}
-		if ctx := checkJSONAssociationPropertyMetadataContext(lines, line, col); ctx != nil {
+		paramNameForMeta := findParameterNameJSON(lines, line)
+		if ctx := checkJSONAssociationPropertyMetadataContext(lines, line, col, paramNameForMeta); ctx != nil {
 			return ctx
 		}
 		depth := 0
@@ -133,10 +134,24 @@ func analyzeJSONPosition(content string, line, col int) *AnalysisContext {
 
 	if inProperties && resourceName != "" {
 		if depthAtCursor > propsDepth+1 && propertyName != "" {
+			path := findPropertyPathJSON(lines, line, propsDepth)
+
+			currentKey := extractJSONKey(strings.TrimSpace(currentLine))
+			actualPropName := propertyName
+			if currentKey != "" && currentKey != propertyName &&
+				currentKey != "Properties" && currentKey != "Ref" &&
+				!strings.HasPrefix(currentKey, "Fn::") {
+				actualPropName = currentKey
+				if len(path) == 0 || path[len(path)-1] != currentKey {
+					path = append(path, currentKey)
+				}
+			}
+
 			return &AnalysisContext{
 				Type:             ContextPropertyValue,
 				ResourceName:     resourceName,
-				PropertyName:     propertyName,
+				PropertyName:     actualPropName,
+				PropertyPath:     path,
 				ResourceTypeName: findResourceTypeJSON(lines, resourceName),
 				Prefix:           extractJSONKeyPrefix(currentLine, col),
 			}
@@ -385,12 +400,34 @@ func checkJSONAssociationPropertyContext(lines []string, line, col int) *Analysi
 
 // checkJSONAssociationPropertyMetadataContext detects if the cursor is inside
 // an "AssociationPropertyMetadata" object in a JSON template.
-func checkJSONAssociationPropertyMetadataContext(lines []string, line, col int) *AnalysisContext {
+// It also detects ${...} parameter references within metadata string values.
+func checkJSONAssociationPropertyMetadataContext(lines []string, line, col int, paramName string) *AnalysisContext {
 	currentLine := lines[line]
 	trimmed := strings.TrimSpace(currentLine)
 
 	if strings.Contains(trimmed, `"AssociationPropertyMetadata"`) && strings.Contains(trimmed, ":") {
 		return nil
+	}
+
+	// Check if cursor is inside a ${...} parameter reference in a string value.
+	if ctx := checkParamRefInJSONLine(currentLine, col); ctx != nil {
+		// Verify we are inside an AssociationPropertyMetadata block.
+		depthCheck := 0
+		for i := line; i >= 0; i-- {
+			l := strings.TrimSpace(lines[i])
+			if i < line {
+				depthCheck += strings.Count(l, "}") - strings.Count(l, "{")
+			}
+			if strings.Contains(l, `"AssociationPropertyMetadata"`) && strings.Contains(l, ":") {
+				if depthCheck <= 0 {
+					ctx.CurrentParamName = paramName
+					return ctx
+				}
+			}
+			if depthCheck < 0 {
+				break
+			}
+		}
 	}
 
 	depth := 0
@@ -423,6 +460,43 @@ func checkJSONAssociationPropertyMetadataContext(lines []string, line, col int) 
 		ResourceTypeName: assocPropValue,
 		Prefix:           extractJSONKeyPrefix(currentLine, col),
 		ExistingKeys:     existingKeys,
+		CurrentParamName: paramName,
+	}
+}
+
+// checkParamRefInJSONLine detects if the cursor is inside a ${...} parameter reference
+// within a JSON string value on the given line.
+func checkParamRefInJSONLine(line string, col int) *AnalysisContext {
+	searchStr := line
+	if col <= len(searchStr) {
+		searchStr = line[:col]
+	}
+	start := strings.LastIndex(searchStr, "${")
+	if start < 0 {
+		return nil
+	}
+	substr := line[start+2:]
+	cursorOffset := col - (start + 2)
+	if cursorOffset < 0 {
+		return nil
+	}
+	closeIdx := strings.Index(substr, "}")
+	if closeIdx >= 0 && cursorOffset > closeIdx {
+		return nil
+	}
+	prefixEnd := col
+	if prefixEnd > len(line) {
+		prefixEnd = len(line)
+	}
+	prefix := ""
+	if prefixEnd > start+2 {
+		prefix = line[start+2 : prefixEnd]
+		prefix = strings.TrimRight(prefix, "}\"")
+	}
+	return &AnalysisContext{
+		Type:          ContextAssociationPropertyMetadataParamRef,
+		Prefix:        prefix,
+		ParamRefStart: start + 2,
 	}
 }
 
@@ -988,6 +1062,33 @@ func findTopLevelKeysJSON(lines []string) []string {
 		}
 	}
 	return keys
+}
+
+// findPropertyPathJSON builds the full property path from the current line
+// back to the Properties object by tracking brace depth.
+func findPropertyPathJSON(lines []string, currentLine, propsDepth int) []string {
+	var path []string
+	braceDepth := 0
+	for i := currentLine; i >= 0; i-- {
+		trimmed := strings.TrimSpace(lines[i])
+		braceDepth += strings.Count(trimmed, "}") - strings.Count(trimmed, "{")
+		key := extractJSONKey(trimmed)
+		if key != "" && key != "Properties" && key != "Ref" && !strings.HasPrefix(key, "Fn::") {
+			if strings.Contains(trimmed, ":") && (strings.Contains(trimmed, "{") || (i < currentLine && braceDepth < 0)) {
+				path = append([]string{key}, path...)
+				braceDepth = 0
+			}
+		}
+		totalDepth := 0
+		for j := 0; j <= i; j++ {
+			lt := strings.TrimSpace(lines[j])
+			totalDepth += strings.Count(lt, "{") - strings.Count(lt, "}")
+		}
+		if totalDepth <= propsDepth+1 {
+			break
+		}
+	}
+	return path
 }
 
 func findExistingPropertiesJSON(lines []string, currentLine int) []string {
@@ -1652,6 +1753,89 @@ func collectJSONArrayItems(lines []string, startLine, endLine int) []string {
 		}
 	}
 	return items
+}
+
+// extractDefinitionTargetJSON extracts the name under the cursor for go-to-definition
+// in JSON templates. Returns the target name and whether it's a GetAtt resource reference.
+func extractDefinitionTargetJSON(currentLine string, lines []string, line, col int) (name string, isGetAttResource bool) {
+	trimmed := strings.TrimSpace(currentLine)
+
+	// "Ref": "Name"
+	if strings.Contains(trimmed, `"Ref"`) {
+		refIdx := strings.Index(trimmed, `"Ref"`)
+		rest := trimmed[refIdx+5:]
+		colonIdx := strings.Index(rest, ":")
+		if colonIdx >= 0 {
+			afterColon := rest[colonIdx+1:]
+			q1 := strings.Index(afterColon, `"`)
+			if q1 >= 0 {
+				inner := afterColon[q1+1:]
+				q2 := strings.Index(inner, `"`)
+				if q2 >= 0 {
+					value := inner[:q2]
+					lineRefIdx := strings.Index(currentLine, `"Ref"`)
+					valueStartCol := lineRefIdx + 5 + colonIdx + 1 + q1 + 1
+					valueEndCol := valueStartCol + len(value)
+					if value != "" && col >= valueStartCol && col <= valueEndCol {
+						return value, false
+					}
+				}
+			}
+		}
+	}
+
+	// "Fn::GetAtt": ["Resource", "Attribute"]
+	if strings.Contains(trimmed, `"Fn::GetAtt"`) {
+		bracketIdx := strings.Index(currentLine, "[")
+		if bracketIdx >= 0 && col > bracketIdx {
+			elements, positions := extractJSONArrayElements(currentLine[bracketIdx+1:], bracketIdx+1)
+			if len(elements) > 0 && len(positions) > 0 {
+				pos := positions[0]
+				if col >= pos.start && col <= pos.end {
+					return elements[0], true
+				}
+			}
+		}
+	}
+
+	// Multiline GetAtt: cursor on a string line within a "Fn::GetAtt" array
+	for i := line; i >= 0; i-- {
+		lt := strings.TrimSpace(lines[i])
+		if strings.Contains(lt, `"Fn::GetAtt"`) {
+			// Count items before current line
+			itemIndex := 0
+			for j := i + 1; j < line; j++ {
+				jt := strings.TrimSpace(lines[j])
+				if strings.Contains(jt, `"`) && jt != "[" && jt != "]" {
+					itemIndex++
+				}
+			}
+			if itemIndex == 0 {
+				// Current line is the resource name element
+				value := extractQuotedValue(trimmed)
+				if value != "" {
+					return value, true
+				}
+			}
+			break
+		}
+		if strings.ContainsAny(lt, "{}") && !strings.Contains(lt, "[") {
+			break
+		}
+	}
+
+	return "", false
+}
+
+// extractQuotedValue extracts a value from a simple "value" or "value", JSON line.
+func extractQuotedValue(s string) string {
+	s = strings.TrimSpace(s)
+	s = strings.TrimRight(s, ",]")
+	s = strings.TrimSpace(s)
+	if len(s) >= 2 && s[0] == '"' && s[len(s)-1] == '"' {
+		return s[1 : len(s)-1]
+	}
+	return ""
 }
 
 // extractJSONStringValue extracts a quoted string value from a JSON line.

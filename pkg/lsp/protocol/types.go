@@ -97,6 +97,7 @@ type ServerCapabilities struct {
 	TextDocumentSync   *TextDocumentSyncOptions `json:"textDocumentSync,omitempty"`
 	CompletionProvider *CompletionOptions       `json:"completionProvider,omitempty"`
 	HoverProvider      bool                     `json:"hoverProvider,omitempty"`
+	DefinitionProvider bool                     `json:"definitionProvider,omitempty"`
 }
 
 // TextDocumentSyncOptions describes how text document syncing works.
@@ -201,6 +202,13 @@ const (
 	CompletionItemKindConstant      = 21
 	CompletionItemKindTypeParameter = 25
 )
+
+// --- Definition ---
+
+// DefinitionParams are sent for a go-to-definition request.
+type DefinitionParams struct {
+	TextDocumentPositionParams
+}
 
 // --- Hover ---
 

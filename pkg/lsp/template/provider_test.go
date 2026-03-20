@@ -35,8 +35,8 @@ func newTestRegistry() *schema.Registry {
 			"DATASOURCE::VPC::Vpcs": {
 				Description: "Query VPCs",
 				Properties: map[string]*schema.Property{
-					"VpcName":  {Type: "String", Required: false, Description: "VPC name"},
-					"VpcId":    {Type: "String", Required: false, Description: "VPC ID"},
+					"VpcName":   {Type: "String", Required: false, Description: "VPC name"},
+					"VpcId":     {Type: "String", Required: false, Description: "VPC ID"},
 					"IsDefault": {Type: "Boolean", Required: false, Description: "Whether default VPC"},
 				},
 			},
@@ -48,6 +48,38 @@ func newTestRegistry() *schema.Registry {
 					"Encrypted": {Type: "boolean", Required: false, Description: "Whether encrypted"},
 					"Tags":      {Type: "list", Required: false, Description: "Tags"},
 					"Options":   {Type: "map", Required: false, Description: "Options"},
+				},
+			},
+			"ALIYUN::ECS::SecurityGroup": {
+				Description: "A security group",
+				Properties: map[string]*schema.Property{
+					"VpcId": {Type: "string", Required: false, Description: "VPC ID"},
+					"SecurityGroupIngress": {
+						Type:        "list",
+						Required:    false,
+						Description: "Ingress rules",
+						Properties: map[string]*schema.Property{
+							"IpProtocol": {
+								Type:        "string",
+								Required:    true,
+								Description: "IP protocol",
+								Constraints: &schema.Constraint{
+									AllowedValues: []interface{}{"tcp", "udp", "icmp", "gre", "all"},
+								},
+							},
+							"PortRange": {Type: "string", Required: true, Description: "Port range"},
+							"NicType": {
+								Type:        "string",
+								Required:    false,
+								Description: "Network type",
+								Constraints: &schema.Constraint{
+									AllowedValues: []interface{}{"internet", "intranet"},
+								},
+							},
+							"SourceCidrIp": {Type: "string", Required: false, Description: "Source CIDR"},
+							"Priority":     {Type: "integer", Required: false, Description: "Priority"},
+						},
+					},
 				},
 			},
 		},
@@ -1498,6 +1530,132 @@ Resources:
 		Convey("It should return resource type description", func() {
 			So(result, ShouldNotBeNil)
 			So(result.Contents, ShouldContainSubstring, "ECS instance")
+		})
+	})
+}
+
+// --- Hover GetAtt Attribute Tests ---
+
+func TestHover_GetAttAttribute_YAML(t *testing.T) {
+	Convey("Given a YAML template with cursor on GetAtt attribute", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  MyECS:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.c6.large
+      ImageId: img-123
+Outputs:
+  ID:
+    Value: !GetAtt MyECS.InstanceId
+`
+
+		line := 9
+		lineContent := strings.Split(content, "\n")[line]
+		col := strings.Index(lineContent, "InstanceId") + 3
+
+		ctx := HoverContext{
+			Content:  content,
+			Line:     line,
+			Col:      col,
+			IsYAML:   true,
+			Registry: registry,
+		}
+
+		result := provider.Hover(ctx)
+
+		Convey("It should return attribute description", func() {
+			So(result, ShouldNotBeNil)
+			So(result.Contents, ShouldContainSubstring, "InstanceId")
+			So(result.Contents, ShouldContainSubstring, "instance ID")
+			So(result.Contents, ShouldContainSubstring, "MyECS")
+			So(result.Contents, ShouldContainSubstring, "ALIYUN::ECS::Instance")
+		})
+	})
+}
+
+func TestHover_GetAttAttribute_YAML_InvalidAttr(t *testing.T) {
+	Convey("Given a YAML template with cursor on an invalid GetAtt attribute", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  MyECS:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.c6.large
+      ImageId: img-123
+Outputs:
+  IP:
+    Value: !GetAtt MyECS.NonExistent
+`
+
+		line := 9
+		lineContent := strings.Split(content, "\n")[line]
+		col := strings.Index(lineContent, "NonExistent") + 3
+
+		ctx := HoverContext{
+			Content:  content,
+			Line:     line,
+			Col:      col,
+			IsYAML:   true,
+			Registry: registry,
+		}
+
+		result := provider.Hover(ctx)
+
+		Convey("It should return nil for unknown attribute", func() {
+			So(result, ShouldBeNil)
+		})
+	})
+}
+
+func TestHover_GetAttAttribute_JSON(t *testing.T) {
+	Convey("Given a JSON template with cursor on GetAtt attribute", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `{
+  "ROSTemplateFormatVersion": "2015-09-01",
+  "Resources": {
+    "MyECS": {
+      "Type": "ALIYUN::ECS::Instance",
+      "Properties": {
+        "InstanceType": "ecs.c6.large",
+        "ImageId": "img-123"
+      }
+    }
+  },
+  "Outputs": {
+    "ID": {
+      "Value": {"Fn::GetAtt": ["MyECS", "InstanceId"]}
+    }
+  }
+}`
+
+		line := 13
+		lineContent := strings.Split(content, "\n")[line]
+		col := strings.Index(lineContent, "InstanceId") + 3
+
+		ctx := HoverContext{
+			Content:  content,
+			Line:     line,
+			Col:      col,
+			IsYAML:   false,
+			Registry: registry,
+		}
+
+		result := provider.Hover(ctx)
+
+		Convey("It should return attribute description", func() {
+			So(result, ShouldNotBeNil)
+			So(result.Contents, ShouldContainSubstring, "InstanceId")
+			So(result.Contents, ShouldContainSubstring, "instance ID")
+			So(result.Contents, ShouldContainSubstring, "MyECS")
 		})
 	})
 }
@@ -4190,6 +4348,1123 @@ func TestComplete_FnNot_JSON(t *testing.T) {
 				}
 			}
 			So(found, ShouldBeTrue)
+		})
+	})
+}
+
+// --- Definition Tests ---
+
+func TestDefinition_YAML_RefParameter(t *testing.T) {
+	Convey("Given a YAML template with Ref to a parameter", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `ROSTemplateFormatVersion: '2015-09-01'
+Parameters:
+  InstanceType:
+    Type: String
+Resources:
+  MyECS:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType:
+        Ref: InstanceType`
+
+		ctx := DefinitionContext{
+			URI:      "file:///test.yaml",
+			Content:  content,
+			Line:     9,
+			Col:      15,
+			IsYAML:   true,
+			Registry: registry,
+		}
+
+		loc := provider.Definition(ctx)
+
+		Convey("It should jump to the parameter definition", func() {
+			So(loc, ShouldNotBeNil)
+			So(loc.URI, ShouldEqual, "file:///test.yaml")
+			So(loc.Range.Start.Line, ShouldEqual, 2)
+		})
+	})
+}
+
+func TestDefinition_YAML_RefResource(t *testing.T) {
+	Convey("Given a YAML template with Ref to a resource", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  MyVPC:
+    Type: ALIYUN::ECS::VPC
+  MyECS:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.g6.large
+    DependsOn:
+      Ref: MyVPC`
+
+		ctx := DefinitionContext{
+			URI:      "file:///test.yaml",
+			Content:  content,
+			Line:     9,
+			Col:      14,
+			IsYAML:   true,
+			Registry: registry,
+		}
+
+		loc := provider.Definition(ctx)
+
+		Convey("It should jump to the resource definition", func() {
+			So(loc, ShouldNotBeNil)
+			So(loc.Range.Start.Line, ShouldEqual, 2)
+		})
+	})
+}
+
+func TestDefinition_YAML_ShortRefParameter(t *testing.T) {
+	Convey("Given a YAML template with !Ref to a parameter", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `ROSTemplateFormatVersion: '2015-09-01'
+Parameters:
+  ImageId:
+    Type: String
+Resources:
+  MyECS:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      ImageId: !Ref ImageId`
+
+		ctx := DefinitionContext{
+			URI:      "file:///test.yaml",
+			Content:  content,
+			Line:     8,
+			Col:      22,
+			IsYAML:   true,
+			Registry: registry,
+		}
+
+		loc := provider.Definition(ctx)
+
+		Convey("It should jump to the parameter definition", func() {
+			So(loc, ShouldNotBeNil)
+			So(loc.Range.Start.Line, ShouldEqual, 2)
+		})
+	})
+}
+
+func TestDefinition_YAML_GetAttResource(t *testing.T) {
+	Convey("Given a YAML template with !GetAtt referencing a resource", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  MyECS:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.g6.large
+Outputs:
+  InstanceId:
+    Value: !GetAtt MyECS.InstanceId`
+
+		ctx := DefinitionContext{
+			URI:      "file:///test.yaml",
+			Content:  content,
+			Line:     8,
+			Col:      20,
+			IsYAML:   true,
+			Registry: registry,
+		}
+
+		loc := provider.Definition(ctx)
+
+		Convey("It should jump to the resource definition", func() {
+			So(loc, ShouldNotBeNil)
+			So(loc.Range.Start.Line, ShouldEqual, 2)
+		})
+	})
+}
+
+func TestDefinition_YAML_RefLocals(t *testing.T) {
+	Convey("Given a YAML template with Ref to a local variable", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `ROSTemplateFormatVersion: '2015-09-01'
+Locals:
+  MyLocal:
+    Value: hello
+Resources:
+  MyECS:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType:
+        Ref: MyLocal`
+
+		ctx := DefinitionContext{
+			URI:      "file:///test.yaml",
+			Content:  content,
+			Line:     9,
+			Col:      15,
+			IsYAML:   true,
+			Registry: registry,
+		}
+
+		loc := provider.Definition(ctx)
+
+		Convey("It should jump to the local definition", func() {
+			So(loc, ShouldNotBeNil)
+			So(loc.Range.Start.Line, ShouldEqual, 2)
+		})
+	})
+}
+
+func TestDefinition_YAML_NoTarget(t *testing.T) {
+	Convey("Given a YAML template with cursor not on Ref or GetAtt", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  MyECS:
+    Type: ALIYUN::ECS::Instance`
+
+		ctx := DefinitionContext{
+			URI:      "file:///test.yaml",
+			Content:  content,
+			Line:     3,
+			Col:      10,
+			IsYAML:   true,
+			Registry: registry,
+		}
+
+		loc := provider.Definition(ctx)
+
+		Convey("It should return nil", func() {
+			So(loc, ShouldBeNil)
+		})
+	})
+}
+
+func TestDefinition_JSON_RefParameter(t *testing.T) {
+	Convey("Given a JSON template with Ref to a parameter", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `{
+  "ROSTemplateFormatVersion": "2015-09-01",
+  "Parameters": {
+    "InstanceType": {
+      "Type": "String"
+    }
+  },
+  "Resources": {
+    "MyECS": {
+      "Type": "ALIYUN::ECS::Instance",
+      "Properties": {
+        "InstanceType": {"Ref": "InstanceType"}
+      }
+    }
+  }
+}`
+
+		line := 11
+		lineContent := strings.Split(content, "\n")[line]
+		col := strings.Index(lineContent, `"InstanceType"}`) + 1
+
+		ctx := DefinitionContext{
+			URI:      "file:///test.json",
+			Content:  content,
+			Line:     line,
+			Col:      col,
+			IsYAML:   false,
+			Registry: registry,
+		}
+
+		loc := provider.Definition(ctx)
+
+		Convey("It should jump to the parameter definition", func() {
+			So(loc, ShouldNotBeNil)
+			So(loc.Range.Start.Line, ShouldEqual, 3)
+		})
+	})
+}
+
+func TestDefinition_JSON_GetAttResource(t *testing.T) {
+	Convey("Given a JSON template with Fn::GetAtt referencing a resource", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `{
+  "ROSTemplateFormatVersion": "2015-09-01",
+  "Resources": {
+    "MyECS": {
+      "Type": "ALIYUN::ECS::Instance",
+      "Properties": {
+        "InstanceType": "ecs.g6.large"
+      }
+    }
+  },
+  "Outputs": {
+    "InstanceId": {
+      "Value": {"Fn::GetAtt": ["MyECS", "InstanceId"]}
+    }
+  }
+}`
+
+		line := 12
+		lineContent := strings.Split(content, "\n")[line]
+		col := strings.Index(lineContent, `"MyECS"`) + 2
+
+		ctx := DefinitionContext{
+			URI:      "file:///test.json",
+			Content:  content,
+			Line:     line,
+			Col:      col,
+			IsYAML:   false,
+			Registry: registry,
+		}
+
+		loc := provider.Definition(ctx)
+
+		Convey("It should jump to the resource definition", func() {
+			So(loc, ShouldNotBeNil)
+			So(loc.Range.Start.Line, ShouldEqual, 3)
+		})
+	})
+}
+
+func TestDefinition_JSON_RefUndefined(t *testing.T) {
+	Convey("Given a JSON template with Ref to an undefined name", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `{
+  "ROSTemplateFormatVersion": "2015-09-01",
+  "Resources": {
+    "MyECS": {
+      "Type": "ALIYUN::ECS::Instance",
+      "Properties": {
+        "InstanceType": {"Ref": "NonExistent"}
+      }
+    }
+  }
+}`
+
+		line := 6
+		lineContent := strings.Split(content, "\n")[line]
+		col := strings.Index(lineContent, `"NonExistent"`) + 2
+
+		ctx := DefinitionContext{
+			URI:      "file:///test.json",
+			Content:  content,
+			Line:     line,
+			Col:      col,
+			IsYAML:   false,
+			Registry: registry,
+		}
+
+		loc := provider.Definition(ctx)
+
+		Convey("It should return nil for undefined targets", func() {
+			So(loc, ShouldBeNil)
+		})
+	})
+}
+
+// --- Definition for ${ParamRef} in AssociationPropertyMetadata ---
+
+func TestDefinition_YAML_ParamRef(t *testing.T) {
+	Convey("Given a YAML template with ${ParamName} in AssociationPropertyMetadata", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `ROSTemplateFormatVersion: '2015-09-01'
+Parameters:
+  VpcId:
+    Type: String
+    AssociationProperty: ALIYUN::ECS::VPC::VPCId
+  VSwitchId:
+    Type: String
+    AssociationProperty: ALIYUN::VPC::VSwitch::VSwitchId
+    AssociationPropertyMetadata:
+      VpcId: ${VpcId}
+`
+
+		line := 9
+		lineContent := strings.Split(content, "\n")[line]
+		col := strings.Index(lineContent, "VpcId}") + 2
+
+		ctx := DefinitionContext{
+			URI:      "file:///test.yaml",
+			Content:  content,
+			Line:     line,
+			Col:      col,
+			IsYAML:   true,
+			Registry: registry,
+		}
+
+		loc := provider.Definition(ctx)
+
+		Convey("It should jump to the referenced parameter definition", func() {
+			So(loc, ShouldNotBeNil)
+			So(loc.Range.Start.Line, ShouldEqual, 2)
+		})
+	})
+}
+
+func TestDefinition_JSON_ParamRef(t *testing.T) {
+	Convey("Given a JSON template with ${ParamName} in AssociationPropertyMetadata", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `{
+  "ROSTemplateFormatVersion": "2015-09-01",
+  "Parameters": {
+    "VpcId": {
+      "Type": "String",
+      "AssociationProperty": "ALIYUN::ECS::VPC::VPCId"
+    },
+    "VSwitchId": {
+      "Type": "String",
+      "AssociationProperty": "ALIYUN::VPC::VSwitch::VSwitchId",
+      "AssociationPropertyMetadata": {
+        "VpcId": "${VpcId}"
+      }
+    }
+  }
+}`
+
+		line := 11
+		lineContent := strings.Split(content, "\n")[line]
+		col := strings.Index(lineContent, "VpcId}") + 2
+
+		ctx := DefinitionContext{
+			URI:      "file:///test.json",
+			Content:  content,
+			Line:     line,
+			Col:      col,
+			IsYAML:   false,
+			Registry: registry,
+		}
+
+		loc := provider.Definition(ctx)
+
+		Convey("It should jump to the referenced parameter definition", func() {
+			So(loc, ShouldNotBeNil)
+			So(loc.Range.Start.Line, ShouldEqual, 3)
+		})
+	})
+}
+
+func TestDefinition_YAML_ParamRef_Undefined(t *testing.T) {
+	Convey("Given a YAML template with ${NonExistent} in AssociationPropertyMetadata", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `ROSTemplateFormatVersion: '2015-09-01'
+Parameters:
+  VSwitchId:
+    Type: String
+    AssociationPropertyMetadata:
+      VpcId: ${NonExistent}
+`
+
+		line := 5
+		lineContent := strings.Split(content, "\n")[line]
+		col := strings.Index(lineContent, "NonExistent") + 3
+
+		ctx := DefinitionContext{
+			URI:      "file:///test.yaml",
+			Content:  content,
+			Line:     line,
+			Col:      col,
+			IsYAML:   true,
+			Registry: registry,
+		}
+
+		loc := provider.Definition(ctx)
+
+		Convey("It should return nil for undefined parameter", func() {
+			So(loc, ShouldBeNil)
+		})
+	})
+}
+
+// --- Validate Ref/GetAtt targets ---
+
+func TestValidate_UndefinedRef_YAML(t *testing.T) {
+	Convey("Given a YAML template with Ref to an undefined name", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `ROSTemplateFormatVersion: '2015-09-01'
+Parameters:
+  MyParam:
+    Type: String
+Resources:
+  MyECS:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: !Ref NonExistent
+      ImageId: !Ref MyParam
+`
+
+		ctx := ValidationContext{
+			Content:  content,
+			IsYAML:   true,
+			Registry: registry,
+		}
+
+		diags := provider.Validate(ctx)
+
+		Convey("It should report undefined Ref target", func() {
+			found := false
+			for _, d := range diags {
+				if strings.Contains(d.Message, "NonExistent") && strings.Contains(d.Message, "Ref") {
+					found = true
+				}
+			}
+			So(found, ShouldBeTrue)
+		})
+
+		Convey("It should NOT report valid Ref targets", func() {
+			for _, d := range diags {
+				So(d.Message, ShouldNotContainSubstring, "MyParam")
+			}
+		})
+	})
+}
+
+func TestValidate_UndefinedRef_YAML_FullForm(t *testing.T) {
+	Convey("Given a YAML template with Ref: full form to undefined name", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  MyECS:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType:
+        Ref: DoesNotExist
+      ImageId: img-123
+`
+
+		ctx := ValidationContext{
+			Content:  content,
+			IsYAML:   true,
+			Registry: registry,
+		}
+
+		diags := provider.Validate(ctx)
+
+		Convey("It should report undefined Ref target", func() {
+			found := false
+			for _, d := range diags {
+				if strings.Contains(d.Message, "DoesNotExist") && strings.Contains(d.Message, "Ref") {
+					found = true
+				}
+			}
+			So(found, ShouldBeTrue)
+		})
+	})
+}
+
+func TestValidate_UndefinedRef_JSON(t *testing.T) {
+	Convey("Given a JSON template with Ref to an undefined name", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `{
+  "ROSTemplateFormatVersion": "2015-09-01",
+  "Parameters": {
+    "MyParam": {
+      "Type": "String"
+    }
+  },
+  "Resources": {
+    "MyECS": {
+      "Type": "ALIYUN::ECS::Instance",
+      "Properties": {
+        "InstanceType": {"Ref": "NonExistent"},
+        "ImageId": {"Ref": "MyParam"}
+      }
+    }
+  }
+}`
+
+		ctx := ValidationContext{
+			Content:  content,
+			IsYAML:   false,
+			Registry: registry,
+		}
+
+		diags := provider.Validate(ctx)
+
+		Convey("It should report undefined Ref target", func() {
+			found := false
+			for _, d := range diags {
+				if strings.Contains(d.Message, "NonExistent") && strings.Contains(d.Message, "Ref") {
+					found = true
+				}
+			}
+			So(found, ShouldBeTrue)
+		})
+
+		Convey("It should NOT report valid Ref targets", func() {
+			for _, d := range diags {
+				So(d.Message, ShouldNotContainSubstring, "MyParam")
+			}
+		})
+	})
+}
+
+func TestValidate_RefToResource_YAML(t *testing.T) {
+	Convey("Given a YAML template with Ref to a defined resource", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  MyVPC:
+    Type: ALIYUN::ECS::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/8
+  MyECS:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.c6.large
+      ImageId: img-123
+      VpcId: !Ref MyVPC
+`
+
+		ctx := ValidationContext{
+			Content:  content,
+			IsYAML:   true,
+			Registry: registry,
+		}
+
+		diags := provider.Validate(ctx)
+
+		Convey("It should NOT report Ref to a defined resource", func() {
+			for _, d := range diags {
+				if strings.Contains(d.Message, "Ref") {
+					So(d.Message, ShouldNotContainSubstring, "MyVPC")
+				}
+			}
+		})
+	})
+}
+
+func TestValidate_RefToPseudoParam_YAML(t *testing.T) {
+	Convey("Given a YAML template with Ref to a pseudo parameter", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  MyECS:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.c6.large
+      ImageId: img-123
+Outputs:
+  Region:
+    Value: !Ref ALIYUN::Region
+`
+
+		ctx := ValidationContext{
+			Content:  content,
+			IsYAML:   true,
+			Registry: registry,
+		}
+
+		diags := provider.Validate(ctx)
+
+		Convey("It should NOT report Ref to pseudo parameters", func() {
+			for _, d := range diags {
+				if strings.Contains(d.Message, "Ref") {
+					So(d.Message, ShouldNotContainSubstring, "ALIYUN::Region")
+				}
+			}
+		})
+	})
+}
+
+func TestValidate_UndefinedGetAtt_YAML(t *testing.T) {
+	Convey("Given a YAML template with GetAtt to an undefined resource", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  MyECS:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.c6.large
+      ImageId: img-123
+Outputs:
+  IP:
+    Value: !GetAtt NonExistentResource.PublicIp
+`
+
+		ctx := ValidationContext{
+			Content:  content,
+			IsYAML:   true,
+			Registry: registry,
+		}
+
+		diags := provider.Validate(ctx)
+
+		Convey("It should report undefined GetAtt resource", func() {
+			found := false
+			for _, d := range diags {
+				if strings.Contains(d.Message, "NonExistentResource") && strings.Contains(d.Message, "GetAtt") {
+					found = true
+				}
+			}
+			So(found, ShouldBeTrue)
+		})
+	})
+}
+
+func TestValidate_UndefinedGetAtt_JSON(t *testing.T) {
+	Convey("Given a JSON template with GetAtt to an undefined resource", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `{
+  "ROSTemplateFormatVersion": "2015-09-01",
+  "Resources": {
+    "MyECS": {
+      "Type": "ALIYUN::ECS::Instance",
+      "Properties": {
+        "InstanceType": "ecs.c6.large",
+        "ImageId": "img-123"
+      }
+    }
+  },
+  "Outputs": {
+    "IP": {
+      "Value": {"Fn::GetAtt": ["BadResource", "PublicIp"]}
+    }
+  }
+}`
+
+		ctx := ValidationContext{
+			Content:  content,
+			IsYAML:   false,
+			Registry: registry,
+		}
+
+		diags := provider.Validate(ctx)
+
+		Convey("It should report undefined GetAtt resource", func() {
+			found := false
+			for _, d := range diags {
+				if strings.Contains(d.Message, "BadResource") && strings.Contains(d.Message, "GetAtt") {
+					found = true
+				}
+			}
+			So(found, ShouldBeTrue)
+		})
+	})
+}
+
+func TestValidate_ValidGetAtt_YAML(t *testing.T) {
+	Convey("Given a YAML template with GetAtt to a defined resource and valid attribute", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  MyECS:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.c6.large
+      ImageId: img-123
+Outputs:
+  ID:
+    Value: !GetAtt MyECS.InstanceId
+`
+
+		ctx := ValidationContext{
+			Content:  content,
+			IsYAML:   true,
+			Registry: registry,
+		}
+
+		diags := provider.Validate(ctx)
+
+		Convey("It should NOT report GetAtt to a defined resource with valid attribute", func() {
+			for _, d := range diags {
+				if strings.Contains(d.Message, "GetAtt") {
+					So(d.Message, ShouldNotContainSubstring, "MyECS")
+				}
+			}
+		})
+	})
+}
+
+// --- Validate GetAtt attribute ---
+
+func TestValidate_InvalidGetAttAttribute_YAML(t *testing.T) {
+	Convey("Given a YAML template with GetAtt to a valid resource but invalid attribute", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  MyECS:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.c6.large
+      ImageId: img-123
+Outputs:
+  IP:
+    Value: !GetAtt MyECS.NonExistentAttr
+`
+
+		ctx := ValidationContext{
+			Content:  content,
+			IsYAML:   true,
+			Registry: registry,
+		}
+
+		diags := provider.Validate(ctx)
+
+		Convey("It should report undefined attribute", func() {
+			found := false
+			for _, d := range diags {
+				if strings.Contains(d.Message, "NonExistentAttr") && strings.Contains(d.Message, "attribute") {
+					found = true
+				}
+			}
+			So(found, ShouldBeTrue)
+		})
+	})
+}
+
+func TestValidate_ValidGetAttAttribute_YAML(t *testing.T) {
+	Convey("Given a YAML template with GetAtt to a valid resource and valid attribute", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  MyECS:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.c6.large
+      ImageId: img-123
+Outputs:
+  ID:
+    Value: !GetAtt MyECS.InstanceId
+`
+
+		ctx := ValidationContext{
+			Content:  content,
+			IsYAML:   true,
+			Registry: registry,
+		}
+
+		diags := provider.Validate(ctx)
+
+		Convey("It should NOT report valid attribute", func() {
+			for _, d := range diags {
+				So(d.Message, ShouldNotContainSubstring, "InstanceId")
+			}
+		})
+	})
+}
+
+func TestValidate_InvalidGetAttAttribute_JSON(t *testing.T) {
+	Convey("Given a JSON template with GetAtt to a valid resource but invalid attribute", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `{
+  "ROSTemplateFormatVersion": "2015-09-01",
+  "Resources": {
+    "MyECS": {
+      "Type": "ALIYUN::ECS::Instance",
+      "Properties": {
+        "InstanceType": "ecs.c6.large",
+        "ImageId": "img-123"
+      }
+    }
+  },
+  "Outputs": {
+    "IP": {
+      "Value": {"Fn::GetAtt": ["MyECS", "BadAttribute"]}
+    }
+  }
+}`
+
+		ctx := ValidationContext{
+			Content:  content,
+			IsYAML:   false,
+			Registry: registry,
+		}
+
+		diags := provider.Validate(ctx)
+
+		Convey("It should report undefined attribute", func() {
+			found := false
+			for _, d := range diags {
+				if strings.Contains(d.Message, "BadAttribute") && strings.Contains(d.Message, "attribute") {
+					found = true
+				}
+			}
+			So(found, ShouldBeTrue)
+		})
+	})
+}
+
+func TestValidate_ValidGetAttAttribute_JSON(t *testing.T) {
+	Convey("Given a JSON template with GetAtt to a valid resource and valid attribute", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `{
+  "ROSTemplateFormatVersion": "2015-09-01",
+  "Resources": {
+    "MyECS": {
+      "Type": "ALIYUN::ECS::Instance",
+      "Properties": {
+        "InstanceType": "ecs.c6.large",
+        "ImageId": "img-123"
+      }
+    }
+  },
+  "Outputs": {
+    "ID": {
+      "Value": {"Fn::GetAtt": ["MyECS", "InstanceId"]}
+    }
+  }
+}`
+
+		ctx := ValidationContext{
+			Content:  content,
+			IsYAML:   false,
+			Registry: registry,
+		}
+
+		diags := provider.Validate(ctx)
+
+		Convey("It should NOT report valid attribute", func() {
+			for _, d := range diags {
+				So(d.Message, ShouldNotContainSubstring, "InstanceId")
+			}
+		})
+	})
+}
+
+func TestValidate_GetAttAttribute_YAML_ListForm(t *testing.T) {
+	Convey("Given a YAML template with Fn::GetAtt list form and invalid attribute", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  MyECS:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      InstanceType: ecs.c6.large
+      ImageId: img-123
+Outputs:
+  ID:
+    Value:
+      Fn::GetAtt:
+        - MyECS
+        - WrongAttr
+`
+
+		ctx := ValidationContext{
+			Content:  content,
+			IsYAML:   true,
+			Registry: registry,
+		}
+
+		diags := provider.Validate(ctx)
+
+		Convey("It should report undefined attribute in list form", func() {
+			found := false
+			for _, d := range diags {
+				if strings.Contains(d.Message, "WrongAttr") && strings.Contains(d.Message, "attribute") {
+					found = true
+				}
+			}
+			So(found, ShouldBeTrue)
+		})
+	})
+}
+
+// --- List item property completion (AllowedValues within list sub-properties) ---
+
+func TestComplete_ListItemPropertyValue_YAML(t *testing.T) {
+	Convey("Given a YAML template with cursor at a list item property value that has AllowedValues", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  SG:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupIngress:
+        - IpProtocol: a
+          PortRange: '-1/-1'
+`
+		ctx := CompletionContext{
+			Content:  content,
+			Line:     6,
+			Col:      24,
+			IsYAML:   true,
+			Registry: registry,
+		}
+
+		items := provider.Complete(ctx)
+
+		Convey("It should return AllowedValues for IpProtocol matching prefix 'a'", func() {
+			So(len(items), ShouldBeGreaterThan, 0)
+			labels := make(map[string]bool)
+			for _, item := range items {
+				labels[item.Label] = true
+			}
+			So(labels["all"], ShouldBeTrue)
+			So(labels["tcp"], ShouldBeFalse)
+		})
+
+		Convey("Without prefix, it should return all AllowedValues", func() {
+			ctx2 := CompletionContext{
+				Content:  content,
+				Line:     6,
+				Col:      22,
+				IsYAML:   true,
+				Registry: registry,
+			}
+			items2 := provider.Complete(ctx2)
+			So(len(items2), ShouldBeGreaterThan, 0)
+			labels2 := make(map[string]bool)
+			for _, item := range items2 {
+				labels2[item.Label] = true
+			}
+			So(labels2["tcp"], ShouldBeTrue)
+			So(labels2["udp"], ShouldBeTrue)
+			So(labels2["icmp"], ShouldBeTrue)
+			So(labels2["all"], ShouldBeTrue)
+		})
+	})
+}
+
+func TestComplete_ListItemPropertyValue_YAML_NonDashLine(t *testing.T) {
+	Convey("Given a YAML template with cursor at a non-dash list item property value", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  SG:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupIngress:
+        - IpProtocol: all
+          NicType: i
+`
+		ctx := CompletionContext{
+			Content:  content,
+			Line:     7,
+			Col:      20,
+			IsYAML:   true,
+			Registry: registry,
+		}
+
+		items := provider.Complete(ctx)
+
+		Convey("It should return AllowedValues for NicType", func() {
+			So(len(items), ShouldBeGreaterThan, 0)
+			labels := make(map[string]bool)
+			for _, item := range items {
+				labels[item.Label] = true
+			}
+			So(labels["internet"], ShouldBeTrue)
+			So(labels["intranet"], ShouldBeTrue)
+		})
+	})
+}
+
+func TestComplete_ListItemPropertyValue_JSON(t *testing.T) {
+	Convey("Given a JSON template with cursor at a list item property value that has AllowedValues", t, func() {
+		provider := &ROSTemplateProvider{}
+		registry := newTestRegistry()
+
+		content := `{
+  "ROSTemplateFormatVersion": "2015-09-01",
+  "Resources": {
+    "SG": {
+      "Type": "ALIYUN::ECS::SecurityGroup",
+      "Properties": {
+        "SecurityGroupIngress": [
+          {
+            "IpProtocol": "a"
+          }
+        ]
+      }
+    }
+  }
+}`
+		ctx := CompletionContext{
+			Content:  content,
+			Line:     8,
+			Col:      27,
+			IsYAML:   false,
+			Registry: registry,
+		}
+
+		items := provider.Complete(ctx)
+
+		Convey("It should return AllowedValues for IpProtocol", func() {
+			So(len(items), ShouldBeGreaterThan, 0)
+			labels := make(map[string]bool)
+			for _, item := range items {
+				labels[item.Label] = true
+			}
+			So(labels["tcp"], ShouldBeTrue)
+			So(labels["udp"], ShouldBeTrue)
+			So(labels["all"], ShouldBeTrue)
+		})
+	})
+}
+
+func TestAnalyzePosition_ListItemProperty_YAML(t *testing.T) {
+	Convey("Given a YAML template with cursor on a property inside a list item", t, func() {
+		content := `ROSTemplateFormatVersion: '2015-09-01'
+Resources:
+  SG:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupIngress:
+        - IpProtocol: all
+          NicType: internet
+`
+		Convey("On the dash line (- IpProtocol: all)", func() {
+			analysis := AnalyzePosition(content, 6, 24, true)
+			So(analysis.Type, ShouldEqual, ContextPropertyValue)
+			So(analysis.PropertyName, ShouldEqual, "IpProtocol")
+			So(analysis.PropertyPath, ShouldResemble, []string{"SecurityGroupIngress", "IpProtocol"})
+		})
+
+		Convey("On a non-dash line (NicType: internet)", func() {
+			analysis := AnalyzePosition(content, 7, 20, true)
+			So(analysis.Type, ShouldEqual, ContextPropertyValue)
+			So(analysis.PropertyName, ShouldEqual, "NicType")
+			So(analysis.PropertyPath, ShouldResemble, []string{"SecurityGroupIngress", "NicType"})
 		})
 	})
 }

@@ -56,16 +56,16 @@ func analyzeYAMLPosition(content string, line, col int) *AnalysisContext {
 			if outputCtx := analyzeOutputContext(lines, line, col, currentLine, indent); outputCtx != nil {
 				return outputCtx
 			}
-		if localsCtx := analyzeLocalsContext(lines, line, col, currentLine, indent); localsCtx != nil {
-			return localsCtx
-		}
-		if mappingsCtx := analyzeMappingsContext(lines, line, col, currentLine, indent); mappingsCtx != nil {
-			return mappingsCtx
-		}
-		if conditionsCtx := analyzeConditionsContext(lines, line, col, currentLine, indent); conditionsCtx != nil {
-			return conditionsCtx
-		}
-		return &AnalysisContext{Type: ContextUnknown}
+			if localsCtx := analyzeLocalsContext(lines, line, col, currentLine, indent); localsCtx != nil {
+				return localsCtx
+			}
+			if mappingsCtx := analyzeMappingsContext(lines, line, col, currentLine, indent); mappingsCtx != nil {
+				return mappingsCtx
+			}
+			if conditionsCtx := analyzeConditionsContext(lines, line, col, currentLine, indent); conditionsCtx != nil {
+				return conditionsCtx
+			}
+			return &AnalysisContext{Type: ContextUnknown}
 		}
 		return &AnalysisContext{Type: ContextTopLevel, ExistingKeys: findTopLevelKeys(lines)}
 	}
@@ -84,10 +84,33 @@ func analyzeYAMLPosition(content string, line, col int) *AnalysisContext {
 		if indent > propIndent && propIndent > 0 {
 			propName := findPropertyName(lines, line, propIndent)
 			if propName != "" {
+				parentPath := findPropertyPath(lines, line, propIndent)
+				var path []string
+				if len(parentPath) > 0 && parentPath[0] == propName {
+					path = parentPath
+				} else {
+					path = append(parentPath, propName)
+				}
+
+				deepKey := extractLineKey(currentLine)
+				if deepKey != "" && deepKey != propName && (len(path) == 0 || path[len(path)-1] != deepKey) {
+					path = append(path, deepKey)
+					ctx := &AnalysisContext{
+						Type:         ContextPropertyValue,
+						ResourceName: resourceName,
+						PropertyName: deepKey,
+						PropertyPath: path,
+					}
+					ctx.ResourceTypeName = findResourceType(lines, resourceName)
+					ctx.Prefix = extractPropertyValuePrefix(currentLine, col, deepKey)
+					return ctx
+				}
+
 				ctx := &AnalysisContext{
 					Type:         ContextPropertyValue,
 					ResourceName: resourceName,
 					PropertyName: propName,
+					PropertyPath: path,
 				}
 				ctx.ResourceTypeName = findResourceType(lines, resourceName)
 				ctx.Prefix = extractPropertyValuePrefix(currentLine, col, propName)
@@ -334,11 +357,16 @@ func extractPrefix(line string, col int) string {
 // the prefix is the text after the colon. Otherwise, it's the trimmed line content.
 func extractPropertyValuePrefix(line string, col int, propName string) string {
 	trimmed := strings.TrimSpace(line)
-	if strings.HasPrefix(trimmed, propName+":") {
-		colonIdx := strings.Index(line, ":")
-		if colonIdx < 0 {
+	checkStr := trimmed
+	if strings.HasPrefix(checkStr, "- ") {
+		checkStr = checkStr[2:]
+	}
+	if strings.HasPrefix(checkStr, propName+":") {
+		keyIdx := strings.Index(line, propName+":")
+		if keyIdx < 0 {
 			return ""
 		}
+		colonIdx := keyIdx + len(propName)
 		valueStart := colonIdx + 1
 		for valueStart < len(line) && (line[valueStart] == ' ' || line[valueStart] == '\t') {
 			valueStart++
@@ -368,7 +396,7 @@ func extractValuePrefix(line string, col int) string {
 	valueStart := idx + 1
 	if col <= valueStart {
 		return ""
-	} 
+	}
 	if col > len(line) {
 		col = len(line)
 	}
@@ -417,6 +445,7 @@ func findResourceContext(lines []string, currentLine, currentIndent int) (resour
 			if section == "" && isResourceSection(key) {
 				section = key
 				currentIndent = ind
+				resourceName = ""
 				continue
 			}
 
@@ -462,7 +491,7 @@ func analyzeParameterContext(lines []string, line, col int, currentLine string, 
 		}
 	}
 
-	if ctx := checkAssociationPropertyMetadataContext(lines, line, col, currentLine, indent); ctx != nil {
+	if ctx := checkAssociationPropertyMetadataContext(lines, line, col, currentLine, indent, paramName); ctx != nil {
 		return ctx
 	}
 
@@ -477,11 +506,22 @@ func analyzeParameterContext(lines []string, line, col int, currentLine string, 
 // checkAssociationPropertyMetadataContext checks if the cursor is inside an
 // AssociationPropertyMetadata block and returns a context with the current
 // parameter's AssociationProperty value so we can suggest relevant metadata keys.
-func checkAssociationPropertyMetadataContext(lines []string, line, col int, currentLine string, indent int) *AnalysisContext {
+// It also detects ${...} parameter references within metadata string values.
+func checkAssociationPropertyMetadataContext(lines []string, line, col int, currentLine string, indent int, paramName string) *AnalysisContext {
 	trimmed := strings.TrimSpace(currentLine)
 
 	if strings.HasPrefix(trimmed, "AssociationPropertyMetadata:") {
 		return nil
+	}
+
+	// Check if cursor is inside a ${...} parameter reference in a metadata value.
+	// We do this before looking up metaIndent so we can return early with the right context.
+	if ctx := checkParamRefInLine(currentLine, col); ctx != nil {
+		// Walk up through all ancestor indentation levels to find AssociationPropertyMetadata.
+		if isInsideAssociationPropertyMetadata(lines, line, indent) {
+			ctx.CurrentParamName = paramName
+			return ctx
+		}
 	}
 
 	metaIndent := -1
@@ -513,7 +553,72 @@ func checkAssociationPropertyMetadataContext(lines []string, line, col int, curr
 		ResourceTypeName: assocPropValue,
 		Prefix:           extractPrefix(currentLine, col),
 		ExistingKeys:     existingKeys,
+		CurrentParamName: paramName,
 	}
+}
+
+// checkParamRefInLine detects if the cursor is inside a ${...} parameter reference
+// on the given line and returns the appropriate context.
+func checkParamRefInLine(line string, col int) *AnalysisContext {
+	// Find the last "${" before the cursor position.
+	searchStr := line
+	if col <= len(searchStr) {
+		searchStr = line[:col]
+	}
+	start := strings.LastIndex(searchStr, "${")
+	if start < 0 {
+		return nil
+	}
+	// Check that there is no closing "}" between "${" and the cursor.
+	substr := line[start+2:]
+	cursorOffset := col - (start + 2)
+	if cursorOffset < 0 {
+		return nil
+	}
+	closeIdx := strings.Index(substr, "}")
+	if closeIdx >= 0 && cursorOffset > closeIdx {
+		// Cursor is past the closing brace — not inside the ref.
+		return nil
+	}
+	// Extract prefix (text after "${" up to cursor).
+	prefixEnd := col
+	if prefixEnd > len(line) {
+		prefixEnd = len(line)
+	}
+	prefix := ""
+	if prefixEnd > start+2 {
+		prefix = line[start+2 : prefixEnd]
+		prefix = strings.TrimRight(prefix, "}")
+	}
+	return &AnalysisContext{
+		Type:          ContextAssociationPropertyMetadataParamRef,
+		Prefix:        prefix,
+		ParamRefStart: start + 2,
+	}
+}
+
+// isInsideAssociationPropertyMetadata walks up through all ancestor indentation
+// levels to determine if the current position is inside an AssociationPropertyMetadata block.
+func isInsideAssociationPropertyMetadata(lines []string, line, indent int) bool {
+	scanIndent := indent
+	for i := line - 1; i >= 0; i-- {
+		l := lines[i]
+		lt := strings.TrimSpace(l)
+		if lt == "" {
+			continue
+		}
+		li := countIndent(l)
+		if li < scanIndent {
+			if strings.HasPrefix(lt, "AssociationPropertyMetadata:") || lt == "AssociationPropertyMetadata" {
+				return true
+			}
+			scanIndent = li
+			if li == 0 {
+				break
+			}
+		}
+	}
+	return false
 }
 
 // findSiblingValue looks for a sibling key at the same indent level and returns its value.
@@ -845,6 +950,62 @@ func findSectionIndent(lines []string, currentLine int, sectionName string) int 
 		}
 	}
 	return 0
+}
+
+// findPropertyPath builds the full property path from the current line back
+// to the Properties section, collecting key names at each decreasing indent level.
+// This only finds ANCESTOR keys (at lower indent levels), not the key on the current line.
+// YAML list item markers ("- key: value") are skipped since they don't introduce
+// a new nesting level in the property path.
+func findPropertyPath(lines []string, currentLine, propIndent int) []string {
+	var path []string
+	targetIndent := countIndent(lines[currentLine])
+
+	for i := currentLine; i >= 0; i-- {
+		l := lines[i]
+		if strings.TrimSpace(l) == "" {
+			continue
+		}
+		li := countIndent(l)
+		if li <= propIndent {
+			break
+		}
+		if li < targetIndent {
+			trimmed := strings.TrimSpace(l)
+			if strings.HasPrefix(trimmed, "- ") {
+				targetIndent = li
+				continue
+			}
+			if !strings.Contains(trimmed, ":") {
+				continue
+			}
+			parts := strings.SplitN(trimmed, ":", 2)
+			key := strings.TrimSpace(parts[0])
+			if key != "" {
+				path = append([]string{key}, path...)
+			}
+			targetIndent = li
+		}
+	}
+	return path
+}
+
+// extractLineKey extracts the key from a YAML line, handling list item "- " prefix.
+// Returns "" if the line has no key (blank, comment, or continuation).
+func extractLineKey(line string) string {
+	trimmed := strings.TrimSpace(line)
+	if strings.HasPrefix(trimmed, "- ") {
+		trimmed = trimmed[2:]
+	}
+	if !strings.Contains(trimmed, ":") {
+		return ""
+	}
+	parts := strings.SplitN(trimmed, ":", 2)
+	key := strings.TrimSpace(parts[0])
+	if strings.HasPrefix(key, "!") || strings.HasPrefix(key, "Fn::") || key == "" {
+		return ""
+	}
+	return key
 }
 
 func findPropertyName(lines []string, currentLine, propIndent int) string {
@@ -1384,6 +1545,75 @@ func checkFindInMapContext(lines []string, line, col int) *AnalysisContext {
 	}
 
 	return nil
+}
+
+// extractDefinitionTargetYAML extracts the name under the cursor for go-to-definition
+// in YAML templates. Returns the target name and whether it's a GetAtt resource reference
+// (as opposed to a Ref value).
+func extractDefinitionTargetYAML(currentLine string, col int) (name string, isGetAttResource bool) {
+	trimmed := strings.TrimSpace(currentLine)
+
+	// Ref: <name>
+	if strings.HasPrefix(trimmed, "Ref:") {
+		colonIdx := strings.Index(currentLine, "Ref:") + 4
+		value := strings.TrimSpace(currentLine[colonIdx:])
+		if value != "" && col >= colonIdx {
+			return value, false
+		}
+	}
+
+	// !Ref <name>
+	refIdx := strings.Index(currentLine, "!Ref ")
+	if refIdx >= 0 {
+		valueStart := refIdx + 5
+		value := strings.TrimSpace(currentLine[valueStart:])
+		if value != "" && col >= valueStart {
+			return value, false
+		}
+	}
+
+	// !GetAtt Resource.Attribute — extract the resource name part
+	getAttIdx := strings.Index(currentLine, "!GetAtt ")
+	if getAttIdx >= 0 {
+		valueStart := getAttIdx + 8
+		valPart := strings.TrimSpace(currentLine[valueStart:])
+		dotIdx := strings.Index(valPart, ".")
+		if dotIdx >= 0 {
+			resName := valPart[:dotIdx]
+			resStartCol := valueStart + (strings.Index(currentLine[valueStart:], resName))
+			resEndCol := resStartCol + len(resName)
+			if col >= resStartCol && col <= resEndCol {
+				return resName, true
+			}
+		} else if valPart != "" && col >= valueStart {
+			return valPart, true
+		}
+	}
+
+	// Fn::GetAtt: list form — check for list item being a resource name
+	indent := countIndent(currentLine)
+	if strings.HasPrefix(trimmed, "- ") {
+		value := strings.TrimSpace(strings.TrimPrefix(trimmed, "- "))
+		if value != "" {
+			dashIdx := strings.Index(currentLine, "- ")
+			valueCol := dashIdx + 2 + (len(strings.TrimPrefix(trimmed, "- ")) - len(value))
+			if col >= valueCol && col <= valueCol+len(value) {
+				return value, true
+			}
+		}
+	}
+	_ = indent
+
+	// Fn::GetAtt: inline value (resource name)
+	if strings.HasPrefix(trimmed, "Fn::GetAtt:") {
+		colonIdx := strings.Index(currentLine, "Fn::GetAtt:") + 11
+		valPart := strings.TrimSpace(currentLine[colonIdx:])
+		if valPart != "" && col >= colonIdx {
+			return valPart, true
+		}
+	}
+
+	return "", false
 }
 
 // parseFindInMapShortForm parses the [mapName, firstKey, secondKey] inline form.

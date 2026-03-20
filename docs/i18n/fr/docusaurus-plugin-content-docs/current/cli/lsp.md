@@ -19,6 +19,7 @@ La commande `lsp` démarre un serveur du protocole Language Server Protocol (LSP
 - **Saisie semi-automatique** — Types de ressources, propriétés, fonctions intrinsèques, cibles Ref/GetAtt
 - **Diagnostics en temps réel** — Version du format, types de ressources, propriétés requises, incompatibilités de type
 - **Documentation au survol** — Descriptions, informations de type, contraintes pour les ressources et propriétés
+- **Aller à la Définition** — Sauter depuis les références vers les définitions de paramètres et de ressources
 
 Le serveur LSP prend en charge les formats de modèle YAML et JSON.
 

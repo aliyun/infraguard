@@ -16,6 +16,15 @@ Validates your template as you type — checks format version, resource types, r
 
 Hover over resource types, properties, or intrinsic functions to see descriptions, type info, constraints, and whether a property is required or updatable.
 
+### Go to Definition
+
+Jump to definitions from references:
+
+- **Ref/GetAtt** — Jump from `!Ref`, `Ref`, or `Fn::GetAtt` to parameter, locals, or resource definitions
+- **AssociationPropertyMetadata** — Jump from `${Name}` placeholders in metadata to parameter definitions
+
+Use `Ctrl+Click` (or `Cmd+Click` on macOS) or press `F12`.
+
 ### Syntax Highlighting
 
 Enhanced syntax highlighting for ROS-specific elements like `!Ref`, `Fn::Join`, and `ALIYUN::*::*` resource type identifiers.

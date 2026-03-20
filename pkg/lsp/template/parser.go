@@ -14,12 +14,12 @@ import (
 
 // ParsedTemplate represents a parsed ROS template with position information.
 type ParsedTemplate struct {
-	Content    string
-	Format     string // "yaml" or "json"
-	Root       map[string]interface{}
-	YAMLFile   *ast.File
+	Content      string
+	Format       string // "yaml" or "json"
+	Root         map[string]interface{}
+	YAMLFile     *ast.File
 	TopLevelKeys []string
-	Err        error
+	Err          error
 }
 
 // ParseYAML parses a YAML document and returns a ParsedTemplate.

@@ -12,8 +12,6 @@ InfraGuard provides editor integration through a built-in Language Server Protoc
 
 Install the **InfraGuard** extension from the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=AlibabaCloudROS.infraguard), or search for "InfraGuard" in the VS Code Extensions panel.
 
-The extension requires the `infraguard` CLI to be installed and available in your PATH. See [Installation](../getting-started/installation) for details.
-
 ### Features
 
 #### Auto-Completion
@@ -48,6 +46,17 @@ Hover over elements to see contextual documentation:
 - **Resource types** — Description and link to official docs
 - **Properties** — Type, constraints, whether required or optional, update behavior
 - **Intrinsic functions** — Syntax and usage examples
+
+#### Go to Definition
+
+Jump to definitions from references:
+
+- **Ref targets** — Jump from `!Ref` or `Ref` to the parameter or resource definition
+- **GetAtt targets** — Jump from `Fn::GetAtt` to the resource definition
+- **Resource references** — Navigate to resource definitions from property references
+- **AssociationPropertyMetadata** — Jump from `${Name}` placeholders in metadata to parameter definitions
+
+Use `Ctrl+Click` (or `Cmd+Click` on macOS) or press `F12` on a reference to jump to its definition.
 
 #### Syntax Highlighting
 

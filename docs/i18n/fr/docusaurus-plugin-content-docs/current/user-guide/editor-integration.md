@@ -12,8 +12,6 @@ InfraGuard fournit une intégration éditeur via un serveur Language Server Prot
 
 Installez l'extension **InfraGuard** depuis le [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=AlibabaCloudROS.infraguard), ou recherchez "InfraGuard" dans le panneau Extensions de VS Code.
 
-L'extension nécessite que le CLI `infraguard` soit installé et disponible dans votre PATH. Voir [Installation](../getting-started/installation) pour plus de détails.
-
 ### Fonctionnalités
 
 #### Complétion Automatique
@@ -48,6 +46,17 @@ Survolez les éléments pour voir la documentation contextuelle :
 - **Types de ressources** — Description et lien vers la documentation officielle
 - **Propriétés** — Type, contraintes, requis ou optionnel, comportement de mise à jour
 - **Fonctions intrinsèques** — Syntaxe et exemples d'utilisation
+
+#### Aller à la Définition
+
+Sautez depuis les références vers les définitions :
+
+- **Cibles Ref** — Sautez depuis `!Ref` ou `Ref` vers la définition de paramètre ou de ressource
+- **Cibles GetAtt** — Sautez depuis `Fn::GetAtt` vers la définition de ressource
+- **Références de ressources** — Naviguez vers les définitions de ressources depuis les références de propriétés
+- **AssociationPropertyMetadata** — Sautez depuis les espaces réservés `${Name}` dans les métadonnées vers les définitions de paramètres
+
+Utilisez `Ctrl+Clic` (ou `Cmd+Clic` sur macOS) ou appuyez sur `F12` sur une référence pour sauter à sa définition.
 
 #### Coloration Syntaxique
 
