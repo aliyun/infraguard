@@ -4,7 +4,23 @@ title: Installation
 
 # Installation
 
-## Using go install (Recommended)
+## Using Homebrew (macOS/Linux)
+
+Tap this repository and install InfraGuard:
+
+```bash
+brew tap aliyun/infraguard https://github.com/aliyun/infraguard
+brew install infraguard
+```
+
+To upgrade later:
+
+```bash
+brew update
+brew upgrade infraguard
+```
+
+## Using go install
 
 The simplest way to install InfraGuard is using `go install`:
 
@@ -96,4 +112,3 @@ sudo cp infraguard /usr/local/bin/
 ## Next Steps
 
 Now that you have InfraGuard installed, proceed to the [Quick Start Guide](./quick-start) to learn how to use it.
-

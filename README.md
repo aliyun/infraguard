@@ -29,6 +29,13 @@
 ### Installation
 
 ```bash
+brew tap aliyun/infraguard https://github.com/aliyun/infraguard
+brew install infraguard
+```
+
+Or install with Go:
+
+```bash
 go install github.com/aliyun/infraguard/cmd/infraguard@latest
 ```
 

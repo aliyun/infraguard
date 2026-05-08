@@ -4,7 +4,23 @@ title: インストール
 
 # インストール
 
-## go installを使用（推奨）
+## Homebrewを使用（macOS/Linux）
+
+このリポジトリをHomebrew tapとして追加し、InfraGuardをインストールします：
+
+```bash
+brew tap aliyun/infraguard https://github.com/aliyun/infraguard
+brew install infraguard
+```
+
+後でアップグレードする場合：
+
+```bash
+brew update
+brew upgrade infraguard
+```
+
+## go installを使用
 
 InfraGuardをインストールする最も簡単な方法は、`go install`を使用することです：
 
