@@ -1,0 +1,97 @@
+package infraguard.rules.terraform.alb_all_listener_health_check_enabled
+
+import rego.v1
+
+import data.infraguard.helpers.terraform as tf
+
+rule_meta := {
+	"id": "alb-all-listener-health-check-enabled",
+	"severity": "high",
+	"name": {
+		"en": "ALB All Listeners Health Check Enabled",
+		"zh": "ALB 所有监听开启健康检查",
+		"ja": "ALB すべてのリスナーヘルスチェックが有効",
+		"de": "ALB Alle Listener Health Check aktiviert",
+		"es": "Verificación de Salud de Todos los Oyentes ALB Habilitada",
+		"fr": "Vérification de Santé de Tous les Écouteurs ALB Activée",
+		"pt": "Verificação de Integridade de Todos os Ouvintes ALB Habilitada"
+	},
+	"description": {
+		"en": "Ensures all ALB listeners have health checks enabled.",
+		"zh": "确保所有 ALB 监听均开启了健康检查。",
+		"ja": "すべての ALB リスナーでヘルスチェックが有効になっていることを確認します。",
+		"de": "Stellt sicher, dass alle ALB-Listener Health Checks aktiviert haben.",
+		"es": "Garantiza que todos los oyentes ALB tengan verificaciones de salud habilitadas.",
+		"fr": "Garantit que tous les écouteurs ALB ont des vérifications de santé activées.",
+		"pt": "Garante que todos os ouvintes ALB tenham verificações de integridade habilitadas."
+	},
+	"reason": {
+		"en": "Health checks are vital for detecting and bypassing unhealthy backend servers.",
+		"zh": "健康检查对于发现和避开不健康的后端服务器至关重要。",
+		"ja": "ヘルスチェックは、異常なバックエンドサーバーを検出して回避するために不可欠です。",
+		"de": "Health Checks sind entscheidend für die Erkennung und Umgehung ungesunder Backend-Server.",
+		"es": "Las verificaciones de salud son vitales para detectar y evitar servidores backend no saludables.",
+		"fr": "Les vérifications de santé sont essentielles pour détecter et contourner les serveurs backend malsains.",
+		"pt": "As verificações de integridade são vitais para detectar e contornar servidores backend não saudáveis."
+	},
+	"recommendation": {
+		"en": "Enable health checks for all ALB listeners.",
+		"zh": "为所有 ALB 监听开启健康检查。",
+		"ja": "すべての ALB リスナーのヘルスチェックを有効にします。",
+		"de": "Aktivieren Sie Health Checks für alle ALB-Listener.",
+		"es": "Habilite las verificaciones de salud para todos los oyentes ALB.",
+		"fr": "Activez les vérifications de santé pour tous les écouteurs ALB.",
+		"pt": "Habilite verificações de integridade para todos os ouvintes ALB."
+	},
+	"resource_types": ["alicloud_alb_listener", "alicloud_alb_server_group"],
+	"iac_type": "terraform"
+}
+
+as_array(value) := value if is_array(value)
+
+else := [value] if is_object(value)
+
+else := []
+
+server_group_ref(resource) := id if {
+	id := tf.get_attribute(resource, "server_group_id", "")
+	id != ""
+	not tf.is_unknown(id)
+}
+
+server_group_ref(resource) := id if {
+	actions := as_array(tf.get_attribute(resource, "default_actions", []))
+	some action in actions
+	id := object.get(action, "server_group_id", "")
+	id != ""
+	not tf.is_unknown(id)
+}
+
+server_group_identifier(name, resource) := id if {
+	id := tf.get_attribute(resource, "server_group_id", "")
+	id != ""
+	not tf.is_unknown(id)
+} else := name
+
+health_check_enabled(resource) if {
+	configs := as_array(tf.get_attribute(resource, "health_check_config", []))
+	some config in configs
+	tf.get_attribute(config, "health_check_enabled", false) == true
+}
+
+listener_has_enabled_health_check(listener) if {
+	group_id := server_group_ref(listener)
+	some sg_name, server_group in tf.resources_by_type("alicloud_alb_server_group")
+	server_group_identifier(sg_name, server_group) == group_id
+	health_check_enabled(server_group)
+}
+
+deny contains violation if {
+	some name, resource in tf.resources_by_type("alicloud_alb_listener")
+	not listener_has_enabled_health_check(resource)
+	violation := {
+		"id": rule_meta.id,
+		"resource_id": sprintf("alicloud_alb_listener.%s", [name]),
+		"meta": {"severity": rule_meta.severity, "reason": rule_meta.reason, "recommendation": rule_meta.recommendation},
+	}
+}

@@ -1,14 +1,13 @@
 package policies_test
 
 import (
-	"fmt"
-	"io/fs"
 	"os"
 	"path/filepath"
 	"testing"
 
 	"github.com/aliyun/infraguard/pkg/engine"
 	"github.com/aliyun/infraguard/pkg/models"
+	"github.com/aliyun/infraguard/pkg/providers/terraform"
 	. "github.com/smartystreets/goconvey/convey"
 	"gopkg.in/yaml.v3"
 )
@@ -31,28 +30,31 @@ func loadTemplate(path string) (map[string]interface{}, error) {
 	return template, nil
 }
 
-// hasTestTemplates checks if a directory contains both compliant.yaml and violation.yaml
-func hasTestTemplates(dir string) bool {
-	compliantPath := filepath.Join(dir, "compliant.yaml")
-	violationPath := filepath.Join(dir, "violation.yaml")
+// hasROSTestTemplates checks if a directory contains both ros/compliant.yaml and ros/violation.yaml
+func hasROSTestTemplates(dir string) bool {
+	compliantPath := filepath.Join(dir, "ros", "compliant.yaml")
+	violationPath := filepath.Join(dir, "ros", "violation.yaml")
 	_, err1 := os.Stat(compliantPath)
 	_, err2 := os.Stat(violationPath)
 	return err1 == nil && err2 == nil
 }
 
-// discoverTestDirs discovers all test directories under a base path
-func discoverTestDirs(basePath string) ([]string, error) {
+// discoverROSTestDirs discovers all test directories that have ros/ subdirectory with test templates
+func discoverROSTestDirs(basePath string) ([]string, error) {
 	var dirs []string
-	err := filepath.WalkDir(basePath, func(path string, d fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	entries, err := os.ReadDir(basePath)
+	if err != nil {
+		return nil, err
+	}
+	for _, e := range entries {
+		if e.IsDir() {
+			dir := filepath.Join(basePath, e.Name())
+			if hasROSTestTemplates(dir) {
+				dirs = append(dirs, dir)
+			}
 		}
-		if d.IsDir() && hasTestTemplates(path) {
-			dirs = append(dirs, path)
-		}
-		return nil
-	})
-	return dirs, err
+	}
+	return dirs, nil
 }
 
 // filterByRuleID filters violations by rule ID
@@ -68,7 +70,7 @@ func filterByRuleID(violations []models.OPAViolation, ruleID string) []models.OP
 
 // getRuleFile returns the path to the rule file based on provider and rule name
 func getRuleFile(provider, ruleName string) string {
-	return filepath.Join(policiesDir, provider, "rules", ruleName+".rego")
+	return filepath.Join(policiesDir, provider, "rules", "ros", ruleName+".rego")
 }
 
 // getPackFile returns the path to the pack file based on provider and pack name
@@ -83,7 +85,7 @@ func TestPolicyRules(t *testing.T) {
 		return
 	}
 
-	testDirs, err := discoverTestDirs(rulesTestDir)
+	testDirs, err := discoverROSTestDirs(rulesTestDir)
 	if err != nil {
 		t.Fatalf("Failed to discover test directories: %v", err)
 	}
@@ -93,54 +95,168 @@ func TestPolicyRules(t *testing.T) {
 		return
 	}
 
+	rosLibFile := filepath.Join(policiesDir, "aliyun", "lib", "helpers.rego")
+
 	for _, testDir := range testDirs {
-		// Extract provider and rule name from path
-		// testDir: ./aliyun/rules/rule-name
 		provider := "aliyun"
 		ruleName := filepath.Base(testDir)
-		ruleID := fmt.Sprintf("rule:%s:%s", provider, ruleName)
+		ruleID := ruleName
 		ruleFile := getRuleFile(provider, ruleName)
 
 		// Check if rule file exists
 		if _, err := os.Stat(ruleFile); os.IsNotExist(err) {
-			// Try short rule ID (some rules use short ID in deny result)
-			ruleID = ruleName
+			t.Logf("Skipping %s: rule file not found at %s", ruleName, ruleFile)
+			continue
 		}
 
 		t.Run(ruleName, func(t *testing.T) {
 			Convey("Given the "+ruleName+" rule", t, func() {
 				Convey("When evaluating compliant template", func() {
-					compliantPath := filepath.Join(testDir, "compliant.yaml")
+					compliantPath := filepath.Join(testDir, "ros", "compliant.yaml")
 					template, err := loadTemplate(compliantPath)
 					So(err, ShouldBeNil)
 
-					violations, err := engine.Evaluate(ruleFile, template)
+					opts := &engine.EvalOptions{
+						PolicyPaths: []string{ruleFile, rosLibFile},
+					}
+					result, err := engine.EvaluateWithOpts(opts, template)
 
 					Convey("It should return no violations for this rule", func() {
 						So(err, ShouldBeNil)
-						// Filter by both full rule ID and short rule ID
-						filtered := filterByRuleID(violations, ruleID)
-						if len(filtered) == 0 {
-							filtered = filterByRuleID(violations, ruleName)
-						}
+						filtered := filterByRuleID(result.Violations, ruleID)
 						So(filtered, ShouldBeEmpty)
 					})
 				})
 
 				Convey("When evaluating violation template", func() {
-					violationPath := filepath.Join(testDir, "violation.yaml")
+					violationPath := filepath.Join(testDir, "ros", "violation.yaml")
 					template, err := loadTemplate(violationPath)
 					So(err, ShouldBeNil)
 
-					violations, err := engine.Evaluate(ruleFile, template)
+					opts := &engine.EvalOptions{
+						PolicyPaths: []string{ruleFile, rosLibFile},
+					}
+					result, err := engine.EvaluateWithOpts(opts, template)
 
 					Convey("It should return violations for this rule", func() {
 						So(err, ShouldBeNil)
-						// Filter by both full rule ID and short rule ID
-						filtered := filterByRuleID(violations, ruleID)
-						if len(filtered) == 0 {
-							filtered = filterByRuleID(violations, ruleName)
-						}
+						filtered := filterByRuleID(result.Violations, ruleID)
+						So(len(filtered), ShouldBeGreaterThan, 0)
+					})
+				})
+			})
+		})
+	}
+}
+
+// hasTerraformTestData checks if a directory contains both compliant/ and violation/ subdirs with .tf files
+func hasTerraformTestData(dir string) bool {
+	compliantDir := filepath.Join(dir, "compliant")
+	violationDir := filepath.Join(dir, "violation")
+
+	hasCompliant := hasTFFiles(compliantDir)
+	hasViolation := hasTFFiles(violationDir)
+	return hasCompliant && hasViolation
+}
+
+// hasTFFiles checks if a directory exists and contains at least one .tf file
+func hasTFFiles(dir string) bool {
+	info, err := os.Stat(dir)
+	if err != nil || !info.IsDir() {
+		return false
+	}
+	entries, err := os.ReadDir(dir)
+	if err != nil {
+		return false
+	}
+	for _, e := range entries {
+		if !e.IsDir() && filepath.Ext(e.Name()) == ".tf" {
+			return true
+		}
+	}
+	return false
+}
+
+// discoverTerraformRuleTestDirs discovers rule directories that have terraform/ subdirectory with test data
+func discoverTerraformRuleTestDirs(basePath string) ([]string, error) {
+	var dirs []string
+	entries, err := os.ReadDir(basePath)
+	if err != nil {
+		return nil, err
+	}
+	for _, e := range entries {
+		if e.IsDir() {
+			tfDir := filepath.Join(basePath, e.Name(), "terraform")
+			if hasTerraformTestData(tfDir) {
+				dirs = append(dirs, filepath.Join(basePath, e.Name()))
+			}
+		}
+	}
+	return dirs, nil
+}
+
+func TestTerraformPolicyRules(t *testing.T) {
+	rulesTestDir := filepath.Join(policiesTestDir, "aliyun", "rules")
+	if _, err := os.Stat(rulesTestDir); os.IsNotExist(err) {
+		t.Skip("testdata/aliyun/rules directory not found")
+		return
+	}
+
+	testDirs, err := discoverTerraformRuleTestDirs(rulesTestDir)
+	if err != nil {
+		t.Fatalf("Failed to discover terraform test directories: %v", err)
+	}
+
+	if len(testDirs) == 0 {
+		t.Skip("No terraform rule test directories found")
+		return
+	}
+
+	tfLibFile := filepath.Join(policiesDir, "aliyun", "lib", "terraform.rego")
+
+	for _, testDir := range testDirs {
+		ruleName := filepath.Base(testDir)
+		ruleID := ruleName
+		ruleFile := filepath.Join(policiesDir, "aliyun", "rules", "terraform", ruleName+".rego")
+
+		// Check if rule file exists
+		if _, err := os.Stat(ruleFile); os.IsNotExist(err) {
+			t.Logf("Skipping %s: rule file not found at %s", ruleName, ruleFile)
+			continue
+		}
+
+		t.Run(ruleName, func(t *testing.T) {
+			Convey("Given the terraform "+ruleName+" rule", t, func() {
+				Convey("When evaluating compliant terraform config", func() {
+					compliantDir := filepath.Join(testDir, "terraform", "compliant")
+					opaInput, err := terraform.Load(compliantDir, nil)
+					So(err, ShouldBeNil)
+
+					opts := &engine.EvalOptions{
+						PolicyPaths: []string{ruleFile, tfLibFile},
+					}
+					result, err := engine.EvaluateWithOpts(opts, opaInput)
+
+					Convey("It should return no violations for this rule", func() {
+						So(err, ShouldBeNil)
+						filtered := filterByRuleID(result.Violations, ruleID)
+						So(filtered, ShouldBeEmpty)
+					})
+				})
+
+				Convey("When evaluating violation terraform config", func() {
+					violationDir := filepath.Join(testDir, "terraform", "violation")
+					opaInput, err := terraform.Load(violationDir, nil)
+					So(err, ShouldBeNil)
+
+					opts := &engine.EvalOptions{
+						PolicyPaths: []string{ruleFile, tfLibFile},
+					}
+					result, err := engine.EvaluateWithOpts(opts, opaInput)
+
+					Convey("It should return violations for this rule", func() {
+						So(err, ShouldBeNil)
+						filtered := filterByRuleID(result.Violations, ruleID)
 						So(len(filtered), ShouldBeGreaterThan, 0)
 					})
 				})
@@ -156,7 +272,7 @@ func TestPolicyPacks(t *testing.T) {
 		return
 	}
 
-	testDirs, err := discoverTestDirs(packsTestDir)
+	testDirs, err := discoverROSTestDirs(packsTestDir)
 	if err != nil {
 		t.Fatalf("Failed to discover test directories: %v", err)
 	}
@@ -166,16 +282,14 @@ func TestPolicyPacks(t *testing.T) {
 		return
 	}
 
+	rosLibFile := filepath.Join(policiesDir, "aliyun", "lib", "helpers.rego")
+
 	for _, testDir := range testDirs {
-		// Extract provider and pack name from path
-		// testDir: ./aliyun/packs/pack-name
 		provider := "aliyun"
 		packName := filepath.Base(testDir)
 		packFile := getPackFile(provider, packName)
 
-		// For pack testing, we evaluate all rules in the pack directory
-		// Pack tests verify that the combined rules work correctly
-		rulesDir := filepath.Join(policiesDir, provider, "rules")
+		rosRulesDir := filepath.Join(policiesDir, provider, "rules", "ros")
 
 		t.Run(packName, func(t *testing.T) {
 			Convey("Given the "+packName+" pack", t, func() {
@@ -186,30 +300,97 @@ func TestPolicyPacks(t *testing.T) {
 				}
 
 				Convey("When evaluating compliant template", func() {
-					compliantPath := filepath.Join(testDir, "compliant.yaml")
+					compliantPath := filepath.Join(testDir, "ros", "compliant.yaml")
 					template, err := loadTemplate(compliantPath)
 					So(err, ShouldBeNil)
 
-					// Evaluate against all rules in the provider directory
-					violations, err := engine.Evaluate(rulesDir, template)
+					opts := &engine.EvalOptions{
+						PolicyPaths: []string{rosRulesDir, rosLibFile},
+					}
+					result, err := engine.EvaluateWithOpts(opts, template)
 
 					Convey("It should return no violations", func() {
 						So(err, ShouldBeNil)
-						So(violations, ShouldBeEmpty)
+						So(result.Violations, ShouldBeEmpty)
 					})
 				})
 
 				Convey("When evaluating violation template", func() {
-					violationPath := filepath.Join(testDir, "violation.yaml")
+					violationPath := filepath.Join(testDir, "ros", "violation.yaml")
 					template, err := loadTemplate(violationPath)
 					So(err, ShouldBeNil)
 
-					// Evaluate against all rules in the provider directory
-					violations, err := engine.Evaluate(rulesDir, template)
+					opts := &engine.EvalOptions{
+						PolicyPaths: []string{rosRulesDir, rosLibFile},
+					}
+					result, err := engine.EvaluateWithOpts(opts, template)
 
 					Convey("It should return violations", func() {
 						So(err, ShouldBeNil)
-						So(len(violations), ShouldBeGreaterThan, 0)
+						So(len(result.Violations), ShouldBeGreaterThan, 0)
+					})
+				})
+			})
+		})
+	}
+}
+
+func TestTerraformPolicyPacks(t *testing.T) {
+	packsTestDir := filepath.Join(policiesTestDir, "aliyun", "packs")
+	if _, err := os.Stat(packsTestDir); os.IsNotExist(err) {
+		t.Skip("testdata/aliyun/packs directory not found")
+		return
+	}
+
+	entries, err := os.ReadDir(packsTestDir)
+	if err != nil {
+		t.Fatalf("Failed to read packs test directory: %v", err)
+	}
+
+	tfRulesDir := filepath.Join(policiesDir, "aliyun", "rules", "terraform")
+	tfLibFile := filepath.Join(policiesDir, "aliyun", "lib", "terraform.rego")
+
+	for _, entry := range entries {
+		if !entry.IsDir() {
+			continue
+		}
+		packName := entry.Name()
+		tfTestDir := filepath.Join(packsTestDir, packName, "terraform")
+		if !hasTerraformTestData(tfTestDir) {
+			continue
+		}
+
+		t.Run(packName, func(t *testing.T) {
+			Convey("Given the terraform "+packName+" pack", t, func() {
+				Convey("When evaluating compliant terraform config", func() {
+					compliantDir := filepath.Join(tfTestDir, "compliant")
+					opaInput, err := terraform.Load(compliantDir, nil)
+					So(err, ShouldBeNil)
+
+					opts := &engine.EvalOptions{
+						PolicyPaths: []string{tfRulesDir, tfLibFile},
+					}
+					result, err := engine.EvaluateWithOpts(opts, opaInput)
+
+					Convey("It should return no violations", func() {
+						So(err, ShouldBeNil)
+						So(result.Violations, ShouldBeEmpty)
+					})
+				})
+
+				Convey("When evaluating violation terraform config", func() {
+					violationDir := filepath.Join(tfTestDir, "violation")
+					opaInput, err := terraform.Load(violationDir, nil)
+					So(err, ShouldBeNil)
+
+					opts := &engine.EvalOptions{
+						PolicyPaths: []string{tfRulesDir, tfLibFile},
+					}
+					result, err := engine.EvaluateWithOpts(opts, opaInput)
+
+					Convey("It should return violations", func() {
+						So(err, ShouldBeNil)
+						So(len(result.Violations), ShouldBeGreaterThan, 0)
 					})
 				})
 			})

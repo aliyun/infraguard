@@ -1,0 +1,78 @@
+package infraguard.rules.terraform.ecs_disk_encrypted
+
+import rego.v1
+
+import data.infraguard.helpers.terraform as tf
+
+rule_meta := {
+	"id": "ecs-disk-encrypted",
+	"severity": "medium",
+	"name": {
+		"en": "ECS data disk encryption enabled",
+		"zh": "ECS 数据磁盘开启加密",
+		"ja": "ECS データディスクの暗号化が有効",
+		"de": "ECS-Datendisk-Verschlüsselung aktiviert",
+		"es": "Criptografía de disco de datos ECS habilitada",
+		"fr": "Chiffrement du disque de données ECS activé",
+		"pt": "Criptografia de disco de dados ECS habilitada"
+	},
+	"description": {
+		"en": "ECS data disk has encryption enabled, considered compliant.",
+		"zh": "ECS 数据磁盘已开启加密，视为合规。",
+		"ja": "ECS データディスクで暗号化が有効になっている場合、準拠と見なされます。",
+		"de": "ECS-Datendisk hat Verschlüsselung aktiviert, wird als konform betrachtet.",
+		"es": "El disco de datos ECS tiene cifrado habilitado, se considera conforme.",
+		"fr": "Le disque de données ECS a le chiffrement activé, considéré comme conforme.",
+		"pt": "O disco de dados ECS tem criptografia habilitada, considerado conforme."
+	},
+	"reason": {
+		"en": "ECS data disk does not have encryption enabled",
+		"zh": "ECS 数据磁盘未开启加密",
+		"ja": "ECS データディスクで暗号化が有効になっていません",
+		"de": "ECS-Datendisk hat keine Verschlüsselung aktiviert",
+		"es": "El disco de datos ECS no tiene cifrado habilitado",
+		"fr": "Le disque de données ECS n'a pas le chiffrement activé",
+		"pt": "O disco de dados ECS não tem criptografia habilitada"
+	},
+	"recommendation": {
+		"en": "Enable encryption for ECS data disks to protect data at rest.",
+		"zh": "为 ECS 数据磁盘开启加密以保护静态数据。",
+		"ja": "保存データを保護するために、ECS データディスクで暗号化を有効にします",
+		"de": "Aktivieren Sie die Verschlüsselung für ECS-Datendisks, um ruhende Daten zu schützen",
+		"es": "Habilite el cifrado para el disco de datos ECS para proteger los datos en reposo",
+		"fr": "Activez le chiffrement pour le disque de données ECS pour protéger les données au repos",
+		"pt": "Habilite criptografia para disco de dados ECS para proteger dados em repouso"
+	},
+	"resource_types": ["alicloud_disk", "alicloud_ecs_disk"],
+	"iac_type": "terraform"
+}
+
+is_encrypted(resource) if {
+	tf.get_attribute(resource, "encrypted", false) == true
+}
+
+is_encrypted(resource) if {
+	tf.get_attribute(resource, "encrypted", "") == "true"
+}
+
+deny contains violation if {
+	some name, resource in tf.resources_by_type("alicloud_ecs_disk")
+	not is_encrypted(resource)
+	violation := {
+		"id": rule_meta.id,
+		"resource_id": sprintf("alicloud_ecs_disk.%s", [name]),
+		"violation_path": ["encrypted"],
+		"meta": {"severity": rule_meta.severity, "reason": rule_meta.reason, "recommendation": rule_meta.recommendation},
+	}
+}
+
+deny contains violation if {
+	some name, resource in tf.resources_by_type("alicloud_disk")
+	not is_encrypted(resource)
+	violation := {
+		"id": rule_meta.id,
+		"resource_id": sprintf("alicloud_disk.%s", [name]),
+		"violation_path": ["encrypted"],
+		"meta": {"severity": rule_meta.severity, "reason": rule_meta.reason, "recommendation": rule_meta.recommendation},
+	}
+}

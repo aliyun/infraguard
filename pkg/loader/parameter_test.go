@@ -19,6 +19,9 @@ func TestParseInputValues(t *testing.T) {
 	jsonFile := filepath.Join(tmpDir, "params.json")
 	os.WriteFile(jsonFile, []byte(`{"Key5": "Value5"}`), 0644)
 
+	tfvarsFile := filepath.Join(tmpDir, "terraform.tfvars")
+	os.WriteFile(tfvarsFile, []byte("instance_type = \"ecs.g6.large\"\nbandwidth = 10\n"), 0644)
+
 	tests := []struct {
 		name    string
 		inputs  []string
@@ -44,6 +47,11 @@ func TestParseInputValues(t *testing.T) {
 			name:   "JSON file format",
 			inputs: []string{jsonFile},
 			want:   models.TemplateParams{"Key5": "Value5"},
+		},
+		{
+			name:   "tfvars file format",
+			inputs: []string{tfvarsFile},
+			want:   models.TemplateParams{"instance_type": "ecs.g6.large", "bandwidth": "10"},
 		},
 		{
 			name:   "Mixed formats and overrides",

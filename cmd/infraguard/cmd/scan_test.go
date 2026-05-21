@@ -211,6 +211,20 @@ Resources:
 	})
 }
 
+func TestIsTemplateFile_TerraformSupport(t *testing.T) {
+	Convey("Given file paths", t, func() {
+		Convey(".tf files should be recognized as templates", func() {
+			So(isTemplateFile("main.tf"), ShouldBeTrue)
+			So(isTemplateFile("/path/to/project/main.tf"), ShouldBeTrue)
+			So(isTemplateFile("network.tf"), ShouldBeTrue)
+		})
+		Convey("Non-template files should not be recognized", func() {
+			So(isTemplateFile("readme.md"), ShouldBeFalse)
+			So(isTemplateFile("main.go"), ShouldBeFalse)
+		})
+	})
+}
+
 func TestParsePolicySpec(t *testing.T) {
 	Convey("Given the parsePolicySpec function", t, func() {
 		Convey("When parsing exact rule ID", func() {

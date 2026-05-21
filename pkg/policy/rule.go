@@ -89,6 +89,7 @@ func parseRuleMeta(value interface{}, filePath, packageName, baseDir string) (*m
 		Reason         interface{} `json:"reason"`
 		Recommendation interface{} `json:"recommendation"`
 		ResourceTypes  []string    `json:"resource_types"`
+		IaCType        string      `json:"iac_type"`
 	}
 
 	if err := json.Unmarshal(data, &rawMeta); err != nil {
@@ -112,6 +113,13 @@ func parseRuleMeta(value interface{}, filePath, packageName, baseDir string) (*m
 		}
 	}
 
+	var iacTypes []string
+	if rawMeta.IaCType != "" {
+		iacTypes = []string{rawMeta.IaCType}
+	} else {
+		iacTypes = detectIaCTypesFromPath(filePath)
+	}
+
 	rule := &models.Rule{
 		ID:             ruleID,
 		Name:           parseI18nString(rawMeta.Name),
@@ -120,11 +128,21 @@ func parseRuleMeta(value interface{}, filePath, packageName, baseDir string) (*m
 		Reason:         parseI18nString(rawMeta.Reason),
 		Recommendation: parseI18nString(rawMeta.Recommendation),
 		ResourceTypes:  rawMeta.ResourceTypes,
+		IaCTypes:       iacTypes,
 		FilePath:       filePath,
 		PackageName:    packageName,
 	}
 
 	return rule, nil
+}
+
+// detectIaCTypesFromPath determines the IaC types from the rule file path as fallback.
+func detectIaCTypesFromPath(filePath string) []string {
+	normalized := filepath.ToSlash(filePath)
+	if strings.Contains(normalized, "/rules/terraform/") {
+		return []string{"terraform"}
+	}
+	return []string{"ros"}
 }
 
 // parseI18nString converts an interface{} to I18nString.

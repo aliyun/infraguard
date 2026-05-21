@@ -454,7 +454,7 @@ func validateDenyRule(content, filePath, packageName string, extraModules []Rego
 			FilePath:   filePath,
 			ErrorCode:  ErrCodeRuleMissingDeny,
 			Message:    "deny rule is required.",
-			Suggestion: "Add a deny rule: deny contains result if { ... } with result containing id, resource_id, violation_path, meta",
+			Suggestion: "Add a deny rule: deny contains result if { ... } with result containing id, resource_id, meta",
 		})
 		return errors
 	}
@@ -479,7 +479,7 @@ func validateDenyResultFormat(result map[string]interface{}, filePath string) []
 
 	// Check required fields
 	msg := i18n.Msg()
-	requiredFields := []string{"id", "resource_id", "violation_path", "meta"}
+	requiredFields := []string{"id", "resource_id", "meta"}
 	for _, field := range requiredFields {
 		if _, exists := result[field]; !exists {
 			errors = append(errors, &ValidationError{

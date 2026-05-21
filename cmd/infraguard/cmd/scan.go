@@ -15,6 +15,7 @@ import (
 	"github.com/aliyun/infraguard/pkg/models"
 	"github.com/aliyun/infraguard/pkg/policy"
 	"github.com/aliyun/infraguard/pkg/providers/ros"
+	"github.com/aliyun/infraguard/pkg/providers/terraform"
 	"github.com/aliyun/infraguard/pkg/reporter"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
@@ -162,7 +163,7 @@ func runScan(cmd *cobra.Command, args []string) error {
 	}
 
 	// Build evaluation options based on policy specs
-	evalOpts, err := buildEvalOptions(policySpecs, msg)
+	evalOpts, ruleIaCMap, err := buildEvalOptions(policySpecs, msg)
 	if err != nil {
 		return err
 	}
@@ -186,6 +187,7 @@ func runScan(cmd *cobra.Command, args []string) error {
 	var results []models.FileResult
 	hasViolations := false
 	hasHighSeverity := false
+	warnedUnsupported := make(map[string]bool)
 
 	// Process each template
 	for _, templatePath := range templateFiles {
@@ -205,18 +207,37 @@ func runScan(cmd *cobra.Command, args []string) error {
 			continue
 		}
 
-		// At this point, templateData is ready for policy evaluation
-		// (parameters resolved, conditions evaluated, intrinsic functions processed)
+		// Determine IaC type for this template
+		iacType := "ros"
+		if terraform.IsTerraformFile(templatePath) {
+			iacType = "terraform"
+		}
+
+		// Filter eval options by IaC type
+		filteredOpts := filterEvalOptsByIaCType(evalOpts, ruleIaCMap, iacType, warnedUnsupported)
+
+		// Skip evaluation if no applicable policies after filtering
+		if len(filteredOpts.Modules) == 0 && len(filteredOpts.PolicyPaths) == 0 {
+			results = append(results, models.FileResult{
+				File:       templatePath,
+				Violations: nil,
+			})
+			continue
+		}
 
 		// Load and evaluate policies
-		// We reuse evalOpts which contains loaded policies
-		evalResult, err := engine.EvaluateWithOpts(evalOpts, templateData)
+		evalResult, err := engine.EvaluateWithOpts(filteredOpts, templateData)
 		if err != nil {
 			return fmt.Errorf(msg.Scan.FileError, templatePath, fmt.Errorf(msg.Errors.EvaluatePolicies, err))
 		}
 
 		// Map violations to source locations with i18n support
-		richViolations := mapper.MapViolationsWithLang(evalResult.Violations, yamlRoot, templatePath, lang)
+		var richViolations []models.RichViolation
+		if terraform.IsTerraformFile(templatePath) {
+			richViolations = mapper.MapTerraformViolations(evalResult.Violations, templateData, filepath.Dir(templatePath), lang)
+		} else {
+			richViolations = mapper.MapViolationsWithLang(evalResult.Violations, yamlRoot, templatePath, lang)
+		}
 
 		// Sort violations by severity
 		sort.Slice(richViolations, func(i, j int) bool {
@@ -291,6 +312,7 @@ func runScan(cmd *cobra.Command, args []string) error {
 func collectTemplates(paths []string) ([]string, error) {
 	var files []string
 	seen := make(map[string]bool)
+	seenTFDirs := make(map[string]bool)
 
 	for _, path := range paths {
 		info, err := os.Stat(path)
@@ -303,11 +325,16 @@ func collectTemplates(paths []string) ([]string, error) {
 			if err != nil {
 				return nil, err
 			}
-			if !seen[absPath] {
-				if isTemplateFile(absPath) {
-					files = append(files, absPath)
-					seen[absPath] = true
+			if !seen[absPath] && isTemplateFile(absPath) {
+				if terraform.IsTerraformFile(absPath) {
+					dir := filepath.Dir(absPath)
+					if seenTFDirs[dir] {
+						continue
+					}
+					seenTFDirs[dir] = true
 				}
+				files = append(files, absPath)
+				seen[absPath] = true
 			}
 			continue
 		}
@@ -323,6 +350,13 @@ func collectTemplates(paths []string) ([]string, error) {
 					return err
 				}
 				if !seen[absPath] {
+					if terraform.IsTerraformFile(absPath) {
+						dir := filepath.Dir(absPath)
+						if seenTFDirs[dir] {
+							return nil
+						}
+						seenTFDirs[dir] = true
+					}
 					files = append(files, absPath)
 					seen[absPath] = true
 				}
@@ -338,7 +372,7 @@ func collectTemplates(paths []string) ([]string, error) {
 
 func isTemplateFile(path string) bool {
 	ext := strings.ToLower(filepath.Ext(path))
-	return ext == ".json" || ext == ".yaml" || ext == ".yml"
+	return ext == ".json" || ext == ".yaml" || ext == ".yml" || ext == ".tf"
 }
 
 // parsePolicySpecs parses all policy specification strings.
@@ -358,14 +392,23 @@ func parsePolicySpecs(specs []string) ([]*PolicySpec, error) {
 	return result, nil
 }
 
+// ruleIaCInfo tracks which IaC types each module file supports.
+type ruleIaCInfo struct {
+	iacTypes []string
+	ruleID   string
+}
+
 // buildEvalOptions builds engine evaluation options from policy specs.
-func buildEvalOptions(specs []*PolicySpec, msg *i18n.Messages) (*engine.EvalOptions, error) {
+// Returns the eval options and a map from module file path to its IaC type info.
+func buildEvalOptions(specs []*PolicySpec, msg *i18n.Messages) (*engine.EvalOptions, map[string]*ruleIaCInfo, error) {
 	opts := &engine.EvalOptions{
 		PolicyPaths: []string{},
 		RuleIDs:     []string{},
 		PackIDs:     []string{},
 		IDMapping:   make(map[string]string),
 	}
+
+	iacMap := make(map[string]*ruleIaCInfo)
 
 	// If no specs provided, try using fallback loader (embedded + local)
 	if len(specs) == 0 {
@@ -377,6 +420,7 @@ func buildEvalOptions(specs []*PolicySpec, msg *i18n.Messages) (*engine.EvalOpti
 				opts.RuleIDs = append(opts.RuleIDs, rule.ID)
 				if rule.Content != "" {
 					opts.Modules[rule.FilePath] = rule.Content
+					iacMap[rule.FilePath] = &ruleIaCInfo{iacTypes: rule.IaCTypes, ruleID: rule.ID}
 				} else if rule.FilePath != "" {
 					opts.PolicyPaths = append(opts.PolicyPaths, rule.FilePath)
 				}
@@ -387,15 +431,15 @@ func buildEvalOptions(specs []*PolicySpec, msg *i18n.Messages) (*engine.EvalOpti
 					opts.LibModules[k] = v
 				}
 			}
-			return opts, nil
+			return opts, iacMap, nil
 		}
 		// Fallback to default directory if loading fails
 		defaultDir := policy.DefaultPolicyDir()
 		if err := policy.ValidatePath(defaultDir); err != nil {
-			return nil, fmt.Errorf(msg.Errors.PolicyDir+"\n"+msg.Errors.PolicyDirHint, err)
+			return nil, nil, fmt.Errorf(msg.Errors.PolicyDir+"\n"+msg.Errors.PolicyDirHint, err)
 		}
 		opts.PolicyPaths = []string{defaultDir}
-		return opts, nil
+		return opts, iacMap, nil
 	}
 
 	// Load policy index for rule/pack ID resolution and helper loading
@@ -429,30 +473,28 @@ func buildEvalOptions(specs []*PolicySpec, msg *i18n.Messages) (*engine.EvalOpti
 		case "rule":
 			if policyLoader != nil {
 				if spec.IsPattern {
-					// Handle wildcard pattern matching
 					matchedRules := policyLoader.MatchRules(spec.Value)
 					if len(matchedRules) == 0 {
-						return nil, fmt.Errorf(msg.Errors.PolicyPatternNoMatch, spec.Value)
+						return nil, nil, fmt.Errorf(msg.Errors.PolicyPatternNoMatch, spec.Value)
 					}
 					for _, rule := range matchedRules {
 						opts.RuleIDs = append(opts.RuleIDs, rule.ID)
-						// Add the rule's content for evaluation
 						if rule.Content != "" {
 							opts.Modules[rule.FilePath] = rule.Content
+							iacMap[rule.FilePath] = &ruleIaCInfo{iacTypes: rule.IaCTypes, ruleID: rule.ID}
 						} else if rule.FilePath != "" {
 							opts.PolicyPaths = append(opts.PolicyPaths, rule.FilePath)
 						}
 					}
 				} else {
-					// Handle exact match (backward compatibility)
 					rule := policyLoader.GetRule(spec.Value)
 					if rule == nil {
-						return nil, fmt.Errorf(msg.Errors.PolicyNotFound, spec.Value)
+						return nil, nil, fmt.Errorf(msg.Errors.PolicyNotFound, spec.Value)
 					}
 					opts.RuleIDs = append(opts.RuleIDs, spec.Value)
-					// Add the rule's content for evaluation
 					if rule.Content != "" {
 						opts.Modules[rule.FilePath] = rule.Content
+						iacMap[rule.FilePath] = &ruleIaCInfo{iacTypes: rule.IaCTypes, ruleID: rule.ID}
 					} else if rule.FilePath != "" {
 						opts.PolicyPaths = append(opts.PolicyPaths, rule.FilePath)
 					}
@@ -461,19 +503,18 @@ func buildEvalOptions(specs []*PolicySpec, msg *i18n.Messages) (*engine.EvalOpti
 		case "pack":
 			if policyLoader != nil {
 				if spec.IsPattern {
-					// Handle wildcard pattern matching
 					matchedPacks := policyLoader.MatchPacks(spec.Value)
 					if len(matchedPacks) == 0 {
-						return nil, fmt.Errorf(msg.Errors.PolicyPatternNoMatch, spec.Value)
+						return nil, nil, fmt.Errorf(msg.Errors.PolicyPatternNoMatch, spec.Value)
 					}
 					for _, pack := range matchedPacks {
 						opts.PackIDs = append(opts.PackIDs, pack.ID)
-						// Add all rule file contents for this pack
 						for _, ruleID := range pack.RuleIDs {
 							rule := policyLoader.GetRule(ruleID)
 							if rule != nil {
 								if rule.Content != "" {
 									opts.Modules[rule.FilePath] = rule.Content
+									iacMap[rule.FilePath] = &ruleIaCInfo{iacTypes: rule.IaCTypes, ruleID: rule.ID}
 								} else if rule.FilePath != "" {
 									opts.PolicyPaths = append(opts.PolicyPaths, rule.FilePath)
 								}
@@ -481,18 +522,17 @@ func buildEvalOptions(specs []*PolicySpec, msg *i18n.Messages) (*engine.EvalOpti
 						}
 					}
 				} else {
-					// Handle exact match (backward compatibility)
 					pack := policyLoader.GetPack(spec.Value)
 					if pack == nil {
-						return nil, fmt.Errorf(msg.Errors.PolicyNotFound, spec.Value)
+						return nil, nil, fmt.Errorf(msg.Errors.PolicyNotFound, spec.Value)
 					}
 					opts.PackIDs = append(opts.PackIDs, spec.Value)
-					// Add all rule file contents for this pack
 					for _, ruleID := range pack.RuleIDs {
 						rule := policyLoader.GetRule(ruleID)
 						if rule != nil {
 							if rule.Content != "" {
 								opts.Modules[rule.FilePath] = rule.Content
+								iacMap[rule.FilePath] = &ruleIaCInfo{iacTypes: rule.IaCTypes, ruleID: rule.ID}
 							} else if rule.FilePath != "" {
 								opts.PolicyPaths = append(opts.PolicyPaths, rule.FilePath)
 							}
@@ -510,7 +550,40 @@ func buildEvalOptions(specs []*PolicySpec, msg *i18n.Messages) (*engine.EvalOpti
 		opts.PolicyPaths = []string{policy.DefaultPolicyDir()}
 	}
 
-	return opts, nil
+	return opts, iacMap, nil
+}
+
+// filterEvalOptsByIaCType creates a filtered copy of eval options containing only
+// modules that support the given IaC type. Warns once per rule that doesn't support it.
+func filterEvalOptsByIaCType(opts *engine.EvalOptions, iacMap map[string]*ruleIaCInfo, iacType string, warned map[string]bool) *engine.EvalOptions {
+	if len(iacMap) == 0 {
+		return opts
+	}
+
+	filtered := &engine.EvalOptions{
+		PolicyPaths: opts.PolicyPaths,
+		RuleIDs:     opts.RuleIDs,
+		PackIDs:     opts.PackIDs,
+		IDMapping:   opts.IDMapping,
+		LibModules:  opts.LibModules,
+		Modules:     make(map[string]string),
+	}
+
+	for path, content := range opts.Modules {
+		info, exists := iacMap[path]
+		if !exists {
+			filtered.Modules[path] = content
+			continue
+		}
+		if contains(info.iacTypes, iacType) {
+			filtered.Modules[path] = content
+		} else if !warned[info.ruleID] {
+			warned[info.ruleID] = true
+			fmt.Fprintf(os.Stderr, "Warning: rule %s does not support %s, skipped\n", info.ruleID, iacType)
+		}
+	}
+
+	return filtered
 }
 
 // extractShortRuleID extracts the short ID from a full rule ID.
@@ -579,8 +652,14 @@ func formatAndPrintError(templatePath string, err error, msg *i18n.Messages) {
 func loadTemplateWithMode(templatePath string, inputParams map[string]interface{}, mode string) (*yaml.Node, map[string]interface{}, error) {
 	msg := i18n.Msg()
 
-	// Detect template type - for now we only support ROS templates
-	// In the future, this could be extended to support other IaC providers
+	// Terraform detection: .tf extension — load the entire directory as a Terraform module
+	if terraform.IsTerraformFile(templatePath) {
+		opaInput, err := terraform.Load(templatePath, inputParams)
+		if err != nil {
+			return nil, nil, err
+		}
+		return nil, opaInput, nil
+	}
 
 	// Try to load template to check if it's a valid ROS template
 	_, templateData, err := ros.LoadLocalTemplate(templatePath)

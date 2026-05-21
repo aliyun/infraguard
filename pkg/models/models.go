@@ -18,24 +18,38 @@ func (i I18nString) Get(lang string) string {
 	if val, ok := i[lang]; ok {
 		return val
 	}
+	if idx := strings.Index(lang, "-"); idx > 0 {
+		if val, ok := i[lang[:idx]]; ok {
+			return val
+		}
+	}
 	if val, ok := i["en"]; ok {
 		return val
 	}
 	return ""
 }
 
+// RuleImpl represents an IaC-type-specific implementation of a rule.
+type RuleImpl struct {
+	FilePath    string `json:"file_path"`
+	PackageName string `json:"package_name"`
+	Content     string `json:"content"`
+}
+
 // Rule represents a compliance rule with its metadata.
 type Rule struct {
-	ID             string     `json:"id"`             // e.g., "rule:aliyun:ecs-public-ip"
-	Name           I18nString `json:"name"`           // Localized name
-	Severity       string     `json:"severity"`       // high, medium, low
-	Description    I18nString `json:"description"`    // What the rule checks
-	Reason         I18nString `json:"reason"`         // Why the violation occurred
-	Recommendation I18nString `json:"recommendation"` // How to fix
-	ResourceTypes  []string   `json:"resource_types"` // Resource types this rule applies to
-	FilePath       string     `json:"file_path"`      // Source .rego file path
-	PackageName    string     `json:"package_name"`   // Rego package name
-	Content        string     `json:"content"`        // Rego content (for embedded)
+	ID              string               `json:"id"`                        // e.g., "rule:aliyun:ecs-public-ip"
+	Name            I18nString           `json:"name"`                      // Localized name
+	Severity        string               `json:"severity"`                  // high, medium, low
+	Description     I18nString           `json:"description"`               // What the rule checks
+	Reason          I18nString           `json:"reason"`                    // Why the violation occurred
+	Recommendation  I18nString           `json:"recommendation"`            // How to fix
+	ResourceTypes   []string             `json:"resource_types"`            // Resource types this rule applies to
+	IaCTypes        []string             `json:"iac_types"`                 // Supported IaC types (e.g., "ros", "terraform")
+	Implementations map[string]*RuleImpl `json:"implementations,omitempty"` // Per-IaC-type implementations
+	FilePath        string               `json:"file_path"`                 // Source .rego file path (backward compat)
+	PackageName     string               `json:"package_name"`              // Rego package name
+	Content         string               `json:"content"`                   // Rego content (for embedded)
 }
 
 // Pack represents a compliance pack that groups multiple rules.
@@ -58,10 +72,60 @@ type PolicyIndex struct {
 	LibModules map[string]string // Embedded lib modules
 }
 
-// AddRule adds a rule to the index.
+// AddRule adds a rule to the index. If a rule with the same ID already exists,
+// it merges IaCTypes, ResourceTypes, and Implementations.
 func (pi *PolicyIndex) AddRule(rule *Rule) {
-	pi.Rules[rule.ID] = rule
-	pi.RuleList = append(pi.RuleList, rule)
+	existing, exists := pi.Rules[rule.ID]
+	if !exists {
+		if rule.Implementations == nil {
+			rule.Implementations = make(map[string]*RuleImpl)
+		}
+		for _, iacType := range rule.IaCTypes {
+			rule.Implementations[iacType] = &RuleImpl{
+				FilePath:    rule.FilePath,
+				PackageName: rule.PackageName,
+				Content:     rule.Content,
+			}
+		}
+		pi.Rules[rule.ID] = rule
+		pi.RuleList = append(pi.RuleList, rule)
+		return
+	}
+
+	// Merge IaCTypes
+	for _, t := range rule.IaCTypes {
+		if !containsString(existing.IaCTypes, t) {
+			existing.IaCTypes = append(existing.IaCTypes, t)
+		}
+	}
+
+	// Merge ResourceTypes
+	for _, rt := range rule.ResourceTypes {
+		if !containsString(existing.ResourceTypes, rt) {
+			existing.ResourceTypes = append(existing.ResourceTypes, rt)
+		}
+	}
+
+	// Merge Implementations
+	if existing.Implementations == nil {
+		existing.Implementations = make(map[string]*RuleImpl)
+	}
+	for _, iacType := range rule.IaCTypes {
+		existing.Implementations[iacType] = &RuleImpl{
+			FilePath:    rule.FilePath,
+			PackageName: rule.PackageName,
+			Content:     rule.Content,
+		}
+	}
+}
+
+func containsString(slice []string, s string) bool {
+	for _, v := range slice {
+		if v == s {
+			return true
+		}
+	}
+	return false
 }
 
 // AddPack adds a pack to the index.

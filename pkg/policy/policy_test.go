@@ -631,6 +631,55 @@ func TestGenerateIDPrefix(t *testing.T) {
 			}
 		})
 
+		Convey("When file is in IaC type subdirectory (ros/terraform excluded from ID)", func() {
+			tests := []struct {
+				name     string
+				filePath string
+				baseDir  string
+				idType   string
+				expected string
+			}{
+				{
+					name:     "rule in ros subdirectory",
+					filePath: "policies/aliyun/rules/ros/ecs-public-ip.rego",
+					baseDir:  "policies/aliyun/rules",
+					idType:   "rule",
+					expected: "rule:aliyun:",
+				},
+				{
+					name:     "rule in terraform subdirectory",
+					filePath: "policies/aliyun/rules/terraform/ecs-instance-public-ip.rego",
+					baseDir:  "policies/aliyun/rules",
+					idType:   "rule",
+					expected: "rule:aliyun:",
+				},
+				{
+					name:     "rule in ros subdirectory (embedded path)",
+					filePath: "aliyun/rules/ros/ecs-public-ip.rego",
+					baseDir:  "aliyun/rules",
+					idType:   "rule",
+					expected: "rule:aliyun:",
+				},
+				{
+					name:     "rule in terraform subdirectory (embedded path)",
+					filePath: "aliyun/rules/terraform/ecs-instance-public-ip.rego",
+					baseDir:  "aliyun/rules",
+					idType:   "rule",
+					expected: "rule:aliyun:",
+				},
+			}
+
+			for _, tc := range tests {
+				Convey("When "+tc.name, func() {
+					result := GenerateIDPrefix(tc.filePath, tc.baseDir, tc.idType)
+
+					Convey("It should return correct prefix", func() {
+						So(result, ShouldEqual, tc.expected)
+					})
+				})
+			}
+		})
+
 		Convey("When file is in subdirectory of baseDir", func() {
 			tests := []struct {
 				name     string

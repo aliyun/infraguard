@@ -79,6 +79,7 @@ type Messages struct {
 		Name                string `yaml:"name"`
 		Description         string `yaml:"description"`
 		ResourceTypes       string `yaml:"resource_types"`
+		IaCTypes            string `yaml:"iac_types"`
 		PackID              string `yaml:"pack_id"`
 	} `yaml:"policy_get"`
 

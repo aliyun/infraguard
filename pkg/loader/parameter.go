@@ -67,7 +67,7 @@ func isFilePath(input string) bool {
 	// Check for common file extensions
 	ext := strings.ToLower(filepath.Ext(input))
 	switch ext {
-	case ".json", ".yaml", ".yml", ".txt":
+	case ".json", ".yaml", ".yml", ".txt", ".tfvars":
 		return true
 	}
 	// Check if file exists
@@ -116,7 +116,11 @@ func parseFile(path string) (models.TemplateParams, error) {
 		}
 		if strings.Contains(line, "=") {
 			parts := strings.SplitN(line, "=", 2)
-			params[strings.TrimSpace(parts[0])] = strings.TrimSpace(parts[1])
+			val := strings.TrimSpace(parts[1])
+			if len(val) >= 2 && val[0] == '"' && val[len(val)-1] == '"' {
+				val = val[1 : len(val)-1]
+			}
+			params[strings.TrimSpace(parts[0])] = val
 			foundKV = true
 		}
 	}

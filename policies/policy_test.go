@@ -11,6 +11,7 @@ import (
 	"github.com/aliyun/infraguard/pkg/engine"
 	"github.com/aliyun/infraguard/pkg/models"
 	"github.com/aliyun/infraguard/pkg/policy"
+	"github.com/aliyun/infraguard/pkg/providers/terraform"
 	. "github.com/smartystreets/goconvey/convey"
 	"gopkg.in/yaml.v3"
 )
@@ -33,12 +34,21 @@ func loadTemplate(path string) (map[string]interface{}, error) {
 	return template, nil
 }
 
-// hasTestTemplates checks if a directory contains both compliant.yaml and violation.yaml
+// hasTestTemplates checks if a directory contains test templates in ros/ or terraform/ subdirectories.
 func hasTestTemplates(dir string) bool {
-	compliantPath := filepath.Join(dir, "compliant.yaml")
-	violationPath := filepath.Join(dir, "violation.yaml")
-	_, err1 := os.Stat(compliantPath)
-	_, err2 := os.Stat(violationPath)
+	// Check ROS format: ros/compliant.yaml and ros/violation.yaml
+	rosCompliant := filepath.Join(dir, "ros", "compliant.yaml")
+	rosViolation := filepath.Join(dir, "ros", "violation.yaml")
+	_, err1 := os.Stat(rosCompliant)
+	_, err2 := os.Stat(rosViolation)
+	if err1 == nil && err2 == nil {
+		return true
+	}
+	// Check Terraform format: terraform/compliant/main.tf and terraform/violation/main.tf
+	tfCompliant := filepath.Join(dir, "terraform", "compliant", "main.tf")
+	tfViolation := filepath.Join(dir, "terraform", "violation", "main.tf")
+	_, err1 = os.Stat(tfCompliant)
+	_, err2 = os.Stat(tfViolation)
 	return err1 == nil && err2 == nil
 }
 
@@ -68,14 +78,61 @@ func filterByRuleID(violations []models.OPAViolation, ruleID string) []models.OP
 	return filtered
 }
 
-// getRuleFile returns the path to the rule file based on provider and rule name
-func getRuleFile(provider, ruleName string) string {
+// getRuleFile returns the path to the rule file based on provider, rule name, and IaC type.
+// When iacType is specified, it looks in that subdirectory first.
+func getRuleFile(provider, ruleName, iacType string) string {
+	if iacType != "" {
+		path := filepath.Join(policiesDir, provider, "rules", iacType, ruleName+".rego")
+		if _, err := os.Stat(path); err == nil {
+			return path
+		}
+	}
+	// Check IaC type subdirectories
+	for _, it := range []string{"ros", "terraform"} {
+		path := filepath.Join(policiesDir, provider, "rules", it, ruleName+".rego")
+		if _, err := os.Stat(path); err == nil {
+			return path
+		}
+	}
+	// Fallback to flat structure (backward compat)
 	return filepath.Join(policiesDir, provider, "rules", ruleName+".rego")
+}
+
+// buildEvalOpts constructs EvalOptions using the correct implementation for the given IaC type.
+func buildEvalOpts(loader *policy.Loader, ruleID, iacType, ruleFile string, libModules map[string]string) *engine.EvalOptions {
+	opts := &engine.EvalOptions{
+		LibModules: libModules,
+	}
+	rule := loader.GetRule(ruleID)
+	if rule != nil {
+		// Pick the implementation matching the test's IaC type
+		if iacType != "" && rule.Implementations != nil {
+			if impl, ok := rule.Implementations[iacType]; ok && impl.Content != "" {
+				opts.Modules = map[string]string{impl.FilePath: impl.Content}
+				return opts
+			}
+		}
+		if rule.Content != "" {
+			opts.Modules = map[string]string{rule.FilePath: rule.Content}
+			return opts
+		}
+	}
+	opts.PolicyPaths = []string{ruleFile}
+	return opts
 }
 
 // getPackFile returns the path to the pack file based on provider and pack name
 func getPackFile(provider, packName string) string {
 	return filepath.Join(policiesDir, provider, "packs", packName+".rego")
+}
+
+func containsIaCType(types []string, target string) bool {
+	for _, t := range types {
+		if t == target {
+			return true
+		}
+	}
+	return false
 }
 
 // extractShortRuleID extracts the short ID from a full rule ID.
@@ -122,97 +179,147 @@ func TestPolicyRules(t *testing.T) {
 
 	for _, testDir := range testDirs {
 		// Extract provider and rule name from path
-		// testDir: testdata/aliyun/rules/rule-name
+		// testDir: testdata/aliyun/rules/rule-name (contains ros/ and/or terraform/ subdirs)
 		provider := "aliyun"
 		ruleName := filepath.Base(testDir)
 		ruleID := fmt.Sprintf("rule:%s:%s", provider, ruleName)
-		ruleFile := getRuleFile(provider, ruleName)
 
 		// Check if rule file exists
-		if _, err := os.Stat(ruleFile); os.IsNotExist(err) {
-			// Try short rule ID (some rules use short ID in deny result)
+		if _, err := os.Stat(getRuleFile(provider, ruleName, "")); os.IsNotExist(err) {
 			ruleID = ruleName
 		}
 
-		t.Run(ruleName, func(t *testing.T) {
-			Convey("Given the "+ruleName+" rule", t, func() {
-				Convey("When evaluating compliant template", func() {
-					compliantPath := filepath.Join(testDir, "compliant.yaml")
-					relPath, _ := filepath.Rel(policiesDir, compliantPath)
-					template, err := loadTemplate(compliantPath)
-					So(err, ShouldBeNil)
+		// Test ROS if ros/ subdirectory exists
+		rosDir := filepath.Join(testDir, "ros")
+		if _, err := os.Stat(filepath.Join(rosDir, "compliant.yaml")); err == nil {
+			testIaCType := "ros"
+			ruleFile := getRuleFile(provider, ruleName, testIaCType)
 
-					// Use optimized evaluation
-					opts := &engine.EvalOptions{
-						LibModules: libModules,
-					}
-					rule := loader.GetRule(ruleID)
-					if rule != nil && rule.Content != "" {
-						opts.Modules = map[string]string{rule.FilePath: rule.Content}
-					} else {
-						opts.PolicyPaths = []string{ruleFile}
-					}
-
-					evalResult, err := engine.EvaluateWithOpts(opts, template)
-					violations := []models.OPAViolation{}
-					if err == nil {
-						violations = evalResult.Violations
-					}
-
-					Convey("It should return no violations for this rule", func() {
+			t.Run(ruleName+"/ros", func(t *testing.T) {
+				Convey("Given the ROS "+ruleName+" rule", t, func() {
+					Convey("When evaluating compliant template", func() {
+						compliantPath := filepath.Join(rosDir, "compliant.yaml")
+						relPath, _ := filepath.Rel(policiesDir, compliantPath)
+						template, err := loadTemplate(compliantPath)
 						So(err, ShouldBeNil)
-						// Filter by both full rule ID and short rule ID
-						filtered := filterByRuleID(violations, ruleID)
-						if len(filtered) == 0 {
-							filtered = filterByRuleID(violations, ruleName)
+
+						opts := buildEvalOpts(loader, ruleID, testIaCType, ruleFile, libModules)
+
+						evalResult, err := engine.EvaluateWithOpts(opts, template)
+						violations := []models.OPAViolation{}
+						if err == nil {
+							violations = evalResult.Violations
 						}
-						if len(filtered) > 0 {
-							t.Logf("Template file: %s", relPath)
-							t.Logf("Unexpected violations found: %+v", filtered)
-						}
-						So(filtered, ShouldBeEmpty)
+
+						Convey("It should return no violations for this rule", func() {
+							So(err, ShouldBeNil)
+							filtered := filterByRuleID(violations, ruleID)
+							if len(filtered) == 0 {
+								filtered = filterByRuleID(violations, ruleName)
+							}
+							if len(filtered) > 0 {
+								t.Logf("Template file: %s", relPath)
+								t.Logf("Unexpected violations found: %+v", filtered)
+							}
+							So(filtered, ShouldBeEmpty)
+						})
 					})
-				})
 
-				Convey("When evaluating violation template", func() {
-					violationPath := filepath.Join(testDir, "violation.yaml")
-					relPath, _ := filepath.Rel(policiesDir, violationPath)
-					template, err := loadTemplate(violationPath)
-					So(err, ShouldBeNil)
-
-					// Use optimized evaluation
-					opts := &engine.EvalOptions{
-						LibModules: libModules,
-					}
-					rule := loader.GetRule(ruleID)
-					if rule != nil && rule.Content != "" {
-						opts.Modules = map[string]string{rule.FilePath: rule.Content}
-					} else {
-						opts.PolicyPaths = []string{ruleFile}
-					}
-
-					evalResult, err := engine.EvaluateWithOpts(opts, template)
-					violations := []models.OPAViolation{}
-					if err == nil {
-						violations = evalResult.Violations
-					}
-
-					Convey("It should return violations for this rule", func() {
+					Convey("When evaluating violation template", func() {
+						violationPath := filepath.Join(rosDir, "violation.yaml")
+						relPath, _ := filepath.Rel(policiesDir, violationPath)
+						template, err := loadTemplate(violationPath)
 						So(err, ShouldBeNil)
-						// Filter by both full rule ID and short rule ID
-						filtered := filterByRuleID(violations, ruleID)
-						if len(filtered) == 0 {
-							filtered = filterByRuleID(violations, ruleName)
+
+						opts := buildEvalOpts(loader, ruleID, testIaCType, ruleFile, libModules)
+
+						evalResult, err := engine.EvaluateWithOpts(opts, template)
+						violations := []models.OPAViolation{}
+						if err == nil {
+							violations = evalResult.Violations
 						}
-						if len(filtered) == 0 {
-							t.Logf("Template file: %s", relPath)
-							t.Logf("Expected violations but found none")
-						}
-						So(len(filtered), ShouldBeGreaterThan, 0)
+
+						Convey("It should return violations for this rule", func() {
+							So(err, ShouldBeNil)
+							filtered := filterByRuleID(violations, ruleID)
+							if len(filtered) == 0 {
+								filtered = filterByRuleID(violations, ruleName)
+							}
+							if len(filtered) == 0 {
+								t.Logf("Template file: %s", relPath)
+								t.Logf("Expected violations but found none")
+							}
+							So(len(filtered), ShouldBeGreaterThan, 0)
+						})
 					})
 				})
 			})
-		})
+		}
+
+		// Test Terraform if terraform/ subdirectory exists
+		tfDir := filepath.Join(testDir, "terraform")
+		if _, err := os.Stat(filepath.Join(tfDir, "compliant", "main.tf")); err == nil {
+			testIaCType := "terraform"
+			ruleFile := getRuleFile(provider, ruleName, testIaCType)
+
+			t.Run(ruleName+"/terraform", func(t *testing.T) {
+				Convey("Given the Terraform "+ruleName+" rule", t, func() {
+					Convey("When evaluating compliant terraform config", func() {
+						compliantDir := filepath.Join(tfDir, "compliant")
+						template, err := terraform.Load(compliantDir, nil)
+						So(err, ShouldBeNil)
+
+						opts := buildEvalOpts(loader, ruleID, testIaCType, ruleFile, libModules)
+
+						evalResult, err := engine.EvaluateWithOpts(opts, template)
+						violations := []models.OPAViolation{}
+						if err == nil {
+							violations = evalResult.Violations
+						}
+
+						Convey("It should return no violations for this rule", func() {
+							So(err, ShouldBeNil)
+							filtered := filterByRuleID(violations, ruleID)
+							if len(filtered) == 0 {
+								filtered = filterByRuleID(violations, ruleName)
+							}
+							if len(filtered) > 0 {
+								t.Logf("Template dir: %s", compliantDir)
+								t.Logf("Unexpected violations found: %+v", filtered)
+							}
+							So(filtered, ShouldBeEmpty)
+						})
+					})
+
+					Convey("When evaluating violation terraform config", func() {
+						violationDir := filepath.Join(tfDir, "violation")
+						template, err := terraform.Load(violationDir, nil)
+						So(err, ShouldBeNil)
+
+						opts := buildEvalOpts(loader, ruleID, testIaCType, ruleFile, libModules)
+
+						evalResult, err := engine.EvaluateWithOpts(opts, template)
+						violations := []models.OPAViolation{}
+						if err == nil {
+							violations = evalResult.Violations
+						}
+
+						Convey("It should return violations for this rule", func() {
+							So(err, ShouldBeNil)
+							filtered := filterByRuleID(violations, ruleID)
+							if len(filtered) == 0 {
+								filtered = filterByRuleID(violations, ruleName)
+							}
+							if len(filtered) == 0 {
+								t.Logf("Template dir: %s", violationDir)
+								t.Logf("Expected violations but found none")
+							}
+							So(len(filtered), ShouldBeGreaterThan, 0)
+						})
+					})
+				})
+			})
+		}
 	}
 }
 
@@ -274,7 +381,7 @@ func TestPolicyPacks(t *testing.T) {
 				}
 
 				Convey("When evaluating compliant template", func() {
-					compliantPath := filepath.Join(testDir, "compliant.yaml")
+					compliantPath := filepath.Join(testDir, "ros", "compliant.yaml")
 					relPath, _ := filepath.Rel(policiesDir, compliantPath)
 					template, err := loadTemplate(compliantPath)
 					So(err, ShouldBeNil)
@@ -292,17 +399,23 @@ func TestPolicyPacks(t *testing.T) {
 						LibModules: libModules,
 						IDMapping:  idMapping,
 					}
-					// Add rule contents from index if available
+					// Add rule contents from index, filtering to ROS-compatible rules only
 					opts.Modules = make(map[string]string)
 					for _, rID := range pack.RuleIDs {
 						rule := loader.GetRule(rID)
-						if rule != nil && rule.Content != "" {
+						if rule == nil {
+							continue
+						}
+						if !containsIaCType(rule.IaCTypes, "ros") {
+							continue
+						}
+						if rule.Content != "" {
 							opts.Modules[rule.FilePath] = rule.Content
 						}
 					}
-					// If no modules added, fallback to path
+					// If no modules added, fallback to ROS rules path
 					if len(opts.Modules) == 0 {
-						opts.PolicyPaths = []string{rulesDir}
+						opts.PolicyPaths = []string{filepath.Join(rulesDir, "ros")}
 					}
 
 					evalResult, err := engine.EvaluateWithOpts(opts, template)
@@ -319,7 +432,7 @@ func TestPolicyPacks(t *testing.T) {
 				})
 
 				Convey("When evaluating violation template", func() {
-					violationPath := filepath.Join(testDir, "violation.yaml")
+					violationPath := filepath.Join(testDir, "ros", "violation.yaml")
 					relPath, _ := filepath.Rel(policiesDir, violationPath)
 					template, err := loadTemplate(violationPath)
 					So(err, ShouldBeNil)
@@ -337,17 +450,23 @@ func TestPolicyPacks(t *testing.T) {
 						LibModules: libModules,
 						IDMapping:  idMapping,
 					}
-					// Add rule contents from index if available
+					// Add rule contents from index, filtering to ROS-compatible rules only
 					opts.Modules = make(map[string]string)
 					for _, rID := range pack.RuleIDs {
 						rule := loader.GetRule(rID)
-						if rule != nil && rule.Content != "" {
+						if rule == nil {
+							continue
+						}
+						if !containsIaCType(rule.IaCTypes, "ros") {
+							continue
+						}
+						if rule.Content != "" {
 							opts.Modules[rule.FilePath] = rule.Content
 						}
 					}
-					// If no modules added, fallback to path
+					// If no modules added, fallback to ROS rules path
 					if len(opts.Modules) == 0 {
-						opts.PolicyPaths = []string{rulesDir}
+						opts.PolicyPaths = []string{filepath.Join(rulesDir, "ros")}
 					}
 
 					evalResult, err := engine.EvaluateWithOpts(opts, template)

@@ -236,11 +236,12 @@ func runPolicyList(cmd *cobra.Command, args []string) error {
 				},
 			}),
 		)
-		table.Header(msg.Report.RuleID, msg.PolicyGet.Name, msg.Report.Severity, msg.PolicyGet.ResourceTypes)
+		table.Header(msg.Report.RuleID, msg.PolicyGet.Name, msg.Report.Severity, msg.PolicyGet.IaCTypes, msg.PolicyGet.ResourceTypes)
 
 		for _, rule := range rules {
-			resourceTypes := strings.Join(rule.ResourceTypes, ", ")
-			table.Append(wrapText(rule.ID, 20), wrapText(rule.Name.Get(lang), 40), formatSeverityWithColor(rule.Severity, lang), wrapText(resourceTypes, 30))
+			resourceTypes := formatResourceTypes(rule)
+			iacTypes := formatIaCTypes(rule.IaCTypes)
+			table.Append(wrapText(rule.ID, 20), wrapText(rule.Name.Get(lang), 40), formatSeverityWithColor(rule.Severity, lang), iacTypes, wrapText(resourceTypes, 30))
 		}
 
 		table.Render()
@@ -268,10 +269,64 @@ func printRuleDetails(rule *models.Rule, lang string, msg *i18n.Messages) {
 	table.Append(msg.PolicyGet.Name, wrapText(rule.Name.Get(lang), 80))
 	table.Append(msg.Report.Severity, formatSeverityWithColor(rule.Severity, lang))
 	table.Append(msg.PolicyGet.Description, wrapText(rule.Description.Get(lang), 80))
-	table.Append(msg.PolicyGet.ResourceTypes, wrapText(strings.Join(rule.ResourceTypes, ", "), 80))
+	table.Append(msg.PolicyGet.IaCTypes, formatIaCTypes(rule.IaCTypes))
+	table.Append(msg.PolicyGet.ResourceTypes, formatResourceTypes(rule))
 	table.Render()
 
 	fmt.Println()
+}
+
+func formatIaCTypes(iacTypes []string) string {
+	var parts []string
+	for _, t := range iacTypes {
+		switch t {
+		case "ros":
+			parts = append(parts, "ROS")
+		case "terraform":
+			parts = append(parts, "Terraform")
+		default:
+			parts = append(parts, t)
+		}
+	}
+	sort.Strings(parts)
+	return strings.Join(parts, "/")
+}
+
+func formatResourceTypes(rule *models.Rule) string {
+	if len(rule.IaCTypes) <= 1 {
+		return strings.Join(rule.ResourceTypes, ", ")
+	}
+	var parts []string
+	for _, iacType := range rule.IaCTypes {
+		types := getResourceTypesForImpl(rule, iacType)
+		if types != "" {
+			label := iacType
+			switch iacType {
+			case "ros":
+				label = "ROS"
+			case "terraform":
+				label = "Terraform"
+			}
+			parts = append(parts, fmt.Sprintf("%s: %s", label, types))
+		}
+	}
+	sort.Strings(parts)
+	return strings.Join(parts, "\n")
+}
+
+func getResourceTypesForImpl(rule *models.Rule, iacType string) string {
+	var types []string
+	for _, rt := range rule.ResourceTypes {
+		if iacType == "terraform" && strings.HasPrefix(rt, "alicloud_") {
+			types = append(types, rt)
+		} else if iacType == "ros" && strings.HasPrefix(rt, "ALIYUN::") {
+			types = append(types, rt)
+		}
+	}
+	if len(types) == 0 {
+		return strings.Join(rule.ResourceTypes, ", ")
+	}
+	return strings.Join(types, ", ")
 }
 
 func printPackDetails(pack *models.Pack, loader *policy.Loader, lang string, msg *i18n.Messages) {
@@ -312,11 +367,12 @@ func printPackDetails(pack *models.Pack, loader *policy.Loader, lang string, msg
 				},
 			}),
 		)
-		rulesTable.Header(msg.Report.RuleID, msg.PolicyGet.Name, msg.Report.Severity, msg.PolicyGet.ResourceTypes)
+		rulesTable.Header(msg.Report.RuleID, msg.PolicyGet.Name, msg.Report.Severity, msg.PolicyGet.IaCTypes, msg.PolicyGet.ResourceTypes)
 
 		for _, rule := range rules {
-			resourceTypes := strings.Join(rule.ResourceTypes, ", ")
-			rulesTable.Append(wrapText(rule.ID, 20), wrapText(rule.Name.Get(lang), 40), formatSeverityWithColor(rule.Severity, lang), wrapText(resourceTypes, 30))
+			resourceTypes := formatResourceTypes(rule)
+			iacTypes := formatIaCTypes(rule.IaCTypes)
+			rulesTable.Append(wrapText(rule.ID, 20), wrapText(rule.Name.Get(lang), 40), formatSeverityWithColor(rule.Severity, lang), iacTypes, wrapText(resourceTypes, 30))
 		}
 
 		rulesTable.Render()

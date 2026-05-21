@@ -76,6 +76,7 @@ policy_get:
   name: "名称"
   description: "描述"
   resource_types: "资源类型"
+  iac_types: "IaC 类型"
   pack_id: "合规包 ID"
 
 # Policy list command

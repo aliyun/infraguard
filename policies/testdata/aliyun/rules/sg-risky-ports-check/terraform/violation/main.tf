@@ -1,0 +1,7 @@
+resource "alicloud_security_group_rule" "allow_ssh_all" {
+  type              = "ingress"
+  ip_protocol       = "tcp"
+  port_range        = "22/22"
+  security_group_id = "sg-xxx"
+  cidr_ip           = "0.0.0.0/0"
+}

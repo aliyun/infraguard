@@ -77,6 +77,7 @@ policy_get:
   name: "Nom"
   description: "Description"
   resource_types: "Types de Ressources"
+  iac_types: "IaC Types"
   pack_id: "ID de Pack"
 
 # Commande policy list

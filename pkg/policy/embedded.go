@@ -218,8 +218,9 @@ func GenerateIDPrefix(filePath, baseDir, idType string) string {
 	if provider != "" {
 		validParts = append(validParts, provider)
 	}
+	iacTypes := map[string]bool{"ros": true, "terraform": true}
 	for _, part := range parts {
-		if part != "" && part != "." && part != "rules" && part != "packs" {
+		if part != "" && part != "." && part != "rules" && part != "packs" && !iacTypes[part] {
 			validParts = append(validParts, part)
 		}
 	}
