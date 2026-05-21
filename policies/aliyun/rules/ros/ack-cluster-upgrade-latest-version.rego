@@ -47,15 +47,22 @@ rule_meta := {
 	"resource_types": ["ALIYUN::CS::AnyCluster", "ALIYUN::CS::ManagedKubernetesCluster"]
 }
 
+latest_version_prefixes := ["1.35"]
+
+is_latest_version(version) if {
+	some prefix in latest_version_prefixes
+	startswith(version, prefix)
+}
+
 deny contains result if {
 	some name, resource in helpers.resources_by_types(["ALIYUN::CS::ManagedKubernetesCluster", "ALIYUN::CS::AnyCluster"])
-
-	# Conceptual check for version
-	helpers.has_property(resource, "ClusterVersion")
+	version := helpers.get_property(resource, "KubernetesVersion", "")
+	version != ""
+	not is_latest_version(version)
 	result := {
 		"id": rule_meta.id,
 		"resource_id": name,
-		"violation_path": ["Properties", "ClusterVersion"],
+		"violation_path": ["Properties", "KubernetesVersion"],
 		"meta": {
 			"severity": rule_meta.severity,
 			"reason": rule_meta.reason,

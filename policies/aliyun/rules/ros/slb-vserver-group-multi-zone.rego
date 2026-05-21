@@ -47,15 +47,20 @@ rule_meta := {
 	"resource_types": ["ALIYUN::SLB::VServerGroup"]
 }
 
+has_multi_zone_servers(resource) if {
+	servers := helpers.get_property(resource, "BackendServers", [])
+	count(servers) >= 2
+}
+
 deny contains result if {
 	some name, resource in helpers.resources_by_type("ALIYUN::SLB::VServerGroup")
-
-	# Conceptual check for multi-zone
-	not helpers.has_property(resource, "BackendServers")
+	servers := helpers.get_property(resource, "BackendServers", [])
+	count(servers) > 0
+	not has_multi_zone_servers(resource)
 	result := {
 		"id": rule_meta.id,
 		"resource_id": name,
-		"violation_path": ["Properties"],
+		"violation_path": ["Properties", "BackendServers"],
 		"meta": {
 			"severity": rule_meta.severity,
 			"reason": rule_meta.reason,

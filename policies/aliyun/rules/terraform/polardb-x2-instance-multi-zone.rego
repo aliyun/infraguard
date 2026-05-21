@@ -48,7 +48,12 @@ rule_meta := {
 	"iac_type": "terraform"
 }
 
-# Check if instance is multi-zone (zone_id contains "MAZ")
+is_multi_zone(resource) if {
+	topology_type := tf.get_attribute(resource, "topology_type", "")
+	not tf.is_unknown(topology_type)
+	topology_type == "3azones"
+}
+
 is_multi_zone(resource) if {
 	zone_id := tf.get_attribute(resource, "zone_id", "")
 	not tf.is_unknown(zone_id)

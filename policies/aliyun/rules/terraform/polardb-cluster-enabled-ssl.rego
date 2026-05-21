@@ -47,9 +47,17 @@ rule_meta := {
 	"iac_type": "terraform"
 }
 
+is_ssl_enabled(resource) if {
+	tf.get_attribute(resource, "tls_service_status", "") == "Enabled"
+}
+
+is_ssl_enabled(resource) if {
+	tf.get_attribute(resource, "tls_service_status", "") == "Enable"
+}
+
 deny contains violation if {
 	some name, resource in tf.resources_by_type("alicloud_polardb_cluster")
-	tf.get_attribute(resource, "tde_status", "Disabled") != "Enabled"
+	not is_ssl_enabled(resource)
 	violation := {
 		"id": rule_meta.id,
 		"resource_id": sprintf("alicloud_polardb_cluster.%s", [name]),

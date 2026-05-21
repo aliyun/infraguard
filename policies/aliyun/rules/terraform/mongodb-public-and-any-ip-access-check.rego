@@ -8,8 +8,8 @@ rule_meta := {
 	"id": "mongodb-public-and-any-ip-access-check",
 	"severity": "high",
 	"name": {
-		"en": "MongoDB Instance Network Type Check",
-		"zh": "MongoDB 实例网络类型检查",
+		"en": "MongoDB Public and Any IP Access Check",
+		"zh": "MongoDB 实例不开启公网或安全白名单不设置为允许任意来源访问",
 		"ja": "MongoDB のパブリックおよび任意の IP アクセスチェック",
 		"de": "MongoDB öffentlicher und beliebiger IP-Zugriff-Prüfung",
 		"es": "Verificación de Acceso Público y de Cualquier IP de MongoDB",
@@ -17,8 +17,8 @@ rule_meta := {
 		"pt": "Verificação de Acesso Público e de Qualquer IP do MongoDB"
 	},
 	"description": {
-		"en": "MongoDB instances should use VPC network type instead of Classic network to reduce public exposure.",
-		"zh": "MongoDB 实例应使用 VPC 网络类型而非经典网络，以减少公网暴露风险。",
+		"en": "Ensures that MongoDB instances do not have an open whitelist (0.0.0.0/0).",
+		"zh": "确保 MongoDB 实例未设置开放白名单（0.0.0.0/0）。",
 		"ja": "MongoDB インスタンスにオープンホワイトリスト（0.0.0.0/0）が設定されていないことを確認します。",
 		"de": "Stellt sicher, dass MongoDB-Instanzen keine offene Whitelist (0.0.0.0/0) haben.",
 		"es": "Garantiza que las instancias MongoDB no tengan una lista blanca abierta (0.0.0.0/0).",
@@ -26,8 +26,8 @@ rule_meta := {
 		"pt": "Garante que as instâncias MongoDB não tenham uma lista branca aberta (0.0.0.0/0)."
 	},
 	"reason": {
-		"en": "The MongoDB instance is using Classic network type which may expose it to public access.",
-		"zh": "MongoDB 实例使用了经典网络类型，可能暴露于公网访问。",
+		"en": "Setting the whitelist to 0.0.0.0/0 allows any IP to attempt connection, significantly increasing the risk of data breaches or brute force attacks.",
+		"zh": "将白名单设置为 0.0.0.0/0 允许任何 IP 尝试连接，大大增加了数据泄露或暴力破解的风险。",
 		"ja": "ホワイトリストを 0.0.0.0/0 に設定すると、任意の IP が接続を試みることができ、データ侵害やブルートフォース攻撃のリスクが大幅に増加します。",
 		"de": "Das Setzen der Whitelist auf 0.0.0.0/0 erlaubt jeder IP, eine Verbindung zu versuchen, was das Risiko von Datenlecks oder Brute-Force-Angriffen erheblich erhöht.",
 		"es": "Establecer la lista blanca en 0.0.0.0/0 permite que cualquier IP intente conectarse, aumentando significativamente el riesgo de violaciones de datos o ataques de fuerza bruta.",
@@ -35,8 +35,8 @@ rule_meta := {
 		"pt": "Definir a lista branca como 0.0.0.0/0 permite que qualquer IP tente conexão, aumentando significativamente o risco de violações de dados ou ataques de força bruta."
 	},
 	"recommendation": {
-		"en": "Set network_type to 'VPC' to use VPC network for better isolation.",
-		"zh": "将 network_type 设置为 'VPC' 以使用 VPC 网络实现更好的隔离。",
+		"en": "Restrict the IP whitelist for the MongoDB instance to specific trusted IP ranges.",
+		"zh": "将 MongoDB 实例的 IP 白名单限制为特定的可信 IP 范围。",
 		"ja": "MongoDB インスタンスの IP ホワイトリストを特定の信頼できる IP 範囲に制限します。",
 		"de": "Beschränken Sie die IP-Whitelist für die MongoDB-Instanz auf spezifische vertrauenswürdige IP-Bereiche.",
 		"es": "Restrinja la lista blanca de IP para la instancia MongoDB a rangos de IP confiables específicos.",
@@ -47,9 +47,18 @@ rule_meta := {
 	"iac_type": "terraform"
 }
 
+open_cidrs := {"0.0.0.0/0", "0.0.0.0"}
+
+is_fully_open(resource) if {
+	security_ip_list := tf.get_attribute(resource, "security_ip_list", [])
+	is_array(security_ip_list)
+	some ip in security_ip_list
+	ip in open_cidrs
+}
+
 deny contains violation if {
 	some name, resource in tf.resources_by_type("alicloud_mongodb_instance")
-	tf.get_attribute(resource, "network_type", "Classic") != "VPC"
+	is_fully_open(resource)
 	violation := {
 		"id": rule_meta.id,
 		"resource_id": sprintf("alicloud_mongodb_instance.%s", [name]),

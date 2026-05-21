@@ -17,48 +17,41 @@ rule_meta := {
 		"pt": "Verificação de Acesso Público de Instância RDS"
 	},
 	"description": {
-		"en": "RDS instances should not have security_ips configured to allow all source IPs (0.0.0.0/0).",
-		"zh": "RDS 实例的 security_ips 不应配置为允许所有来源 IP（0.0.0.0/0）。",
-		"ja": "RDS インスタンスの security_ips にすべてのソース IP（0.0.0.0/0）の許可を設定すべきではありません。",
-		"de": "RDS-Instanzen sollten security_ips nicht so konfiguriert haben, dass alle Quell-IPs (0.0.0.0/0) erlaubt sind.",
-		"es": "Las instancias RDS no deben tener security_ips configurado para permitir todas las IPs de origen (0.0.0.0/0).",
-		"fr": "Les instances RDS ne doivent pas avoir security_ips configuré pour autoriser toutes les IP source (0.0.0.0/0).",
-		"pt": "Instâncias RDS não devem ter security_ips configurado para permitir todos os IPs de origem (0.0.0.0/0)."
+		"en": "RDS instances should not be configured with public network addresses. Public access exposes databases to potential security threats from the internet.",
+		"zh": "RDS 实例不应配置公网地址。公网访问会使数据库暴露于来自互联网的潜在安全威胁。",
+		"ja": "RDS インスタンスはパブリックネットワークアドレスで設定すべきではありません。パブリックアクセスにより、データベースがインターネットからの潜在的なセキュリティ脅威にさらされます。",
+		"de": "RDS-Instanzen sollten nicht mit öffentlichen Netzwerkadressen konfiguriert werden. Öffentlicher Zugriff setzt Datenbanken potenziellen Sicherheitsbedrohungen aus dem Internet aus.",
+		"es": "Las instancias RDS no deben configurarse con direcciones de red públicas. El acceso público expone las bases de datos a posibles amenazas de seguridad de internet.",
+		"fr": "Les instances RDS ne doivent pas être configurées avec des adresses réseau publiques. L'accès public expose les bases de données à des menaces de sécurité potentielles d'Internet.",
+		"pt": "Instâncias RDS não devem ser configuradas com endereços de rede pública. O acesso público expõe bancos de dados a ameaças potenciais de segurança da internet."
 	},
 	"reason": {
-		"en": "The RDS instance security_ips contains 0.0.0.0/0, which exposes the database to security risks from the internet.",
-		"zh": "RDS 实例的 security_ips 包含 0.0.0.0/0，使数据库暴露于来自互联网的安全风险。",
-		"ja": "RDS インスタンスの security_ips に 0.0.0.0/0 が含まれているため、データベースがインターネットからのセキュリティリスクにさらされます。",
-		"de": "Die RDS-Instanz security_ips enthält 0.0.0.0/0, was die Datenbank Sicherheitsrisiken aus dem Internet aussetzt.",
-		"es": "La instancia RDS security_ips contiene 0.0.0.0/0, lo que expone la base de datos a riesgos de seguridad de internet.",
-		"fr": "L'instance RDS security_ips contient 0.0.0.0/0, ce qui expose la base de données aux risques de sécurité d'Internet.",
-		"pt": "A instância RDS security_ips contém 0.0.0.0/0, o que expõe o banco de dados a riscos de segurança da internet."
+		"en": "The RDS instance is configured with public network access, which exposes the database to security risks from the internet.",
+		"zh": "RDS 实例配置了公网访问，使数据库暴露于来自互联网的安全风险。",
+		"ja": "RDS インスタンスがパブリックネットワークアクセスで設定されているため、データベースがインターネットからのセキュリティリスクにさらされます。",
+		"de": "Die RDS-Instanz ist mit öffentlichem Netzwerkzugriff konfiguriert, was die Datenbank Sicherheitsrisiken aus dem Internet aussetzt.",
+		"es": "La instancia RDS está configurada con acceso a red pública, lo que expone la base de datos a riesgos de seguridad de internet.",
+		"fr": "L'instance RDS est configurée avec un accès réseau public, ce qui expose la base de données aux risques de sécurité d'Internet.",
+		"pt": "A instância RDS está configurada com acesso à rede pública, o que expõe o banco de dados a riscos de segurança da internet."
 	},
 	"recommendation": {
-		"en": "Remove 0.0.0.0/0 from security_ips and use specific trusted IP ranges.",
-		"zh": "从 security_ips 中移除 0.0.0.0/0，并使用特定的可信 IP 范围。",
-		"ja": "security_ips から 0.0.0.0/0 を削除し、特定の信頼できる IP 範囲を使用します。",
-		"de": "Entfernen Sie 0.0.0.0/0 aus security_ips und verwenden Sie spezifische vertrauenswürdige IP-Bereiche.",
-		"es": "Elimine 0.0.0.0/0 de security_ips y use rangos de IP confiables específicos.",
-		"fr": "Supprimez 0.0.0.0/0 de security_ips et utilisez des plages d'IP de confiance spécifiques.",
-		"pt": "Remova 0.0.0.0/0 de security_ips e use faixas de IP confiáveis específicas."
+		"en": "Do not create alicloud_db_connection resources to avoid allocating public network addresses for RDS instances.",
+		"zh": "不要创建 alicloud_db_connection 资源，以避免为 RDS 实例分配公网地址。",
+		"ja": "RDS インスタンスにパブリックネットワークアドレスを割り当てないように、alicloud_db_connection リソースを作成しないでください。",
+		"de": "Erstellen Sie keine alicloud_db_connection-Ressourcen, um die Zuweisung öffentlicher Netzwerkadressen für RDS-Instanzen zu vermeiden.",
+		"es": "No cree recursos alicloud_db_connection para evitar asignar direcciones de red pública a instancias RDS.",
+		"fr": "Ne créez pas de ressources alicloud_db_connection pour éviter d'attribuer des adresses réseau publiques aux instances RDS.",
+		"pt": "Não crie recursos alicloud_db_connection para evitar a alocação de endereços de rede pública para instâncias RDS."
 	},
-	"resource_types": ["alicloud_db_instance"],
+	"resource_types": ["alicloud_db_connection"],
 	"iac_type": "terraform"
 }
 
-has_public_access(resource) if {
-	security_ips := tf.get_attribute(resource, "security_ips", [])
-	some ip in security_ips
-	ip == "0.0.0.0/0"
-}
-
 deny contains violation if {
-	some name, resource in tf.resources_by_type("alicloud_db_instance")
-	has_public_access(resource)
+	some name, resource in tf.resources_by_type("alicloud_db_connection")
 	violation := {
 		"id": rule_meta.id,
-		"resource_id": sprintf("alicloud_db_instance.%s", [name]),
+		"resource_id": sprintf("alicloud_db_connection.%s", [name]),
 		"meta": {"severity": rule_meta.severity, "reason": rule_meta.reason, "recommendation": rule_meta.recommendation},
 	}
 }

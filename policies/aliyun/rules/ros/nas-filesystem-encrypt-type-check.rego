@@ -46,13 +46,19 @@ rule_meta := {
 	"resource_types": ["ALIYUN::NAS::FileSystem"]
 }
 
+is_encrypted(resource) if {
+	encrypt_type := helpers.get_property(resource, "EncryptType", 0)
+	encrypt_type == 1
+}
+
+is_encrypted(resource) if {
+	encrypt_type := helpers.get_property(resource, "EncryptType", 0)
+	encrypt_type == 2
+}
+
 deny contains result if {
 	some name, resource in helpers.resources_by_type("ALIYUN::NAS::FileSystem")
-
-	# Check if EncryptType is set to 1 (encrypted)
-	encrypt_type := helpers.get_property(resource, "EncryptType", 0)
-	encrypt_type != 1
-
+	not is_encrypted(resource)
 	result := {
 		"id": rule_meta.id,
 		"resource_id": name,

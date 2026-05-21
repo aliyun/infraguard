@@ -47,10 +47,13 @@ rule_meta := {
 	"iac_type": "terraform"
 }
 
+risky_policies := {"AdministratorAccess", "*:*", "*"}
+
 deny contains violation if {
 	some name, resource in tf.resources_by_type("alicloud_ram_user_policy_attachment")
 	policy_name := tf.get_attribute(resource, "policy_name", "")
-	policy_name == "AdministratorAccess"
+	not tf.is_unknown(policy_name)
+	policy_name in risky_policies
 	violation := {
 		"id": rule_meta.id,
 		"resource_id": sprintf("alicloud_ram_user_policy_attachment.%s", [name]),

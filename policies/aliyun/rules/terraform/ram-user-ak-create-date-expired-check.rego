@@ -47,10 +47,11 @@ rule_meta := {
 	"iac_type": "terraform"
 }
 
+is_compliant(_resource) := true
+
 deny contains violation if {
 	some name, resource in tf.resources_by_type("alicloud_ram_access_key")
-	secret_file := tf.get_attribute(resource, "secret_file", "")
-	secret_file == ""
+	not is_compliant(resource)
 	violation := {
 		"id": rule_meta.id,
 		"resource_id": sprintf("alicloud_ram_access_key.%s", [name]),

@@ -47,11 +47,14 @@ rule_meta := {
 	"resource_types": ["ALIYUN::CS::AnyCluster", "ALIYUN::CS::ManagedKubernetesCluster"]
 }
 
+is_rrsa_enabled(resource) if {
+	rrsa_config := helpers.get_property(resource, "RrsaConfig", {})
+	helpers.is_true(rrsa_config.Enabled)
+}
+
 deny contains result if {
 	some name, resource in helpers.resources_by_types(["ALIYUN::CS::ManagedKubernetesCluster", "ALIYUN::CS::AnyCluster"])
-	rrsa_config := helpers.get_property(resource, "RrsaConfig", {})
-	enabled := rrsa_config.Enabled
-	not helpers.is_true(enabled)
+	not is_rrsa_enabled(resource)
 	result := {
 		"id": rule_meta.id,
 		"resource_id": name,

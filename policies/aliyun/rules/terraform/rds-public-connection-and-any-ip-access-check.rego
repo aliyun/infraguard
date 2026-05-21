@@ -49,14 +49,14 @@ rule_meta := {
 
 is_fully_open(resource) if {
 	security_ips := tf.get_attribute(resource, "security_ips", [])
-	count(security_ips) == 1
-	security_ips[0] == "0.0.0.0/0"
+	some ip in security_ips
+	ip == "0.0.0.0/0"
 }
 
 is_fully_open(resource) if {
 	security_ips := tf.get_attribute(resource, "security_ips", [])
-	count(security_ips) == 1
-	security_ips[0] == "0.0.0.0"
+	some ip in security_ips
+	ip == "0.0.0.0"
 }
 
 deny contains violation if {

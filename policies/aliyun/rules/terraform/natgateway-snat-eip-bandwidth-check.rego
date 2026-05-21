@@ -50,6 +50,11 @@ rule_meta := {
 disallowed_specs := {"Small"}
 
 is_compliant(resource) if {
+	nat_type := tf.get_attribute(resource, "nat_type", "")
+	nat_type == "Enhanced"
+}
+
+is_compliant(resource) if {
 	spec := tf.get_attribute(resource, "specification", "")
 	not tf.is_unknown(spec)
 	spec != ""

@@ -46,6 +46,16 @@ rule_meta := {
 	"resource_types": ["ALIYUN::OSS::Bucket"]
 }
 
+is_wildcard_principal(principal) if {
+	principal == "*"
+}
+
+is_wildcard_principal(principal) if {
+	is_array(principal)
+	some item in principal
+	item == "*"
+}
+
 deny contains result if {
 	some name, resource in helpers.resources_by_type("ALIYUN::OSS::Bucket")
 
@@ -60,7 +70,7 @@ deny contains result if {
 
 	# Check if statement grants access to anonymous users (Principal: "*")
 	principal := object.get(statement, "Principal", "")
-	principal == "*"
+	is_wildcard_principal(principal)
 	statement.Effect == "Allow"
 
 	result := {

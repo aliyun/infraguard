@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "slb-all-listener-health-check-enabled",
-	"severity": "medium",
+	"severity": "high",
 	"name": {
 		"en": "SLB All Listeners Health Check Enabled",
 		"zh": "SLB 所有监听开启健康检查",

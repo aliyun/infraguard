@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "slb-loadbalancer-in-vpc",
-	"severity": "high",
+	"severity": "medium",
 	"name": {
 		"en": "SLB in VPC Check",
 		"zh": "强制 SLB 部署在 VPC 环境中",

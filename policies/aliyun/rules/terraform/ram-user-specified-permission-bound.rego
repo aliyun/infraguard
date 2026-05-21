@@ -47,12 +47,20 @@ rule_meta := {
 	"iac_type": "terraform"
 }
 
+is_admin_policy_name(policy_name) if {
+	policy_name == "AdministratorAccess"
+}
+
+is_admin_policy_name(policy_name) if {
+	contains(policy_name, "FullAccess")
+	contains(policy_name, "Admin")
+}
+
 deny contains violation if {
 	some name, resource in tf.resources_by_type("alicloud_ram_user_policy_attachment")
-	policy_type := tf.get_attribute(resource, "policy_type", "")
-	policy_type == "System"
 	policy_name := tf.get_attribute(resource, "policy_name", "")
-	policy_name == "AdministratorAccess"
+	not tf.is_unknown(policy_name)
+	is_admin_policy_name(policy_name)
 	violation := {
 		"id": rule_meta.id,
 		"resource_id": sprintf("alicloud_ram_user_policy_attachment.%s", [name]),

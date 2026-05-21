@@ -47,19 +47,19 @@ rule_meta := {
 	"iac_type": "terraform"
 }
 
-# Outdated versions that are flagged
-outdated_versions := ["1.16", "1.18"]
+outdated_version_prefixes := ["1.16", "1.18"]
 
-# Check if version is compliant (not outdated)
-is_compliant(resource) if {
-	v := tf.get_attribute(resource, "version", "")
-	not tf.is_unknown(v)
-	not v in outdated_versions
+is_outdated_version(version) if {
+	some prefix in outdated_version_prefixes
+	startswith(version, prefix)
 }
 
 deny contains violation if {
 	some name, resource in tf.resources_by_type("alicloud_cs_managed_kubernetes")
-	not is_compliant(resource)
+	v := tf.get_attribute(resource, "version", "")
+	not tf.is_unknown(v)
+	v != ""
+	is_outdated_version(v)
 	violation := {
 		"id": rule_meta.id,
 		"resource_id": sprintf("alicloud_cs_managed_kubernetes.%s", [name]),

@@ -47,6 +47,8 @@ rule_meta := {
 	"iac_type": "terraform"
 }
 
+encrypted_storage_types := {"cloud_essd", "cloud_essd2", "cloud_essd3"}
+
 is_tde_enabled(resource) if {
 	tf.get_attribute(resource, "tde_status", "") == "Enabled"
 }
@@ -54,6 +56,11 @@ is_tde_enabled(resource) if {
 is_tde_enabled(resource) if {
 	key := tf.get_attribute(resource, "encryption_key", "")
 	key != ""
+}
+
+is_tde_enabled(resource) if {
+	storage_type := tf.get_attribute(resource, "db_instance_storage_type", "")
+	storage_type in encrypted_storage_types
 }
 
 deny contains violation if {

@@ -337,6 +337,7 @@ severity:
 
 # Global flags
 lang_flag: "Output language (en, zh, es, fr, de, ja, pt, default: auto-detect)"
+help_flag: "help for {{.Name}}"
 
 # Error messages
 errors:

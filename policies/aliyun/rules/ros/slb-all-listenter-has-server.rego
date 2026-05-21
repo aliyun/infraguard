@@ -45,12 +45,26 @@ rule_meta := {
 	"resource_types": ["ALIYUN::SLB::LoadBalancer"]
 }
 
+has_backend_servers(resource) if {
+	servers := helpers.get_property(resource, "BackendServers", [])
+	count(servers) > 0
+}
+
+has_backend_servers(_resource) if {
+	count(helpers.resources_by_type("ALIYUN::SLB::VServerGroup")) > 0
+}
+
+has_backend_servers(_resource) if {
+	count(helpers.resources_by_type("ALIYUN::SLB::MasterSlaveServerGroup")) > 0
+}
+
 deny contains result if {
 	some name, resource in helpers.resources_by_type("ALIYUN::SLB::LoadBalancer")
+	not has_backend_servers(resource)
 	result := {
 		"id": rule_meta.id,
 		"resource_id": name,
-		"violation_path": ["Properties", "Listeners"],
+		"violation_path": ["Properties", "BackendServers"],
 		"meta": {"severity": rule_meta.severity, "reason": rule_meta.reason, "recommendation": rule_meta.recommendation},
 	}
 }

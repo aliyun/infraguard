@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "gpdb-instance-multi-zone",
-	"severity": "high",
+	"severity": "medium",
 	"name": {
 		"en": "GPDB Instance Multi-Zone Deployment",
 		"zh": "GPDB 实例多可用区部署",

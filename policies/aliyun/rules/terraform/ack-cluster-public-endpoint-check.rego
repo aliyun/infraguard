@@ -43,7 +43,7 @@ rule_meta := {
 		"fr": "Désactivez l'endpoint public du cluster ACK en définissant 'EndpointPublicAccess' sur false.",
 		"pt": "Desabilite o endpoint público do cluster ACK definindo 'EndpointPublicAccess' como false."
 	},
-	"resource_types": ["alicloud_cs_managed_kubernetes"],
+	"resource_types": ["alicloud_cs_managed_kubernetes", "alicloud_cs_serverless_kubernetes"],
 	"iac_type": "terraform"
 }
 
@@ -61,4 +61,25 @@ deny contains violation if {
 			"recommendation": rule_meta.recommendation,
 		},
 	}
+}
+
+# Check for serverless kubernetes (default is true for public endpoint)
+deny contains violation if {
+	some name, resource in tf.resources_by_type("alicloud_cs_serverless_kubernetes")
+	is_serverless_public_access_enabled(resource)
+	violation := {
+		"id": rule_meta.id,
+		"resource_id": sprintf("alicloud_cs_serverless_kubernetes.%s", [name]),
+		"meta": {
+			"severity": rule_meta.severity,
+			"reason": rule_meta.reason,
+			"recommendation": rule_meta.recommendation,
+		},
+	}
+}
+
+is_serverless_public_access_enabled(resource) if {
+	enabled := tf.get_attribute(resource, "endpoint_public_access_enabled", true)
+	not tf.is_unknown(enabled)
+	enabled == true
 }

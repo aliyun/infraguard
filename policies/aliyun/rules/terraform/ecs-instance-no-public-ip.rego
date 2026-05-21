@@ -49,9 +49,41 @@ rule_meta := {
 
 deny contains violation if {
 	some name, resource in tf.resources_by_type("alicloud_instance")
+	allocate_public_ip := tf.get_attribute(resource, "allocate_public_ip", false)
+	not tf.is_unknown(allocate_public_ip)
+	allocate_public_ip == true
+	violation := {
+		"id": rule_meta.id,
+		"resource_id": sprintf("alicloud_instance.%s", [name]),
+		"meta": {
+			"severity": rule_meta.severity,
+			"reason": rule_meta.reason,
+			"recommendation": rule_meta.recommendation,
+		},
+	}
+}
+
+deny contains violation if {
+	some name, resource in tf.resources_by_type("alicloud_instance")
 	bandwidth := tf.get_attribute(resource, "internet_max_bandwidth_out", 0)
 	not tf.is_unknown(bandwidth)
 	bandwidth > 0
+	violation := {
+		"id": rule_meta.id,
+		"resource_id": sprintf("alicloud_instance.%s", [name]),
+		"meta": {
+			"severity": rule_meta.severity,
+			"reason": rule_meta.reason,
+			"recommendation": rule_meta.recommendation,
+		},
+	}
+}
+
+deny contains violation if {
+	some name, resource in tf.resources_by_type("alicloud_instance")
+	some _, eip_assoc in tf.resources_by_type("alicloud_eip_association")
+	instance_id := tf.get_attribute(eip_assoc, "instance_id", "")
+	instance_id == name
 	violation := {
 		"id": rule_meta.id,
 		"resource_id": sprintf("alicloud_instance.%s", [name]),

@@ -45,15 +45,18 @@ rule_meta := {
 	"resource_types": ["ALIYUN::CS::ManagedKubernetesCluster"]
 }
 
-# Real check requires runtime data. In IaC, we check if a standard version is used.
-is_compliant(resource) if {
-	v := helpers.get_property(resource, "KubernetesVersion", "")
-	not helpers.includes(["1.16", "1.18"], v) # Example: flag very old versions
+outdated_version_prefixes := ["1.16", "1.18"]
+
+is_outdated_version(version) if {
+	some prefix in outdated_version_prefixes
+	startswith(version, prefix)
 }
 
 deny contains result if {
 	some name, resource in helpers.resources_by_type("ALIYUN::CS::ManagedKubernetesCluster")
-	not is_compliant(resource)
+	v := helpers.get_property(resource, "KubernetesVersion", "")
+	v != ""
+	is_outdated_version(v)
 	result := {
 		"id": rule_meta.id,
 		"resource_id": name,

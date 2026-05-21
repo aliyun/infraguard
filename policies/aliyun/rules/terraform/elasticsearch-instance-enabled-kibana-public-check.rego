@@ -29,6 +29,10 @@ has_open_cidr(whitelist) if {
 }
 
 is_kibana_public(resource) if {
+	tf.get_attribute(resource, "enable_kibana_public_network", false) == true
+}
+
+is_kibana_public(resource) if {
 	whitelist := tf.get_attribute(resource, "kibana_whitelist", [])
 	not tf.is_unknown(whitelist)
 	has_open_cidr(whitelist)

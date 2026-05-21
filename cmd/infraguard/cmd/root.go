@@ -139,11 +139,7 @@ func updateCommandDescriptions() {
 	updateConfigCommandDescriptions()
 
 	// Update help flag description for root and all subcommands
-	helpFlagDesc := "help for {{.Name}}"
-	if i18n.GetLanguage() == "zh" {
-		helpFlagDesc = "{{.Name}} 的帮助信息"
-	}
-	// Traverse all commands to update help flag
+	helpFlagDesc := i18n.Get(func(m *i18n.Messages) string { return m.HelpFlag })
 	updateHelpFlags(rootCmd, helpFlagDesc)
 
 	// Update built-in commands (completion, help)

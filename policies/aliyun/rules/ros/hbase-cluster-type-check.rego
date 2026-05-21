@@ -47,13 +47,16 @@ rule_meta := {
 	"resource_types": ["ALIYUN::HBase::Cluster"]
 }
 
+deprecated_engines := {"hbaseue"}
+
 deny contains result if {
 	some name, resource in helpers.resources_by_type("ALIYUN::HBase::Cluster")
-	helpers.get_property(resource, "ClusterType", "") == "deprecated"
+	engine := helpers.get_property(resource, "Engine", "")
+	lower(engine) in deprecated_engines
 	result := {
 		"id": rule_meta.id,
 		"resource_id": name,
-		"violation_path": ["Properties", "ClusterType"],
+		"violation_path": ["Properties", "Engine"],
 		"meta": {
 			"severity": rule_meta.severity,
 			"reason": rule_meta.reason,

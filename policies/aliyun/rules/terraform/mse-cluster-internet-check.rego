@@ -77,3 +77,14 @@ deny contains violation if {
 		"meta": {"severity": rule_meta.severity, "reason": rule_meta.reason, "recommendation": rule_meta.recommendation},
 	}
 }
+
+deny contains violation if {
+	some name, resource in tf.resources_by_type("alicloud_mse_cluster")
+	tf.get_attribute(resource, "connection_type", "") == "single_eni"
+	tf.get_attribute(resource, "eip_enabled", false) == true
+	violation := {
+		"id": rule_meta.id,
+		"resource_id": sprintf("alicloud_mse_cluster.%s", [name]),
+		"meta": {"severity": rule_meta.severity, "reason": rule_meta.reason, "recommendation": rule_meta.recommendation},
+	}
+}

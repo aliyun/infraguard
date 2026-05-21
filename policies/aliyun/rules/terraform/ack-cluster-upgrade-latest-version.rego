@@ -47,14 +47,11 @@ rule_meta := {
 	"iac_type": "terraform"
 }
 
-# Latest known version prefix
-latest_version_prefix := "1.30"
+latest_version_prefixes := ["1.35"]
 
-# Check if version is the latest
-is_latest_version(resource) if {
-	v := tf.get_attribute(resource, "version", "")
-	not tf.is_unknown(v)
-	startswith(v, latest_version_prefix)
+is_latest_version(version) if {
+	some prefix in latest_version_prefixes
+	startswith(version, prefix)
 }
 
 deny contains violation if {
@@ -62,7 +59,7 @@ deny contains violation if {
 	v := tf.get_attribute(resource, "version", "")
 	not tf.is_unknown(v)
 	v != ""
-	not is_latest_version(resource)
+	not is_latest_version(v)
 	violation := {
 		"id": rule_meta.id,
 		"resource_id": sprintf("alicloud_cs_managed_kubernetes.%s", [name]),

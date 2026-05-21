@@ -47,15 +47,25 @@ rule_meta := {
 	"iac_type": "terraform"
 }
 
+as_array(value) := value if is_array(value)
+
+else := [value] if is_object(value)
+
+else := []
+
+server_list(resource) := as_array(tf.get_attribute(resource, "servers", []))
+
 has_multi_servers(resource) if {
-	servers := tf.get_attribute(resource, "servers", [])
-	not tf.is_unknown(servers)
-	is_array(servers)
-	count(servers) >= 2
+	count(server_list(resource)) >= 2
+}
+
+has_servers(resource) if {
+	count(server_list(resource)) > 0
 }
 
 deny contains violation if {
 	some name, resource in tf.resources_by_type("alicloud_slb_server_group")
+	has_servers(resource)
 	not has_multi_servers(resource)
 	violation := {
 		"id": rule_meta.id,

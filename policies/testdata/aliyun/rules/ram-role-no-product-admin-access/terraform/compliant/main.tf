@@ -1,7 +1,6 @@
 resource "alicloud_ram_role" "limited" {
-  name                 = "limited-role"
-  max_session_duration = 3600
-  document             = <<EOF
+  name     = "limited-role"
+  document = <<EOF
 {
   "Statement": [
     {
@@ -13,5 +12,10 @@ resource "alicloud_ram_role" "limited" {
   "Version": "1"
 }
 EOF
-  description = "A role with limited session duration"
+}
+
+resource "alicloud_ram_role_policy_attachment" "readonly" {
+  role_name   = alicloud_ram_role.limited.name
+  policy_name = "AliyunOSSReadOnlyAccess"
+  policy_type = "System"
 }

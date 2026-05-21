@@ -47,15 +47,18 @@ rule_meta := {
 	"resource_types": ["ALIYUN::Redis::DBInstance"]
 }
 
+is_tde_enabled(resource) if {
+	tde_status := helpers.get_property(resource, "TDEStatus", "Disabled")
+	tde_status == "Enabled"
+}
+
 deny contains result if {
 	some name, resource in helpers.resources_by_type("ALIYUN::Redis::DBInstance")
-
-	# Conceptual check for TDE
-	not helpers.has_property(resource, "TDEStatus")
+	not is_tde_enabled(resource)
 	result := {
 		"id": rule_meta.id,
 		"resource_id": name,
-		"violation_path": ["Properties"],
+		"violation_path": ["Properties", "TDEStatus"],
 		"meta": {
 			"severity": rule_meta.severity,
 			"reason": rule_meta.reason,

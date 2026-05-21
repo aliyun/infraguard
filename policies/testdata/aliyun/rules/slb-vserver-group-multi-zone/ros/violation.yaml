@@ -1,5 +1,5 @@
 ROSTemplateFormatVersion: '2015-09-01'
-Description: Violation template - SLB VServerGroup without backend servers
+Description: Violation template - SLB VServerGroup with single-zone backend servers
 Resources:
   LoadBalancer:
     Type: ALIYUN::SLB::LoadBalancer
@@ -14,6 +14,10 @@ Resources:
   VServerGroup:
     Type: ALIYUN::SLB::VServerGroup
     Properties:
-      VServerGroupName: NoBackendVServerGroup
+      VServerGroupName: SingleZoneVServerGroup
       LoadBalancerId:
         Ref: LoadBalancer
+      BackendServers:
+        - ServerId: i-12345678
+          Port: 80
+          Weight: 100

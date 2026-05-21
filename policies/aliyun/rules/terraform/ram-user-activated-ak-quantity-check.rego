@@ -17,13 +17,13 @@ rule_meta := {
 		"pt": "Verificação de Quantidade de AK Ativo de Usuário RAM"
 	},
 	"description": {
-		"en": "Ensures RAM access keys have an active status.",
-		"zh": "确保 RAM AccessKey 状态为激活。",
-		"ja": "RAM アクセスキーがアクティブな状態であることを確認します。",
-		"de": "Stellt sicher, dass RAM-Zugriffsschlüssel einen aktiven Status haben.",
-		"es": "Garantiza que las claves de acceso RAM tengan un estado activo.",
-		"fr": "Garantit que les clés d'accès RAM ont un statut actif.",
-		"pt": "Garante que as chaves de acesso RAM tenham um status ativo."
+		"en": "Ensures RAM users do not have more than one active AccessKey.",
+		"zh": "确保 RAM 用户激活的 AccessKey 数量不超过 1 个。",
+		"ja": "RAM ユーザーが 1 つを超えるアクティブな AccessKey を持っていないことを確認します。",
+		"de": "Stellt sicher, dass RAM-Benutzer nicht mehr als einen aktiven AccessKey haben.",
+		"es": "Garantiza que los usuarios RAM no tengan más de una AccessKey activa.",
+		"fr": "Garantit que les utilisateurs RAM n'ont pas plus d'une AccessKey active.",
+		"pt": "Garante que usuários RAM não tenham mais de uma AccessKey ativa."
 	},
 	"reason": {
 		"en": "Limiting active AccessKeys reduces the potential impact of a credential leak.",
@@ -35,22 +35,33 @@ rule_meta := {
 		"pt": "Limitar AccessKeys ativas reduz o impacto potencial de um vazamento de credenciais."
 	},
 	"recommendation": {
-		"en": "Set the status attribute to 'Active' on alicloud_ram_access_key resources, or remove inactive keys.",
-		"zh": "在 alicloud_ram_access_key 资源上将 status 属性设置为 'Active'，或移除不活跃的密钥。",
-		"ja": "alicloud_ram_access_key リソースで status 属性を 'Active' に設定するか、非アクティブなキーを削除します。",
-		"de": "Setzen Sie das status-Attribut auf 'Active' bei alicloud_ram_access_key-Ressourcen oder entfernen Sie inaktive Schlüssel.",
-		"es": "Establezca el atributo status en 'Active' en los recursos alicloud_ram_access_key, o elimine las claves inactivas.",
-		"fr": "Définissez l'attribut status sur 'Active' pour les ressources alicloud_ram_access_key, ou supprimez les clés inactives.",
-		"pt": "Defina o atributo status como 'Active' nos recursos alicloud_ram_access_key, ou remova chaves inativas."
+		"en": "Deactivate or remove unnecessary AccessKeys.",
+		"zh": "禁用或移除不必要的 AccessKey。",
+		"ja": "不要な AccessKey を無効化または削除します。",
+		"de": "Deaktivieren oder entfernen Sie unnötige AccessKeys.",
+		"es": "Desactive o elimine AccessKeys innecesarias.",
+		"fr": "Désactivez ou supprimez les AccessKeys inutiles.",
+		"pt": "Desative ou remova AccessKeys desnecessárias."
 	},
 	"resource_types": ["alicloud_ram_access_key"],
 	"iac_type": "terraform"
 }
 
+count_active_keys(user_name) := count([name |
+	some name, resource in tf.resources_by_type("alicloud_ram_access_key")
+	tf.get_attribute(resource, "user_name", "") == user_name
+	tf.get_attribute(resource, "status", "Active") == "Active"
+])
+
+has_excess_active_keys(resource) if {
+	user_name := tf.get_attribute(resource, "user_name", "")
+	user_name != ""
+	count_active_keys(user_name) > 1
+}
+
 deny contains violation if {
 	some name, resource in tf.resources_by_type("alicloud_ram_access_key")
-	status := tf.get_attribute(resource, "status", "Active")
-	status != "Active"
+	has_excess_active_keys(resource)
 	violation := {
 		"id": rule_meta.id,
 		"resource_id": sprintf("alicloud_ram_access_key.%s", [name]),

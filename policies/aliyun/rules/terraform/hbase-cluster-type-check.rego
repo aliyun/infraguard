@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "hbase-cluster-type-check",
-	"severity": "medium",
+	"severity": "low",
 	"name": {
 		"en": "HBase Cluster Engine Type Check",
 		"zh": "HBase 集群引擎类型检查",

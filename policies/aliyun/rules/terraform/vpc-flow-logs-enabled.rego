@@ -47,14 +47,17 @@ rule_meta := {
 	"iac_type": "terraform"
 }
 
-# Check if there is at least one flow log resource
-has_flow_log if {
-	tf.has_resource_type("alicloud_vpc_flow_log")
-}
+vpc_count := count(tf.resources_by_type("alicloud_vpc"))
+
+vpc_flow_log_count := count([name |
+	some name, flow_log in tf.resources_by_type("alicloud_vpc_flow_log")
+	resource_type := tf.get_attribute(flow_log, "resource_type", "VPC")
+	resource_type == "VPC"
+])
 
 deny contains violation if {
 	some name, resource in tf.resources_by_type("alicloud_vpc")
-	not has_flow_log
+	vpc_flow_log_count < vpc_count
 	violation := {
 		"id": rule_meta.id,
 		"resource_id": sprintf("alicloud_vpc.%s", [name]),

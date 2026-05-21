@@ -68,9 +68,9 @@ has_zone_redundant_oss(cr_instance_name) if {
 	some oss_name, oss_resource in helpers.resources_by_type("ALIYUN::OSS::Bucket")
 	oss_name == bucket_name
 
-	# Check if storage class is ZRS (Zone-Redundant Storage)
-	storage_class := helpers.get_property(oss_resource, "StorageClass", "Standard")
-	storage_class == "ZRS"
+	# Check if redundancy type is ZRS (Zone-Redundant Storage)
+	redundancy_type := helpers.get_property(oss_resource, "DataRedundancyType", "LRS")
+	redundancy_type == "ZRS"
 }
 
 # Deny rule: CR instances must be associated with zone-redundant OSS buckets

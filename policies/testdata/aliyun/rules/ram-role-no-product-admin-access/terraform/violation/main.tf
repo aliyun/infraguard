@@ -1,5 +1,5 @@
-resource "alicloud_ram_role" "unrestricted" {
-  name     = "unrestricted-role"
+resource "alicloud_ram_role" "admin" {
+  name     = "admin-role"
   document = <<EOF
 {
   "Statement": [
@@ -12,5 +12,10 @@ resource "alicloud_ram_role" "unrestricted" {
   "Version": "1"
 }
 EOF
-  description = "A role without max_session_duration set"
+}
+
+resource "alicloud_ram_role_policy_attachment" "admin_policy" {
+  role_name   = alicloud_ram_role.admin.name
+  policy_name = "AdministratorAccess"
+  policy_type = "System"
 }

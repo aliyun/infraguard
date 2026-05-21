@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "mongodb-instance-class-not-shared",
-	"severity": "medium",
+	"severity": "high",
 	"name": {
 		"en": "MongoDB Instance Class Not Shared",
 		"zh": "MongoDB 实例规格非共享型",
@@ -47,10 +47,18 @@ rule_meta := {
 	"iac_type": "terraform"
 }
 
+shared_classes := {"dds.mongo.sharding", "dds.mongo.logic", "dds.mongo.shared"}
+
+contains_shared_class(instance_class) if {
+	some pattern in shared_classes
+	contains(instance_class, pattern)
+}
+
 deny contains violation if {
 	some name, resource in tf.resources_by_type("alicloud_mongodb_instance")
 	db_class := tf.get_attribute(resource, "db_instance_class", "")
-	contains(db_class, "shared")
+	not tf.is_unknown(db_class)
+	contains_shared_class(lower(db_class))
 	violation := {
 		"id": rule_meta.id,
 		"resource_id": sprintf("alicloud_mongodb_instance.%s", [name]),

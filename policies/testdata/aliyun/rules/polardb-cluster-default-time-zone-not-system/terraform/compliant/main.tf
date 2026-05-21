@@ -4,4 +4,9 @@ resource "alicloud_polardb_cluster" "configured" {
   db_node_class = "polar.mysql.x4.large"
   pay_type      = "PostPaid"
   vswitch_id    = "vsw-abc123"
+
+  parameters {
+    name  = "default_time_zone"
+    value = "+08:00"
+  }
 }

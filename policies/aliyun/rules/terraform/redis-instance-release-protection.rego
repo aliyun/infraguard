@@ -48,8 +48,11 @@ rule_meta := {
 }
 
 is_protected(resource) if {
-	payment_type := tf.get_attribute(resource, "payment_type", "PostPaid")
-	payment_type == "PrePaid"
+	tf.get_attribute(resource, "instance_release_protection", false) == true
+}
+
+is_protected(resource) if {
+	tf.get_attribute(resource, "instance_release_protection", "") == "true"
 }
 
 deny contains violation if {

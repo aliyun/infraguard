@@ -60,3 +60,17 @@ deny contains violation if {
 		},
 	}
 }
+
+deny contains violation if {
+	some name, resource in tf.resources_by_type("alicloud_ram_group")
+	not tf.has_resource_type("alicloud_ram_group_policy_attachment")
+	violation := {
+		"id": rule_meta.id,
+		"resource_id": sprintf("alicloud_ram_group.%s", [name]),
+		"meta": {
+			"severity": rule_meta.severity,
+			"reason": rule_meta.reason,
+			"recommendation": rule_meta.recommendation,
+		},
+	}
+}

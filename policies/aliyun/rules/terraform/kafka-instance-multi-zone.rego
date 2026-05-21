@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "kafka-instance-multi-zone",
-	"severity": "high",
+	"severity": "medium",
 	"name": {
 		"en": "Kafka Instance Multi-Zone Deployment",
 		"zh": "Kafka 实例多可用区部署",
@@ -45,6 +45,12 @@ rule_meta := {
 	},
 	"resource_types": ["alicloud_alikafka_instance"],
 	"iac_type": "terraform"
+}
+
+is_multi_zone(resource) if {
+	cross_zone := tf.get_attribute(resource, "cross_zone", false)
+	not tf.is_unknown(cross_zone)
+	cross_zone == true
 }
 
 is_multi_zone(resource) if {

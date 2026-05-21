@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "slb-all-listener-servers-multi-zone",
-	"severity": "medium",
+	"severity": "high",
 	"name": {
 		"en": "SLB Multi-Zone with Multi-Zone Backend Servers",
 		"zh": "使用多可用区 SLB 实例并为服务器组配置多个可用区资源",

@@ -6,3 +6,9 @@ resource "alicloud_ram_group_membership" "active_members" {
   group_name = alicloud_ram_group.active_group.name
   user_names = ["user1"]
 }
+
+resource "alicloud_ram_group_policy_attachment" "policy" {
+  group_name  = alicloud_ram_group.active_group.name
+  policy_name = "AliyunOSSFullAccess"
+  policy_type = "System"
+}

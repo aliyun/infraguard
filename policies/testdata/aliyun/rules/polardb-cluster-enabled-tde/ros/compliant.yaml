@@ -7,6 +7,6 @@ Resources:
       DBVersion: '8.0'
       DBNodeClass: polar.mysql.x4.medium
       PayType: PostPaid
-      TDEStatus: true
+      TDEStatus: Enabled
       DBClusterParameters:
         Parameters: '{"tde_status": "ON"}'

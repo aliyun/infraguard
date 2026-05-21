@@ -35,22 +35,43 @@ rule_meta := {
 		"pt": "Usar fuso horário explícito garante configuração de tempo consistente."
 	},
 	"recommendation": {
-		"en": "Configure db_node_class for the PolarDB cluster to ensure proper configuration.",
-		"zh": "为 PolarDB 集群配置 db_node_class 以确保正确的配置。",
-		"ja": "適切な構成を確保するために、PolarDB クラスタの db_node_class を設定します。",
-		"de": "Konfigurieren Sie db_node_class für den PolarDB-Cluster, um eine ordnungsgemäße Konfiguration sicherzustellen.",
-		"es": "Configure db_node_class para el clúster PolarDB para garantizar una configuración adecuada.",
-		"fr": "Configurez db_node_class pour le cluster PolarDB pour assurer une configuration correcte.",
-		"pt": "Configure db_node_class para o cluster PolarDB para garantir configuração adequada."
+		"en": "Set default_time_zone parameter to a specific timezone (e.g., '+08:00') instead of SYSTEM in the PolarDB cluster parameters.",
+		"zh": "将 PolarDB 集群参数中的 default_time_zone 设置为具体时区（如 '+08:00'），而非 SYSTEM。",
+		"ja": "PolarDB クラスタパラメータの default_time_zone を SYSTEM ではなく特定のタイムゾーン（例：'+08:00'）に設定します。",
+		"de": "Setzen Sie den Parameter default_time_zone auf eine bestimmte Zeitzone (z.B. '+08:00') anstelle von SYSTEM in den PolarDB-Cluster-Parametern.",
+		"es": "Establezca el parámetro default_time_zone en una zona horaria específica (p. ej., '+08:00') en lugar de SYSTEM en los parámetros del clúster PolarDB.",
+		"fr": "Définissez le paramètre default_time_zone sur un fuseau horaire spécifique (par exemple, '+08:00') au lieu de SYSTEM dans les paramètres du cluster PolarDB.",
+		"pt": "Defina o parâmetro default_time_zone para um fuso horário específico (ex.: '+08:00') em vez de SYSTEM nos parâmetros do cluster PolarDB."
 	},
 	"resource_types": ["alicloud_polardb_cluster"],
 	"iac_type": "terraform"
 }
 
+as_array(v) := v if {
+	is_array(v)
+}
+
+as_array(v) := [v] if {
+	is_object(v)
+}
+
+as_array(v) := [] if {
+	not is_array(v)
+	not is_object(v)
+}
+
+has_explicit_timezone(resource) if {
+	params := as_array(tf.get_attribute(resource, "parameters", []))
+	some param in params
+	object.get(param, "name", "") == "default_time_zone"
+	value := object.get(param, "value", "SYSTEM")
+	value != "SYSTEM"
+	value != ""
+}
+
 deny contains violation if {
 	some name, resource in tf.resources_by_type("alicloud_polardb_cluster")
-	db_node_class := tf.get_attribute(resource, "db_node_class", "")
-	db_node_class == ""
+	not has_explicit_timezone(resource)
 	violation := {
 		"id": rule_meta.id,
 		"resource_id": sprintf("alicloud_polardb_cluster.%s", [name]),

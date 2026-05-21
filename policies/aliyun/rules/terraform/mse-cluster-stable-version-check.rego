@@ -17,8 +17,8 @@ rule_meta := {
 		"pt": "O Cluster MSE Usa Versão Estável"
 	},
 	"description": {
-		"en": "MSE cluster should have a cluster_version explicitly set and not empty.",
-		"zh": "MSE 集群应明确设置 cluster_version 且不为空。",
+		"en": "Ensures that MSE cluster engine version is greater than the minimum stable version.",
+		"zh": "确保 MSE 集群引擎版本大于最小稳定版本。",
 		"ja": "MSE クラスターエンジンバージョンが最小安定バージョンより大きいことを確認します。",
 		"de": "Stellt sicher, dass die MSE-Cluster-Engine-Version größer als die minimale stabile Version ist.",
 		"es": "Garantiza que la versión del motor del clúster MSE sea mayor que la versión estable mínima.",
@@ -26,8 +26,8 @@ rule_meta := {
 		"pt": "Garante que a versão do motor do cluster MSE seja maior que a versão estável mínima."
 	},
 	"reason": {
-		"en": "The MSE cluster does not have cluster_version set.",
-		"zh": "MSE 集群未设置 cluster_version。",
+		"en": "Older versions may have security vulnerabilities and lack latest features.",
+		"zh": "旧版本可能存在安全漏洞且缺少最新功能。",
 		"ja": "古いバージョンにはセキュリティの脆弱性があり、最新機能が不足している可能性があります。",
 		"de": "Ältere Versionen können Sicherheitslücken haben und die neuesten Funktionen fehlen.",
 		"es": "Las versiones anteriores pueden tener vulnerabilidades de seguridad y carecer de las últimas funciones.",
@@ -35,8 +35,8 @@ rule_meta := {
 		"pt": "Versões mais antigas podem ter vulnerabilidades de segurança e faltar recursos mais recentes."
 	},
 	"recommendation": {
-		"en": "Set cluster_version to a specific stable version (e.g., 'NACOS_2_0_0').",
-		"zh": "将 cluster_version 设置为特定的稳定版本（如 'NACOS_2_0_0'）。",
+		"en": "Upgrade the MSE cluster to a stable version.",
+		"zh": "将 MSE 集群升级到稳定版本。",
 		"ja": "MSE クラスターを安定バージョンにアップグレードします。",
 		"de": "Aktualisieren Sie den MSE-Cluster auf eine stabile Version.",
 		"es": "Actualice el clúster MSE a una versión estable.",
@@ -47,15 +47,45 @@ rule_meta := {
 	"iac_type": "terraform"
 }
 
-has_cluster_version(resource) if {
+default_min_version := "3.5.0"
+
+version_greater(v1, v2) if {
+	v1_parts := split(v1, ".")
+	v2_parts := split(v2, ".")
+	to_number(v1_parts[0]) > to_number(v2_parts[0])
+}
+
+version_greater(v1, v2) if {
+	v1_parts := split(v1, ".")
+	v2_parts := split(v2, ".")
+	to_number(v1_parts[0]) == to_number(v2_parts[0])
+	to_number(v1_parts[1]) > to_number(v2_parts[1])
+}
+
+version_greater(v1, v2) if {
+	v1_parts := split(v1, ".")
+	v2_parts := split(v2, ".")
+	to_number(v1_parts[0]) == to_number(v2_parts[0])
+	to_number(v1_parts[1]) == to_number(v2_parts[1])
+	to_number(v1_parts[2]) > to_number(v2_parts[2])
+}
+
+is_stable_version(resource) if {
 	cluster_version := tf.get_attribute(resource, "cluster_version", "")
 	not tf.is_unknown(cluster_version)
 	cluster_version != ""
+	version_parts := split(cluster_version, "_")
+	count(version_parts) >= 4
+	major := version_parts[1]
+	minor := version_parts[2]
+	patch := version_parts[3]
+	version := sprintf("%s.%s.%s", [major, minor, patch])
+	version_greater(version, default_min_version)
 }
 
 deny contains violation if {
 	some name, resource in tf.resources_by_type("alicloud_mse_cluster")
-	not has_cluster_version(resource)
+	not is_stable_version(resource)
 	violation := {
 		"id": rule_meta.id,
 		"resource_id": sprintf("alicloud_mse_cluster.%s", [name]),

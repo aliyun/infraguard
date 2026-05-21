@@ -57,6 +57,11 @@ allowed_specs := {
 
 is_valid_spec(resource) if {
 	spec := tf.get_attribute(resource, "load_balancer_spec", "")
+	spec == ""
+}
+
+is_valid_spec(resource) if {
+	spec := tf.get_attribute(resource, "load_balancer_spec", "")
 	not tf.is_unknown(spec)
 	spec in allowed_specs
 }

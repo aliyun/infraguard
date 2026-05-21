@@ -1,6 +1,7 @@
 resource "alicloud_polardb_cluster" "unconfigured" {
-  db_type    = "MySQL"
-  db_version = "8.0"
-  pay_type   = "PostPaid"
-  vswitch_id = "vsw-abc123"
+  db_type       = "MySQL"
+  db_version    = "8.0"
+  db_node_class = "polar.mysql.x4.large"
+  pay_type      = "PostPaid"
+  vswitch_id    = "vsw-abc123"
 }

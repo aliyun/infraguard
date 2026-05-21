@@ -45,12 +45,20 @@ rule_meta := {
 	"resource_types": ["ALIYUN::SLB::MasterSlaveServerGroup"]
 }
 
+has_multi_zone_servers(resource) if {
+	servers := helpers.get_property(resource, "MasterSlaveBackendServers", [])
+	count(servers) >= 2
+}
+
 deny contains result if {
 	some name, resource in helpers.resources_by_type("ALIYUN::SLB::MasterSlaveServerGroup")
+	servers := helpers.get_property(resource, "MasterSlaveBackendServers", [])
+	count(servers) > 0
+	not has_multi_zone_servers(resource)
 	result := {
 		"id": rule_meta.id,
 		"resource_id": name,
-		"violation_path": [],
+		"violation_path": ["Properties", "MasterSlaveBackendServers"],
 		"meta": {"severity": rule_meta.severity, "reason": rule_meta.reason, "recommendation": rule_meta.recommendation},
 	}
 }

@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "slb-modify-protection-check",
-	"severity": "medium",
+	"severity": "low",
 	"name": {
 		"en": "SLB Modification Protection Enabled",
 		"zh": "SLB 实例开启配置修改保护",

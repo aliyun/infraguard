@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "slb-instance-autorenewal-check",
-	"severity": "low",
+	"severity": "medium",
 	"name": {
 		"en": "SLB Instance Auto-Renewal Check",
 		"zh": "SLB 实例包年包月开启自动续费",

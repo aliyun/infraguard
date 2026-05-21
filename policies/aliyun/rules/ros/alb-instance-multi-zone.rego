@@ -47,9 +47,15 @@ rule_meta := {
 	"resource_types": ["ALIYUN::ALB::LoadBalancer"]
 }
 
-# Check if ALB is multi-zone
+# Check if ALB is multi-zone (deduplicate by ZoneId)
 is_multi_zone(resource) if {
-	count(object.get(resource.Properties, "ZoneMappings", [])) >= 2
+	mappings := object.get(resource.Properties, "ZoneMappings", [])
+	unique_zones := {zone |
+		some mapping in mappings
+		zone := object.get(mapping, "ZoneId", "")
+		zone != ""
+	}
+	count(unique_zones) >= 2
 }
 
 # Deny rule

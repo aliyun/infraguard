@@ -46,13 +46,15 @@ rule_meta := {
 	"resource_types": ["ALIYUN::ECS::Disk"]
 }
 
+is_kms_encrypted(resource) if {
+	encrypted := helpers.get_property(resource, "Encrypted", false)
+	helpers.is_true(encrypted)
+	helpers.has_property(resource, "KMSKeyId")
+}
+
 deny contains result if {
 	some name, resource in helpers.resources_by_type("ALIYUN::ECS::Disk")
-
-	# Check if disk is encrypted
-	encrypted := helpers.get_property(resource, "Encrypted", false)
-	not helpers.is_true(encrypted)
-
+	not is_kms_encrypted(resource)
 	result := {
 		"id": rule_meta.id,
 		"resource_id": name,

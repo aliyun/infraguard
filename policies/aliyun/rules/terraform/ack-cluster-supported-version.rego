@@ -47,13 +47,11 @@ rule_meta := {
 	"iac_type": "terraform"
 }
 
-# Unsupported/EOL versions
-unsupported_versions := ["1.16", "1.18", "1.20", "1.22"]
+unsupported_version_prefixes := ["1.12", "1.14", "1.16", "1.18", "1.20", "1.22", "1.24", "1.26", "1.28", "1.30", "1.31", "1.32", "1.33", "1.34"]
 
-# Check if version starts with an unsupported prefix
-is_unsupported_version(v) if {
-	some prefix in unsupported_versions
-	startswith(v, prefix)
+is_unsupported_version(version) if {
+	some prefix in unsupported_version_prefixes
+	startswith(version, prefix)
 }
 
 deny contains violation if {

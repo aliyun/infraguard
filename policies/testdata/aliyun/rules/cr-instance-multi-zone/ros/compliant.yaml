@@ -5,7 +5,7 @@ Resources:
     Type: ALIYUN::OSS::Bucket
     Properties:
       BucketName: my-zrs-bucket
-      StorageClass: ZRS
+      DataRedundancyType: ZRS
   
   CRInstance:
     Type: ALIYUN::CR::Instance

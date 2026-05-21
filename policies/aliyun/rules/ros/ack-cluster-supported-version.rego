@@ -47,11 +47,18 @@ rule_meta := {
 	"resource_types": ["ALIYUN::CS::AnyCluster", "ALIYUN::CS::ManagedKubernetesCluster"]
 }
 
+unsupported_version_prefixes := ["1.12", "1.14", "1.16", "1.18", "1.20", "1.22", "1.24", "1.26", "1.28", "1.30", "1.31", "1.32", "1.33", "1.34"]
+
+is_unsupported_version(version) if {
+	some prefix in unsupported_version_prefixes
+	startswith(version, prefix)
+}
+
 deny contains result if {
 	some name, resource in helpers.resources_by_types(["ALIYUN::CS::ManagedKubernetesCluster", "ALIYUN::CS::AnyCluster"])
-
-	# Conceptual check - any cluster with a version is potentially unsupported
-	helpers.has_property(resource, "KubernetesVersion")
+	version := helpers.get_property(resource, "KubernetesVersion", "")
+	version != ""
+	is_unsupported_version(version)
 	result := {
 		"id": rule_meta.id,
 		"resource_id": name,

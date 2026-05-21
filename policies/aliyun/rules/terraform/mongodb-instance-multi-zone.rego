@@ -47,9 +47,21 @@ rule_meta := {
 	"iac_type": "terraform"
 }
 
+is_multi_zone(resource) if {
+	secondary := tf.get_attribute(resource, "secondary_zone_id", "")
+	not tf.is_unknown(secondary)
+	secondary != ""
+}
+
+is_multi_zone(resource) if {
+	hidden := tf.get_attribute(resource, "hidden_zone_id", "")
+	not tf.is_unknown(hidden)
+	hidden != ""
+}
+
 deny contains violation if {
 	some name, resource in tf.resources_by_type("alicloud_mongodb_instance")
-	tf.get_attribute(resource, "secondary_zone_id", "") == ""
+	not is_multi_zone(resource)
 	violation := {
 		"id": rule_meta.id,
 		"resource_id": sprintf("alicloud_mongodb_instance.%s", [name]),

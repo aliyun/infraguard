@@ -113,11 +113,7 @@ deny contains violation if {
 	violation := {
 		"id": rule_meta.id,
 		"resource_id": sprintf("alicloud_ess_scaling_configuration.%s", [name]),
-		"violation_path": ["security_group_ids"],
- rule_meta.severity, "reason": {
- 	"en": "The scaling configuration does not have explicit security groups configured.",
- 	"zh": "伸缩配置未显式配置安全组。"
- },
+		"meta": {"severity": rule_meta.severity, "reason": rule_meta.reason, "recommendation": rule_meta.recommendation},
 	}
 }
 

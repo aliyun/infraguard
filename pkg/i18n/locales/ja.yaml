@@ -337,6 +337,7 @@ severity:
 
 # グローバルフラグ
 lang_flag: "出力言語（en, zh, es, fr, de, ja, pt、デフォルト: 自動検出）"
+help_flag: "{{.Name}} のヘルプ"
 
 # エラーメッセージ
 errors:

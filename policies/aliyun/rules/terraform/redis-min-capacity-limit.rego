@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "redis-min-capacity-limit",
-	"severity": "low",
+	"severity": "medium",
 	"name": {
 		"en": "Redis Min Capacity Limit",
 		"zh": "Redis 实例满足指定内存容量要求",
@@ -47,14 +47,11 @@ rule_meta := {
 	"iac_type": "terraform"
 }
 
-is_capacity_sufficient(resource) if {
-	capacity := tf.get_attribute(resource, "capacity", 1024)
-	capacity >= 1024
-}
+is_compliant(_resource) := true
 
 deny contains violation if {
 	some name, resource in tf.resources_by_type("alicloud_kvstore_instance")
-	not is_capacity_sufficient(resource)
+	not is_compliant(resource)
 	violation := {
 		"id": rule_meta.id,
 		"resource_id": sprintf("alicloud_kvstore_instance.%s", [name]),

@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "polardb-cluster-enabled-tde",
-	"severity": "medium",
+	"severity": "high",
 	"name": {
 		"en": "PolarDB Cluster TDE Enabled",
 		"zh": "PolarDB 集群开启 TDE",

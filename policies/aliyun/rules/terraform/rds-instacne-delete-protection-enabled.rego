@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "rds-instacne-delete-protection-enabled",
-	"severity": "high",
+	"severity": "medium",
 	"name": {
 		"en": "RDS Instance Deletion Protection Enabled",
 		"zh": "RDS 实例开启删除保护",

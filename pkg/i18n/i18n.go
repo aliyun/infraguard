@@ -316,6 +316,7 @@ type Messages struct {
 
 	// Global flags
 	LangFlag string `yaml:"lang_flag"`
+	HelpFlag string `yaml:"help_flag"`
 
 	// Error messages
 	Errors struct {

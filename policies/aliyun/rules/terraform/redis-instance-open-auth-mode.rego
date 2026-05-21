@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "redis-instance-open-auth-mode",
-	"severity": "medium",
+	"severity": "high",
 	"name": {
 		"en": "Redis Authentication Mode Enabled",
 		"zh": "Redis 强制开启认证模式",

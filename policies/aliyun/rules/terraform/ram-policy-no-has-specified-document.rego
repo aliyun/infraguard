@@ -63,22 +63,30 @@ deny contains violation if {
 	}
 }
 
-has_admin_access(doc_str) if {
-	contains(doc_str, "\"Action\":\"*\"")
-	contains(doc_str, "\"Resource\":\"*\"")
+is_wildcard_action(statement) if {
+	statement.Action == "*"
+}
+
+is_wildcard_action(statement) if {
+	is_array(statement.Action)
+	some action in statement.Action
+	action == "*"
+}
+
+is_wildcard_resource(statement) if {
+	statement.Resource == "*"
+}
+
+is_wildcard_resource(statement) if {
+	is_array(statement.Resource)
+	some res in statement.Resource
+	res == "*"
 }
 
 has_admin_access(doc_str) if {
-	contains(doc_str, "\"Action\": \"*\"")
-	contains(doc_str, "\"Resource\": \"*\"")
-}
-
-has_admin_access(doc_str) if {
-	contains(doc_str, "\"Action\":[\"*\"]")
-	contains(doc_str, "\"Resource\":[\"*\"]")
-}
-
-has_admin_access(doc_str) if {
-	contains(doc_str, "\"Action\": [\"*\"]")
-	contains(doc_str, "\"Resource\": [\"*\"]")
+	doc := json.unmarshal(doc_str)
+	some statement in doc.Statement
+	statement.Effect == "Allow"
+	is_wildcard_action(statement)
+	is_wildcard_resource(statement)
 }

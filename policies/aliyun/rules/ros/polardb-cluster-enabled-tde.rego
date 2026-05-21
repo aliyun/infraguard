@@ -46,7 +46,7 @@ rule_meta := {
 }
 
 is_compliant(resource) if {
-	helpers.is_true(helpers.get_property(resource, "TDEStatus", false))
+	helpers.get_property(resource, "TDEStatus", "Disabled") == "Enabled"
 }
 
 deny contains result if {
