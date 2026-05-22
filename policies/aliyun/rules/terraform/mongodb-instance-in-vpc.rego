@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "mongodb-instance-in-vpc",
-	"severity": "high",
+	"severity": "medium",
 	"name": {
 		"en": "MongoDB Instance Deployed in VPC",
 		"zh": "MongoDB 实例部署在 VPC 中",

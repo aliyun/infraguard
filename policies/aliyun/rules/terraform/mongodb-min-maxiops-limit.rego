@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "mongodb-min-maxiops-limit",
-	"severity": "medium",
+	"severity": "high",
 	"name": {
 		"en": "MongoDB Instance Minimum IOPS Storage",
 		"zh": "MongoDB 实例最小 IOPS 存储检查",

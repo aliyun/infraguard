@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "polardb-cluster-delete-protection-enabled",
-	"severity": "high",
+	"severity": "medium",
 	"name": {
 		"en": "PolarDB Cluster Deletion Protection Enabled",
 		"zh": "PolarDB 集群开启删除保护",

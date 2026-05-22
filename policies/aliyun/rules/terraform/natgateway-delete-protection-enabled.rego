@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "natgateway-delete-protection-enabled",
-	"severity": "high",
+	"severity": "medium",
 	"name": {
 		"en": "NAT Gateway Deletion Protection Enabled",
 		"zh": "NAT 网关开启释放保护",

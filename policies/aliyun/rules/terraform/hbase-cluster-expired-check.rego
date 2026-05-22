@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "hbase-cluster-expired-check",
-	"severity": "medium",
+	"severity": "high",
 	"name": {
 		"en": "HBase Prepaid Instance Expiration Check",
 		"zh": "HBase 预付费实例到期检查",

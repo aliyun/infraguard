@@ -49,11 +49,13 @@ rule_meta := {
 
 has_https_enabled(resource) if {
 	protocol := tf.get_attribute(resource, "protocol", "")
+	not tf.is_unknown(protocol)
 	protocol == "HTTPS"
 }
 
 has_https_enabled(resource) if {
 	protocol := tf.get_attribute(resource, "protocol", "")
+	not tf.is_unknown(protocol)
 	protocol == "HTTP,HTTPS"
 }
 

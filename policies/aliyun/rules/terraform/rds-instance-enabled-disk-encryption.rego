@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "rds-instance-enabled-disk-encryption",
-	"severity": "medium",
+	"severity": "high",
 	"name": {
 		"en": "RDS Instance Disk Encryption Enabled",
 		"zh": "RDS 实例开启磁盘加密",

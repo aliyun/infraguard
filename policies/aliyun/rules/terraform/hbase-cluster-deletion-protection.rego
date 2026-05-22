@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "hbase-cluster-deletion-protection",
-	"severity": "high",
+	"severity": "medium",
 	"name": {
 		"en": "HBase Cluster Deletion Protection Enabled",
 		"zh": "HBase 集群开启释放保护",

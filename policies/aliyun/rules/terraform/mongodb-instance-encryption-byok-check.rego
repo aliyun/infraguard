@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "mongodb-instance-encryption-byok-check",
-	"severity": "high",
+	"severity": "medium",
 	"name": {
 		"en": "MongoDB Instance TDE with Custom KMS Key",
 		"zh": "MongoDB 实例使用自定义 KMS 密钥进行 TDE 加密",

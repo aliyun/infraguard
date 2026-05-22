@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "mongodb-instance-multi-node",
-	"severity": "high",
+	"severity": "medium",
 	"name": {
 		"en": "MongoDB Instance Multi-Node for High Availability",
 		"zh": "MongoDB 实例多节点高可用",

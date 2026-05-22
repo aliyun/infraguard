@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "rds-instances-in-vpc",
-	"severity": "high",
+	"severity": "medium",
 	"name": {
 		"en": "RDS Instance in VPC",
 		"zh": "RDS 实例在 VPC 内",

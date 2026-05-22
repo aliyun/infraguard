@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "mongodb-min-maxconnections-limit",
-	"severity": "medium",
+	"severity": "high",
 	"name": {
 		"en": "MongoDB Instance Minimum Connections Spec",
 		"zh": "MongoDB 实例最小连接数规格检查",

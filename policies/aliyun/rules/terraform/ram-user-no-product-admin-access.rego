@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "ram-user-no-product-admin-access",
-	"severity": "high",
+	"severity": "medium",
 	"name": {
 		"en": "RAM User No Product Administrative Access",
 		"zh": "RAM 用户没有产品管理权限",

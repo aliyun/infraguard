@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "mongodb-cluster-expired-check",
-	"severity": "medium",
+	"severity": "high",
 	"name": {
 		"en": "MongoDB Instance Expiration Check",
 		"zh": "MongoDB 实例到期检查",

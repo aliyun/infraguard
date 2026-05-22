@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "kms-instance-multi-zone",
-	"severity": "high",
+	"severity": "medium",
 	"name": {
 		"en": "KMS Instance Multi-Zone Deployment",
 		"zh": "使用多可用区的 KMS 实例",

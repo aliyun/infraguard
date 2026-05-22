@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "redis-instance-expired-check",
-	"severity": "medium",
+	"severity": "high",
 	"name": {
 		"en": "Redis Prepaid Instance Expiration Check",
 		"zh": "Redis 预付费实例到期检查",

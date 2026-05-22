@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "hbase-cluster-in-vpc",
-	"severity": "high",
+	"severity": "medium",
 	"name": {
 		"en": "HBase Cluster Deployed in VPC",
 		"zh": "HBase 集群部署在 VPC 中",

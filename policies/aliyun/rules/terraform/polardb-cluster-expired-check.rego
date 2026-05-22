@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "polardb-cluster-expired-check",
-	"severity": "medium",
+	"severity": "high",
 	"name": {
 		"en": "PolarDB Cluster Expiration Check",
 		"zh": "PolarDB 集群到期检查",

@@ -6,7 +6,7 @@ import data.infraguard.helpers.terraform as tf
 
 rule_meta := {
 	"id": "lindorm-instance-in-vpc",
-	"severity": "high",
+	"severity": "medium",
 	"name": {
 		"en": "Lindorm Instance in VPC",
 		"zh": "使用专有网络类型的 Lindorm 实例",

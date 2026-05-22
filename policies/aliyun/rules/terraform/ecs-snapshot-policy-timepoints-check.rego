@@ -55,6 +55,7 @@ deny contains violation if {
 	some name, resource in tf.resources_by_type(resource_type)
 
 	timepoints := tf.get_attribute(resource, "time_points", [])
+	not tf.is_unknown(timepoints)
 	some point in timepoints
 	not point in recommended_timepoints
 
