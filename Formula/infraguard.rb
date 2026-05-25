@@ -1,8 +1,8 @@
 class Infraguard < Formula
-  desc "IaC compliance pre-check CLI for Alibaba Cloud ROS templates"
+  desc "IaC compliance pre-check CLI for Alibaba Cloud ROS and Terraform templates"
   homepage "https://github.com/aliyun/infraguard"
-  url "https://github.com/aliyun/infraguard/archive/refs/tags/cli/v0.8.0.tar.gz"
-  sha256 "4082d5fc92a4eb6e3d0d35a5a13ad58ec75ee25c6318c55718fa1ce52310b0ec"
+  url "https://github.com/aliyun/infraguard/archive/refs/tags/cli/v0.9.0.tar.gz"
+  sha256 "34cdd9da54cbd0205e271bce329bc33dc87c2a99c6a6695d2621306521be7765"
   license "Apache-2.0"
   head "https://github.com/aliyun/infraguard.git", branch: "main"
 
