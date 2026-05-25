@@ -12,7 +12,7 @@ InfraGuard est un outil en ligne de commande qui valide les modèles Infrastruct
 
 ### Quels fournisseurs de cloud sont supportés ?
 
-Actuellement, InfraGuard supporte les modèles Alibaba Cloud (Aliyun) ROS. Le support pour d'autres fournisseurs peut être ajouté dans les versions futures.
+Actuellement, InfraGuard supporte les modèles Alibaba Cloud (Aliyun) ROS et les configurations Terraform pour les ressources Alibaba Cloud. Le support pour d'autres fournisseurs peut être ajouté dans les versions futures.
 
 ### InfraGuard est-il gratuit ?
 
@@ -24,6 +24,12 @@ Oui, InfraGuard est open source et publié sous la Licence Apache 2.0.
 
 ```bash
 infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack
+```
+
+Pour Terraform :
+
+```bash
+infraguard scan ./terraform -p pack:aliyun:quick-start-compliance-pack
 ```
 
 Voir le [Guide de Démarrage Rapide](./getting-started/quick-start) pour plus d'exemples.

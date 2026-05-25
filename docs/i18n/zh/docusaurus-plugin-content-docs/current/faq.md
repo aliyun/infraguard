@@ -12,7 +12,7 @@ InfraGuard 是一个命令行工具，在部署前根据合规策略验证基础
 
 ### 支持哪些云服务商？
 
-目前，InfraGuard 支持阿里云 (Aliyun) ROS 模板。未来版本可能会添加对其他云服务商的支持。
+目前，InfraGuard 支持阿里云 (Aliyun) ROS 模板，以及面向阿里云资源的 Terraform 配置。未来版本可能会添加对其他云服务商的支持。
 
 ### InfraGuard 是免费的吗？
 
@@ -24,6 +24,12 @@ InfraGuard 是一个命令行工具，在部署前根据合规策略验证基础
 
 ```bash
 infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack
+```
+
+Terraform 示例：
+
+```bash
+infraguard scan ./terraform -p pack:aliyun:quick-start-compliance-pack
 ```
 
 有关更多示例，请参阅[快速入门指南](./getting-started/quick-start)。
@@ -138,7 +144,7 @@ deny contains result if {
 
 ### 模板解析错误
 
-确保您的模板是有效的 YAML 或 JSON。检查语法错误。
+确保您的 ROS 模板是有效的 YAML 或 JSON，或 Terraform 配置是有效的 HCL。检查语法错误。
 
 ### 未发现违规但预期有违规
 
@@ -194,4 +200,3 @@ fi
 1. 查看[文档](./intro)
 2. 搜索现有的 [GitHub Issues](https://github.com/aliyun/infraguard/issues)
 3. 如有需要，创建新问题
-

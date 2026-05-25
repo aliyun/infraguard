@@ -85,6 +85,26 @@ infraguard policy get pack:aliyun:mlps-level-3-pre-check-compliance-pack
 
 ## 常见用例
 
+### 扫描 Terraform
+
+您可以扫描 Terraform 项目目录或单个 `.tf` 文件。提供 `.tf` 文件时，InfraGuard 会评估该文件所在目录中的整个 Terraform 模块。
+
+```bash
+# 扫描 Terraform 项目目录
+infraguard scan ./terraform -p pack:aliyun:quick-start-compliance-pack
+
+# 扫描单个 .tf 文件
+infraguard scan main.tf -p rule:aliyun:ecs-instance-no-public-ip
+```
+
+Terraform 变量值可以通过 `--input` 传入，支持 `key=value`、JSON/YAML 文件或 `.tfvars` 文件：
+
+```bash
+infraguard scan ./terraform \
+  -p rule:aliyun:ecs-instance-no-public-ip \
+  --input terraform.tfvars
+```
+
 ### 使用多个策略扫描
 
 您可以在一次扫描中应用多个策略：
@@ -131,4 +151,3 @@ infraguard config set lang zh
 1. 查看 [FAQ](../faq) 页面
 2. 仔细查看错误消息 - 它们通常包含有用的提示
 3. 在 [GitHub](https://github.com/aliyun/infraguard/issues) 上报告问题
-

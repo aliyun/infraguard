@@ -6,7 +6,7 @@
 
 **ポリシー定義。インフラストラクチャ保護。**
 
-**Infrastructure as Code (IaC) コンプライアンス事前チェック CLI**（Alibaba Cloud ROSテンプレート用）。デプロイ前にROS YAML/JSONテンプレートをセキュリティおよびコンプライアンスポリシーに対して評価します。
+**Infrastructure as Code (IaC) コンプライアンス事前チェック CLI**（Alibaba Cloud ROSおよびTerraformテンプレート用）。デプロイ前にROS YAML/JSONテンプレートとTerraform `.tf` 設定をセキュリティおよびコンプライアンスポリシーに対して評価します。
 
 > 💡 InfraGuardは**Policy as Code**の理念を採用しています - コンプライアンスポリシーをバージョン管理可能で、テスト可能で、再利用可能なコードアーティファクトとして扱います。
 
@@ -16,6 +16,7 @@
 
 - 🔍 **デプロイ前検証** - 本番環境に到達する前にコンプライアンスの問題を検出
 - 🎯 **デュアルスキャンモード** - 静的解析またはクラウドベースのプレビュー検証
+- 🧩 **ROS と Terraform のサポート** - ROS YAML/JSONテンプレートとTerraform `.tf` プロジェクトをスキャン
 - 📦 **組み込みルール** - Aliyunサービスの包括的なカバレッジ
 - 🏆 **コンプライアンスパック** - MLPS、ISO 27001、PCI-DSS、SOC 2など
 - ✏️ **エディタ統合** - VS Code拡張機能によるROSテンプレートの自動補完、リアルタイム診断、ホバードキュメント
@@ -39,6 +40,10 @@ go install github.com/aliyun/infraguard/cmd/infraguard@latest
 ```bash
 # コンプライアンスパックでスキャン
 infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack
+
+# Terraformプロジェクトまたは .tf ファイルをスキャン
+infraguard scan ./terraform -p pack:aliyun:quick-start-compliance-pack
+infraguard scan main.tf -p rule:aliyun:ecs-instance-no-public-ip
 
 # 特定のルールでスキャン
 infraguard scan template.yaml -p rule:aliyun:ecs-instance-no-public-ip

@@ -7,9 +7,9 @@ sidebar_label: Introducción
 
 **Política Definida. Infraestructura Protegida.**
 
-**CLI de pre-verificación de cumplimiento Infrastructure as Code (IaC)** para plantillas Alibaba Cloud ROS.
+**CLI de pre-verificación de cumplimiento Infrastructure as Code (IaC)** para plantillas Alibaba Cloud ROS y Terraform.
 
-Evalúe sus plantillas ROS YAML/JSON contra políticas de seguridad y cumplimiento **antes del despliegue**.
+Evalúe sus plantillas ROS YAML/JSON y configuraciones Terraform `.tf` contra políticas de seguridad y cumplimiento **antes del despliegue**.
 
 ## ¿Qué es InfraGuard?
 

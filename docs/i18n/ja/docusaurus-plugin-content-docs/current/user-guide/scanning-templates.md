@@ -4,7 +4,7 @@ title: テンプレートのスキャン
 
 # テンプレートのスキャン
 
-`infraguard scan`コマンドは、ROSテンプレートをコンプライアンスポリシーに対して評価します。
+`infraguard scan`コマンドは、ROSテンプレートとTerraform設定をコンプライアンスポリシーに対して評価します。
 
 ## 基本的な使用方法
 
@@ -14,7 +14,7 @@ infraguard scan <template> -p <policy>
 
 ### 必須引数
 
-- `<template>`: ROSテンプレートファイルへのパス（YAMLまたはJSON）- 位置引数
+- `<template>`: ROSテンプレートファイル（YAMLまたはJSON）、Terraform `.tf` ファイル、または対応テンプレートを含むディレクトリへのパス - 位置引数
 
 ### 必須フラグ
 

@@ -4,7 +4,7 @@ title: Vorlagen Scannen
 
 # Vorlagen Scannen
 
-Der Befehl `infraguard scan` bewertet Ihre ROS-Vorlagen gegen Compliance-Richtlinien.
+Der Befehl `infraguard scan` bewertet Ihre ROS-Vorlagen und Terraform-Konfigurationen gegen Compliance-Richtlinien.
 
 ## Grundlegende Verwendung
 
@@ -14,7 +14,7 @@ infraguard scan <template> -p <policy>
 
 ### Erforderliche Argumente
 
-- `<template>`: Pfad zu Ihrer ROS-Vorlagendatei (YAML oder JSON) - Positionsargument
+- `<template>`: Pfad zu Ihrer ROS-Vorlagendatei (YAML oder JSON), Terraform `.tf`-Datei oder einem Verzeichnis mit unterstützten Vorlagen - Positionsargument
 
 ### Erforderliche Flags
 

@@ -4,7 +4,7 @@ title: infraguard scan
 
 # infraguard scan
 
-Escanear plantillas ROS para detectar violaciones de cumplimiento.
+Escanear plantillas ROS y configuraciones Terraform para detectar violaciones de cumplimiento.
 
 ## Sinopsis
 
@@ -14,7 +14,7 @@ infraguard scan <template> -p <policy> [flags]
 
 ## Argumentos
 
-- `<template>`: Ruta al archivo de plantilla ROS (requerido, argumento posicional)
+- `<template>`: Ruta a un archivo de plantilla ROS, archivo Terraform `.tf`, o directorio con plantillas compatibles (requerido, argumento posicional)
 
 ## Flags
 
@@ -32,6 +32,12 @@ infraguard scan <template> -p <policy> [flags]
 ```bash
 # Escanear con una regla
 infraguard scan template.yaml -p rule:aliyun:ecs-instance-no-public-ip
+
+# Escanear un proyecto Terraform
+infraguard scan ./terraform -p pack:aliyun:quick-start-compliance-pack
+
+# Escanear un archivo Terraform y pasar variables
+infraguard scan main.tf -p rule:aliyun:ecs-instance-no-public-ip --input terraform.tfvars
 
 # Escanear con un paquete
 infraguard scan template.yaml -p pack:aliyun:mlps-level-3-pre-check-compliance-pack

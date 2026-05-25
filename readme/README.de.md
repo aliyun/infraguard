@@ -6,7 +6,7 @@
 
 **Richtlinien definiert. Infrastruktur gesichert.**
 
-**Infrastructure as Code (IaC) Compliance Pre-Check CLI** für Alibaba Cloud ROS-Vorlagen. Bewerten Sie Ihre ROS YAML/JSON-Vorlagen gegen Sicherheits- und Compliance-Richtlinien **vor dem Deployment**.
+**Infrastructure as Code (IaC) Compliance Pre-Check CLI** für Alibaba Cloud ROS- und Terraform-Vorlagen. Bewerten Sie Ihre ROS YAML/JSON-Vorlagen und Terraform `.tf`-Konfigurationen gegen Sicherheits- und Compliance-Richtlinien **vor dem Deployment**.
 
 > 💡 InfraGuard folgt dem Prinzip **Policy as Code** - Compliance-Richtlinien als versionierte, testbare und wiederverwendbare Code-Artefakte zu behandeln.
 
@@ -16,6 +16,7 @@
 
 - 🔍 **Pre-Deployment-Validierung** - Compliance-Probleme erkennen, bevor sie die Produktion erreichen
 - 🎯 **Dual-Scan-Modi** - Statische Analyse oder cloud-basierte Preview-Validierung
+- 🧩 **ROS- und Terraform-Unterstützung** - Scannen Sie ROS YAML/JSON-Vorlagen und Terraform `.tf`-Projekte
 - 📦 **Integrierte Regeln** - Umfassende Abdeckung für Aliyun-Dienste
 - 🏆 **Compliance-Pakete** - MLPS, ISO 27001, PCI-DSS, SOC 2 und mehr
 - ✏️ **Editor-Integration** - VS Code-Erweiterung mit Auto-Vervollständigung, Echtzeit-Diagnose und Hover-Dokumentation für ROS-Templates
@@ -39,6 +40,10 @@ Oder laden Sie vorkompilierte Binärdateien von [GitHub Releases](https://github
 ```bash
 # Scannen mit einem Compliance-Paket
 infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack
+
+# Terraform-Projekt oder .tf-Datei scannen
+infraguard scan ./terraform -p pack:aliyun:quick-start-compliance-pack
+infraguard scan main.tf -p rule:aliyun:ecs-instance-no-public-ip
 
 # Scannen mit einer bestimmten Regel
 infraguard scan template.yaml -p rule:aliyun:ecs-instance-no-public-ip

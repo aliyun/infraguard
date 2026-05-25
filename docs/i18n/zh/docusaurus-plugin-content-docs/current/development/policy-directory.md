@@ -16,8 +16,12 @@ InfraGuard 支持多个策略来源，并具有清晰的策略加载优先级系
 {策略根目录}/
 ├── {provider}/
 │   ├── rules/
-│   │   ├── rule1.rego            # 单个规则
-│   │   └── rule2.rego
+│   │   ├── ros/
+│   │   │   ├── rule1.rego        # ROS 规则
+│   │   │   └── rule2.rego
+│   │   └── terraform/
+│   │       ├── rule1.rego        # Terraform 规则
+│   │       └── rule2.rego
 │   └── packs/
 │       ├── pack1.rego            # 合规包
 │       └── pack2.rego
@@ -29,13 +33,17 @@ InfraGuard 支持多个策略来源，并具有清晰的策略加载优先级系
 .infraguard/policies/
 ├── solution/
 │   ├── rules/
-│   │   ├── metadata-ros-composer-check.rego
-│   │   ├── metadata-templatetags-check.rego
-│   │   ├── parameter-sensitive-noecho-check.rego
-│   │   └── security-group-open-ports-except-whitelist.rego
+│   │   ├── ros/
+│   │   │   ├── metadata-ros-composer-check.rego
+│   │   │   ├── metadata-templatetags-check.rego
+│   │   │   └── parameter-sensitive-noecho-check.rego
+│   │   └── terraform/
+│   │       └── security-group-open-ports-except-whitelist.rego
 │   └── packs/
 │       └── ros-best-practice.rego
 ```
+
+自定义策略集中的 `ros/` 和 `terraform/` 子目录是可选的，但建议使用。InfraGuard 会利用这些目录识别规则适用的 IaC 类型，并在扫描时自动过滤策略。
 
 ## 策略加载优先级
 
@@ -91,6 +99,13 @@ InfraGuard 根据目录结构自动生成策略 ID：
 - **包**：`pack:{provider}:{pack-id}`
 
 其中 `{provider}` 派生自父目录名称（例如 `solution`、`aliyun`、`custom`）。
+
+`ros/` 和 `terraform/` 等 IaC 类型子目录不会出现在生成的 ID 中，因此以下两个文件都会生成 `rule:aliyun:ecs-instance-no-public-ip`：
+
+```
+aliyun/rules/ros/ecs-instance-no-public-ip.rego
+aliyun/rules/terraform/ecs-instance-no-public-ip.rego
+```
 
 
 ## 下一步

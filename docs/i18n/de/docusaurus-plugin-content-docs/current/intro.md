@@ -7,9 +7,9 @@ sidebar_label: Einführung
 
 **Richtlinie Definiert. Infrastruktur Gesichert.**
 
-**Infrastructure as Code (IaC) Compliance-Vorprüfung CLI** für Alibaba Cloud ROS-Vorlagen.
+**Infrastructure as Code (IaC) Compliance-Vorprüfung CLI** für Alibaba Cloud ROS- und Terraform-Vorlagen.
 
-Bewerten Sie Ihre ROS YAML/JSON-Vorlagen gegen Sicherheits- und Compliance-Richtlinien **vor dem Deployment**.
+Bewerten Sie Ihre ROS YAML/JSON-Vorlagen und Terraform `.tf`-Konfigurationen gegen Sicherheits- und Compliance-Richtlinien **vor dem Deployment**.
 
 ## Was ist InfraGuard?
 

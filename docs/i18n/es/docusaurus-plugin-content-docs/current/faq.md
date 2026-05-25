@@ -12,7 +12,7 @@ InfraGuard es una herramienta de línea de comandos que valida plantillas Infras
 
 ### ¿Qué proveedores de nube son compatibles?
 
-Actualmente, InfraGuard soporta plantillas Alibaba Cloud (Aliyun) ROS. El soporte para otros proveedores puede agregarse en versiones futuras.
+Actualmente, InfraGuard soporta plantillas Alibaba Cloud (Aliyun) ROS y configuraciones Terraform para recursos de Alibaba Cloud. El soporte para otros proveedores puede agregarse en versiones futuras.
 
 ### ¿InfraGuard es gratuito?
 
@@ -24,6 +24,12 @@ Sí, InfraGuard es de código abierto y se publica bajo la Licencia Apache 2.0.
 
 ```bash
 infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack
+```
+
+Para Terraform:
+
+```bash
+infraguard scan ./terraform -p pack:aliyun:quick-start-compliance-pack
 ```
 
 Consulte la [Guía de Inicio Rápido](./getting-started/quick-start) para más ejemplos.

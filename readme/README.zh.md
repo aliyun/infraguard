@@ -6,7 +6,7 @@
 
 **策略定义基础设施安全。**
 
-**基础设施即代码 (IaC) 合规性预检查 CLI**，适用于阿里云 ROS 模板。在部署前评估您的 ROS YAML/JSON 模板是否符合安全和合规策略。
+**基础设施即代码 (IaC) 合规性预检查 CLI**，适用于阿里云 ROS 和 Terraform 模板。在部署前评估您的 ROS YAML/JSON 模板和 Terraform `.tf` 配置是否符合安全和合规策略。
 
 > 💡 InfraGuard 秉承**策略即代码 (Policy as Code)** 理念 - 将合规策略作为可版本化、可测试、可复用的代码制品来管理。
 
@@ -16,6 +16,7 @@
 
 - 🔍 **部署前验证** - 在生产环境之前发现合规性问题
 - 🎯 **双重扫描模式** - 静态分析或基于云端的预览验证
+- 🧩 **ROS 与 Terraform 支持** - 扫描 ROS YAML/JSON 模板和 Terraform `.tf` 项目
 - 📦 **内置规则** - 全面覆盖阿里云服务
 - 🏆 **合规包** - MLPS、ISO 27001、PCI-DSS、SOC 2 等
 - ✏️ **编辑器集成** - VS Code 扩展，提供 ROS 模板的自动补全、实时诊断和悬停文档
@@ -39,6 +40,10 @@ go install github.com/aliyun/infraguard/cmd/infraguard@latest
 ```bash
 # 使用合规包扫描
 infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack
+
+# 扫描 Terraform 项目或 .tf 文件
+infraguard scan ./terraform -p pack:aliyun:quick-start-compliance-pack
+infraguard scan main.tf -p rule:aliyun:ecs-instance-no-public-ip
 
 # 使用特定规则扫描
 infraguard scan template.yaml -p rule:aliyun:ecs-instance-no-public-ip

@@ -59,11 +59,64 @@ is_compliant(resource) if {
 }
 ```
 
+For Terraform rules, use the Terraform package namespace, import the Terraform helpers, set `iac_type`, and use Terraform resource type names:
+
+```rego
+package infraguard.rules.terraform.my_custom_rule
+
+import rego.v1
+import data.infraguard.helpers.terraform as tf
+
+rule_meta := {
+    "id": "my-custom-rule",
+    "severity": "high",
+    "name": {
+        "en": "My Custom Rule",
+        "zh": "我的自定义规则",
+    },
+    "description": {
+        "en": "Checks for custom compliance requirement",
+        "zh": "检查自定义合规要求",
+    },
+    "reason": {
+        "en": "Resource does not meet requirement",
+        "zh": "资源不符合要求",
+    },
+    "recommendation": {
+        "en": "Configure resource properly",
+        "zh": "正确配置资源",
+    },
+    "resource_types": ["alicloud_instance"],
+    "iac_type": "terraform",
+}
+
+deny contains result if {
+    some name, resource in tf.resources_by_type("alicloud_instance")
+    # Your compliance logic here
+    not is_compliant(resource)
+    result := {
+        "id": rule_meta.id,
+        "resource_id": sprintf("alicloud_instance.%s", [name]),
+        "meta": {
+            "severity": rule_meta.severity,
+            "reason": rule_meta.reason,
+            "recommendation": rule_meta.recommendation,
+        },
+    }
+}
+
+is_compliant(resource) if {
+    tf.get_attribute(resource, "instance_type", "") != ""
+}
+```
+
 ## Key Components
 
 ### Package Name
 
-Must follow format: `infraguard.rules.<provider>.<rule_name_snake_case>`
+For ROS rules, use `infraguard.rules.<provider>.<rule_name_snake_case>`.
+
+For Terraform rules, use `infraguard.rules.terraform.<rule_name_snake_case>`.
 
 **Note**: Use underscores, not hyphens in package names.
 
@@ -77,6 +130,7 @@ Required fields:
 - `reason`: Why it failed
 - `recommendation`: How to fix
 - `resource_types`: Affected resource types (optional)
+- `iac_type`: IaC type for Terraform rules (`"terraform"`); ROS rules default to ROS when omitted
 
 ### Deny Rule
 
@@ -85,6 +139,8 @@ Must return results with:
 - `resource_id`: Resource name from template
 - `violation_path`: Path to problematic property
 - `meta`: Severity, reason, recommendation
+
+Terraform rules usually omit `violation_path`; InfraGuard maps violations back to the matching Terraform resource block when `resource_id` follows the `resource_type.resource_name` format.
 
 ## Helper Functions
 
@@ -119,4 +175,3 @@ See [Debugging Policies](./debugging-policies) for comprehensive debugging techn
 - Learn to [Write Packs](./writing-packs)
 - Learn about [Policy Directory Structure](./policy-directory)
 - Explore [Helper Functions](./helper-functions)
-

@@ -16,8 +16,12 @@ Policies follow a provider-first directory structure:
 {policy-root}/
 ├── {provider}/
 │   ├── rules/
-│   │   ├── rule1.rego            # Individual rules
-│   │   └── rule2.rego
+│   │   ├── ros/
+│   │   │   ├── rule1.rego        # ROS rules
+│   │   │   └── rule2.rego
+│   │   └── terraform/
+│   │       ├── rule1.rego        # Terraform rules
+│   │       └── rule2.rego
 │   └── packs/
 │       ├── pack1.rego            # Compliance packs
 │       └── pack2.rego
@@ -29,13 +33,17 @@ Policies follow a provider-first directory structure:
 .infraguard/policies/
 ├── solution/
 │   ├── rules/
-│   │   ├── metadata-ros-composer-check.rego
-│   │   ├── metadata-templatetags-check.rego
-│   │   ├── parameter-sensitive-noecho-check.rego
-│   │   └── security-group-open-ports-except-whitelist.rego
+│   │   ├── ros/
+│   │   │   ├── metadata-ros-composer-check.rego
+│   │   │   ├── metadata-templatetags-check.rego
+│   │   │   └── parameter-sensitive-noecho-check.rego
+│   │   └── terraform/
+│   │       └── security-group-open-ports-except-whitelist.rego
 │   └── packs/
 │       └── ros-best-practice.rego
 ```
+
+The `ros/` and `terraform/` subdirectories are optional for custom policy sets, but recommended. InfraGuard uses them to detect which IaC type a rule applies to and filters policies automatically during scans.
 
 ## Policy Loading Priority
 
@@ -91,6 +99,13 @@ InfraGuard automatically generates policy IDs based on directory structure:
 - **Packs**: `pack:{provider}:{pack-id}`
 
 Where `{provider}` is derived from the parent directory name (e.g., `solution`, `aliyun`, `custom`).
+
+IaC type subdirectories such as `ros/` and `terraform/` are excluded from generated IDs, so these files both produce `rule:aliyun:ecs-instance-no-public-ip`:
+
+```
+aliyun/rules/ros/ecs-instance-no-public-ip.rego
+aliyun/rules/terraform/ecs-instance-no-public-ip.rego
+```
 
 ## Next Steps
 

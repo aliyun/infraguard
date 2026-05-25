@@ -12,7 +12,7 @@ InfraGuard ist ein Befehlszeilentool, das Infrastructure as Code (IaC)-Vorlagen 
 
 ### Welche Cloud-Anbieter werden unterstützt?
 
-Derzeit unterstützt InfraGuard Alibaba Cloud (Aliyun) ROS-Vorlagen. Die Unterstützung für andere Anbieter kann in zukünftigen Versionen hinzugefügt werden.
+Derzeit unterstützt InfraGuard Alibaba Cloud (Aliyun) ROS-Vorlagen und Terraform-Konfigurationen für Alibaba Cloud-Ressourcen. Die Unterstützung für andere Anbieter kann in zukünftigen Versionen hinzugefügt werden.
 
 ### Ist InfraGuard kostenlos?
 
@@ -24,6 +24,12 @@ Ja, InfraGuard ist Open Source und unter der Apache-Lizenz 2.0 veröffentlicht.
 
 ```bash
 infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack
+```
+
+Für Terraform:
+
+```bash
+infraguard scan ./terraform -p pack:aliyun:quick-start-compliance-pack
 ```
 
 Siehe den [Schnellstart-Leitfaden](./getting-started/quick-start) für weitere Beispiele.

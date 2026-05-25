@@ -85,6 +85,26 @@ infraguard policy get pack:aliyun:mlps-level-3-pre-check-compliance-pack
 
 ## Common Use Cases
 
+### Scan Terraform
+
+You can scan a Terraform project directory or a single `.tf` file. When a `.tf` file is provided, InfraGuard evaluates the whole directory that contains it.
+
+```bash
+# Scan a Terraform project directory
+infraguard scan ./terraform -p pack:aliyun:quick-start-compliance-pack
+
+# Scan a single .tf file
+infraguard scan main.tf -p rule:aliyun:ecs-instance-no-public-ip
+```
+
+Terraform variable values can be passed with `--input` using `key=value`, JSON/YAML files, or `.tfvars` files:
+
+```bash
+infraguard scan ./terraform \
+  -p rule:aliyun:ecs-instance-no-public-ip \
+  --input terraform.tfvars
+```
+
 ### Scan with Multiple Policies
 
 You can apply multiple policies in a single scan:
@@ -131,4 +151,3 @@ If you encounter any issues:
 1. Check the [FAQ](../faq) page
 2. Review error messages carefully - they usually include helpful hints
 3. Report issues on [GitHub](https://github.com/aliyun/infraguard/issues)
-

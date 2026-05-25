@@ -4,7 +4,7 @@ title: infraguard scan
 
 # infraguard scan
 
-ROSテンプレートをスキャンしてコンプライアンス違反を検出します。
+ROSテンプレートとTerraform設定をスキャンしてコンプライアンス違反を検出します。
 
 ## 概要
 
@@ -14,7 +14,7 @@ infraguard scan <template> -p <policy> [flags]
 
 ## 引数
 
-- `<template>`: ROSテンプレートファイルへのパス（必須、位置引数）
+- `<template>`: ROSテンプレートファイル、Terraform `.tf` ファイル、または対応テンプレートを含むディレクトリへのパス（必須、位置引数）
 
 ## フラグ
 
@@ -32,6 +32,12 @@ infraguard scan <template> -p <policy> [flags]
 ```bash
 # ルールでスキャン
 infraguard scan template.yaml -p rule:aliyun:ecs-instance-no-public-ip
+
+# Terraformプロジェクトをスキャン
+infraguard scan ./terraform -p pack:aliyun:quick-start-compliance-pack
+
+# Terraformファイルをスキャンして変数を渡す
+infraguard scan main.tf -p rule:aliyun:ecs-instance-no-public-ip --input terraform.tfvars
 
 # パックでスキャン
 infraguard scan template.yaml -p pack:aliyun:mlps-level-3-pre-check-compliance-pack

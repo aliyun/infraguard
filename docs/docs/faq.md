@@ -12,7 +12,7 @@ InfraGuard is a command-line tool that validates Infrastructure as Code (IaC) te
 
 ### Which cloud providers are supported?
 
-Currently, InfraGuard supports Alibaba Cloud (Aliyun) ROS templates. Support for other providers may be added in future versions.
+Currently, InfraGuard supports Alibaba Cloud (Aliyun) ROS templates and Terraform configurations for Alibaba Cloud resources. Support for other providers may be added in future versions.
 
 ### Is InfraGuard free to use?
 
@@ -24,6 +24,12 @@ Yes, InfraGuard is open source and released under the Apache License 2.0.
 
 ```bash
 infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack
+```
+
+For Terraform:
+
+```bash
+infraguard scan ./terraform -p pack:aliyun:quick-start-compliance-pack
 ```
 
 See the [Quick Start Guide](./getting-started/quick-start) for more examples.
@@ -138,7 +144,7 @@ Use `infraguard policy list` to see all available policies. Ensure you're using 
 
 ### Template parsing error
 
-Ensure your template is valid YAML or JSON. Check for syntax errors.
+Ensure your ROS template is valid YAML or JSON, or your Terraform configuration is valid HCL. Check for syntax errors.
 
 ### No violations found but expected some
 
@@ -194,4 +200,3 @@ If your question isn't answered here, please:
 1. Check the [documentation](./intro)
 2. Search existing [GitHub Issues](https://github.com/aliyun/infraguard/issues)
 3. Create a new issue if needed
-

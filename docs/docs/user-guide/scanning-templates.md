@@ -4,7 +4,7 @@ title: Scanning Templates
 
 # Scanning Templates
 
-The `infraguard scan` command evaluates your ROS templates against compliance policies.
+The `infraguard scan` command evaluates your ROS templates and Terraform configurations against compliance policies.
 
 ## Basic Usage
 
@@ -14,7 +14,7 @@ infraguard scan <template> -p <policy>
 
 ### Required Arguments
 
-- `<template>`: Path to your ROS template file (YAML or JSON) - positional argument
+- `<template>`: Path to your ROS template file (YAML or JSON), Terraform `.tf` file, or a directory containing supported templates - positional argument
 
 ### Required Flags
 
@@ -27,6 +27,29 @@ infraguard scan <template> -p <policy>
 - `--lang <lang>`: Output language (`en` or `zh`)
 - `-m, --mode <mode>`: Scan mode (`static` for local analysis or `preview` for ROS PreviewStack API, default: `static`)
 - `-i, --input <value>`: Parameter values in `key=value`, JSON format, or file path (can be specified multiple times)
+
+## Supported Template Types
+
+InfraGuard supports:
+
+- ROS templates in YAML or JSON (`.yaml`, `.yml`, `.json`)
+- Terraform configurations (`.tf`)
+
+When you scan a Terraform `.tf` file, InfraGuard evaluates the whole directory that contains that file so related Terraform files in the same module are included. You can also pass a Terraform project directory directly:
+
+```bash
+infraguard scan ./terraform -p pack:aliyun:quick-start-compliance-pack
+infraguard scan main.tf -p rule:aliyun:ecs-instance-no-public-ip
+```
+
+Terraform scans use local static HCL evaluation. Variable values can be supplied with `--input`:
+
+```bash
+infraguard scan ./terraform \
+  -p rule:aliyun:ecs-instance-no-public-ip \
+  --input terraform.tfvars \
+  --input region=cn-hangzhou
+```
 
 ## Policy Types
 
@@ -90,7 +113,7 @@ Performs local static analysis of the template without requiring cloud provider 
 infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack --mode static
 ```
 
-This mode analyzes the template structure and resource configurations locally. It's fast and doesn't require cloud credentials, but may not support all ROS features (see [ROS Features Support](./ros-features)).
+This mode analyzes the template structure and resource configurations locally. It's fast and doesn't require cloud credentials, but may not support all ROS features (see [ROS Features Support](./ros-features)). Terraform scans use static mode.
 
 ### Preview Mode
 
@@ -101,6 +124,8 @@ infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack --mode 
 ```
 
 Preview mode provides more accurate analysis for features that require runtime evaluation (such as `Fn::GetAtt`, `Fn::GetAZs`, etc.). This mode requires ROS credentials to be configured.
+
+Preview mode applies to ROS templates. Terraform configurations are evaluated locally.
 
 For templates using features not supported by static analysis, we recommend using `--mode preview` for more accurate results.
 
@@ -227,7 +252,16 @@ infraguard scan "${TEMPLATE_FILE}" \
   --lang en
 ```
 
-### Example 4: Preview Mode with Parameters
+### Example 4: Terraform Scan
+
+```bash
+infraguard scan ./terraform \
+  -p pack:aliyun:quick-start-compliance-pack \
+  --input terraform.tfvars \
+  --format json
+```
+
+### Example 5: Preview Mode with Parameters
 
 Scan using preview mode with template parameters:
 
@@ -260,4 +294,3 @@ infraguard scan template.yaml \
 - Learn about [Managing Policies](./managing-policies)
 - Explore [Output Formats](./output-formats) in detail
 - Configure [Settings](./configuration)
-

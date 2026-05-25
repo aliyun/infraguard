@@ -4,7 +4,7 @@ title: 扫描模板
 
 # 扫描模板
 
-`infraguard scan` 命令根据合规策略评估您的 ROS 模板。
+`infraguard scan` 命令根据合规策略评估您的 ROS 模板和 Terraform 配置。
 
 ## 基本用法
 
@@ -14,7 +14,7 @@ infraguard scan <template> -p <policy>
 
 ### 必需参数
 
-- `<template>`: ROS 模板文件路径（YAML 或 JSON）- 位置参数
+- `<template>`: ROS 模板文件（YAML 或 JSON）、Terraform `.tf` 文件或包含受支持模板的目录路径 - 位置参数
 
 ### 必需选项
 
@@ -27,6 +27,29 @@ infraguard scan <template> -p <policy>
 - `--lang <lang>`: 输出语言（`en` 或 `zh`）
 - `-m, --mode <mode>`: 扫描模式（`static` 用于本地分析，`preview` 用于 ROS PreviewStack API，默认：`static`）
 - `-i, --input <value>`: 参数值，格式为 `key=value`、JSON 格式或文件路径（可多次指定）
+
+## 支持的模板类型
+
+InfraGuard 支持：
+
+- ROS YAML 或 JSON 模板（`.yaml`、`.yml`、`.json`）
+- Terraform 配置（`.tf`）
+
+扫描 Terraform `.tf` 文件时，InfraGuard 会评估该文件所在目录中的整个 Terraform 模块，因此同目录下相关的 Terraform 文件都会包含在内。您也可以直接传入 Terraform 项目目录：
+
+```bash
+infraguard scan ./terraform -p pack:aliyun:quick-start-compliance-pack
+infraguard scan main.tf -p rule:aliyun:ecs-instance-no-public-ip
+```
+
+Terraform 扫描使用本地静态 HCL 评估。变量值可以通过 `--input` 传入：
+
+```bash
+infraguard scan ./terraform \
+  -p rule:aliyun:ecs-instance-no-public-ip \
+  --input terraform.tfvars \
+  --input region=cn-hangzhou
+```
 
 ## 策略类型
 
@@ -90,7 +113,7 @@ InfraGuard 支持两种扫描模式：
 infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack --mode static
 ```
 
-此模式在本地分析模板结构和资源配置。速度快且不需要云凭证，但可能不支持所有 ROS 特性（参见 [ROS 特性支持](./ros-features)）。
+此模式在本地分析模板结构和资源配置。速度快且不需要云凭证，但可能不支持所有 ROS 特性（参见 [ROS 特性支持](./ros-features)）。Terraform 扫描使用静态模式。
 
 ### 预览模式
 
@@ -101,6 +124,8 @@ infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack --mode 
 ```
 
 预览模式为需要运行时评估的特性（如 `Fn::GetAtt`、`Fn::GetAZs` 等）提供更准确的分析。此模式需要配置 ROS 凭证。
+
+预览模式适用于 ROS 模板。Terraform 配置会在本地评估。
 
 对于使用静态分析不支持的特性的模板，我们推荐使用 `--mode preview` 以获得更准确的结果。
 
@@ -227,7 +252,16 @@ infraguard scan "${TEMPLATE_FILE}" \
   --lang en
 ```
 
-### 示例 4：使用参数的预览模式
+### 示例 4：Terraform 扫描
+
+```bash
+infraguard scan ./terraform \
+  -p pack:aliyun:quick-start-compliance-pack \
+  --input terraform.tfvars \
+  --format json
+```
+
+### 示例 5：使用参数的预览模式
 
 使用模板参数进行预览模式扫描：
 
@@ -260,4 +294,3 @@ infraguard scan template.yaml \
 - 了解[管理策略](./managing-policies)
 - 详细了解[输出格式](./output-formats)
 - 配置[设置](./configuration)
-

@@ -6,7 +6,7 @@
 
 **Política Definida. Infraestructura Asegurada.**
 
-**CLI de pre-verificación de cumplimiento de Infrastructure as Code (IaC)** para plantillas de Alibaba Cloud ROS. Evalúe sus plantillas ROS YAML/JSON contra políticas de seguridad y cumplimiento **antes del despliegue**.
+**CLI de pre-verificación de cumplimiento de Infrastructure as Code (IaC)** para plantillas Alibaba Cloud ROS y Terraform. Evalúe sus plantillas ROS YAML/JSON y configuraciones Terraform `.tf` contra políticas de seguridad y cumplimiento **antes del despliegue**.
 
 > 💡 InfraGuard adopta **Policy as Code** - tratando las políticas de cumplimiento como artefactos de código versionados, probables y reutilizables.
 
@@ -16,6 +16,7 @@
 
 - 🔍 **Validación Pre-despliegue** - Detectar problemas de cumplimiento antes de que lleguen a producción
 - 🎯 **Modos de Escaneo Dual** - Análisis estático o validación de vista previa basada en la nube
+- 🧩 **Soporte ROS y Terraform** - Escanee plantillas ROS YAML/JSON y proyectos Terraform `.tf`
 - 📦 **Reglas Integradas** - Cobertura integral para servicios de Aliyun
 - 🏆 **Paquetes de Cumplimiento** - MLPS, ISO 27001, PCI-DSS, SOC 2 y más
 - ✏️ **Integración con Editores** - Extensión de VS Code con autocompletado, diagnósticos en tiempo real y documentación al pasar el cursor para plantillas ROS
@@ -39,6 +40,10 @@ O descargue binarios precompilados de [GitHub Releases](https://github.com/aliyu
 ```bash
 # Escanear con un paquete de cumplimiento
 infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack
+
+# Escanear un proyecto Terraform o archivo .tf
+infraguard scan ./terraform -p pack:aliyun:quick-start-compliance-pack
+infraguard scan main.tf -p rule:aliyun:ecs-instance-no-public-ip
 
 # Escanear con una regla específica
 infraguard scan template.yaml -p rule:aliyun:ecs-instance-no-public-ip

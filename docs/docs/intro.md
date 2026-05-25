@@ -7,9 +7,9 @@ sidebar_label: Introduction
 
 **Policy Defined. Infrastructure Secured.**
 
-**Infrastructure as Code (IaC) compliance pre-check CLI** for Alibaba Cloud ROS templates.
+**Infrastructure as Code (IaC) compliance pre-check CLI** for Alibaba Cloud ROS and Terraform templates.
 
-Evaluate your ROS YAML/JSON templates against security and compliance policies **before deployment**.
+Evaluate your ROS YAML/JSON templates and Terraform `.tf` configurations against security and compliance policies **before deployment**.
 
 ## What is InfraGuard?
 
@@ -29,6 +29,7 @@ InfraGuard embraces the **Policy as Code** approach - treating compliance polici
 ## Key Features
 
 - **Pre-deployment Validation** - Catch compliance issues before they reach production
+- **ROS and Terraform Support** - Scan ROS YAML/JSON templates and Terraform `.tf` projects
 - **Policy Packs** - Pre-built compliance packs (MLPS, ISO 27001, PCI-DSS, etc.)
 - **Editor Integration** - VS Code extension with auto-completion, diagnostics, and hover documentation for ROS templates
 - **Internationalization** - Full support for 7 languages (English, Chinese, Spanish, French, German, Japanese, Portuguese)
@@ -45,6 +46,9 @@ InfraGuard embraces the **Policy as Code** approach - treating compliance polici
 ```bash
 # Scan a template with a compliance pack
 infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack
+
+# Scan a Terraform project with a compliance pack
+infraguard scan ./terraform -p pack:aliyun:quick-start-compliance-pack
 
 # Scan with specific rules
 infraguard scan template.yaml -p rule:aliyun:ecs-instance-no-public-ip

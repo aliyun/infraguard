@@ -4,7 +4,7 @@ title: infraguard scan
 
 # infraguard scan
 
-Scan ROS templates for compliance violations.
+Scan ROS templates and Terraform configurations for compliance violations.
 
 ## Synopsis
 
@@ -14,7 +14,7 @@ infraguard scan <template> -p <policy> [flags]
 
 ## Arguments
 
-- `<template>`: Path to ROS template file (required, positional argument)
+- `<template>`: Path to a ROS template file, Terraform `.tf` file, or a directory containing supported templates (required, positional argument)
 
 ## Flags
 
@@ -32,6 +32,12 @@ infraguard scan <template> -p <policy> [flags]
 ```bash
 # Scan with a rule
 infraguard scan template.yaml -p rule:aliyun:ecs-instance-no-public-ip
+
+# Scan a Terraform project
+infraguard scan ./terraform -p pack:aliyun:quick-start-compliance-pack
+
+# Scan a Terraform file and pass variables
+infraguard scan main.tf -p rule:aliyun:ecs-instance-no-public-ip --input terraform.tfvars
 
 # Scan with a pack
 infraguard scan template.yaml -p pack:aliyun:mlps-level-3-pre-check-compliance-pack
@@ -62,4 +68,3 @@ infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack --mode 
 - `2`: High severity violations found
 
 For more details, see [Scanning Templates](../user-guide/scanning-templates).
-

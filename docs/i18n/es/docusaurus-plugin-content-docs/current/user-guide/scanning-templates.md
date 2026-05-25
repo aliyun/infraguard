@@ -4,7 +4,7 @@ title: Escaneo de Plantillas
 
 # Escaneo de Plantillas
 
-El comando `infraguard scan` evalúa sus plantillas ROS contra políticas de cumplimiento.
+El comando `infraguard scan` evalúa sus plantillas ROS y configuraciones Terraform contra políticas de cumplimiento.
 
 ## Uso Básico
 
@@ -14,7 +14,7 @@ infraguard scan <template> -p <policy>
 
 ### Argumentos Requeridos
 
-- `<template>`: Ruta al archivo de plantilla ROS (YAML o JSON) - argumento posicional
+- `<template>`: Ruta al archivo de plantilla ROS (YAML o JSON), archivo Terraform `.tf`, o directorio con plantillas compatibles - argumento posicional
 
 ### Flags Requeridos
 

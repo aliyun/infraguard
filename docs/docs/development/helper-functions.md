@@ -6,9 +6,15 @@ title: Helper Functions
 
 InfraGuard provides helper functions to simplify policy writing.
 
-Import them with:
+For ROS rules, import them with:
 ```rego
 import data.infraguard.helpers
+```
+
+For Terraform rules, import the Terraform helper module:
+
+```rego
+import data.infraguard.helpers.terraform as tf
 ```
 
 ## Available Functions
@@ -24,6 +30,15 @@ import data.infraguard.helpers
 | `is_true(v)` / `is_false(v)` | Check boolean (handles string "true"/"false") |
 | `is_public_cidr(cidr)` | Check if CIDR is `0.0.0.0/0` or `::/0` |
 | `includes(list, elem)` | Check if element is in list |
+
+## Terraform Functions
+
+| Function | Description |
+|----------|-------------|
+| `tf.resources_by_type(type)` | Get Terraform resources of a type as `{name: resource}` map |
+| `tf.has_resource_type(type)` | Check if a Terraform resource type exists |
+| `tf.get_attribute(resource, attr, default)` | Get an evaluated Terraform attribute with default value |
+| `tf.is_unknown(value)` | Check if an attribute could not be resolved statically |
 
 ## Examples
 
@@ -51,4 +66,3 @@ deny contains result if {
 ```
 
 For more examples, see [Writing Rules](./writing-rules).
-

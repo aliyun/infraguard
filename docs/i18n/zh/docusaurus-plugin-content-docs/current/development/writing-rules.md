@@ -59,11 +59,64 @@ is_compliant(resource) if {
 }
 ```
 
+Terraform 规则使用 Terraform 包命名空间，导入 Terraform 辅助函数，设置 `iac_type`，并使用 Terraform 资源类型名称：
+
+```rego
+package infraguard.rules.terraform.my_custom_rule
+
+import rego.v1
+import data.infraguard.helpers.terraform as tf
+
+rule_meta := {
+    "id": "my-custom-rule",
+    "severity": "high",
+    "name": {
+        "en": "My Custom Rule",
+        "zh": "我的自定义规则",
+    },
+    "description": {
+        "en": "Checks for custom compliance requirement",
+        "zh": "检查自定义合规要求",
+    },
+    "reason": {
+        "en": "Resource does not meet requirement",
+        "zh": "资源不符合要求",
+    },
+    "recommendation": {
+        "en": "Configure resource properly",
+        "zh": "正确配置资源",
+    },
+    "resource_types": ["alicloud_instance"],
+    "iac_type": "terraform",
+}
+
+deny contains result if {
+    some name, resource in tf.resources_by_type("alicloud_instance")
+    # Your compliance logic here
+    not is_compliant(resource)
+    result := {
+        "id": rule_meta.id,
+        "resource_id": sprintf("alicloud_instance.%s", [name]),
+        "meta": {
+            "severity": rule_meta.severity,
+            "reason": rule_meta.reason,
+            "recommendation": rule_meta.recommendation,
+        },
+    }
+}
+
+is_compliant(resource) if {
+    tf.get_attribute(resource, "instance_type", "") != ""
+}
+```
+
 ## 关键组件
 
 ### 包名
 
-必须遵循格式：`infraguard.rules.<provider>.<rule_name_snake_case>`
+ROS 规则使用格式：`infraguard.rules.<provider>.<rule_name_snake_case>`。
+
+Terraform 规则使用格式：`infraguard.rules.terraform.<rule_name_snake_case>`。
 
 **注意**：在包名中使用下划线，而不是连字符。
 
@@ -77,6 +130,7 @@ is_compliant(resource) if {
 - `reason`: 失败的原因
 - `recommendation`: 如何修复
 - `resource_types`: 受影响的资源类型（可选）
+- `iac_type`: Terraform 规则的 IaC 类型（`"terraform"`）；ROS 规则省略时默认为 ROS
 
 ### Deny 规则
 
@@ -85,6 +139,8 @@ is_compliant(resource) if {
 - `resource_id`: 模板中的资源名称
 - `violation_path`: 问题属性的路径
 - `meta`: 严重性、原因、建议
+
+Terraform 规则通常可以省略 `violation_path`；当 `resource_id` 使用 `resource_type.resource_name` 格式时，InfraGuard 会将违规映射回对应的 Terraform 资源块。
 
 ## 辅助函数
 
@@ -119,4 +175,3 @@ deny contains result if {
 - 学习[编写包](./writing-packs)
 - 了解[策略目录结构](./policy-directory)
 - 探索[辅助函数](./helper-functions)
-

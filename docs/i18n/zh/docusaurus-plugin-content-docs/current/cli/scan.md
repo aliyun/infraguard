@@ -4,7 +4,7 @@ title: infraguard scan
 
 # infraguard scan
 
-扫描 ROS 模板以查找合规违规。
+扫描 ROS 模板和 Terraform 配置以查找合规违规。
 
 ## 概要
 
@@ -14,7 +14,7 @@ infraguard scan <template> -p <policy> [选项]
 
 ## 参数
 
-- `<template>`: ROS 模板文件路径（必需，位置参数）
+- `<template>`: ROS 模板文件、Terraform `.tf` 文件或包含受支持模板的目录路径（必需，位置参数）
 
 ## 选项
 
@@ -32,6 +32,12 @@ infraguard scan <template> -p <policy> [选项]
 ```bash
 # 使用规则扫描
 infraguard scan template.yaml -p rule:aliyun:ecs-instance-no-public-ip
+
+# 扫描 Terraform 项目
+infraguard scan ./terraform -p pack:aliyun:quick-start-compliance-pack
+
+# 扫描 Terraform 文件并传入变量
+infraguard scan main.tf -p rule:aliyun:ecs-instance-no-public-ip --input terraform.tfvars
 
 # 使用包扫描
 infraguard scan template.yaml -p pack:aliyun:mlps-level-3-pre-check-compliance-pack
@@ -65,4 +71,3 @@ infraguard scan template.yaml -p rule:aliyun:ecs-instance-no-public-ip -p pack:a
 - `2`: 发现高严重性违规
 
 有关更多详细信息，请参阅[扫描模板](../user-guide/scanning-templates)。
-

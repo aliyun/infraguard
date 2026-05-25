@@ -4,7 +4,7 @@ title: Scanner les Modèles
 
 # Scanner les Modèles
 
-La commande `infraguard scan` évalue vos modèles ROS par rapport aux politiques de conformité.
+La commande `infraguard scan` évalue vos modèles ROS et configurations Terraform par rapport aux politiques de conformité.
 
 ## Utilisation de Base
 
@@ -14,7 +14,7 @@ infraguard scan <template> -p <policy>
 
 ### Arguments Requis
 
-- `<template>`: Chemin vers votre fichier de modèle ROS (YAML ou JSON) - argument positionnel
+- `<template>`: Chemin vers votre fichier de modèle ROS (YAML ou JSON), fichier Terraform `.tf`, ou répertoire contenant des modèles pris en charge - argument positionnel
 
 ### Flags Requis
 

@@ -4,7 +4,7 @@ title: Escaneando Modelos
 
 # Escaneando Modelos
 
-O comando `infraguard scan` avalia seus modelos ROS em relação às políticas de conformidade.
+O comando `infraguard scan` avalia seus modelos ROS e configurações Terraform em relação às políticas de conformidade.
 
 ## Uso Básico
 
@@ -14,7 +14,7 @@ infraguard scan <template> -p <policy>
 
 ### Argumentos Obrigatórios
 
-- `<template>`: Caminho para o arquivo de modelo ROS (YAML ou JSON) - argumento posicional
+- `<template>`: Caminho para o arquivo de modelo ROS (YAML ou JSON), arquivo Terraform `.tf`, ou diretório com modelos suportados - argumento posicional
 
 ### Flags Obrigatórios
 

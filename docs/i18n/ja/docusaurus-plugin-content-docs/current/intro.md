@@ -7,9 +7,9 @@ sidebar_label: 紹介
 
 **ポリシー定義。インフラストラクチャ保護。**
 
-Alibaba Cloud ROSテンプレート用の**Infrastructure as Code (IaC) コンプライアンス事前チェックCLI**。
+Alibaba Cloud ROSおよびTerraformテンプレート用の**Infrastructure as Code (IaC) コンプライアンス事前チェックCLI**。
 
-デプロイ前にROS YAML/JSONテンプレートをセキュリティおよびコンプライアンスポリシーに対して評価します。
+デプロイ前にROS YAML/JSONテンプレートとTerraform `.tf` 設定をセキュリティおよびコンプライアンスポリシーに対して評価します。
 
 ## InfraGuardとは？
 
