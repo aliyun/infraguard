@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template for logstore-ttl-required
+Resources:
+  TargetResource:
+    Type: ALIYUN::SLS::Logstore
+    Properties:
+      TTL: 2

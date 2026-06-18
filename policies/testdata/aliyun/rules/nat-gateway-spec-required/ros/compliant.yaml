@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template for nat-gateway-spec-required
+Resources:
+  TargetResource:
+    Type: ALIYUN::VPC::NatGateway
+    Properties:
+      NatGatewaySpec: Small

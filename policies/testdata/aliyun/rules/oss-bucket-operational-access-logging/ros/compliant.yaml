@@ -1,0 +1,9 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template for oss-bucket-operational-access-logging
+Resources:
+  TargetResource:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      LoggingConfiguration:
+        TargetBucket: audit-bucket
+        TargetPrefix: logs/

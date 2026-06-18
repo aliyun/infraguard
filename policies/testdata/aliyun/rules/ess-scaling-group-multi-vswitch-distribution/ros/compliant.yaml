@@ -1,0 +1,9 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template for ess-scaling-group-multi-vswitch-distribution
+Resources:
+  TargetResource:
+    Type: ALIYUN::ESS::ScalingGroup
+    Properties:
+      VSwitchIds:
+        - vsw-a
+        - vsw-b

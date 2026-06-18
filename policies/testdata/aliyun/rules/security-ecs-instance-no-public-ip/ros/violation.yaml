@@ -1,0 +1,8 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template for security-ecs-instance-no-public-ip
+Resources:
+  TargetResource:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      AllocatePublicIP: true
+      InternetMaxBandwidthOut: 0

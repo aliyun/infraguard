@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template for ecs-instance-group-max-amount-required
+Resources:
+  TargetResource:
+    Type: ALIYUN::ECS::InstanceGroup
+    Properties:
+      MaxAmount: 2

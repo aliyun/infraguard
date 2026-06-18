@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template for ack-cluster-node-pool-scaling-limits-required
+Resources:
+  TargetResource:
+    Type: ALIYUN::ESS::ScalingGroup
+    Properties:
+      MinSize: 2

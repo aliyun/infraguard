@@ -1,0 +1,9 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template for ack-cluster-node-pool-autoscaling-enabled
+Resources:
+  TargetResource:
+    Type: ALIYUN::CS::ClusterApplication
+    Properties:
+      WorkerVSwitchIds:
+        - vsw-a
+        - vsw-b

@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template for kms-key-description-required
+Resources:
+  TargetResource:
+    Type: ALIYUN::KMS::Key
+    Properties:
+      Description: managed by infraguard test

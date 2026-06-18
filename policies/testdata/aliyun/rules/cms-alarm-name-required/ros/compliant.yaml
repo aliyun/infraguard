@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template for cms-alarm-name-required
+Resources:
+  TargetResource:
+    Type: ALIYUN::CMS::Alarm
+    Properties:
+      Name: resource-name

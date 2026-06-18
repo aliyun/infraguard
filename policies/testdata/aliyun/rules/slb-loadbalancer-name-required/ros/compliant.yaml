@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template for slb-loadbalancer-name-required
+Resources:
+  TargetResource:
+    Type: ALIYUN::SLB::LoadBalancer
+    Properties:
+      LoadBalancerName: app-lb

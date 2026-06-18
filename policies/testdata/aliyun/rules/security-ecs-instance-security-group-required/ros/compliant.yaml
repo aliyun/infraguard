@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template for security-ecs-instance-security-group-required
+Resources:
+  TargetResource:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      SecurityGroupId: sg-12345

@@ -1,0 +1,8 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template for security-oss-bucket-encryption-configured
+Resources:
+  TargetResource:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      ServerSideEncryptionConfiguration:
+        SSEAlgorithm: KMS

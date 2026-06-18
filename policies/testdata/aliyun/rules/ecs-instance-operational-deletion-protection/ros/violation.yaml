@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template for ecs-instance-operational-deletion-protection
+Resources:
+  TargetResource:
+    Type: ALIYUN::ECS::Instance
+    Properties:
+      DeletionProtection: false

@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template for sls-logstore-shard-count-configured
+Resources:
+  TargetResource:
+    Type: ALIYUN::SLS::Logstore
+    Properties:
+      ShardCount: 2

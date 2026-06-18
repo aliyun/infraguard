@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template for rds-pay-type-required
+Resources:
+  TargetResource:
+    Type: ALIYUN::RDS::DBInstance
+    Properties:
+      PayType: Postpaid

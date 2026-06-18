@@ -1,0 +1,8 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template for redis-backup-policy-required
+Resources:
+  TargetResource:
+    Type: ALIYUN::REDIS::Instance
+    Properties:
+      BackupPolicy:
+        PreferredBackupTime: 03:00Z-04:00Z

@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template for security-ram-user-mfa-required
+Resources:
+  TargetResource:
+    Type: ALIYUN::RAM::User
+    Properties:
+      MFABindRequired: true

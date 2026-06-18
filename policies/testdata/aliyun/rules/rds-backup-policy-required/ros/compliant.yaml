@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template for rds-backup-policy-required
+Resources:
+  TargetResource:
+    Type: ALIYUN::RDS::Backup
+    Properties:
+      BackupTime: 03:00Z-04:00Z

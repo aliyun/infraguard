@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template for ess-scaling-group-capacity-bounds-required
+Resources:
+  TargetResource:
+    Type: ALIYUN::ESS::ScalingGroup
+    Properties:
+      MaxSize: 2
