@@ -522,3 +522,37 @@ func TestGetSupportedLanguages(t *testing.T) {
 		})
 	})
 }
+
+func TestDetectFromEnv(t *testing.T) {
+	cases := []struct {
+		name   string
+		env    map[string]string
+		expect string
+	}{
+		{"LANG zh_CN.UTF-8", map[string]string{"LANG": "zh_CN.UTF-8"}, "zh-CN"},
+		{"LANG en_US.UTF-8", map[string]string{"LANG": "en_US.UTF-8"}, "en-US"},
+		{"LANG fr_FR", map[string]string{"LANG": "fr_FR"}, "fr-FR"},
+		{"LANG ja", map[string]string{"LANG": "ja"}, "ja-JP"},
+		{"LC_ALL overrides LANG", map[string]string{"LC_ALL": "de_DE.UTF-8", "LANG": "en_US.UTF-8"}, "de-DE"},
+		{"LANGUAGE list", map[string]string{"LANGUAGE": "pt_BR:en"}, "pt-BR"},
+		{"C locale ignored", map[string]string{"LANG": "C"}, ""},
+		{"POSIX ignored", map[string]string{"LANG": "POSIX"}, ""},
+		{"unsupported ignored", map[string]string{"LANG": "ru_RU.UTF-8"}, ""},
+		{"modifier stripped", map[string]string{"LANG": "zh_CN.UTF-8@pinyin"}, "zh-CN"},
+		{"empty", map[string]string{}, ""},
+	}
+	for _, c := range cases {
+		t.Run(c.name, func(t *testing.T) {
+			// Clear all locale vars, then apply the case-specific ones.
+			for _, k := range []string{"LC_ALL", "LC_MESSAGES", "LANG", "LANGUAGE"} {
+				t.Setenv(k, "")
+			}
+			for k, v := range c.env {
+				t.Setenv(k, v)
+			}
+			if got := detectFromEnv(); got != c.expect {
+				t.Errorf("detectFromEnv() = %q, want %q", got, c.expect)
+			}
+		})
+	}
+}

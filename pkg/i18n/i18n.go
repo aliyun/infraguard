@@ -4,6 +4,7 @@ package i18n
 import (
 	"embed"
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/Xuanwo/go-locale"
@@ -752,10 +753,53 @@ func loadLocale(lang string) *Messages {
 	return &msgs
 }
 
+// detectFromEnv reads the locale from standard POSIX environment variables so the
+// CLI honors the terminal's language settings. It checks LC_ALL, LC_MESSAGES,
+// LANG, and LANGUAGE in priority order. Returns "" if none yields a supported
+// language.
+func detectFromEnv() string {
+	for _, key := range []string{"LC_ALL", "LC_MESSAGES", "LANG", "LANGUAGE"} {
+		val := os.Getenv(key)
+		if val == "" {
+			continue
+		}
+		// LANGUAGE may be a colon-separated priority list (e.g. "zh_CN:en_US").
+		val = strings.SplitN(val, ":", 2)[0]
+		// Strip charset and modifier: "zh_CN.UTF-8@pinyin" -> "zh_CN".
+		val = strings.SplitN(val, ".", 2)[0]
+		val = strings.SplitN(val, "@", 2)[0]
+		val = strings.TrimSpace(val)
+		if val == "" || strings.EqualFold(val, "C") || strings.EqualFold(val, "POSIX") {
+			continue
+		}
+
+		// Try the full tag first (e.g. "zh_CN" -> "zh-CN").
+		if normalized := normalizeLanguageTag(strings.ReplaceAll(val, "_", "-")); isSupportedLanguage(normalized) {
+			return normalized
+		}
+		// Fall back to the language code alone (e.g. "zh").
+		langCode := strings.ToLower(strings.FieldsFunc(val, func(r rune) bool {
+			return r == '_' || r == '-'
+		})[0])
+		if normalized := normalizeLanguageTag(langCode); isSupportedLanguage(normalized) {
+			return normalized
+		}
+	}
+	return ""
+}
+
 // DetectLanguage detects the system language and returns a BCP 47 language tag.
 // Supports: en, zh, es, fr, de, ja, pt
 // Returns normalized BCP 47 tag (e.g., "zh-CN", "en-US")
+//
+// The terminal's locale environment variables take priority; if they do not
+// resolve to a supported language, it falls back to the OS-level locale and
+// finally to US English.
 func DetectLanguage() string {
+	if env := detectFromEnv(); env != "" {
+		return env
+	}
+
 	tag, err := locale.Detect()
 	if err == nil {
 		lang := tag.String()
