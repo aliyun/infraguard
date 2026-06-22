@@ -4,7 +4,7 @@
     "description": "The homepage tagline"
   },
   "homepage.getStarted": {
-    "message": "快速开始 →",
+    "message": "快速开始",
     "description": "Get started button text"
   },
   "homepage.browsePolicies": {
@@ -66,6 +66,138 @@
   "homepage.features.fast.description": {
     "message": "使用 Go 构建，速度快、效率高。单一二进制文件，无依赖。几秒钟内扫描大型模板，资源占用极小。",
     "description": "Fast feature description"
+  },
+  "homepage.heroDescription": {
+    "message": "专为阿里云 ROS 模板设计的基础设施即代码（IaC）合规预检 CLI。在问题进入生产环境之前，提前发现安全与合规风险。",
+    "description": "The homepage hero description"
+  },
+  "homepage.installOr": {
+    "message": "或",
+    "description": "Separator between install commands"
+  },
+  "homepage.stats.rules": {
+    "message": "内置规则",
+    "description": "Stat label for built-in rules"
+  },
+  "homepage.stats.languages": {
+    "message": "支持语言",
+    "description": "Stat label for languages"
+  },
+  "homepage.stats.binary": {
+    "message": "零依赖二进制",
+    "description": "Stat label for single binary"
+  },
+  "homepage.stats.speed": {
+    "message": "为速度而生",
+    "description": "Stat label for speed"
+  },
+  "homepage.features.eyebrow": {
+    "message": "为什么选择 InfraGuard",
+    "description": "Features section eyebrow"
+  },
+  "homepage.features.heading": {
+    "message": "交付合规基础设施所需的一切",
+    "description": "Features section heading"
+  },
+  "homepage.standardize.eyebrow": {
+    "message": "规模化的一致性",
+    "description": "Standardize section eyebrow"
+  },
+  "homepage.standardize.title": {
+    "message": "规范您的基础设施",
+    "description": "Standardize section title"
+  },
+  "homepage.standardize.description": {
+    "message": "InfraGuard 提供了一种统一的方式，在整个组织中强制执行最佳实践。无论您使用官方阿里云合规包还是自定义规则，每一次部署都能保持一致与安全。",
+    "description": "Standardize section description"
+  },
+  "homepage.standardize.point1": {
+    "message": "在不安全的部署发生之前将其拦截",
+    "description": "Standardize check point 1"
+  },
+  "homepage.standardize.point2": {
+    "message": "在每个团队之间规范基础设施",
+    "description": "Standardize check point 2"
+  },
+  "homepage.standardize.point3": {
+    "message": "在 CI/CD 流水线中自动化合规审计",
+    "description": "Standardize check point 3"
+  },
+  "homepage.standardize.learnMore": {
+    "message": "了解更多",
+    "description": "Standardize learn more button"
+  },
+  "homepage.flow.write": {
+    "message": "编写",
+    "description": "Flow step write"
+  },
+  "homepage.flow.writeDesc": {
+    "message": "像往常一样编写您的 ROS 模板",
+    "description": "Flow step write description"
+  },
+  "homepage.flow.scan": {
+    "message": "扫描",
+    "description": "Flow step scan"
+  },
+  "homepage.flow.scanDesc": {
+    "message": "InfraGuard 依据策略进行检查",
+    "description": "Flow step scan description"
+  },
+  "homepage.flow.deploy": {
+    "message": "部署",
+    "description": "Flow step deploy"
+  },
+  "homepage.flow.deployDesc": {
+    "message": "满怀信心地发布，完全合规",
+    "description": "Flow step deploy description"
+  },
+  "homepage.cta.title": {
+    "message": "准备好保护您的基础设施了吗？",
+    "description": "CTA title"
+  },
+  "homepage.cta.description": {
+    "message": "安装 InfraGuard，一分钟内即可运行您的第一次合规扫描。",
+    "description": "CTA description"
+  },
+  "homepage.terminal.desc": {
+    "message": "加密可保护静态数据免受未经授权的访问。",
+    "description": "Terminal: finding description"
+  },
+  "homepage.terminal.high": {
+    "message": "高",
+    "description": "Terminal: high severity label"
+  },
+  "homepage.terminal.ruleId": {
+    "message": "规则 ID",
+    "description": "Terminal: rule id label"
+  },
+  "homepage.terminal.resource": {
+    "message": "资源",
+    "description": "Terminal: resource label"
+  },
+  "homepage.terminal.recommendation": {
+    "message": "修复建议",
+    "description": "Terminal: recommendation label"
+  },
+  "homepage.terminal.recValue": {
+    "message": "将 ECS 磁盘的 'Encrypted' 属性设置为 true。",
+    "description": "Terminal: recommendation value"
+  },
+  "homepage.terminal.scanResults": {
+    "message": "检查结果",
+    "description": "Terminal: scan results divider"
+  },
+  "homepage.terminal.total": {
+    "message": "合计",
+    "description": "Terminal: total label"
+  },
+  "homepage.terminal.medium": {
+    "message": "中",
+    "description": "Terminal: medium severity label"
+  },
+  "homepage.terminal.low": {
+    "message": "低",
+    "description": "Terminal: low severity label"
   },
   "theme.ErrorPageContent.title": {
     "message": "页面已崩溃。",

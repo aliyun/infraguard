@@ -4,7 +4,7 @@
     "description": "The homepage tagline"
   },
   "homepage.getStarted": {
-    "message": "Commencer →",
+    "message": "Commencer",
     "description": "Get started button text"
   },
   "homepage.browsePolicies": {
@@ -66,6 +66,126 @@
   "homepage.features.fast.description": {
     "message": "Construit en Go pour la vitesse et l'efficacité. Binaire unique sans dépendances. Scannez de grands modèles en quelques secondes avec une utilisation minimale des ressources.",
     "description": "Fast feature description"
+  },
+  "homepage.heroDescription": {
+    "message": "Un CLI de pré-vérification de conformité Infrastructure as Code pour les modèles Alibaba Cloud ROS. Détectez les problèmes de sécurité et de conformité avant qu'ils n'atteignent la production.",
+    "description": "An Infrastructure as Code compliance pre-check CLI for Alibaba Cloud ROS templates. Catch security and compliance issues before they ever reach production."
+  },
+  "homepage.installOr": {
+    "message": "ou",
+    "description": "or"
+  },
+  "homepage.stats.rules": {
+    "message": "Règles intégrées",
+    "description": "Built-in rules"
+  },
+  "homepage.stats.languages": {
+    "message": "Langues",
+    "description": "Languages"
+  },
+  "homepage.stats.binary": {
+    "message": "Binaire sans dépendances",
+    "description": "Zero-dependency binary"
+  },
+  "homepage.stats.speed": {
+    "message": "Conçu pour la vitesse",
+    "description": "Built for speed"
+  },
+  "homepage.features.eyebrow": {
+    "message": "Pourquoi InfraGuard",
+    "description": "Why InfraGuard"
+  },
+  "homepage.features.heading": {
+    "message": "Tout ce dont vous avez besoin pour déployer une infrastructure conforme",
+    "description": "Everything you need to ship compliant infrastructure"
+  },
+  "homepage.standardize.eyebrow": {
+    "message": "Cohérence à grande échelle",
+    "description": "Consistency at scale"
+  },
+  "homepage.standardize.point1": {
+    "message": "Empêchez les déploiements non sécurisés avant qu'ils ne surviennent",
+    "description": "Prevent insecure deployments before they happen"
+  },
+  "homepage.standardize.point2": {
+    "message": "Standardisez l'infrastructure dans toutes les équipes",
+    "description": "Standardize infrastructure across every team"
+  },
+  "homepage.standardize.point3": {
+    "message": "Automatisez les audits de conformité dans votre pipeline CI/CD",
+    "description": "Automate compliance audits in your CI/CD pipeline"
+  },
+  "homepage.flow.write": {
+    "message": "Écrire",
+    "description": "Write"
+  },
+  "homepage.flow.writeDesc": {
+    "message": "Rédigez vos modèles ROS comme d'habitude",
+    "description": "Author your ROS templates as usual"
+  },
+  "homepage.flow.scan": {
+    "message": "Scanner",
+    "description": "Scan"
+  },
+  "homepage.flow.scanDesc": {
+    "message": "InfraGuard les vérifie par rapport à la politique",
+    "description": "InfraGuard checks them against policy"
+  },
+  "homepage.flow.deploy": {
+    "message": "Déployer",
+    "description": "Deploy"
+  },
+  "homepage.flow.deployDesc": {
+    "message": "Déployez en toute confiance, en pleine conformité",
+    "description": "Ship with confidence, fully compliant"
+  },
+  "homepage.cta.title": {
+    "message": "Prêt à sécuriser votre infrastructure ?",
+    "description": "Ready to secure your infrastructure?"
+  },
+  "homepage.cta.description": {
+    "message": "Installez InfraGuard et lancez votre première analyse de conformité en moins d'une minute.",
+    "description": "Install InfraGuard and run your first compliance scan in under a minute."
+  },
+  "homepage.terminal.desc": {
+    "message": "Le chiffrement protège les données au repos contre les accès non autorisés.",
+    "description": "Encryption protects data at rest from unauthorized access."
+  },
+  "homepage.terminal.high": {
+    "message": "Élevé",
+    "description": "High"
+  },
+  "homepage.terminal.ruleId": {
+    "message": "ID de règle",
+    "description": "Rule ID"
+  },
+  "homepage.terminal.resource": {
+    "message": "Ressource",
+    "description": "Resource"
+  },
+  "homepage.terminal.recommendation": {
+    "message": "Recommandation",
+    "description": "Recommendation"
+  },
+  "homepage.terminal.recValue": {
+    "message": "Définissez la propriété « Encrypted » des disques ECS sur true.",
+    "description": "Set the 'Encrypted' property of ECS disks to true."
+  },
+  "homepage.terminal.scanResults": {
+    "message": "Résultats de l'analyse",
+    "description": "Scan Results"
+  },
+  "homepage.terminal.total": {
+    "message": "Total",
+    "description": "Total"
+  },
+  "homepage.terminal.medium": {
+    "message": "Moyen",
+    "description": "Medium"
+  },
+  "homepage.terminal.low": {
+    "message": "Faible",
+    "description": "Low"
   },
   "homepage.codeExample.title": {
     "message": "Détectez les Problèmes Tôt",

@@ -4,7 +4,7 @@
     "description": "The homepage tagline"
   },
   "homepage.getStarted": {
-    "message": "始める →",
+    "message": "始める",
     "description": "Get started button text"
   },
   "homepage.browsePolicies": {
@@ -66,6 +66,126 @@
   "homepage.features.fast.description": {
     "message": "速度と効率のためにGoで構築。依存関係のない単一のバイナリ。数秒で大きなテンプレートをスキャンし、リソース使用量を最小限に抑えます。",
     "description": "Fast feature description"
+  },
+  "homepage.heroDescription": {
+    "message": "Alibaba Cloud ROSテンプレート向けのInfrastructure as Codeコンプライアンス事前チェックCLI。セキュリティとコンプライアンスの問題が本番環境に到達する前に検出します。",
+    "description": "An Infrastructure as Code compliance pre-check CLI for Alibaba Cloud ROS templates. Catch security and compliance issues before they ever reach production."
+  },
+  "homepage.installOr": {
+    "message": "または",
+    "description": "or"
+  },
+  "homepage.stats.rules": {
+    "message": "組み込みルール",
+    "description": "Built-in rules"
+  },
+  "homepage.stats.languages": {
+    "message": "言語",
+    "description": "Languages"
+  },
+  "homepage.stats.binary": {
+    "message": "依存関係のないバイナリ",
+    "description": "Zero-dependency binary"
+  },
+  "homepage.stats.speed": {
+    "message": "高速性を追求した設計",
+    "description": "Built for speed"
+  },
+  "homepage.features.eyebrow": {
+    "message": "InfraGuardを選ぶ理由",
+    "description": "Why InfraGuard"
+  },
+  "homepage.features.heading": {
+    "message": "コンプライアンスに準拠したインフラを提供するために必要なすべて",
+    "description": "Everything you need to ship compliant infrastructure"
+  },
+  "homepage.standardize.eyebrow": {
+    "message": "大規模環境での一貫性",
+    "description": "Consistency at scale"
+  },
+  "homepage.standardize.point1": {
+    "message": "安全でないデプロイを未然に防止",
+    "description": "Prevent insecure deployments before they happen"
+  },
+  "homepage.standardize.point2": {
+    "message": "すべてのチームでインフラストラクチャを標準化",
+    "description": "Standardize infrastructure across every team"
+  },
+  "homepage.standardize.point3": {
+    "message": "CI/CDパイプラインでコンプライアンス監査を自動化",
+    "description": "Automate compliance audits in your CI/CD pipeline"
+  },
+  "homepage.flow.write": {
+    "message": "記述",
+    "description": "Write"
+  },
+  "homepage.flow.writeDesc": {
+    "message": "いつも通りROSテンプレートを作成",
+    "description": "Author your ROS templates as usual"
+  },
+  "homepage.flow.scan": {
+    "message": "スキャン",
+    "description": "Scan"
+  },
+  "homepage.flow.scanDesc": {
+    "message": "InfraGuardがポリシーに照らして検証",
+    "description": "InfraGuard checks them against policy"
+  },
+  "homepage.flow.deploy": {
+    "message": "デプロイ",
+    "description": "Deploy"
+  },
+  "homepage.flow.deployDesc": {
+    "message": "完全にコンプライアンスに準拠し、自信を持ってデプロイ",
+    "description": "Ship with confidence, fully compliant"
+  },
+  "homepage.cta.title": {
+    "message": "インフラストラクチャを保護する準備はできましたか？",
+    "description": "Ready to secure your infrastructure?"
+  },
+  "homepage.cta.description": {
+    "message": "InfraGuardをインストールして、1分以内に最初のコンプライアンススキャンを実行しましょう。",
+    "description": "Install InfraGuard and run your first compliance scan in under a minute."
+  },
+  "homepage.terminal.desc": {
+    "message": "暗号化により、保存データを不正アクセスから保護します。",
+    "description": "Encryption protects data at rest from unauthorized access."
+  },
+  "homepage.terminal.high": {
+    "message": "高",
+    "description": "High"
+  },
+  "homepage.terminal.ruleId": {
+    "message": "ルールID",
+    "description": "Rule ID"
+  },
+  "homepage.terminal.resource": {
+    "message": "リソース",
+    "description": "Resource"
+  },
+  "homepage.terminal.recommendation": {
+    "message": "推奨事項",
+    "description": "Recommendation"
+  },
+  "homepage.terminal.recValue": {
+    "message": "ECSディスクの「Encrypted」プロパティをtrueに設定してください。",
+    "description": "Set the 'Encrypted' property of ECS disks to true."
+  },
+  "homepage.terminal.scanResults": {
+    "message": "スキャン結果",
+    "description": "Scan Results"
+  },
+  "homepage.terminal.total": {
+    "message": "合計",
+    "description": "Total"
+  },
+  "homepage.terminal.medium": {
+    "message": "中",
+    "description": "Medium"
+  },
+  "homepage.terminal.low": {
+    "message": "低",
+    "description": "Low"
   },
   "homepage.codeExample.title": {
     "message": "問題を早期に発見",

@@ -1,10 +1,8 @@
 import type { ReactNode } from "react";
-import clsx from "clsx";
 import Translate from "@docusaurus/Translate";
 import Heading from "@theme/Heading";
-import styles from "./styles.module.css";
-
 import useBaseUrl from "@docusaurus/useBaseUrl";
+import styles from "./styles.module.css";
 
 type FeatureItem = {
   titleId: string;
@@ -73,22 +71,16 @@ function Feature({
   descriptionDefault,
 }: FeatureItem) {
   return (
-    <div className={clsx("col col--4 padding--md")}>
-      <div className={styles.featureCard}>
-        <div className="text--center">
-          <div className={styles.featureIcon}>
-            <img src={useBaseUrl(iconPath)} width="48" height="48" alt="" />
-          </div>
-        </div>
-        <div className="text--center">
-          <Heading as="h3" className={styles.featureTitle}>
-            <Translate id={titleId}>{titleDefault}</Translate>
-          </Heading>
-          <p className={styles.featureDescription}>
-            <Translate id={descriptionId}>{descriptionDefault}</Translate>
-          </p>
-        </div>
+    <div className={styles.featureCard}>
+      <div className={styles.featureIcon}>
+        <img src={useBaseUrl(iconPath)} width="32" height="32" alt="" />
       </div>
+      <Heading as="h3" className={styles.featureTitle}>
+        <Translate id={titleId}>{titleDefault}</Translate>
+      </Heading>
+      <p className={styles.featureDescription}>
+        <Translate id={descriptionId}>{descriptionDefault}</Translate>
+      </p>
     </div>
   );
 }
@@ -97,7 +89,19 @@ export default function HomepageFeatures(): ReactNode {
   return (
     <section className={styles.features}>
       <div className="container">
-        <div className="row">
+        <div className={styles.sectionHead}>
+          <span className={styles.eyebrow}>
+            <Translate id="homepage.features.eyebrow">
+              Why InfraGuard
+            </Translate>
+          </span>
+          <Heading as="h2" className={styles.sectionTitle}>
+            <Translate id="homepage.features.heading">
+              Everything you need to ship compliant infrastructure
+            </Translate>
+          </Heading>
+        </div>
+        <div className={styles.grid}>
           {FeatureList.map((props, idx) => (
             <Feature key={idx} {...props} />
           ))}
