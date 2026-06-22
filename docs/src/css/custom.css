@@ -37,6 +37,19 @@
   border-top: 1px solid rgba(92, 148, 235, 0.1);
 }
 
+.footer__links {
+  justify-content: center;
+  gap: 2rem clamp(4rem, 16vw, 22rem);
+  margin: 0 0 1rem;
+}
+
+.footer__col {
+  flex: 0 1 auto;
+  width: max-content;
+  max-width: min(100%, 16rem);
+  padding: 0;
+}
+
 .footer__title {
   font-weight: 700;
   color: #000000 !important;
@@ -69,4 +82,18 @@
 
 [data-theme="dark"] .footer__link-item:hover {
   color: #ffffff !important;
+}
+
+@media (max-width: 996px) {
+  .footer__links {
+    justify-content: flex-start;
+    gap: 0;
+  }
+
+  .footer__col {
+    flex: 0 0 100%;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 var(--ifm-spacing-horizontal);
+  }
 }
