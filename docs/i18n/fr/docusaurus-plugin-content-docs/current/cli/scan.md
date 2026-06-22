@@ -26,6 +26,17 @@ infraguard scan <template> -p <policy> [flags]
 | `--lang <lang>` | string | Langue de sortie (`en`, `zh`, `es`, `fr`, `de`, `ja`, `pt`) |
 | `-m, --mode <mode>` | string | Mode de scan : `static` pour analyse locale ou `preview` pour ROS PreviewStack API (par défaut : `static`) |
 | `-i, --input <value>` | string | Valeurs de paramètres au format `key=value`, JSON, ou chemin de fichier (peut être spécifié plusieurs fois) |
+| `--waivers <path>` | string | Chemin vers le fichier de dérogations (par défaut : détection automatique de `.infraguard/waivers.yaml`) |
+| `--no-waivers` | bool | Ignorer toutes les dérogations (commentaires en ligne et fichier de dérogations) |
+| `--show-waived` | bool | Afficher les violations dérogées au lieu de les masquer |
+| `--fail-on-expired` | bool | Traiter les dérogations expirées comme de vraies violations (par défaut : `true`) |
+
+## Dérogations
+
+Les violations peuvent être supprimées avec une raison via des commentaires en ligne ou un fichier
+`.infraguard/waivers.yaml` central. Les dérogations actives sont masquées (et comptabilisées dans le
+résumé) ; les dérogations expirées réapparaissent et font échouer la build par défaut. Consultez le
+[guide des dérogations](../user-guide/waivers) et [infraguard waiver](./waiver).
 
 ## Exemples
 

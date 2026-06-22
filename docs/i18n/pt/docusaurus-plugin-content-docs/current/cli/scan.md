@@ -26,6 +26,17 @@ infraguard scan <template> -p <policy> [flags]
 | `--lang <lang>` | string | Idioma de saída (`en`, `zh`, `es`, `fr`, `de`, `ja`, `pt`) |
 | `-m, --mode <mode>` | string | Modo de varredura: `static` para análise local ou `preview` para ROS PreviewStack API (padrão: `static`) |
 | `-i, --input <value>` | string | Valores de parâmetros no formato `key=value`, formato JSON ou caminho de arquivo (pode ser especificado múltiplas vezes) |
+| `--waivers <path>` | string | Caminho para o arquivo de isenções (padrão: detecção automática de `.infraguard/waivers.yaml`) |
+| `--no-waivers` | bool | Ignorar todas as isenções (comentários inline e arquivo de isenções) |
+| `--show-waived` | bool | Mostrar violações isentas em vez de ocultá-las |
+| `--fail-on-expired` | bool | Tratar isenções expiradas como violações reais (padrão: `true`) |
+
+## Isenções
+
+Violações podem ser suprimidas com um motivo por meio de comentários inline ou de um arquivo
+central `.infraguard/waivers.yaml`. Isenções ativas são ocultadas (e contabilizadas no
+resumo); isenções expiradas reaparecem e fazem a build falhar por padrão. Consulte o
+[Guia de isenções](../user-guide/waivers) e [infraguard waiver](./waiver).
 
 ## Exemplos
 

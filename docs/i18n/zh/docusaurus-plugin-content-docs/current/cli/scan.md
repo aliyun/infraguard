@@ -26,6 +26,16 @@ infraguard scan <template> -p <policy> [选项]
 | `--lang <lang>` | 字符串 | 输出语言（`en` 或 `zh`） |
 | `-m, --mode <mode>` | 字符串 | 扫描模式：`static` 用于本地分析，`preview` 用于 ROS PreviewStack API（默认：`static`） |
 | `-i, --input <value>` | 字符串 | 参数值，格式为 `key=value`、JSON 格式或文件路径（可多次指定） |
+| `--waivers <path>` | 字符串 | 豁免文件路径（默认：自动检测 `.infraguard/waivers.yaml`） |
+| `--no-waivers` | 布尔 | 忽略所有豁免（内联注释和豁免文件） |
+| `--show-waived` | 布尔 | 显示已豁免的违规，而非隐藏它们 |
+| `--fail-on-expired` | 布尔 | 将已过期的豁免视为真实违规（默认：`true`） |
+
+## 豁免
+
+可以通过内联注释或一个中心化的 `.infraguard/waivers.yaml` 文件，附带理由来抑制违规。
+处于活动状态的豁免会被隐藏（并计入汇总）；已过期的豁免会重新出现，并默认导致构建失败。
+请参阅[豁免指南](../user-guide/waivers)和 [infraguard waiver](./waiver)。
 
 ## 示例
 

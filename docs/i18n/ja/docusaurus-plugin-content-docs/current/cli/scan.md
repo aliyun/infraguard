@@ -26,6 +26,14 @@ infraguard scan <template> -p <policy> [flags]
 | `--lang <lang>` | string | 出力言語（`en`、`zh`、`es`、`fr`、`de`、`ja`、`pt`） |
 | `-m, --mode <mode>` | string | スキャンモード：ローカル分析の場合は`static`、ROS PreviewStack APIの場合は`preview`（デフォルト：`static`） |
 | `-i, --input <value>` | string | `key=value`形式、JSON形式、またはファイルパスのパラメータ値（複数回指定可能） |
+| `--waivers <path>` | string | 除外ファイルへのパス（デフォルト：`.infraguard/waivers.yaml` を自動検出） |
+| `--no-waivers` | bool | すべての除外を無視（インラインコメントと除外ファイル） |
+| `--show-waived` | bool | 除外された違反を非表示にせず表示する |
+| `--fail-on-expired` | bool | 期限切れの除外を実際の違反として扱う（デフォルト：`true`） |
+
+## 除外
+
+違反は、インラインコメントまたは集中管理の `.infraguard/waivers.yaml` ファイルによって、理由とともに抑制できます。アクティブな除外は非表示になり（サマリーには集計されます）、期限切れの除外は再び現れ、デフォルトではビルドを失敗させます。[除外ガイド](../user-guide/waivers) および [infraguard waiver](./waiver) を参照してください。
 
 ## 例
 

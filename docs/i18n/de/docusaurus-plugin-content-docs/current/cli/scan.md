@@ -26,6 +26,18 @@ infraguard scan <template> -p <policy> [flags]
 | `--lang <lang>` | string | Ausgabesprache (`en`, `zh`, `es`, `fr`, `de`, `ja`, `pt`) |
 | `-m, --mode <mode>` | string | Scan-Modus: `static` für lokale Analyse oder `preview` für ROS PreviewStack API (Standard: `static`) |
 | `-i, --input <value>` | string | Parameterwerte im Format `key=value`, JSON-Format oder Dateipfad (kann mehrfach angegeben werden) |
+| `--waivers <path>` | string | Pfad zur Waiver-Datei (Standard: automatische Erkennung von `.infraguard/waivers.yaml`) |
+| `--no-waivers` | bool | Alle Waiver ignorieren (Inline-Kommentare und Waiver-Datei) |
+| `--show-waived` | bool | Waived Verstöße anzeigen, anstatt sie auszublenden |
+| `--fail-on-expired` | bool | Abgelaufene Waiver als echte Verstöße behandeln (Standard: `true`) |
+
+## Waiver
+
+Verstöße können mit einer Begründung über Inline-Kommentare oder eine zentrale
+`.infraguard/waivers.yaml`-Datei unterdrückt werden. Aktive Waiver werden
+ausgeblendet (und in der Zusammenfassung gezählt); abgelaufene Waiver tauchen
+wieder auf und lassen den Build standardmäßig fehlschlagen. Siehe den
+[Waiver-Leitfaden](../user-guide/waivers) und [infraguard waiver](./waiver).
 
 ## Beispiele
 

@@ -26,6 +26,18 @@ infraguard scan <template> -p <policy> [flags]
 | `--lang <lang>` | string | Idioma de salida (`en`, `zh`, `es`, `fr`, `de`, `ja`, `pt`) |
 | `-m, --mode <mode>` | string | Modo de escaneo: `static` para análisis local o `preview` para ROS PreviewStack API (predeterminado: `static`) |
 | `-i, --input <value>` | string | Valores de parámetros en formato `key=value`, JSON, o ruta de archivo (puede especificarse múltiples veces) |
+| `--waivers <path>` | string | Ruta al archivo de exenciones (predeterminado: autodetectar `.infraguard/waivers.yaml`) |
+| `--no-waivers` | bool | Ignorar todas las exenciones (comentarios en línea y archivo de exenciones) |
+| `--show-waived` | bool | Mostrar las violaciones exentas en lugar de ocultarlas |
+| `--fail-on-expired` | bool | Tratar las exenciones caducadas como violaciones reales (predeterminado: `true`) |
+
+## Exenciones
+
+Las violaciones pueden suprimirse con un motivo mediante comentarios en línea o un
+archivo central `.infraguard/waivers.yaml`. Las exenciones activas se ocultan (y se
+contabilizan en el resumen); las exenciones caducadas reaparecen y hacen fallar la
+compilación de forma predeterminada. Consulte la
+[guía de Exenciones](../user-guide/waivers) e [infraguard waiver](./waiver).
 
 ## Ejemplos
 

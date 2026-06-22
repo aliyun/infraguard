@@ -29,6 +29,7 @@ const sidebars: SidebarsConfig = {
       items: [
         'user-guide/scanning-templates',
         'user-guide/managing-policies',
+        'user-guide/waivers',
         'user-guide/output-formats',
         'user-guide/configuration',
         'user-guide/ros-features',
@@ -79,6 +80,7 @@ const sidebars: SidebarsConfig = {
       collapsed: true,
       items: [
         'development/writing-rules',
+        'development/scaffolding-rules',
         'development/writing-packs',
         'development/policy-validation',
         'development/policy-directory',
@@ -92,6 +94,7 @@ const sidebars: SidebarsConfig = {
       items: [
         'cli/scan',
         'cli/policy',
+        'cli/waiver',
         'cli/config',
         'cli/update',
         'cli/lsp',
