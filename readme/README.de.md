@@ -8,24 +8,24 @@
 
 **Infrastructure as Code (IaC) Compliance Pre-Check CLI** für Alibaba Cloud ROS- und Terraform-Vorlagen. Bewerten Sie Ihre ROS YAML/JSON-Vorlagen und Terraform `.tf`-Konfigurationen gegen Sicherheits- und Compliance-Richtlinien **vor dem Deployment**.
 
-> 💡 InfraGuard folgt dem Prinzip **Policy as Code** - Compliance-Richtlinien als versionierte, testbare und wiederverwendbare Code-Artefakte zu behandeln.
+> InfraGuard folgt dem Prinzip **Policy as Code** - Compliance-Richtlinien als versionierte, testbare und wiederverwendbare Code-Artefakte zu behandeln.
 
 **Sprache**: [English](../README.md) | [中文](README.zh.md) | [Español](README.es.md) | [Français](README.fr.md) | Deutsch | [日本語](README.ja.md) | [Português](README.pt.md)
 
-## ✨ Funktionen
+## Funktionen
 
-- 🔍 **Pre-Deployment-Validierung** - Compliance-Probleme erkennen, bevor sie die Produktion erreichen
-- 🎯 **Dual-Scan-Modi** - Statische Analyse oder cloud-basierte Preview-Validierung
-- 🧩 **ROS- und Terraform-Unterstützung** - Scannen Sie ROS YAML/JSON-Vorlagen und Terraform `.tf`-Projekte
-- 📦 **Integrierte Regeln** - Umfassende Abdeckung für Aliyun-Dienste
-- 🏆 **Compliance-Pakete** - MLPS, ISO 27001, PCI-DSS, SOC 2 und mehr
-- ✏️ **Editor-Integration** - VS Code-Erweiterung mit Auto-Vervollständigung, Echtzeit-Diagnose und Hover-Dokumentation für ROS-Templates
-- 🌍 **Mehrsprachige Unterstützung** - Verfügbar in 7 Sprachen (Deutsch, Englisch, Chinesisch, Spanisch, Französisch, Japanisch, Portugiesisch)
-- 🎨 **Mehrere Ausgabeformate** - Tabellen-, JSON- und interaktive HTML-Berichte
-- 🔧 **Erweiterbar** - Schreiben Sie benutzerdefinierte Richtlinien in Rego (Open Policy Agent)
-- ⚡ **Schnell** - In Go entwickelt für Geschwindigkeit und Effizienz
+- **Pre-Deployment-Validierung** - Compliance-Probleme erkennen, bevor sie die Produktion erreichen
+- **Dual-Scan-Modi** - Statische Analyse oder cloud-basierte Preview-Validierung
+- **ROS- und Terraform-Unterstützung** - Scannen Sie ROS YAML/JSON-Vorlagen und Terraform `.tf`-Projekte
+- **Integrierte Regeln** - Umfassende Abdeckung für Aliyun-Dienste
+- **Compliance-Pakete** - MLPS, ISO 27001, PCI-DSS, SOC 2 und mehr
+- **Editor-Integration** - VS Code-Erweiterung mit Auto-Vervollständigung, Echtzeit-Diagnose und Hover-Dokumentation für ROS-Templates
+- **Mehrsprachige Unterstützung** - Verfügbar in 7 Sprachen (Deutsch, Englisch, Chinesisch, Spanisch, Französisch, Japanisch, Portugiesisch)
+- **Mehrere Ausgabeformate** - Tabellen-, JSON- und interaktive HTML-Berichte
+- **Erweiterbar** - Schreiben Sie benutzerdefinierte Richtlinien in Rego (Open Policy Agent)
+- **Schnell** - In Go entwickelt für Geschwindigkeit und Effizienz
 
-## 🚀 Schnellstart
+## Schnellstart
 
 ### Installation
 
@@ -58,7 +58,7 @@ infraguard scan template.yaml -p "rule:aliyun:ecs-*"
 infraguard scan template.yaml -p pack:aliyun:mlps-level-3-pre-check-compliance-pack --format html -o report.html
 ```
 
-## 📚 Dokumentation
+## Dokumentation
 
 Für detaillierte Dokumentation besuchen Sie bitte unsere [Dokumentationsseite](https://aliyun.github.io/infraguard/de/)
 

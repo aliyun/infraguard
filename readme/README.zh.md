@@ -8,24 +8,24 @@
 
 **基础设施即代码 (IaC) 合规性预检查 CLI**，适用于阿里云 ROS 和 Terraform 模板。在部署前评估您的 ROS YAML/JSON 模板和 Terraform `.tf` 配置是否符合安全和合规策略。
 
-> 💡 InfraGuard 秉承**策略即代码 (Policy as Code)** 理念 - 将合规策略作为可版本化、可测试、可复用的代码制品来管理。
+> InfraGuard 秉承**策略即代码 (Policy as Code)** 理念 - 将合规策略作为可版本化、可测试、可复用的代码制品来管理。
 
 **语言**: [English](../README.md) | 中文 | [Español](README.es.md) | [Français](README.fr.md) | [Deutsch](README.de.md) | [日本語](README.ja.md) | [Português](README.pt.md)
 
-## ✨ 特性
+## 特性
 
-- 🔍 **部署前验证** - 在生产环境之前发现合规性问题
-- 🎯 **双重扫描模式** - 静态分析或基于云端的预览验证
-- 🧩 **ROS 与 Terraform 支持** - 扫描 ROS YAML/JSON 模板和 Terraform `.tf` 项目
-- 📦 **内置规则** - 全面覆盖阿里云服务
-- 🏆 **合规包** - MLPS、ISO 27001、PCI-DSS、SOC 2 等
-- ✏️ **编辑器集成** - VS Code 扩展，提供 ROS 模板的自动补全、实时诊断和悬停文档
-- 🌍 **多语言支持** - 支持 7 种语言（中文、英语、西班牙语、法语、德语、日语、葡萄牙语）
-- 🎨 **多种输出格式** - 表格、JSON 和交互式 HTML 报告
-- 🔧 **可扩展** - 使用 Rego (Open Policy Agent) 编写自定义策略
-- ⚡ **快速** - 使用 Go 构建，速度快、效率高
+- **部署前验证** - 在生产环境之前发现合规性问题
+- **双重扫描模式** - 静态分析或基于云端的预览验证
+- **ROS 与 Terraform 支持** - 扫描 ROS YAML/JSON 模板和 Terraform `.tf` 项目
+- **内置规则** - 全面覆盖阿里云服务
+- **合规包** - MLPS、ISO 27001、PCI-DSS、SOC 2 等
+- **编辑器集成** - VS Code 扩展，提供 ROS 模板的自动补全、实时诊断和悬停文档
+- **多语言支持** - 支持 7 种语言（中文、英语、西班牙语、法语、德语、日语、葡萄牙语）
+- **多种输出格式** - 表格、JSON 和交互式 HTML 报告
+- **可扩展** - 使用 Rego (Open Policy Agent) 编写自定义策略
+- **快速** - 使用 Go 构建，速度快、效率高
 
-## 🚀 快速开始
+## 快速开始
 
 ### 安装
 
@@ -58,7 +58,7 @@ infraguard scan template.yaml -p "rule:aliyun:ecs-*"
 infraguard scan template.yaml -p pack:aliyun:mlps-level-3-pre-check-compliance-pack --format html -o report.html
 ```
 
-## 📚 文档
+## 文档
 
 详细文档请访问我们的 [文档站点](https://aliyun.github.io/infraguard/zh/)
 

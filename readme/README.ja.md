@@ -8,24 +8,24 @@
 
 **Infrastructure as Code (IaC) コンプライアンス事前チェック CLI**（Alibaba Cloud ROSおよびTerraformテンプレート用）。デプロイ前にROS YAML/JSONテンプレートとTerraform `.tf` 設定をセキュリティおよびコンプライアンスポリシーに対して評価します。
 
-> 💡 InfraGuardは**Policy as Code**の理念を採用しています - コンプライアンスポリシーをバージョン管理可能で、テスト可能で、再利用可能なコードアーティファクトとして扱います。
+> InfraGuardは**Policy as Code**の理念を採用しています - コンプライアンスポリシーをバージョン管理可能で、テスト可能で、再利用可能なコードアーティファクトとして扱います。
 
 **言語**: [English](../README.md) | [中文](README.zh.md) | [Español](README.es.md) | [Français](README.fr.md) | [Deutsch](README.de.md) | 日本語 | [Português](README.pt.md)
 
-## ✨ 機能
+## 機能
 
-- 🔍 **デプロイ前検証** - 本番環境に到達する前にコンプライアンスの問題を検出
-- 🎯 **デュアルスキャンモード** - 静的解析またはクラウドベースのプレビュー検証
-- 🧩 **ROS と Terraform のサポート** - ROS YAML/JSONテンプレートとTerraform `.tf` プロジェクトをスキャン
-- 📦 **組み込みルール** - Aliyunサービスの包括的なカバレッジ
-- 🏆 **コンプライアンスパック** - MLPS、ISO 27001、PCI-DSS、SOC 2など
-- ✏️ **エディタ統合** - VS Code拡張機能によるROSテンプレートの自動補完、リアルタイム診断、ホバードキュメント
-- 🌍 **多言語サポート** - 7言語で利用可能（日本語、英語、中国語、スペイン語、フランス語、ドイツ語、ポルトガル語）
-- 🎨 **複数の出力形式** - テーブル、JSON、インタラクティブなHTMLレポート
-- 🔧 **拡張可能** - Rego（Open Policy Agent）でカスタムポリシーを記述
-- ⚡ **高速** - Goで構築され、速度と効率を実現
+- **デプロイ前検証** - 本番環境に到達する前にコンプライアンスの問題を検出
+- **デュアルスキャンモード** - 静的解析またはクラウドベースのプレビュー検証
+- **ROS と Terraform のサポート** - ROS YAML/JSONテンプレートとTerraform `.tf` プロジェクトをスキャン
+- **組み込みルール** - Aliyunサービスの包括的なカバレッジ
+- **コンプライアンスパック** - MLPS、ISO 27001、PCI-DSS、SOC 2など
+- **エディタ統合** - VS Code拡張機能によるROSテンプレートの自動補完、リアルタイム診断、ホバードキュメント
+- **多言語サポート** - 7言語で利用可能（日本語、英語、中国語、スペイン語、フランス語、ドイツ語、ポルトガル語）
+- **複数の出力形式** - テーブル、JSON、インタラクティブなHTMLレポート
+- **拡張可能** - Rego（Open Policy Agent）でカスタムポリシーを記述
+- **高速** - Goで構築され、速度と効率を実現
 
-## 🚀 クイックスタート
+## クイックスタート
 
 ### インストール
 
@@ -58,7 +58,7 @@ infraguard scan template.yaml -p "rule:aliyun:ecs-*"
 infraguard scan template.yaml -p pack:aliyun:mlps-level-3-pre-check-compliance-pack --format html -o report.html
 ```
 
-## 📚 ドキュメント
+## ドキュメント
 
 詳細なドキュメントについては、[ドキュメントサイト](https://aliyun.github.io/infraguard/ja/)をご覧ください
 
