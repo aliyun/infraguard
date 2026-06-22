@@ -299,6 +299,11 @@ scan:
   message: "Mensaje: %s"
   request_id: "IdSolicitud: %s"
   calling_preview_stack: "Llamando API PreviewStack (región: %s)..."
+  waivers_flag: "Ruta al archivo de exenciones (predeterminado: detección automática de .infraguard/waivers.yaml)"
+  no_waivers_flag: "Ignorar todas las exenciones (comentarios en línea y archivo de exenciones)"
+  show_waived_flag: "Mostrar las infracciones exentas en la salida en lugar de ocultarlas"
+  fail_on_expired_flag: "Tratar las exenciones caducadas como infracciones reales"
+  waiver_load_error: "no se pudo cargar el archivo de exenciones %s: %v"
 
 # Informe
 report:
@@ -328,6 +333,11 @@ report:
   metadata_separator: " "
   summary_prefix: "  "
   summary_separator: " | "
+  waived: "⊘ Exenta (%s): %s"
+  waived_expires: " [caduca %s]"
+  waiver_expired: "⚠ Exención caducada el %s (%s): %s"
+  waiver_summary_active: "Exenciones: %d activas"
+  waiver_summary_expired: ", %d caducadas"
 
 # Niveles de severidad
 severity:
@@ -538,3 +548,115 @@ lsp_diag:
   range_violation: "Propiedad %q del recurso %q: valor %v fuera del rango [%v, %v]"
   length_violation: "Propiedad %q del recurso %q: longitud %d fuera del rango [%v, %v]"
   pattern_violation: "Propiedad %q del recurso %q: valor %q no coincide con el patrón %q"
+
+# Policy new command
+policy_new:
+  short: "Genera el esqueleto de una nueva regla personalizada (o paquete) con fixtures de prueba"
+  long: |
+    Genera el esqueleto de una nueva regla personalizada con un esqueleto Rego listo para editar y los fixtures de prueba correspondientes.
+
+    Los archivos generados se ubican bajo --dir (predeterminado ./policies) y funcionan directamente con:
+      infraguard scan -p ./policies <template>
+      infraguard policy test --dir ./policies --rule <rule-id>
+
+    Ejemplos:
+      infraguard policy new ecs-instance-must-have-owner-tag --iac both --severity medium --resource-type ALIYUN::ECS::Instance --tf-resource-type alicloud_instance
+      infraguard policy new --pack my-team-baseline
+  iac_flag: "IaC de destino: ros, terraform o both"
+  severity_flag: "Severidad: high, medium o low"
+  resource_type_flag: "Tipo de recurso ROS (repetible)"
+  tf_resource_type_flag: "Tipo de recurso Terraform (repetible)"
+  dir_flag: "Directorio raíz de salida"
+  name_en_flag: "Nombre de la regla en inglés"
+  name_zh_flag: "Nombre de la regla en chino"
+  desc_en_flag: "Descripción en inglés"
+  desc_zh_flag: "Descripción en chino"
+  no_test_flag: "No generar fixtures de prueba"
+  force_flag: "Sobrescribir archivos existentes"
+  pack_flag: "Generar un esqueleto de paquete con el ID indicado en lugar de una regla"
+  created_rule: "✓ Regla %q creada"
+  created_pack: "✓ Paquete %q creado\n  %s"
+  next_steps: "Próximos pasos:"
+  step1: "1. Implementa la lógica deny (busca los marcadores TODO en los archivos .rego)"
+  step2: "2. Completa los fixtures compliant/violation para que ejerciten la regla"
+  step3: "3. Ejecuta: infraguard policy test --dir %s --rule %s"
+  pack_hint: "Agrega los IDs de regla a la lista `rules` en el archivo generado."
+  err_rule_id_required: "se requiere un ID de regla, p. ej. `infraguard policy new my-rule-id`"
+  err_invalid_id: "ID de regla inválido %q: usa letras minúsculas, dígitos y guiones (p. ej. ecs-must-have-tag)"
+  err_invalid_pack_id: "ID de paquete inválido %q: usa letras minúsculas, dígitos y guiones"
+  err_severity: "severidad inválida %q: usa high, medium o low"
+  err_iac: "--iac inválido %q: usa ros, terraform o both"
+  err_exists_builtin: "la regla %q ya existe en el conjunto de políticas integrado; elige otro ID o usa --force"
+  err_exists_local: "la regla %q ya existe en %s; usa --force para sobrescribir"
+  err_file_exists: "el archivo ya existe: %s (usa --force para sobrescribir)"
+
+# Policy test command
+policy_test:
+  short: "Ejecuta pruebas de comportamiento para las reglas usando sus fixtures"
+  long: |
+    Ejecuta pruebas de comportamiento para las reglas.
+
+    Para cada regla, se evalúan los fixtures bajo <dir>/testdata/aliyun/rules/<rule>/:
+      - los fixtures compliant no deben producir ninguna infracción de la regla
+      - los fixtures violation deben producir al menos una
+
+    Ejemplos:
+      infraguard policy test --dir ./policies
+      infraguard policy test --dir ./policies --rule my-rule --iac terraform
+      infraguard policy test --dir ./policies --format json
+  dir_flag: "Directorio raíz que contiene rules/ y testdata/"
+  rule_flag: "Probar solo el ID de regla indicado (repetible)"
+  iac_flag: "IaC a probar: ros, terraform o both"
+  format_flag: "Formato de salida: table o json"
+  allow_empty_flag: "Salir con 0 incluso cuando no se encuentren fixtures"
+  header_rule: "Regla"
+  header_case: "Caso"
+  header_status: "Estado"
+  header_detail: "Detalle"
+  status_pass: "aprobado"
+  status_fail: "FALLO"
+  status_error: "error"
+  no_fixtures: "No se encontraron fixtures de prueba."
+  summary: "%d reglas, %d casos: %d aprobados, %d fallidos"
+  err_format: "--format inválido %q: usa table o json"
+  err_iac: "--iac inválido %q: usa ros, terraform o both"
+  detail_no_rule: "no se encontró ninguna definición de regla en %s"
+  detail_expect_one: "se esperaba al menos 1 infracción, se obtuvieron 0"
+  detail_expect_zero: "se esperaban 0 infracciones, se obtuvieron %s"
+  detail_load: "cargar plantilla: %s"
+  detail_load_tf: "cargar terraform: %s"
+  detail_eval: "evaluar: %s"
+
+# Waiver command
+waiver:
+  short: "Gestiona las exenciones de reglas (supresiones)"
+  long: |
+    Gestiona las exenciones de reglas (supresiones).
+
+    Las exenciones te permiten suprimir conscientemente infracciones específicas con un motivo y una fecha de caducidad opcional, ya sea mediante comentarios en línea en las plantillas o un archivo de exenciones centralizado (.infraguard/waivers.yaml).
+  waivers_flag: "Ruta al archivo de exenciones (predeterminado: detección automática de .infraguard/waivers.yaml)"
+  rules_dir_flag: "Tratar también como conocidas las reglas bajo este directorio (para reglas personalizadas)"
+  not_found: "no se encontró ningún archivo de exenciones (se buscó %s); usa --waivers para especificar uno"
+  list:
+    short: "Lista las exenciones y su estado"
+    title: "Exenciones (%d) — %s"
+    none: "No hay exenciones definidas en %s"
+    header_rule: "Regla"
+    header_resource: "Recurso"
+    header_status: "Estado"
+    header_expires: "Caduca"
+    header_reason: "Motivo"
+    state_active: "activa"
+    state_expired: "caducada"
+    state_permanent: "permanente"
+  lint:
+    short: "Valida el archivo de exenciones (motivos faltantes, reglas desconocidas, entradas caducadas)"
+    valid: "✓ %d exención(es) válida(s) — %s"
+    summary: "%d error(es), %d advertencia(s) encontradas en %s"
+    warn_summary: "%d advertencia(s) encontradas en %s"
+    missing_rule: "falta el campo requerido: rule"
+    missing_reason: "falta el campo requerido: reason"
+    unknown_rule: "regla desconocida: %s"
+    invalid_expires: "fecha de caducidad inválida %q (se espera YYYY-MM-DD)"
+    expired: "exención caducada el %s"
+    permanent: "exención permanente (sin fecha de caducidad)"

@@ -299,6 +299,11 @@ scan:
   message: "メッセージ: %s"
   request_id: "リクエストID: %s"
   calling_preview_stack: "PreviewStack APIを呼び出し中（リージョン: %s）..."
+  waivers_flag: "免除ファイルのパス（デフォルト: .infraguard/waivers.yaml を自動検出）"
+  no_waivers_flag: "すべての免除を無視する（インラインコメントおよび免除ファイル）"
+  show_waived_flag: "免除された違反を非表示にせず出力に表示する"
+  fail_on_expired_flag: "期限切れの免除を実際の違反として扱う"
+  waiver_load_error: "免除ファイル %s の読み込みに失敗しました: %v"
 
 # レポート
 report:
@@ -328,6 +333,11 @@ report:
   metadata_separator: " "
   summary_prefix: "  "
   summary_separator: " | "
+  waived: "⊘ 免除済み (%s): %s"
+  waived_expires: " [期限 %s]"
+  waiver_expired: "⚠ 免除は %s に期限切れになりました (%s): %s"
+  waiver_summary_active: "免除: %d 件有効"
+  waiver_summary_expired: ", %d 件期限切れ"
 
 # 重要度レベル
 severity:
@@ -538,3 +548,115 @@ lsp_diag:
   range_violation: "リソース %q のプロパティ %q: 値 %v は範囲 [%v, %v] の外です"
   length_violation: "リソース %q のプロパティ %q: 長さ %d は範囲 [%v, %v] の外です"
   pattern_violation: "リソース %q のプロパティ %q: 値 %q はパターン %q に一致しません"
+
+# Policy new command
+policy_new:
+  short: "テストフィクスチャ付きで新しいカスタムルール（またはパック）の雛形を生成する"
+  long: |
+    すぐに編集できる Rego の雛形と対応するテストフィクスチャ付きで、新しいカスタムルールの雛形を生成します。
+
+    生成されるファイルは --dir（デフォルト ./policies）配下に作成され、次のコマンドで直接使用できます:
+      infraguard scan -p ./policies <template>
+      infraguard policy test --dir ./policies --rule <rule-id>
+
+    例:
+      infraguard policy new ecs-instance-must-have-owner-tag --iac both --severity medium --resource-type ALIYUN::ECS::Instance --tf-resource-type alicloud_instance
+      infraguard policy new --pack my-team-baseline
+  iac_flag: "対象 IaC: ros、terraform、または both"
+  severity_flag: "重大度: high、medium、または low"
+  resource_type_flag: "ROS リソースタイプ（繰り返し指定可能）"
+  tf_resource_type_flag: "Terraform リソースタイプ（繰り返し指定可能）"
+  dir_flag: "出力ルートディレクトリ"
+  name_en_flag: "英語のルール名"
+  name_zh_flag: "中国語のルール名"
+  desc_en_flag: "英語の説明"
+  desc_zh_flag: "中国語の説明"
+  no_test_flag: "テストフィクスチャを生成しない"
+  force_flag: "既存のファイルを上書きする"
+  pack_flag: "ルールの代わりに、指定した ID でパックの雛形を生成する"
+  created_rule: "✓ ルール %q を作成しました"
+  created_pack: "✓ パック %q を作成しました\n  %s"
+  next_steps: "次のステップ:"
+  step1: "1. deny ロジックを実装する（.rego ファイル内の TODO マーカーを検索）"
+  step2: "2. ルールを検証できるように compliant/violation フィクスチャを記述する"
+  step3: "3. 実行: infraguard policy test --dir %s --rule %s"
+  pack_hint: "生成されたファイルの `rules` リストにルール ID を追加してください。"
+  err_rule_id_required: "ルール ID が必要です。例: `infraguard policy new my-rule-id`"
+  err_invalid_id: "無効なルール ID %q: 小文字、数字、ハイフンを使用してください（例: ecs-must-have-tag）"
+  err_invalid_pack_id: "無効なパック ID %q: 小文字、数字、ハイフンを使用してください"
+  err_severity: "無効な重大度 %q: high、medium、または low を使用してください"
+  err_iac: "無効な --iac %q: ros、terraform、または both を使用してください"
+  err_exists_builtin: "ルール %q は組み込みポリシーセットに既に存在します。別の ID を選ぶか --force を使用してください"
+  err_exists_local: "ルール %q は %s 配下に既に存在します。上書きするには --force を使用してください"
+  err_file_exists: "ファイルが既に存在します: %s（上書きするには --force を使用してください）"
+
+# Policy test command
+policy_test:
+  short: "フィクスチャを使用してルールの動作テストを実行する"
+  long: |
+    ルールの動作テストを実行します。
+
+    各ルールについて、<dir>/testdata/aliyun/rules/<rule>/ 配下のフィクスチャが評価されます:
+      - compliant フィクスチャはそのルールの違反を発生させてはいけません
+      - violation フィクスチャは少なくとも 1 件の違反を発生させなければなりません
+
+    例:
+      infraguard policy test --dir ./policies
+      infraguard policy test --dir ./policies --rule my-rule --iac terraform
+      infraguard policy test --dir ./policies --format json
+  dir_flag: "rules/ と testdata/ を含むルートディレクトリ"
+  rule_flag: "指定したルール ID のみをテストする（繰り返し指定可能）"
+  iac_flag: "テストする IaC: ros、terraform、または both"
+  format_flag: "出力形式: table または json"
+  allow_empty_flag: "フィクスチャが見つからない場合でも 0 で終了する"
+  header_rule: "ルール"
+  header_case: "ケース"
+  header_status: "ステータス"
+  header_detail: "詳細"
+  status_pass: "pass"
+  status_fail: "FAIL"
+  status_error: "error"
+  no_fixtures: "テストフィクスチャが見つかりませんでした。"
+  summary: "%d ルール、%d ケース: %d 件成功、%d 件失敗"
+  err_format: "無効な --format %q: table または json を使用してください"
+  err_iac: "無効な --iac %q: ros、terraform、または both を使用してください"
+  detail_no_rule: "%s 配下にルール定義が見つかりません"
+  detail_expect_one: "少なくとも 1 件の違反を期待していましたが、0 件でした"
+  detail_expect_zero: "0 件の違反を期待していましたが、%s 件でした"
+  detail_load: "テンプレートの読み込み: %s"
+  detail_load_tf: "terraform の読み込み: %s"
+  detail_eval: "評価: %s"
+
+# Waiver command
+waiver:
+  short: "ルールの免除（抑制）を管理する"
+  long: |
+    ルールの免除（抑制）を管理します。
+
+    免除を使用すると、テンプレート内のインラインコメントまたは中央の免除ファイル（.infraguard/waivers.yaml）のいずれかを通じて、理由と任意の有効期限を付けて特定の違反を意図的に抑制できます。
+  waivers_flag: "免除ファイルのパス（デフォルト: .infraguard/waivers.yaml を自動検出）"
+  rules_dir_flag: "このディレクトリ配下のルールも既知のものとして扱う（カスタムルール用）"
+  not_found: "免除ファイルが見つかりません（%s を検索しました）。--waivers で指定してください"
+  list:
+    short: "免除とそのステータスを一覧表示する"
+    title: "免除 (%d) — %s"
+    none: "%s に免除が定義されていません"
+    header_rule: "ルール"
+    header_resource: "リソース"
+    header_status: "ステータス"
+    header_expires: "有効期限"
+    header_reason: "理由"
+    state_active: "有効"
+    state_expired: "期限切れ"
+    state_permanent: "無期限"
+  lint:
+    short: "免除ファイルを検証する（理由の欠落、不明なルール、期限切れエントリ）"
+    valid: "✓ %d 件の免除は有効です — %s"
+    summary: "%[3]s に %[1]d 件のエラー、%[2]d 件の警告が見つかりました"
+    warn_summary: "%[2]s に %[1]d 件の警告が見つかりました"
+    missing_rule: "必須フィールドがありません: rule"
+    missing_reason: "必須フィールドがありません: reason"
+    unknown_rule: "不明なルール: %s"
+    invalid_expires: "無効な expires 日付 %q（YYYY-MM-DD 形式が必要です）"
+    expired: "免除は %s に期限切れになりました"
+    permanent: "無期限の免除（expires 日付なし）"

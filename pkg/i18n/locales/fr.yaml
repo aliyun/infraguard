@@ -299,6 +299,11 @@ scan:
   message: "Message: %s"
   request_id: "IdRequête: %s"
   calling_preview_stack: "Appel de l'API PreviewStack (région: %s)..."
+  waivers_flag: "Chemin vers le fichier de dérogations (par défaut : détection automatique de .infraguard/waivers.yaml)"
+  no_waivers_flag: "Ignorer toutes les dérogations (commentaires en ligne et fichier de dérogations)"
+  show_waived_flag: "Afficher les violations dérogées dans la sortie au lieu de les masquer"
+  fail_on_expired_flag: "Traiter les dérogations expirées comme de vraies violations"
+  waiver_load_error: "échec du chargement du fichier de dérogations %s : %v"
 
 # Rapport
 report:
@@ -328,6 +333,11 @@ report:
   metadata_separator: " "
   summary_prefix: "  "
   summary_separator: " | "
+  waived: "⊘ Dérogé (%s) : %s"
+  waived_expires: " [expire le %s]"
+  waiver_expired: "⚠ Dérogation expirée le %s (%s) : %s"
+  waiver_summary_active: "Dérogations : %d active(s)"
+  waiver_summary_expired: ", %d expirée(s)"
 
 # Niveaux de gravité
 severity:
@@ -538,3 +548,115 @@ lsp_diag:
   range_violation: "Propriété %q de la ressource %q : valeur %v hors de la plage [%v, %v]"
   length_violation: "Propriété %q de la ressource %q : longueur %d hors de la plage [%v, %v]"
   pattern_violation: "Propriété %q de la ressource %q : valeur %q ne correspond pas au motif %q"
+
+# Policy new command
+policy_new:
+  short: "Générer un squelette pour une nouvelle règle personnalisée (ou un pack) avec des fixtures de test"
+  long: |
+    Générer un squelette pour une nouvelle règle personnalisée avec un canevas Rego prêt à éditer et des fixtures de test correspondantes.
+
+    Les fichiers générés se trouvent sous --dir (par défaut ./policies) et fonctionnent directement avec :
+      infraguard scan -p ./policies <template>
+      infraguard policy test --dir ./policies --rule <rule-id>
+
+    Exemples :
+      infraguard policy new ecs-instance-must-have-owner-tag --iac both --severity medium --resource-type ALIYUN::ECS::Instance --tf-resource-type alicloud_instance
+      infraguard policy new --pack my-team-baseline
+  iac_flag: "IaC cible : ros, terraform ou both"
+  severity_flag: "Gravité : high, medium ou low"
+  resource_type_flag: "Type de ressource ROS (répétable)"
+  tf_resource_type_flag: "Type de ressource Terraform (répétable)"
+  dir_flag: "Répertoire racine de sortie"
+  name_en_flag: "Nom de la règle en anglais"
+  name_zh_flag: "Nom de la règle en chinois"
+  desc_en_flag: "Description en anglais"
+  desc_zh_flag: "Description en chinois"
+  no_test_flag: "Ne pas générer de fixtures de test"
+  force_flag: "Écraser les fichiers existants"
+  pack_flag: "Générer un squelette de pack avec l'ID donné au lieu d'une règle"
+  created_rule: "✓ Règle %q créée"
+  created_pack: "✓ Pack %q créé\n  %s"
+  next_steps: "Prochaines étapes :"
+  step1: "1. Implémenter la logique deny (rechercher les marqueurs TODO dans les fichiers .rego)"
+  step2: "2. Remplir les fixtures compliant/violation pour qu'elles exercent la règle"
+  step3: "3. Exécuter : infraguard policy test --dir %s --rule %s"
+  pack_hint: "Ajoutez les ID de règle à la liste `rules` dans le fichier généré."
+  err_rule_id_required: "un ID de règle est requis, par ex. `infraguard policy new my-rule-id`"
+  err_invalid_id: "ID de règle %q invalide : utilisez des lettres minuscules, des chiffres et des traits d'union (par ex. ecs-must-have-tag)"
+  err_invalid_pack_id: "ID de pack %q invalide : utilisez des lettres minuscules, des chiffres et des traits d'union"
+  err_severity: "gravité %q invalide : utilisez high, medium ou low"
+  err_iac: "--iac %q invalide : utilisez ros, terraform ou both"
+  err_exists_builtin: "la règle %q existe déjà dans l'ensemble de politiques intégré ; choisissez un autre ID ou utilisez --force"
+  err_exists_local: "la règle %q existe déjà sous %s ; utilisez --force pour écraser"
+  err_file_exists: "le fichier existe déjà : %s (utilisez --force pour écraser)"
+
+# Policy test command
+policy_test:
+  short: "Exécuter les tests de comportement des règles à l'aide de leurs fixtures"
+  long: |
+    Exécuter les tests de comportement des règles.
+
+    Pour chaque règle, les fixtures sous <dir>/testdata/aliyun/rules/<rule>/ sont évaluées :
+      - les fixtures compliant ne doivent produire aucune violation de la règle
+      - les fixtures violation doivent en produire au moins une
+
+    Exemples :
+      infraguard policy test --dir ./policies
+      infraguard policy test --dir ./policies --rule my-rule --iac terraform
+      infraguard policy test --dir ./policies --format json
+  dir_flag: "Répertoire racine contenant rules/ et testdata/"
+  rule_flag: "Tester uniquement l'ID de règle donné (répétable)"
+  iac_flag: "IaC à tester : ros, terraform ou both"
+  format_flag: "Format de sortie : table ou json"
+  allow_empty_flag: "Quitter avec 0 même si aucune fixture n'est trouvée"
+  header_rule: "Règle"
+  header_case: "Cas"
+  header_status: "Statut"
+  header_detail: "Détail"
+  status_pass: "réussi"
+  status_fail: "ÉCHEC"
+  status_error: "erreur"
+  no_fixtures: "Aucune fixture de test trouvée."
+  summary: "%d règles, %d cas : %d réussis, %d échoués"
+  err_format: "--format %q invalide : utilisez table ou json"
+  err_iac: "--iac %q invalide : utilisez ros, terraform ou both"
+  detail_no_rule: "aucune définition de règle trouvée sous %s"
+  detail_expect_one: "au moins 1 violation attendue, 0 obtenue"
+  detail_expect_zero: "0 violation attendue, %s obtenue(s)"
+  detail_load: "chargement du template : %s"
+  detail_load_tf: "chargement de terraform : %s"
+  detail_eval: "évaluation : %s"
+
+# Waiver command
+waiver:
+  short: "Gérer les dérogations de règles (suppressions)"
+  long: |
+    Gérer les dérogations de règles (suppressions).
+
+    Les dérogations vous permettent de supprimer sciemment des violations spécifiques avec une raison et une date d'expiration facultative, soit via des commentaires en ligne dans les templates, soit via un fichier de dérogations central (.infraguard/waivers.yaml).
+  waivers_flag: "Chemin vers le fichier de dérogations (par défaut : détection automatique de .infraguard/waivers.yaml)"
+  rules_dir_flag: "Considérer aussi les règles sous ce répertoire comme connues (pour les règles personnalisées)"
+  not_found: "aucun fichier de dérogations trouvé (recherché : %s) ; utilisez --waivers pour en spécifier un"
+  list:
+    short: "Lister les dérogations et leur statut"
+    title: "Dérogations (%d) — %s"
+    none: "Aucune dérogation définie dans %s"
+    header_rule: "Règle"
+    header_resource: "Ressource"
+    header_status: "Statut"
+    header_expires: "Expire"
+    header_reason: "Raison"
+    state_active: "active"
+    state_expired: "expirée"
+    state_permanent: "permanente"
+  lint:
+    short: "Valider le fichier de dérogations (raisons manquantes, règles inconnues, entrées expirées)"
+    valid: "✓ %d dérogation(s) valide(s) — %s"
+    summary: "%d erreur(s), %d avertissement(s) trouvé(s) dans %s"
+    warn_summary: "%d avertissement(s) trouvé(s) dans %s"
+    missing_rule: "champ obligatoire manquant : rule"
+    missing_reason: "champ obligatoire manquant : reason"
+    unknown_rule: "règle inconnue : %s"
+    invalid_expires: "date d'expiration %q invalide (format attendu AAAA-MM-JJ)"
+    expired: "dérogation expirée le %s"
+    permanent: "dérogation permanente (pas de date d'expiration)"

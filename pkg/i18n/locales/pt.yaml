@@ -299,6 +299,11 @@ scan:
   message: "Mensagem: %s"
   request_id: "IdSolicitação: %s"
   calling_preview_stack: "Chamando API PreviewStack (região: %s)..."
+  waivers_flag: "Caminho para o arquivo de waiver (padrão: detecção automática de .infraguard/waivers.yaml)"
+  no_waivers_flag: "Ignorar todos os waivers (comentários inline e arquivo de waiver)"
+  show_waived_flag: "Mostrar violações dispensadas na saída em vez de ocultá-las"
+  fail_on_expired_flag: "Tratar waivers expirados como violações reais"
+  waiver_load_error: "falha ao carregar o arquivo de waiver %s: %v"
 
 # Relatório
 report:
@@ -328,6 +333,11 @@ report:
   metadata_separator: " "
   summary_prefix: "  "
   summary_separator: " | "
+  waived: "⊘ Dispensado (%s): %s"
+  waived_expires: " [expira em %s]"
+  waiver_expired: "⚠ Waiver expirado em %s (%s): %s"
+  waiver_summary_active: "Waivers: %d ativo(s)"
+  waiver_summary_expired: ", %d expirado(s)"
 
 # Níveis de gravidade
 severity:
@@ -538,3 +548,115 @@ lsp_diag:
   range_violation: "Propriedade %q do recurso %q: valor %v fora do intervalo [%v, %v]"
   length_violation: "Propriedade %q do recurso %q: comprimento %d fora do intervalo [%v, %v]"
   pattern_violation: "Propriedade %q do recurso %q: valor %q não corresponde ao padrão %q"
+
+# Policy new command
+policy_new:
+  short: "Cria uma nova regra personalizada (ou pacote) com fixtures de teste"
+  long: |
+    Cria uma nova regra personalizada com um esqueleto Rego pronto para editar e fixtures de teste correspondentes.
+
+    Os arquivos gerados ficam em --dir (padrão ./policies) e funcionam diretamente com:
+      infraguard scan -p ./policies <template>
+      infraguard policy test --dir ./policies --rule <rule-id>
+
+    Exemplos:
+      infraguard policy new ecs-instance-must-have-owner-tag --iac both --severity medium --resource-type ALIYUN::ECS::Instance --tf-resource-type alicloud_instance
+      infraguard policy new --pack my-team-baseline
+  iac_flag: "IaC alvo: ros, terraform ou both"
+  severity_flag: "Severidade: high, medium ou low"
+  resource_type_flag: "Tipo de recurso ROS (repetível)"
+  tf_resource_type_flag: "Tipo de recurso Terraform (repetível)"
+  dir_flag: "Diretório raiz de saída"
+  name_en_flag: "Nome da regra em inglês"
+  name_zh_flag: "Nome da regra em chinês"
+  desc_en_flag: "Descrição em inglês"
+  desc_zh_flag: "Descrição em chinês"
+  no_test_flag: "Não gerar fixtures de teste"
+  force_flag: "Sobrescrever arquivos existentes"
+  pack_flag: "Gerar um esqueleto de pacote com o ID fornecido em vez de uma regra"
+  created_rule: "✓ Regra criada %q"
+  created_pack: "✓ Pacote criado %q\n  %s"
+  next_steps: "Próximos passos:"
+  step1: "1. Implemente a lógica de deny (procure por marcadores TODO nos arquivos .rego)"
+  step2: "2. Preencha as fixtures de conformidade/violação para que exercitem a regra"
+  step3: "3. Execute: infraguard policy test --dir %s --rule %s"
+  pack_hint: "Adicione IDs de regra à lista `rules` no arquivo gerado."
+  err_rule_id_required: "é necessário um ID de regra, ex. `infraguard policy new my-rule-id`"
+  err_invalid_id: "ID de regra inválido %q: use letras minúsculas, dígitos e hifens (ex. ecs-must-have-tag)"
+  err_invalid_pack_id: "ID de pacote inválido %q: use letras minúsculas, dígitos e hifens"
+  err_severity: "severidade inválida %q: use high, medium ou low"
+  err_iac: "--iac inválido %q: use ros, terraform ou both"
+  err_exists_builtin: "a regra %q já existe no conjunto de políticas integrado; escolha outro ID ou use --force"
+  err_exists_local: "a regra %q já existe em %s; use --force para sobrescrever"
+  err_file_exists: "o arquivo já existe: %s (use --force para sobrescrever)"
+
+# Policy test command
+policy_test:
+  short: "Executa testes de comportamento para regras usando suas fixtures"
+  long: |
+    Executa testes de comportamento para regras.
+
+    Para cada regra, as fixtures em <dir>/testdata/aliyun/rules/<rule>/ são avaliadas:
+      - fixtures de conformidade não devem produzir nenhuma violação da regra
+      - fixtures de violação devem produzir pelo menos uma
+
+    Exemplos:
+      infraguard policy test --dir ./policies
+      infraguard policy test --dir ./policies --rule my-rule --iac terraform
+      infraguard policy test --dir ./policies --format json
+  dir_flag: "Diretório raiz contendo rules/ e testdata/"
+  rule_flag: "Testar apenas o ID de regra fornecido (repetível)"
+  iac_flag: "IaC a testar: ros, terraform ou both"
+  format_flag: "Formato de saída: table ou json"
+  allow_empty_flag: "Sair com 0 mesmo quando nenhuma fixture for encontrada"
+  header_rule: "Regra"
+  header_case: "Caso"
+  header_status: "Status"
+  header_detail: "Detalhe"
+  status_pass: "passou"
+  status_fail: "FALHOU"
+  status_error: "erro"
+  no_fixtures: "Nenhuma fixture de teste encontrada."
+  summary: "%d regras, %d casos: %d aprovados, %d falharam"
+  err_format: "--format inválido %q: use table ou json"
+  err_iac: "--iac inválido %q: use ros, terraform ou both"
+  detail_no_rule: "nenhuma definição de regra encontrada em %s"
+  detail_expect_one: "esperava pelo menos 1 violação, obteve 0"
+  detail_expect_zero: "esperava 0 violações, obteve %s"
+  detail_load: "carregar template: %s"
+  detail_load_tf: "carregar terraform: %s"
+  detail_eval: "avaliar: %s"
+
+# Waiver command
+waiver:
+  short: "Gerenciar waivers de regras (supressões)"
+  long: |
+    Gerenciar waivers de regras (supressões).
+
+    Os waivers permitem que você suprima conscientemente violações específicas com um motivo e uma data de expiração opcional, seja por meio de comentários inline em templates ou de um arquivo de waiver central (.infraguard/waivers.yaml).
+  waivers_flag: "Caminho para o arquivo de waiver (padrão: detecção automática de .infraguard/waivers.yaml)"
+  rules_dir_flag: "Também tratar regras neste diretório como conhecidas (para regras personalizadas)"
+  not_found: "nenhum arquivo de waiver encontrado (procurou por %s); use --waivers para especificar um"
+  list:
+    short: "Listar waivers e seu status"
+    title: "Waivers (%d) — %s"
+    none: "Nenhum waiver definido em %s"
+    header_rule: "Regra"
+    header_resource: "Recurso"
+    header_status: "Status"
+    header_expires: "Expira"
+    header_reason: "Motivo"
+    state_active: "ativo"
+    state_expired: "expirado"
+    state_permanent: "permanente"
+  lint:
+    short: "Validar o arquivo de waiver (motivos ausentes, regras desconhecidas, entradas expiradas)"
+    valid: "✓ %d waiver(s) válido(s) — %s"
+    summary: "%d erro(s), %d aviso(s) encontrado(s) em %s"
+    warn_summary: "%d aviso(s) encontrado(s) em %s"
+    missing_rule: "campo obrigatório ausente: rule"
+    missing_reason: "campo obrigatório ausente: reason"
+    unknown_rule: "regra desconhecida: %s"
+    invalid_expires: "data de expiração inválida %q (esperado YYYY-MM-DD)"
+    expired: "waiver expirado em %s"
+    permanent: "waiver permanente (sem data de expiração)"

@@ -299,6 +299,11 @@ scan:
   message: "Nachricht: %s"
   request_id: "AnfrageId: %s"
   calling_preview_stack: "Rufe PreviewStack API auf (Region: %s)..."
+  waivers_flag: "Pfad zur Ausnahmedatei (Standard: automatische Erkennung von .infraguard/waivers.yaml)"
+  no_waivers_flag: "Alle Ausnahmen ignorieren (Inline-Kommentare und Ausnahmedatei)"
+  show_waived_flag: "Ausgenommene Verstöße in der Ausgabe anzeigen, statt sie auszublenden"
+  fail_on_expired_flag: "Abgelaufene Ausnahmen als echte Verstöße behandeln"
+  waiver_load_error: "Ausnahmedatei %s konnte nicht geladen werden: %v"
 
 # Bericht
 report:
@@ -328,6 +333,11 @@ report:
   metadata_separator: " "
   summary_prefix: "  "
   summary_separator: " | "
+  waived: "⊘ Ausgenommen (%s): %s"
+  waived_expires: " [läuft ab am %s]"
+  waiver_expired: "⚠ Ausnahme abgelaufen am %s (%s): %s"
+  waiver_summary_active: "Ausnahmen: %d aktiv"
+  waiver_summary_expired: ", %d abgelaufen"
 
 # Schweregrade
 severity:
@@ -538,3 +548,115 @@ lsp_diag:
   range_violation: "Eigenschaft %q der Ressource %q: Wert %v liegt außerhalb des Bereichs [%v, %v]"
   length_violation: "Eigenschaft %q der Ressource %q: Länge %d liegt außerhalb des Bereichs [%v, %v]"
   pattern_violation: "Eigenschaft %q der Ressource %q: Wert %q entspricht nicht dem Muster %q"
+
+# Policy new command
+policy_new:
+  short: "Eine neue benutzerdefinierte Regel (oder Paket) mit Test-Fixtures erstellen"
+  long: |
+    Erstellt eine neue benutzerdefinierte Regel mit einem bearbeitungsbereiten Rego-Gerüst und passenden Test-Fixtures.
+
+    Die generierten Dateien liegen unter --dir (Standard ./policies) und funktionieren direkt mit:
+      infraguard scan -p ./policies <template>
+      infraguard policy test --dir ./policies --rule <rule-id>
+
+    Beispiele:
+      infraguard policy new ecs-instance-must-have-owner-tag --iac both --severity medium --resource-type ALIYUN::ECS::Instance --tf-resource-type alicloud_instance
+      infraguard policy new --pack my-team-baseline
+  iac_flag: "Ziel-IaC: ros, terraform oder both"
+  severity_flag: "Schweregrad: high, medium oder low"
+  resource_type_flag: "ROS-Ressourcentyp (wiederholbar)"
+  tf_resource_type_flag: "Terraform-Ressourcentyp (wiederholbar)"
+  dir_flag: "Ausgabe-Stammverzeichnis"
+  name_en_flag: "Englischer Regelname"
+  name_zh_flag: "Chinesischer Regelname"
+  desc_en_flag: "Englische Beschreibung"
+  desc_zh_flag: "Chinesische Beschreibung"
+  no_test_flag: "Keine Test-Fixtures generieren"
+  force_flag: "Vorhandene Dateien überschreiben"
+  pack_flag: "Ein Paketgerüst mit der angegebenen ID statt einer Regel generieren"
+  created_rule: "✓ Regel %q erstellt"
+  created_pack: "✓ Paket %q erstellt\n  %s"
+  next_steps: "Nächste Schritte:"
+  step1: "1. Implementiere die deny-Logik (suche nach TODO-Markierungen in den .rego-Dateien)"
+  step2: "2. Fülle die compliant/violation-Fixtures aus, damit sie die Regel ausführen"
+  step3: "3. Ausführen: infraguard policy test --dir %s --rule %s"
+  pack_hint: "Füge Regel-IDs zur `rules`-Liste in der generierten Datei hinzu."
+  err_rule_id_required: "eine Regel-ID ist erforderlich, z. B. `infraguard policy new my-rule-id`"
+  err_invalid_id: "ungültige Regel-ID %q: verwende Kleinbuchstaben, Ziffern und Bindestriche (z. B. ecs-must-have-tag)"
+  err_invalid_pack_id: "ungültige Paket-ID %q: verwende Kleinbuchstaben, Ziffern und Bindestriche"
+  err_severity: "ungültiger Schweregrad %q: verwende high, medium oder low"
+  err_iac: "ungültiges --iac %q: verwende ros, terraform oder both"
+  err_exists_builtin: "Regel %q existiert bereits im integrierten Richtliniensatz; wähle eine andere ID oder verwende --force"
+  err_exists_local: "Regel %q existiert bereits unter %s; verwende --force zum Überschreiben"
+  err_file_exists: "Datei existiert bereits: %s (verwende --force zum Überschreiben)"
+
+# Policy test command
+policy_test:
+  short: "Verhaltenstests für Regeln anhand ihrer Fixtures ausführen"
+  long: |
+    Verhaltenstests für Regeln ausführen.
+
+    Für jede Regel werden Fixtures unter <dir>/testdata/aliyun/rules/<rule>/ ausgewertet:
+      - compliant-Fixtures dürfen keine Verstöße gegen die Regel erzeugen
+      - violation-Fixtures müssen mindestens einen erzeugen
+
+    Beispiele:
+      infraguard policy test --dir ./policies
+      infraguard policy test --dir ./policies --rule my-rule --iac terraform
+      infraguard policy test --dir ./policies --format json
+  dir_flag: "Stammverzeichnis, das rules/ und testdata/ enthält"
+  rule_flag: "Nur die angegebene Regel-ID testen (wiederholbar)"
+  iac_flag: "Zu testende IaC: ros, terraform oder both"
+  format_flag: "Ausgabeformat: table oder json"
+  allow_empty_flag: "Mit 0 beenden, auch wenn keine Fixtures gefunden werden"
+  header_rule: "Regel"
+  header_case: "Fall"
+  header_status: "Status"
+  header_detail: "Detail"
+  status_pass: "bestanden"
+  status_fail: "FEHLGESCHLAGEN"
+  status_error: "Fehler"
+  no_fixtures: "Keine Test-Fixtures gefunden."
+  summary: "%d Regeln, %d Fälle: %d bestanden, %d fehlgeschlagen"
+  err_format: "ungültiges --format %q: verwende table oder json"
+  err_iac: "ungültiges --iac %q: verwende ros, terraform oder both"
+  detail_no_rule: "keine Regeldefinition unter %s gefunden"
+  detail_expect_one: "mindestens 1 Verstoß erwartet, 0 erhalten"
+  detail_expect_zero: "0 Verstöße erwartet, %s erhalten"
+  detail_load: "Vorlage laden: %s"
+  detail_load_tf: "Terraform laden: %s"
+  detail_eval: "auswerten: %s"
+
+# Waiver command
+waiver:
+  short: "Regelausnahmen (Unterdrückungen) verwalten"
+  long: |
+    Regelausnahmen (Unterdrückungen) verwalten.
+
+    Mit Ausnahmen kannst du bestimmte Verstöße bewusst mit einer Begründung und einem optionalen Ablaufdatum unterdrücken, entweder über Inline-Kommentare in Vorlagen oder eine zentrale Ausnahmedatei (.infraguard/waivers.yaml).
+  waivers_flag: "Pfad zur Ausnahmedatei (Standard: automatische Erkennung von .infraguard/waivers.yaml)"
+  rules_dir_flag: "Regeln unter diesem Verzeichnis ebenfalls als bekannt behandeln (für benutzerdefinierte Regeln)"
+  not_found: "keine Ausnahmedatei gefunden (gesucht nach %s); verwende --waivers, um eine anzugeben"
+  list:
+    short: "Ausnahmen und ihren Status auflisten"
+    title: "Ausnahmen (%d) — %s"
+    none: "Keine Ausnahmen definiert in %s"
+    header_rule: "Regel"
+    header_resource: "Ressource"
+    header_status: "Status"
+    header_expires: "Läuft ab"
+    header_reason: "Begründung"
+    state_active: "aktiv"
+    state_expired: "abgelaufen"
+    state_permanent: "permanent"
+  lint:
+    short: "Die Ausnahmedatei validieren (fehlende Begründungen, unbekannte Regeln, abgelaufene Einträge)"
+    valid: "✓ %d Ausnahme(n) gültig — %s"
+    summary: "%d Fehler, %d Warnung(en) gefunden in %s"
+    warn_summary: "%d Warnung(en) gefunden in %s"
+    missing_rule: "fehlendes Pflichtfeld: rule"
+    missing_reason: "fehlendes Pflichtfeld: reason"
+    unknown_rule: "unbekannte Regel: %s"
+    invalid_expires: "ungültiges Ablaufdatum %q (erwartet JJJJ-MM-TT)"
+    expired: "Ausnahme abgelaufen am %s"
+    permanent: "permanente Ausnahme (kein Ablaufdatum)"

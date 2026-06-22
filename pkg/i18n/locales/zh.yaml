@@ -298,6 +298,11 @@ scan:
   message: "错误信息：%s"
   request_id: "请求ID：%s"
   calling_preview_stack: "正在调用 PreviewStack API（业务地域：%s）..."
+  waivers_flag: "豁免文件路径（默认自动查找 .infraguard/waivers.yaml）"
+  no_waivers_flag: "忽略所有豁免（行内注释与豁免文件）"
+  show_waived_flag: "在输出中显示被豁免的违规，而非隐藏"
+  fail_on_expired_flag: "将已过期的豁免视为真实违规"
+  waiver_load_error: "加载豁免文件失败 %s：%v"
 
 # Report
 report:
@@ -327,6 +332,11 @@ report:
   metadata_separator: " "
   summary_prefix: "  "
   summary_separator: " | "
+  waived: "⊘ 已豁免 (%s)：%s"
+  waived_expires: " [过期时间 %s]"
+  waiver_expired: "⚠ 豁免已于 %s 过期 (%s)：%s"
+  waiver_summary_active: "豁免：%d 条生效"
+  waiver_summary_expired: "，%d 条已过期"
 
 # Severity levels
 severity:
@@ -537,4 +547,116 @@ lsp_diag:
   range_violation: "资源 %q 的属性 %q：值 %v 超出范围 [%v, %v]"
   length_violation: "资源 %q 的属性 %q：长度 %d 超出范围 [%v, %v]"
   pattern_violation: "资源 %q 的属性 %q：值 %q 不匹配模式 %q"
+
+# Policy new command
+policy_new:
+  short: "脚手架生成新的自定义规则（或合规包）及测试夹具"
+  long: |
+    脚手架生成新的自定义规则，包含可直接编辑的 Rego 骨架与配套测试夹具。
+
+    生成的文件位于 --dir 目录下（默认 ./policies），可直接配合以下命令使用：
+      infraguard scan -p ./policies <template>
+      infraguard policy test --dir ./policies --rule <rule-id>
+
+    示例：
+      infraguard policy new ecs-instance-must-have-owner-tag --iac both --severity medium --resource-type ALIYUN::ECS::Instance --tf-resource-type alicloud_instance
+      infraguard policy new --pack my-team-baseline
+  iac_flag: "目标 IaC：ros、terraform 或 both"
+  severity_flag: "严重级别：high、medium 或 low"
+  resource_type_flag: "ROS 资源类型（可重复）"
+  tf_resource_type_flag: "Terraform 资源类型（可重复）"
+  dir_flag: "输出根目录"
+  name_en_flag: "规则英文名称"
+  name_zh_flag: "规则中文名称"
+  desc_en_flag: "英文描述"
+  desc_zh_flag: "中文描述"
+  no_test_flag: "不生成测试夹具"
+  force_flag: "覆盖已存在的文件"
+  pack_flag: "生成指定 ID 的合规包骨架，而非规则"
+  created_rule: "✓ 已创建规则 %q"
+  created_pack: "✓ 已创建合规包 %q\n  %s"
+  next_steps: "后续步骤："
+  step1: "1. 实现 deny 逻辑（在 .rego 文件中搜索 TODO 标记）"
+  step2: "2. 补全 compliant/violation 夹具，使其能触发规则"
+  step3: "3. 运行：infraguard policy test --dir %s --rule %s"
+  pack_hint: "在生成文件的 `rules` 列表中添加规则 ID。"
+  err_rule_id_required: "需要提供规则 ID，例如 `infraguard policy new my-rule-id`"
+  err_invalid_id: "非法的规则 ID %q：仅可使用小写字母、数字和连字符（例如 ecs-must-have-tag）"
+  err_invalid_pack_id: "非法的合规包 ID %q：仅可使用小写字母、数字和连字符"
+  err_severity: "非法的严重级别 %q：请使用 high、medium 或 low"
+  err_iac: "非法的 --iac %q：请使用 ros、terraform 或 both"
+  err_exists_builtin: "规则 %q 已存在于内置策略集中；请更换 ID 或使用 --force"
+  err_exists_local: "规则 %q 已存在于 %s；使用 --force 可覆盖"
+  err_file_exists: "文件已存在：%s（使用 --force 可覆盖）"
+
+# Policy test command
+policy_test:
+  short: "使用夹具运行规则的行为测试"
+  long: |
+    运行规则的行为测试。
+
+    对每条规则，会评估 <dir>/testdata/aliyun/rules/<rule>/ 下的夹具：
+      - compliant 夹具不应产生该规则的违规
+      - violation 夹具应至少产生一条违规
+
+    示例：
+      infraguard policy test --dir ./policies
+      infraguard policy test --dir ./policies --rule my-rule --iac terraform
+      infraguard policy test --dir ./policies --format json
+  dir_flag: "包含 rules/ 与 testdata/ 的根目录"
+  rule_flag: "仅测试指定规则 ID（可重复）"
+  iac_flag: "要测试的 IaC：ros、terraform 或 both"
+  format_flag: "输出格式：table 或 json"
+  allow_empty_flag: "即使未找到夹具也返回 0"
+  header_rule: "规则"
+  header_case: "用例"
+  header_status: "状态"
+  header_detail: "详情"
+  status_pass: "通过"
+  status_fail: "失败"
+  status_error: "错误"
+  no_fixtures: "未找到测试夹具。"
+  summary: "%d 条规则，%d 个用例：%d 通过，%d 失败"
+  err_format: "非法的 --format %q：请使用 table 或 json"
+  err_iac: "非法的 --iac %q：请使用 ros、terraform 或 both"
+  detail_no_rule: "在 %s 下未找到规则定义"
+  detail_expect_one: "期望至少 1 条违规，实际 0 条"
+  detail_expect_zero: "期望 0 条违规，实际 %s 条"
+  detail_load: "加载模板失败：%s"
+  detail_load_tf: "加载 terraform 失败：%s"
+  detail_eval: "评估失败：%s"
+
+# Waiver command
+waiver:
+  short: "管理规则豁免（抑制）"
+  long: |
+    管理规则豁免（抑制）。
+
+    豁免允许你带原因和可选的过期时间，有意地抑制特定违规，方式包括模板中的行内注释或集中豁免文件（.infraguard/waivers.yaml）。
+  waivers_flag: "豁免文件路径（默认自动查找 .infraguard/waivers.yaml）"
+  rules_dir_flag: "同时将该目录下的规则视为已知（用于自定义规则）"
+  not_found: "未找到豁免文件（已查找 %s）；请用 --waivers 指定"
+  list:
+    short: "列出豁免及其状态"
+    title: "豁免（%d）— %s"
+    none: "%s 中未定义任何豁免"
+    header_rule: "规则"
+    header_resource: "资源"
+    header_status: "状态"
+    header_expires: "过期时间"
+    header_reason: "原因"
+    state_active: "生效"
+    state_expired: "已过期"
+    state_permanent: "永久"
+  lint:
+    short: "校验豁免文件（缺少原因、未知规则、已过期项）"
+    valid: "✓ %d 条豁免有效 — %s"
+    summary: "发现 %d 个错误、%d 个警告，位于 %s"
+    warn_summary: "发现 %d 个警告，位于 %s"
+    missing_rule: "缺少必填字段：rule"
+    missing_reason: "缺少必填字段：reason"
+    unknown_rule: "未知规则：%s"
+    invalid_expires: "非法的过期日期 %q（应为 YYYY-MM-DD）"
+    expired: "豁免已于 %s 过期"
+    permanent: "永久豁免（未设置过期时间）"
 
