@@ -193,8 +193,45 @@ type RichViolation struct {
 	SnippetLines      []SnippetLine `json:"snippet_lines"` // Multi-line snippet with context
 	Reason            string        `json:"reason"`
 	Recommendation    string        `json:"recommendation"`
-	ReasonRaw         interface{}   `json:"-"` // Original i18n data (string or map)
-	RecommendationRaw interface{}   `json:"-"` // Original i18n data (string or map)
+	ReasonRaw         interface{}   `json:"-"`                // Original i18n data (string or map)
+	RecommendationRaw interface{}   `json:"-"`                // Original i18n data (string or map)
+	Waiver            *WaiverInfo   `json:"waiver,omitempty"` // Set when this violation matched a waiver
+}
+
+// Waiver status constants.
+const (
+	WaiverStatusActive  = "active"  // Waiver is in effect; violation is suppressed
+	WaiverStatusExpired = "expired" // Waiver matched but has passed its expiry date
+)
+
+// WaiverInfo describes the waiver that matched a violation.
+type WaiverInfo struct {
+	Status  string `json:"status"`            // active | expired
+	Source  string `json:"source"`            // inline | file
+	Reason  string `json:"reason"`            // Why the violation is waived
+	Owner   string `json:"owner,omitempty"`   // Responsible person
+	Expires string `json:"expires,omitempty"` // YYYY-MM-DD, empty means permanent
+}
+
+// IsActive reports whether the waiver is currently suppressing the violation.
+func (w *WaiverInfo) IsActive() bool {
+	return w != nil && w.Status == WaiverStatusActive
+}
+
+// IsSuppressed reports whether a violation should be hidden from output and
+// excluded from totals because of its waiver. Active waivers always suppress;
+// expired waivers suppress only when expired waivers are not configured to fail.
+func (v RichViolation) IsSuppressed(failOnExpired bool) bool {
+	if v.Waiver == nil {
+		return false
+	}
+	switch v.Waiver.Status {
+	case WaiverStatusActive:
+		return true
+	case WaiverStatusExpired:
+		return !failOnExpired
+	}
+	return false
 }
 
 // SeverityOrder returns the sort order for severity (lower = more severe).
@@ -233,6 +270,8 @@ type ReportSummary struct {
 	SeverityCounts      map[string]int `json:"severity_counts"`
 	FilesScanned        int            `json:"files_scanned"`
 	FilesWithViolations int            `json:"files_with_violations"`
+	WaivedCount         int            `json:"waived_count"`         // Violations suppressed by an active waiver
+	ExpiredWaiverCount  int            `json:"expired_waiver_count"` // Violations whose waiver has expired
 }
 
 // FileResult holds violations for a specific file.

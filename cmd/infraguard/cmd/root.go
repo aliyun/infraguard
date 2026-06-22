@@ -7,6 +7,7 @@ import (
 	"github.com/aliyun/infraguard/pkg/config"
 	"github.com/aliyun/infraguard/pkg/i18n"
 	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 )
 
 var globalLang string
@@ -101,6 +102,24 @@ func updateCommandDescriptions() {
 	// Policy format command
 	policyFormatCmd.Short = i18n.Get(func(m *i18n.Messages) string { return m.PolicyFormat.Short })
 	policyFormatCmd.Long = strings.TrimSpace(i18n.Get(func(m *i18n.Messages) string { return m.PolicyFormat.Long }))
+
+	// Policy new command
+	policyNewCmd.Short = i18n.Get(func(m *i18n.Messages) string { return m.PolicyNew.Short })
+	policyNewCmd.Long = strings.TrimSpace(i18n.Get(func(m *i18n.Messages) string { return m.PolicyNew.Long }))
+
+	// Policy test command
+	policyTestCmd.Short = i18n.Get(func(m *i18n.Messages) string { return m.PolicyTest.Short })
+	policyTestCmd.Long = strings.TrimSpace(i18n.Get(func(m *i18n.Messages) string { return m.PolicyTest.Long }))
+
+	// Waiver commands
+	waiverCmd.Short = i18n.Get(func(m *i18n.Messages) string { return m.Waiver.Short })
+	waiverCmd.Long = strings.TrimSpace(i18n.Get(func(m *i18n.Messages) string { return m.Waiver.Long }))
+	waiverListCmd.Short = i18n.Get(func(m *i18n.Messages) string { return m.Waiver.List.Short })
+	waiverLintCmd.Short = i18n.Get(func(m *i18n.Messages) string { return m.Waiver.Lint.Short })
+
+	updatePolicyNewFlagDescriptions()
+	updatePolicyTestFlagDescriptions()
+	updateWaiverFlagDescriptions()
 
 	// Scan command
 	scanCmd.Short = i18n.Get(func(m *i18n.Messages) string { return m.Scan.Short })
@@ -224,6 +243,68 @@ func updateScanFlagDescriptions() {
 	}
 	if f := flags.Lookup("mode"); f != nil {
 		f.Usage = msg.Scan.ModeFlag
+	}
+	if f := flags.Lookup("waivers"); f != nil {
+		f.Usage = msg.Scan.WaiversFlag
+	}
+	if f := flags.Lookup("no-waivers"); f != nil {
+		f.Usage = msg.Scan.NoWaiversFlag
+	}
+	if f := flags.Lookup("show-waived"); f != nil {
+		f.Usage = msg.Scan.ShowWaivedFlag
+	}
+	if f := flags.Lookup("fail-on-expired"); f != nil {
+		f.Usage = msg.Scan.FailOnExpiredFlag
+	}
+}
+
+// setUsage updates a flag's usage text if the flag exists and text is non-empty.
+func setUsage(flags *pflag.FlagSet, name, usage string) {
+	if usage == "" {
+		return
+	}
+	if f := flags.Lookup(name); f != nil {
+		f.Usage = usage
+	}
+}
+
+// updatePolicyNewFlagDescriptions updates policy new command flag descriptions.
+func updatePolicyNewFlagDescriptions() {
+	msg := i18n.Msg()
+	f := policyNewCmd.Flags()
+	setUsage(f, "iac", msg.PolicyNew.IaCFlag)
+	setUsage(f, "severity", msg.PolicyNew.SeverityFlag)
+	setUsage(f, "resource-type", msg.PolicyNew.ResourceTypeFlag)
+	setUsage(f, "tf-resource-type", msg.PolicyNew.TFResourceFlag)
+	setUsage(f, "dir", msg.PolicyNew.DirFlag)
+	setUsage(f, "name-en", msg.PolicyNew.NameENFlag)
+	setUsage(f, "name-zh", msg.PolicyNew.NameZHFlag)
+	setUsage(f, "desc-en", msg.PolicyNew.DescENFlag)
+	setUsage(f, "desc-zh", msg.PolicyNew.DescZHFlag)
+	setUsage(f, "no-test", msg.PolicyNew.NoTestFlag)
+	setUsage(f, "force", msg.PolicyNew.ForceFlag)
+	setUsage(f, "pack", msg.PolicyNew.PackFlag)
+}
+
+// updatePolicyTestFlagDescriptions updates policy test command flag descriptions.
+func updatePolicyTestFlagDescriptions() {
+	msg := i18n.Msg()
+	f := policyTestCmd.Flags()
+	setUsage(f, "dir", msg.PolicyTest.DirFlag)
+	setUsage(f, "rule", msg.PolicyTest.RuleFlag)
+	setUsage(f, "iac", msg.PolicyTest.IaCFlag)
+	setUsage(f, "format", msg.PolicyTest.FormatFlag)
+	setUsage(f, "allow-empty", msg.PolicyTest.AllowEmptyFlag)
+}
+
+// updateWaiverFlagDescriptions updates waiver command flag descriptions.
+func updateWaiverFlagDescriptions() {
+	msg := i18n.Msg()
+	if f := waiverCmd.PersistentFlags().Lookup("waivers"); f != nil {
+		f.Usage = msg.Waiver.WaiversFlag
+	}
+	if f := waiverLintCmd.Flags().Lookup("rules-dir"); f != nil {
+		f.Usage = msg.Waiver.RulesDirFlag
 	}
 }
 

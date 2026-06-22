@@ -42,57 +42,98 @@ func (r *Reporter) renderTable(results []models.FileResult) error {
 		isTTY = (stat.Mode() & os.ModeCharDevice) != 0
 	}
 
-	totalViolations := 0
-	var allViolations []models.RichViolation
+	realCount := 0
+	shownAny := false
+	var realViolations []models.RichViolation
+	waived, expired := r.waiverCounts(results)
 
 	for _, fileRes := range results {
-		if len(fileRes.Violations) > 0 {
-			totalViolations += len(fileRes.Violations)
-			allViolations = append(allViolations, fileRes.Violations...)
-
-			// Print file header
-			// Calculate relative path for display
-			displayPath := fileRes.File
-			if wd, err := os.Getwd(); err == nil {
-				if rel, err := filepath.Rel(wd, fileRes.File); err == nil {
-					displayPath = rel
-				}
+		// Select violations to display: hide suppressed ones unless --show-waived.
+		var toShow []models.RichViolation
+		for _, v := range fileRes.Violations {
+			suppressed := v.IsSuppressed(r.failOnExpired)
+			if suppressed && !r.showWaived {
+				continue
 			}
-
-			prefix := msg.Scan.FilePrefix
-			if isTTY {
-				fmt.Fprintf(r.writer, "\n%s %s\n", lowColor.Sprint(prefix), boldColor.Sprint(displayPath))
-			} else {
-				fmt.Fprintf(r.writer, "\n%s%s\n", prefix, displayPath)
+			toShow = append(toShow, v)
+			if !suppressed {
+				realCount++
+				realViolations = append(realViolations, v)
 			}
-
-			// Render each violation as a styled card
-			for idx, v := range fileRes.Violations {
-				if idx > 0 {
-					// Add separator between violations
-					fmt.Fprintln(r.writer)
-				}
-				r.renderViolationCard(idx+1, v, isTTY, msg)
-			}
-			fmt.Fprintln(r.writer)
 		}
+		if len(toShow) == 0 {
+			continue
+		}
+		shownAny = true
+
+		// Print file header
+		// Calculate relative path for display
+		displayPath := fileRes.File
+		if wd, err := os.Getwd(); err == nil {
+			if rel, err := filepath.Rel(wd, fileRes.File); err == nil {
+				displayPath = rel
+			}
+		}
+
+		prefix := msg.Scan.FilePrefix
+		if isTTY {
+			fmt.Fprintf(r.writer, "\n%s %s\n", lowColor.Sprint(prefix), boldColor.Sprint(displayPath))
+		} else {
+			fmt.Fprintf(r.writer, "\n%s%s\n", prefix, displayPath)
+		}
+
+		// Render each violation as a styled card
+		for idx, v := range toShow {
+			if idx > 0 {
+				// Add separator between violations
+				fmt.Fprintln(r.writer)
+			}
+			r.renderViolationCard(idx+1, v, isTTY, msg)
+		}
+		fmt.Fprintln(r.writer)
 	}
 
-	if totalViolations == 0 {
-		if isTTY {
-			greenColor.Fprintln(r.writer, msg.Report.NoViolationsPrefix+msg.Scan.NoViolations)
-		} else {
-			fmt.Fprintln(r.writer, msg.Scan.NoViolations)
+	if realCount == 0 {
+		if !shownAny {
+			if isTTY {
+				greenColor.Fprintln(r.writer, msg.Report.NoViolationsPrefix+msg.Scan.NoViolations)
+			} else {
+				fmt.Fprintln(r.writer, msg.Scan.NoViolations)
+			}
 		}
+		r.renderWaiverNote(waived, expired, isTTY)
 		return nil
 	}
 
 	fmt.Fprintln(r.writer)
 
 	// Print summary statistics as table
-	r.renderSummary(allViolations, isTTY, msg)
+	r.renderSummary(realViolations, isTTY, msg)
+	r.renderWaiverNote(waived, expired, isTTY)
 
 	return nil
+}
+
+// renderWaiverNote prints a one-line note about waived/expired violations.
+func (r *Reporter) renderWaiverNote(waived, expired int, isTTY bool) {
+	if waived == 0 && expired == 0 {
+		return
+	}
+	msg := i18n.Msg()
+	note := fmt.Sprintf(msg.Report.WaiverSummaryActive, waived)
+	if expired > 0 {
+		note += fmt.Sprintf(msg.Report.WaiverSummaryExpired, expired)
+	}
+	if isTTY {
+		if expired > 0 {
+			yellowColor := color.New(color.FgYellow)
+			yellowColor.Fprintln(r.writer, note)
+		} else {
+			dimColor.Fprintln(r.writer, note)
+		}
+	} else {
+		fmt.Fprintln(r.writer, note)
+	}
 }
 
 // renderViolationCard renders a single violation with code snippet table.
@@ -105,6 +146,28 @@ func (r *Reporter) renderViolationCard(num int, v models.RichViolation, isTTY bo
 		fmt.Fprintf(r.writer, "%s %s\n", severityLabel, boldColor.Sprint(header))
 	} else {
 		fmt.Fprintf(r.writer, "%s %s\n", v.Severity, header)
+	}
+
+	// Waiver annotation
+	if v.Waiver != nil {
+		var note string
+		if v.Waiver.Status == models.WaiverStatusExpired {
+			note = fmt.Sprintf(msg.Report.WaiverExpired, v.Waiver.Expires, v.Waiver.Source, v.Waiver.Reason)
+		} else {
+			note = fmt.Sprintf(msg.Report.Waived, v.Waiver.Source, v.Waiver.Reason)
+			if v.Waiver.Expires != "" {
+				note += fmt.Sprintf(msg.Report.WaivedExpires, v.Waiver.Expires)
+			}
+		}
+		if isTTY {
+			if v.Waiver.Status == models.WaiverStatusExpired {
+				color.New(color.FgYellow).Fprintln(r.writer, note)
+			} else {
+				dimColor.Fprintln(r.writer, note)
+			}
+		} else {
+			fmt.Fprintln(r.writer, note)
+		}
 	}
 
 	fmt.Fprintln(r.writer)

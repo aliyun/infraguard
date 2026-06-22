@@ -19,14 +19,23 @@ func (r *Reporter) renderJSON(results []models.FileResult) error {
 	}
 
 	for _, fileRes := range results {
-		if len(fileRes.Violations) > 0 {
-			filesWithViolations++
-			totalViolations += len(fileRes.Violations)
-			for _, v := range fileRes.Violations {
-				severityCounts[strings.ToLower(v.Severity)]++
+		fileHasReal := false
+		for _, v := range fileRes.Violations {
+			// Suppressed (active-waived) violations are excluded from totals but
+			// remain in Results with their waiver annotation for auditing.
+			if v.IsSuppressed(r.failOnExpired) {
+				continue
 			}
+			fileHasReal = true
+			totalViolations++
+			severityCounts[strings.ToLower(v.Severity)]++
+		}
+		if fileHasReal {
+			filesWithViolations++
 		}
 	}
+
+	waivedCount, expiredCount := r.waiverCounts(results)
 
 	report := models.Report{
 		SchemaVersion: "2.0",
@@ -35,6 +44,8 @@ func (r *Reporter) renderJSON(results []models.FileResult) error {
 			SeverityCounts:      severityCounts,
 			FilesScanned:        len(results),
 			FilesWithViolations: filesWithViolations,
+			WaivedCount:         waivedCount,
+			ExpiredWaiverCount:  expiredCount,
 		},
 		Results: results,
 	}

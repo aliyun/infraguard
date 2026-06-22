@@ -299,6 +299,11 @@ scan:
   message: "Message: %s"
   request_id: "RequestId: %s"
   calling_preview_stack: "Calling PreviewStack API (region: %s)..."
+  waivers_flag: "Path to waiver file (default: auto-detect .infraguard/waivers.yaml)"
+  no_waivers_flag: "Ignore all waivers (inline comments and waiver file)"
+  show_waived_flag: "Show waived violations in output instead of hiding them"
+  fail_on_expired_flag: "Treat expired waivers as real violations"
+  waiver_load_error: "failed to load waiver file %s: %v"
 
 # Report
 report:
@@ -328,6 +333,11 @@ report:
   metadata_separator: " "
   summary_prefix: "  "
   summary_separator: " | "
+  waived: "⊘ Waived (%s): %s"
+  waived_expires: " [expires %s]"
+  waiver_expired: "⚠ Waiver expired on %s (%s): %s"
+  waiver_summary_active: "Waivers: %d active"
+  waiver_summary_expired: ", %d expired"
 
 # Severity levels
 severity:
@@ -538,4 +548,116 @@ lsp_diag:
   range_violation: "Property %q of resource %q: value %v is out of range [%v, %v]"
   length_violation: "Property %q of resource %q: length %d is out of range [%v, %v]"
   pattern_violation: "Property %q of resource %q: value %q does not match pattern %q"
+
+# Policy new command
+policy_new:
+  short: "Scaffold a new custom rule (or pack) with test fixtures"
+  long: |
+    Scaffold a new custom rule with a ready-to-edit Rego skeleton and matching test fixtures.
+
+    The generated files live under --dir (default ./policies) and work directly with:
+      infraguard scan -p ./policies <template>
+      infraguard policy test --dir ./policies --rule <rule-id>
+
+    Examples:
+      infraguard policy new ecs-instance-must-have-owner-tag --iac both --severity medium --resource-type ALIYUN::ECS::Instance --tf-resource-type alicloud_instance
+      infraguard policy new --pack my-team-baseline
+  iac_flag: "Target IaC: ros, terraform, or both"
+  severity_flag: "Severity: high, medium, or low"
+  resource_type_flag: "ROS resource type (repeatable)"
+  tf_resource_type_flag: "Terraform resource type (repeatable)"
+  dir_flag: "Output root directory"
+  name_en_flag: "English rule name"
+  name_zh_flag: "Chinese rule name"
+  desc_en_flag: "English description"
+  desc_zh_flag: "Chinese description"
+  no_test_flag: "Do not generate test fixtures"
+  force_flag: "Overwrite existing files"
+  pack_flag: "Generate a pack skeleton with the given ID instead of a rule"
+  created_rule: "✓ Created rule %q"
+  created_pack: "✓ Created pack %q\n  %s"
+  next_steps: "Next steps:"
+  step1: "1. Implement the deny logic (search for TODO markers in the .rego files)"
+  step2: "2. Fill in the compliant/violation fixtures so they exercise the rule"
+  step3: "3. Run: infraguard policy test --dir %s --rule %s"
+  pack_hint: "Add rule IDs to the `rules` list in the generated file."
+  err_rule_id_required: "a rule ID is required, e.g. `infraguard policy new my-rule-id`"
+  err_invalid_id: "invalid rule ID %q: use lowercase letters, digits, and hyphens (e.g. ecs-must-have-tag)"
+  err_invalid_pack_id: "invalid pack ID %q: use lowercase letters, digits, and hyphens"
+  err_severity: "invalid severity %q: use high, medium, or low"
+  err_iac: "invalid --iac %q: use ros, terraform, or both"
+  err_exists_builtin: "rule %q already exists in the built-in policy set; choose another ID or use --force"
+  err_exists_local: "rule %q already exists under %s; use --force to overwrite"
+  err_file_exists: "file already exists: %s (use --force to overwrite)"
+
+# Policy test command
+policy_test:
+  short: "Run behavior tests for rules using their fixtures"
+  long: |
+    Run behavior tests for rules.
+
+    For each rule, fixtures under <dir>/testdata/aliyun/rules/<rule>/ are evaluated:
+      - compliant fixtures must produce no violations of the rule
+      - violation fixtures must produce at least one
+
+    Examples:
+      infraguard policy test --dir ./policies
+      infraguard policy test --dir ./policies --rule my-rule --iac terraform
+      infraguard policy test --dir ./policies --format json
+  dir_flag: "Root directory containing rules/ and testdata/"
+  rule_flag: "Only test the given rule ID (repeatable)"
+  iac_flag: "IaC to test: ros, terraform, or both"
+  format_flag: "Output format: table or json"
+  allow_empty_flag: "Exit 0 even when no fixtures are found"
+  header_rule: "Rule"
+  header_case: "Case"
+  header_status: "Status"
+  header_detail: "Detail"
+  status_pass: "pass"
+  status_fail: "FAIL"
+  status_error: "error"
+  no_fixtures: "No test fixtures found."
+  summary: "%d rules, %d cases: %d passed, %d failed"
+  err_format: "invalid --format %q: use table or json"
+  err_iac: "invalid --iac %q: use ros, terraform, or both"
+  detail_no_rule: "no rule definition found under %s"
+  detail_expect_one: "expected at least 1 violation, got 0"
+  detail_expect_zero: "expected 0 violations, got %s"
+  detail_load: "load template: %s"
+  detail_load_tf: "load terraform: %s"
+  detail_eval: "evaluate: %s"
+
+# Waiver command
+waiver:
+  short: "Manage rule waivers (suppressions)"
+  long: |
+    Manage rule waivers (suppressions).
+
+    Waivers let you knowingly suppress specific violations with a reason and an optional expiry date, either via inline comments in templates or a central waiver file (.infraguard/waivers.yaml).
+  waivers_flag: "Path to waiver file (default: auto-detect .infraguard/waivers.yaml)"
+  rules_dir_flag: "Also treat rules under this directory as known (for custom rules)"
+  not_found: "no waiver file found (looked for %s); use --waivers to specify one"
+  list:
+    short: "List waivers and their status"
+    title: "Waivers (%d) — %s"
+    none: "No waivers defined in %s"
+    header_rule: "Rule"
+    header_resource: "Resource"
+    header_status: "Status"
+    header_expires: "Expires"
+    header_reason: "Reason"
+    state_active: "active"
+    state_expired: "expired"
+    state_permanent: "permanent"
+  lint:
+    short: "Validate the waiver file (missing reasons, unknown rules, expired entries)"
+    valid: "✓ %d waiver(s) valid — %s"
+    summary: "%d error(s), %d warning(s) found in %s"
+    warn_summary: "%d warning(s) found in %s"
+    missing_rule: "missing required field: rule"
+    missing_reason: "missing required field: reason"
+    unknown_rule: "unknown rule: %s"
+    invalid_expires: "invalid expires date %q (want YYYY-MM-DD)"
+    expired: "waiver expired on %s"
+    permanent: "permanent waiver (no expires date)"
 

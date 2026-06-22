@@ -98,13 +98,21 @@ func (r *Reporter) renderHTML(results []models.FileResult) error {
 	totalViolations := 0
 
 	for _, fileResult := range results {
-		if len(fileResult.Violations) == 0 {
+		// Drop violations suppressed by an active waiver unless --show-waived.
+		var visible []models.RichViolation
+		for _, v := range fileResult.Violations {
+			if v.IsSuppressed(r.failOnExpired) && !r.showWaived {
+				continue
+			}
+			visible = append(visible, v)
+		}
+		if len(visible) == 0 {
 			continue
 		}
 
 		// Group violations by rule ID
 		ruleMap := make(map[string][]models.RichViolation)
-		for _, v := range fileResult.Violations {
+		for _, v := range visible {
 			ruleMap[v.ID] = append(ruleMap[v.ID], v)
 		}
 

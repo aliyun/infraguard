@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
+	"time"
 
 	"github.com/aliyun/infraguard/pkg/engine"
 	"github.com/aliyun/infraguard/pkg/i18n"
@@ -17,6 +18,7 @@ import (
 	"github.com/aliyun/infraguard/pkg/providers/ros"
 	"github.com/aliyun/infraguard/pkg/providers/terraform"
 	"github.com/aliyun/infraguard/pkg/reporter"
+	"github.com/aliyun/infraguard/pkg/waiver"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v3"
@@ -28,6 +30,11 @@ var (
 	scanOutput   string
 	scanInput    []string
 	scanMode     string // New: scan mode (static or preview)
+
+	scanWaivers       string // Path to waiver file (default: auto-detect .infraguard/waivers.yaml)
+	scanNoWaivers     bool   // Ignore all waivers (inline and file)
+	scanShowWaived    bool   // Show waived violations in output
+	scanFailOnExpired bool   // Treat expired waivers as real violations
 )
 
 // Color functions for error output
@@ -57,6 +64,14 @@ func init() {
 		"Parameter values in key=value, JSON format, or file path (can be specified multiple times)")
 	scanCmd.Flags().StringVarP(&scanMode, "mode", "m", "static",
 		"Scan mode: 'static' for local analysis or 'preview' for ROS PreviewStack API (default: static)")
+	scanCmd.Flags().StringVar(&scanWaivers, "waivers", "",
+		"Path to waiver file (default: auto-detect .infraguard/waivers.yaml)")
+	scanCmd.Flags().BoolVar(&scanNoWaivers, "no-waivers", false,
+		"Ignore all waivers (inline comments and waiver file)")
+	scanCmd.Flags().BoolVar(&scanShowWaived, "show-waived", false,
+		"Show waived violations in output instead of hiding them")
+	scanCmd.Flags().BoolVar(&scanFailOnExpired, "fail-on-expired", true,
+		"Treat expired waivers as real violations")
 
 	scanCmd.MarkFlagRequired("policy")
 }
@@ -185,9 +200,10 @@ func runScan(cmd *cobra.Command, args []string) error {
 	}
 
 	var results []models.FileResult
-	hasViolations := false
-	hasHighSeverity := false
 	warnedUnsupported := make(map[string]bool)
+	// resLinesByFile maps a source file path to the start lines of its resources,
+	// used to attribute inline waiver comments to resources.
+	resLinesByFile := make(map[string][]waiver.ResourceLine)
 
 	// Process each template
 	for _, templatePath := range templateFiles {
@@ -244,13 +260,14 @@ func runScan(cmd *cobra.Command, args []string) error {
 			return models.SeverityOrder(richViolations[i].Severity) < models.SeverityOrder(richViolations[j].Severity)
 		})
 
-		// Check for severity logic for exit code
-		if len(richViolations) > 0 {
-			hasViolations = true
-			for _, v := range richViolations {
-				if strings.EqualFold(v.Severity, models.SeverityHigh) {
-					hasHighSeverity = true
+		// Collect resource start lines for inline waiver attribution.
+		if !scanNoWaivers {
+			if iacType == "terraform" {
+				for f, rls := range extractTFResourceLines(templateData, filepath.Dir(templatePath)) {
+					resLinesByFile[f] = append(resLinesByFile[f], rls...)
 				}
+			} else if yamlRoot != nil {
+				resLinesByFile[templatePath] = append(resLinesByFile[templatePath], extractROSResourceLines(yamlRoot)...)
 			}
 		}
 
@@ -265,6 +282,28 @@ func runScan(cmd *cobra.Command, args []string) error {
 	// This prevents showing "No violations found" when all templates failed validation
 	if len(results) == 0 {
 		return fmt.Errorf("%s", msg.Scan.NoTemplatesProcessed)
+	}
+
+	// Apply waivers (inline comments + central waiver file) unless disabled.
+	if !scanNoWaivers {
+		if err := applyWaivers(results, resLinesByFile); err != nil {
+			return err
+		}
+	}
+
+	// Determine exit-code flags from non-suppressed violations.
+	hasViolations := false
+	hasHighSeverity := false
+	for _, fr := range results {
+		for _, v := range fr.Violations {
+			if v.IsSuppressed(scanFailOnExpired) {
+				continue
+			}
+			hasViolations = true
+			if strings.EqualFold(v.Severity, models.SeverityHigh) {
+				hasHighSeverity = true
+			}
+		}
 	}
 
 	// Determine output writer
@@ -287,7 +326,9 @@ func runScan(cmd *cobra.Command, args []string) error {
 	}
 
 	// Render report
-	r := reporter.New(scanFormat, writer)
+	r := reporter.New(scanFormat, writer,
+		reporter.WithShowWaived(scanShowWaived),
+		reporter.WithFailOnExpired(scanFailOnExpired))
 	if err := r.Render(results); err != nil {
 		return fmt.Errorf(msg.Errors.RenderReport, err)
 	}
@@ -646,6 +687,116 @@ func formatAndPrintError(templatePath string, err error, msg *i18n.Messages) {
 			fmt.Fprintf(os.Stderr, msg.Scan.SkippedFile+"\n", templatePath, err)
 		}
 	}
+}
+
+// applyWaivers annotates violations in results with matching waivers from inline
+// comments and the central waiver file.
+func applyWaivers(results []models.FileResult, resLinesByFile map[string][]waiver.ResourceLine) error {
+	inlineByFile := make(map[string]map[string][]waiver.Inline)
+	for file, rls := range resLinesByFile {
+		content, err := os.ReadFile(file)
+		if err != nil {
+			continue
+		}
+		ins := waiver.ParseInline(file, string(content))
+		if len(ins) == 0 {
+			continue
+		}
+		inlineByFile[file] = waiver.AttributeInline(ins, rls)
+	}
+
+	set := &waiver.Set{}
+	wpath := scanWaivers
+	if wpath == "" {
+		wpath = waiver.FindFile(".")
+	}
+	if wpath != "" {
+		loaded, err := waiver.Load(wpath)
+		if err != nil {
+			return fmt.Errorf(i18n.Get(func(m *i18n.Messages) string { return m.Scan.WaiverLoadError }), wpath, err)
+		}
+		set = loaded
+	}
+
+	set.Annotate(results, inlineByFile, time.Now())
+	return nil
+}
+
+// extractROSResourceLines returns the start line of each top-level resource in a
+// ROS template, used to attribute inline waiver comments.
+func extractROSResourceLines(root *yaml.Node) []waiver.ResourceLine {
+	var out []waiver.ResourceLine
+	if root == nil {
+		return out
+	}
+	doc := root
+	if doc.Kind == yaml.DocumentNode && len(doc.Content) > 0 {
+		doc = doc.Content[0]
+	}
+	if doc.Kind != yaml.MappingNode {
+		return out
+	}
+	var resNode *yaml.Node
+	for i := 0; i+1 < len(doc.Content); i += 2 {
+		if doc.Content[i].Value == "Resources" {
+			resNode = doc.Content[i+1]
+			break
+		}
+	}
+	if resNode == nil || resNode.Kind != yaml.MappingNode {
+		return out
+	}
+	for i := 0; i+1 < len(resNode.Content); i += 2 {
+		k := resNode.Content[i]
+		out = append(out, waiver.ResourceLine{ID: k.Value, Line: k.Line})
+	}
+	return out
+}
+
+// extractTFResourceLines returns the start line of each Terraform resource, keyed
+// by the source file path, using the __meta__ data embedded by the loader.
+func extractTFResourceLines(data map[string]interface{}, dir string) map[string][]waiver.ResourceLine {
+	out := make(map[string][]waiver.ResourceLine)
+	resources, ok := data["resources"].(map[string]interface{})
+	if !ok {
+		return out
+	}
+	for resType, insts := range resources {
+		typeMap, ok := insts.(map[string]interface{})
+		if !ok {
+			continue
+		}
+		for name, a := range typeMap {
+			attrs, ok := a.(map[string]interface{})
+			if !ok {
+				continue
+			}
+			meta, ok := attrs["__meta__"].(map[string]interface{})
+			if !ok {
+				continue
+			}
+			line := toInt(meta["line"])
+			filename, _ := meta["filename"].(string)
+			if filename == "" || line <= 0 {
+				continue
+			}
+			file := filepath.Join(dir, filename)
+			out[file] = append(out[file], waiver.ResourceLine{ID: resType + "." + name, Line: line})
+		}
+	}
+	return out
+}
+
+func toInt(v interface{}) int {
+	switch n := v.(type) {
+	case int:
+		return n
+	case int64:
+		return int(n)
+	case float64:
+		return int(n)
+	}
+	return 0
 }
 
 // loadTemplateWithMode loads a template using the specified mode (static or preview)

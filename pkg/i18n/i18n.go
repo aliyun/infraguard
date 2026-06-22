@@ -140,6 +140,101 @@ type Messages struct {
 		Cancelled    string `yaml:"cancelled"`
 	} `yaml:"policy_clean"`
 
+	// Policy new command
+	PolicyNew struct {
+		Short            string `yaml:"short"`
+		Long             string `yaml:"long"`
+		IaCFlag          string `yaml:"iac_flag"`
+		SeverityFlag     string `yaml:"severity_flag"`
+		ResourceTypeFlag string `yaml:"resource_type_flag"`
+		TFResourceFlag   string `yaml:"tf_resource_type_flag"`
+		DirFlag          string `yaml:"dir_flag"`
+		NameENFlag       string `yaml:"name_en_flag"`
+		NameZHFlag       string `yaml:"name_zh_flag"`
+		DescENFlag       string `yaml:"desc_en_flag"`
+		DescZHFlag       string `yaml:"desc_zh_flag"`
+		NoTestFlag       string `yaml:"no_test_flag"`
+		ForceFlag        string `yaml:"force_flag"`
+		PackFlag         string `yaml:"pack_flag"`
+		CreatedRule      string `yaml:"created_rule"`
+		CreatedPack      string `yaml:"created_pack"`
+		NextSteps        string `yaml:"next_steps"`
+		Step1            string `yaml:"step1"`
+		Step2            string `yaml:"step2"`
+		Step3            string `yaml:"step3"`
+		PackHint         string `yaml:"pack_hint"`
+		ErrRuleIDReq     string `yaml:"err_rule_id_required"`
+		ErrInvalidID     string `yaml:"err_invalid_id"`
+		ErrInvalidPackID string `yaml:"err_invalid_pack_id"`
+		ErrSeverity      string `yaml:"err_severity"`
+		ErrIaC           string `yaml:"err_iac"`
+		ErrExistsBuiltin string `yaml:"err_exists_builtin"`
+		ErrExistsLocal   string `yaml:"err_exists_local"`
+		ErrFileExists    string `yaml:"err_file_exists"`
+	} `yaml:"policy_new"`
+
+	// Policy test command
+	PolicyTest struct {
+		Short          string `yaml:"short"`
+		Long           string `yaml:"long"`
+		DirFlag        string `yaml:"dir_flag"`
+		RuleFlag       string `yaml:"rule_flag"`
+		IaCFlag        string `yaml:"iac_flag"`
+		FormatFlag     string `yaml:"format_flag"`
+		AllowEmptyFlag string `yaml:"allow_empty_flag"`
+		HeaderRule     string `yaml:"header_rule"`
+		HeaderCase     string `yaml:"header_case"`
+		HeaderStatus   string `yaml:"header_status"`
+		HeaderDetail   string `yaml:"header_detail"`
+		StatusPass     string `yaml:"status_pass"`
+		StatusFail     string `yaml:"status_fail"`
+		StatusError    string `yaml:"status_error"`
+		NoFixtures     string `yaml:"no_fixtures"`
+		Summary        string `yaml:"summary"`
+		ErrFormat      string `yaml:"err_format"`
+		ErrIaC         string `yaml:"err_iac"`
+		DetailNoRule   string `yaml:"detail_no_rule"`
+		DetailExpect1  string `yaml:"detail_expect_one"`
+		DetailExpect0  string `yaml:"detail_expect_zero"`
+		DetailLoad     string `yaml:"detail_load"`
+		DetailLoadTF   string `yaml:"detail_load_tf"`
+		DetailEval     string `yaml:"detail_eval"`
+	} `yaml:"policy_test"`
+
+	// Waiver command
+	Waiver struct {
+		Short        string `yaml:"short"`
+		Long         string `yaml:"long"`
+		WaiversFlag  string `yaml:"waivers_flag"`
+		RulesDirFlag string `yaml:"rules_dir_flag"`
+		NotFound     string `yaml:"not_found"`
+		List         struct {
+			Short          string `yaml:"short"`
+			Title          string `yaml:"title"`
+			None           string `yaml:"none"`
+			HeaderRule     string `yaml:"header_rule"`
+			HeaderResource string `yaml:"header_resource"`
+			HeaderStatus   string `yaml:"header_status"`
+			HeaderExpires  string `yaml:"header_expires"`
+			HeaderReason   string `yaml:"header_reason"`
+			StateActive    string `yaml:"state_active"`
+			StateExpired   string `yaml:"state_expired"`
+			StatePermanent string `yaml:"state_permanent"`
+		} `yaml:"list"`
+		Lint struct {
+			Short          string `yaml:"short"`
+			Valid          string `yaml:"valid"`
+			Summary        string `yaml:"summary"`
+			WarnSummary    string `yaml:"warn_summary"`
+			MissingRule    string `yaml:"missing_rule"`
+			MissingReason  string `yaml:"missing_reason"`
+			UnknownRule    string `yaml:"unknown_rule"`
+			InvalidExpires string `yaml:"invalid_expires"`
+			Expired        string `yaml:"expired"`
+			Permanent      string `yaml:"permanent"`
+		} `yaml:"lint"`
+	} `yaml:"waiver"`
+
 	// Update command
 	Update struct {
 		Short            string `yaml:"short"`
@@ -225,6 +320,11 @@ type Messages struct {
 		Message              string `yaml:"message"`
 		RequestID            string `yaml:"request_id"`
 		CallingPreviewStack  string `yaml:"calling_preview_stack"`
+		WaiversFlag          string `yaml:"waivers_flag"`
+		NoWaiversFlag        string `yaml:"no_waivers_flag"`
+		ShowWaivedFlag       string `yaml:"show_waived_flag"`
+		FailOnExpiredFlag    string `yaml:"fail_on_expired_flag"`
+		WaiverLoadError      string `yaml:"waiver_load_error"`
 	} `yaml:"scan"`
 
 	// Report
@@ -256,6 +356,11 @@ type Messages struct {
 		MetadataSeparator     string `yaml:"metadata_separator"`
 		SummaryPrefix         string `yaml:"summary_prefix"`
 		SummarySeparator      string `yaml:"summary_separator"`
+		Waived                string `yaml:"waived"`
+		WaivedExpires         string `yaml:"waived_expires"`
+		WaiverExpired         string `yaml:"waiver_expired"`
+		WaiverSummaryActive   string `yaml:"waiver_summary_active"`
+		WaiverSummaryExpired  string `yaml:"waiver_summary_expired"`
 	} `yaml:"report"`
 
 	// Severity levels
