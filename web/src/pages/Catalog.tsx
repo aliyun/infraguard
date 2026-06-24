@@ -102,7 +102,7 @@ export default function Catalog() {
               <td><code>{r.id.replace('rule:aliyun:', '')}</code></td>
               <td>{pick(r.name, lang)}</td>
               <td><SeverityBadge severity={r.severity} /></td>
-              <td className="muted">{r.services.join(', ')}</td>
+              <td className="muted">{(r.services || []).join(', ')}</td>
             </tr>
           ))}
         </tbody>
@@ -116,8 +116,8 @@ export default function Catalog() {
               <h2 style={{ marginTop: 0 }}>{pick(detail.rule.name, lang)}</h2>
               <div className="kv"><b>ID</b> <code>{detail.rule.id}</code></div>
               <div className="kv"><b>{t('common.severity')}</b> <SeverityBadge severity={detail.rule.severity} /></div>
-              <div className="kv"><b>IaC</b> {detail.rule.iac_types.join(', ')}</div>
-              <div className="kv"><b>Resources</b> {detail.rule.resource_types.join(', ')}</div>
+              <div className="kv"><b>IaC</b> {(detail.rule.iac_types || []).join(', ')}</div>
+              <div className="kv"><b>Resources</b> {(detail.rule.resource_types || []).join(', ')}</div>
               <p>{pick(detail.rule.description, lang)}</p>
               <p className="hint">{pick(detail.rule.recommendation, lang)}</p>
               {Object.entries(detail.rule.implementations || {}).map(([k, impl]) => (

@@ -194,7 +194,7 @@ func (s *Server) handleCoverage(w http.ResponseWriter, r *http.Request) {
 // servicesFor derives the set of cloud services from resource types.
 func servicesFor(resourceTypes []string) []string {
 	seen := map[string]bool{}
-	var out []string
+	out := []string{}
 	for _, rt := range resourceTypes {
 		svc := ""
 		switch {
