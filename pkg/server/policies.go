@@ -35,14 +35,14 @@ func (s *Server) handlePoliciesList(w http.ResponseWriter, r *http.Request) {
 	q := strings.ToLower(r.URL.Query().Get("q"))
 	severity := strings.ToLower(r.URL.Query().Get("severity"))
 	iac := strings.ToLower(r.URL.Query().Get("iac"))
-	service := strings.ToUpper(r.URL.Query().Get("service"))
-	resourceType := r.URL.Query().Get("resource_type")
+	services := splitCSV(r.URL.Query().Get("service"), true)
+	resourceTypes := splitCSV(r.URL.Query().Get("resource_type"), false)
 	kind := r.URL.Query().Get("type") // "rule" | "pack" | ""
 
 	rules := []ruleSummary{}
 	if kind != "pack" {
 		for _, rule := range loader.GetAllRules() {
-			if !ruleMatchesFilters(rule, severity, iac, service, resourceType) {
+			if !ruleMatchesFilters(rule, severity, iac, services, resourceTypes) {
 				continue
 			}
 			if q != "" && !ruleMatchesQuery(rule, q) {
@@ -64,12 +64,12 @@ func (s *Server) handlePoliciesList(w http.ResponseWriter, r *http.Request) {
 
 	packs := []packSummary{}
 	if kind != "rule" {
-		ruleFiltersActive := severity != "" || iac != "" || service != "" || resourceType != ""
+		ruleFiltersActive := severity != "" || iac != "" || len(services) > 0 || len(resourceTypes) > 0
 		for _, p := range loader.GetAllPacks() {
 			if q != "" && !packMatchesQuery(p, q) {
 				continue
 			}
-			if ruleFiltersActive && !packHasMatchingRule(loader, p, severity, iac, service, resourceType) {
+			if ruleFiltersActive && !packHasMatchingRule(loader, p, severity, iac, services, resourceTypes) {
 				continue
 			}
 			packs = append(packs, packSummary{ID: p.ID, Name: p.Name, Description: p.Description, RuleCount: len(p.RuleIDs)})
@@ -81,26 +81,56 @@ func (s *Server) handlePoliciesList(w http.ResponseWriter, r *http.Request) {
 }
 
 // ruleMatchesFilters reports whether a rule passes the rule-level filters.
-func ruleMatchesFilters(rule *models.Rule, severity, iac, service, resourceType string) bool {
+// services / resourceTypes are OR-sets (match if the rule has any of them).
+func ruleMatchesFilters(rule *models.Rule, severity, iac string, services, resourceTypes []string) bool {
 	if severity != "" && !strings.EqualFold(rule.Severity, severity) {
 		return false
 	}
 	if iac != "" && !containsString(rule.IaCTypes, iac) {
 		return false
 	}
-	if service != "" && !containsString(servicesFor(rule.ResourceTypes), service) {
+	if len(services) > 0 && !anyIn(servicesFor(rule.ResourceTypes), services) {
 		return false
 	}
-	if resourceType != "" && !containsString(rule.ResourceTypes, resourceType) {
+	if len(resourceTypes) > 0 && !anyIn(rule.ResourceTypes, resourceTypes) {
 		return false
 	}
 	return true
 }
 
 // packHasMatchingRule reports whether a pack contains a rule passing the filters.
-func packHasMatchingRule(loader *policy.Loader, p *models.Pack, severity, iac, service, resourceType string) bool {
+func packHasMatchingRule(loader *policy.Loader, p *models.Pack, severity, iac string, services, resourceTypes []string) bool {
 	for _, id := range p.RuleIDs {
-		if rule := loader.GetRule(id); rule != nil && ruleMatchesFilters(rule, severity, iac, service, resourceType) {
+		if rule := loader.GetRule(id); rule != nil && ruleMatchesFilters(rule, severity, iac, services, resourceTypes) {
+			return true
+		}
+	}
+	return false
+}
+
+// splitCSV splits a comma-separated value into a trimmed slice (optionally upper-cased).
+func splitCSV(s string, upper bool) []string {
+	if strings.TrimSpace(s) == "" {
+		return nil
+	}
+	var out []string
+	for _, p := range strings.Split(s, ",") {
+		p = strings.TrimSpace(p)
+		if p == "" {
+			continue
+		}
+		if upper {
+			p = strings.ToUpper(p)
+		}
+		out = append(out, p)
+	}
+	return out
+}
+
+// anyIn reports whether any value in want is present in have.
+func anyIn(have, want []string) bool {
+	for _, w := range want {
+		if containsString(have, w) {
 			return true
 		}
 	}
