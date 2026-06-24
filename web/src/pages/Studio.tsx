@@ -174,7 +174,7 @@ export default function Studio() {
             <span className="grow" />
           </div>
           <label>{t('studio.rego')}</label>
-          <Editor value={rego} onChange={setRego} />
+          <Editor value={rego} onChange={setRego} language="rego" />
         </div>
         <div className="col fill scroll">
           <div className="toolbar">
@@ -195,14 +195,14 @@ export default function Studio() {
           {mode === 'eval' ? (
             <>
               <label>{t('studio.template')}</label>
-              <Editor value={template} onChange={setTemplate} />
+              <Editor value={template} onChange={setTemplate} language={iac === "terraform" ? "hcl" : "yaml"} />
             </>
           ) : (
             <>
               <label>{t('studio.compliant')}</label>
-              <Editor value={compliant} onChange={setCompliant} />
+              <Editor value={compliant} onChange={setCompliant} language={iac === "terraform" ? "hcl" : "yaml"} />
               <label style={{ marginTop: '.6rem' }}>{t('studio.violation')}</label>
-              <Editor value={violation} onChange={setViolation} />
+              <Editor value={violation} onChange={setViolation} language={iac === "terraform" ? "hcl" : "yaml"} />
             </>
           )}
 

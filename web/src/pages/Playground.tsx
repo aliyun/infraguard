@@ -103,7 +103,7 @@ export default function Playground() {
               {loading ? t('common.loading') : t('common.scan')}
             </button>
           </div>
-          <Editor value={content} onChange={setContent} />
+          <Editor value={content} onChange={setContent} language={iac === 'terraform' ? 'hcl' : 'yaml'} />
         </div>
         <div className="col fill scroll">
           {error && <div className="error">{error}</div>}

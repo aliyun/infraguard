@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { Severity, Summary, Violation } from '../api'
 import { useI18n } from '../i18n'
+import { highlight, type Language } from '../highlight'
 
 export function SeverityBadge({ severity }: { severity: Severity | string }) {
   const s = (severity || '').toLowerCase()
@@ -8,23 +9,64 @@ export function SeverityBadge({ severity }: { severity: Severity | string }) {
   return <span className={`badge ${cls}`}>{s}</span>
 }
 
+// Editor is a syntax-highlighted, editable code editor (transparent textarea
+// over a highlighted <pre>, fully offline).
 export function Editor({
   value,
   onChange,
   placeholder,
+  language = 'plain',
 }: {
   value: string
   onChange: (v: string) => void
   placeholder?: string
+  language?: Language
 }) {
+  const taRef = useRef<HTMLTextAreaElement>(null)
+  const preRef = useRef<HTMLPreElement>(null)
+  function sync() {
+    if (preRef.current && taRef.current) {
+      preRef.current.scrollTop = taRef.current.scrollTop
+      preRef.current.scrollLeft = taRef.current.scrollLeft
+    }
+  }
   return (
-    <textarea
-      className="code"
-      spellCheck={false}
-      value={value}
-      placeholder={placeholder}
-      onChange={(e) => onChange(e.target.value)}
-    />
+    <div className="code-editor">
+      <pre className="code code-hl" ref={preRef} aria-hidden="true">
+        <code dangerouslySetInnerHTML={{ __html: highlight(value, language) + '\n' }} />
+      </pre>
+      <textarea
+        ref={taRef}
+        className="code code-input"
+        spellCheck={false}
+        value={value}
+        placeholder={placeholder}
+        onChange={(e) => onChange(e.target.value)}
+        onScroll={sync}
+      />
+    </div>
+  )
+}
+
+// CodeBlock is a read-only highlighted code view with a copy button.
+export function CodeBlock({ code, language = 'plain' }: { code: string; language?: Language }) {
+  const { t } = useI18n()
+  const [copied, setCopied] = useState(false)
+  function copy() {
+    navigator.clipboard?.writeText(code).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1500)
+    })
+  }
+  return (
+    <div className="codeblock">
+      <button type="button" className="copy-btn secondary" onClick={copy}>
+        {copied ? t('common.copied') : t('common.copy')}
+      </button>
+      <pre className="code">
+        <code dangerouslySetInnerHTML={{ __html: highlight(code, language) }} />
+      </pre>
+    </div>
   )
 }
 
@@ -177,7 +219,7 @@ export function ImplTabs({ impls }: { impls: Record<string, { content: string }>
       ) : (
         <label>{IAC_LABEL[keys[0]] || keys[0]}</label>
       )}
-      <pre className="code" style={{ whiteSpace: 'pre', overflow: 'auto' }}>{impls[tab]?.content}</pre>
+      <CodeBlock code={impls[tab]?.content || ''} language="rego" />
     </div>
   )
 }

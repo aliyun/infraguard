@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import { api, type Coverage, type PackSummary, type RuleDetail, type RuleSummary } from '../api'
 import { pick, useI18n } from '../i18n'
-import { ImplTabs, Segmented, Select, SeverityBadge } from '../components/ui'
+import { ImplTabs, MultiSelect, Segmented, Select, SeverityBadge } from '../components/ui'
+
+const iacLabel = (k: string) => (k === 'ros' ? 'ROS' : k === 'terraform' ? 'Terraform' : k)
 
 type Tab = 'overview' | 'packs' | 'rules'
 type Detail = { kind: string; rule?: RuleDetail; pack?: PackSummary; rules?: RuleSummary[] }
@@ -15,8 +17,8 @@ export default function Catalog() {
   const [q, setQ] = useState('')
   const [severity, setSeverity] = useState('')
   const [iac, setIac] = useState('')
-  const [service, setService] = useState('')
-  const [resourceType, setResourceType] = useState('')
+  const [service, setService] = useState<string[]>([])
+  const [resourceType, setResourceType] = useState<string[]>([])
   const [detail, setDetail] = useState<Detail | null>(null)
   const [back, setBack] = useState<Detail | null>(null)
 
@@ -29,8 +31,8 @@ export default function Catalog() {
     if (q) params.q = q
     if (severity) params.severity = severity
     if (iac) params.iac = iac
-    if (service) params.service = service
-    if (resourceType) params.resource_type = resourceType
+    if (service.length) params.service = service.join(',')
+    if (resourceType.length) params.resource_type = resourceType.join(',')
     const h = setTimeout(() => {
       api.policies(params).then((d) => {
         setRules(d.rules)
@@ -64,27 +66,21 @@ export default function Catalog() {
   const maxService = coverage?.by_service[0]?.count || 1
 
   const productSelect = (
-    <Select
-      value={service}
+    <MultiSelect
+      selected={service}
       onChange={setService}
-      searchable
+      allLabel={t('filter.product')}
       searchPlaceholder={t('common.search')}
-      options={[
-        { value: '', label: `${t('filter.product')}: ${t('common.all')}` },
-        ...(coverage?.by_service || []).map((s) => ({ value: s.key, label: s.key })),
-      ]}
+      options={(coverage?.by_service || []).map((s) => ({ value: s.key, label: s.key }))}
     />
   )
   const resTypeSelect = (
-    <Select
-      value={resourceType}
+    <MultiSelect
+      selected={resourceType}
       onChange={setResourceType}
-      searchable
+      allLabel={t('filter.resourceType')}
       searchPlaceholder={t('common.search')}
-      options={[
-        { value: '', label: `${t('filter.resourceType')}: ${t('common.all')}` },
-        ...(coverage?.resource_types || []).map((rt) => ({ value: rt, label: rt })),
-      ]}
+      options={(coverage?.resource_types || []).map((rt) => ({ value: rt, label: rt }))}
     />
   )
 
@@ -205,12 +201,21 @@ export default function Catalog() {
                 <h2 style={{ marginTop: 0 }}>{pick(detail.rule.name, lang)}</h2>
                 <div className="kv"><b>ID</b> <code>{detail.rule.id}</code></div>
                 <div className="kv"><b>{t('common.severity')}</b> <SeverityBadge severity={detail.rule.severity} /></div>
-                <div className="kv"><b>IaC</b> {(detail.rule.iac_types || []).join(', ')}</div>
-                <div className="kv"><b>{t('detail.resources')}</b></div>
-                <div className="kv-vals">
-                  {(detail.rule.resource_types || []).map((rt) => (
-                    <div key={rt}><code>{rt}</code></div>
-                  ))}
+                <div className="kv-tags">
+                  <b>IaC</b>
+                  <div className="tags">
+                    {(detail.rule.iac_types || []).map((k) => (
+                      <span key={k} className="tag">{iacLabel(k)}</span>
+                    ))}
+                  </div>
+                </div>
+                <div className="kv-tags">
+                  <b>{t('detail.resources')}</b>
+                  <div className="tags">
+                    {(detail.rule.resource_types || []).map((rt) => (
+                      <span key={rt} className="tag mono">{rt}</span>
+                    ))}
+                  </div>
                 </div>
                 <p>{pick(detail.rule.description, lang)}</p>
                 <p className="hint">{pick(detail.rule.recommendation, lang)}</p>
