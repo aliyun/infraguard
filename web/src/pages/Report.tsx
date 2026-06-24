@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import type { Summary, Violation } from '../api'
 import { useI18n } from '../i18n'
-import { SeverityBadge, SummaryLine, ViolationCard } from '../components/ui'
+import { FileButton, Select, SeverityBadge, SummaryLine, ViolationCard } from '../components/ui'
 
 interface ParsedReport {
   summary?: Summary
@@ -44,12 +44,6 @@ export default function Report() {
     }
   }
 
-  function onFile(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0]
-    if (!file) return
-    file.text().then(load)
-  }
-
   const grouped = useMemo(() => {
     if (!report) return []
     const filtered = report.violations.filter((v) => !severity || v.severity === severity)
@@ -71,7 +65,7 @@ export default function Report() {
           <label>{t('report.drop')}</label>
           <textarea className="code" value={text} onChange={(e) => load(e.target.value)} placeholder='{"summary": ..., "results": [...]}' />
           <div style={{ marginTop: '.6rem' }}>
-            <input type="file" accept=".json,application/json" onChange={onFile} />
+            <FileButton label={t('common.chooseFile')} accept=".json,application/json" onText={load} />
           </div>
           {error && <div className="error">{error}</div>}
         </div>
@@ -81,16 +75,24 @@ export default function Report() {
           <div className="toolbar">
             {report.summary && <SummaryLine summary={report.summary} />}
             <span className="grow" />
-            <select value={severity} onChange={(e) => setSeverity(e.target.value)} style={{ width: 'auto' }}>
-              <option value="">{t('common.all')}</option>
-              <option value="high">high</option>
-              <option value="medium">medium</option>
-              <option value="low">low</option>
-            </select>
-            <select value={groupBy} onChange={(e) => setGroupBy(e.target.value as 'file' | 'rule')} style={{ width: 'auto' }}>
-              <option value="file">by file</option>
-              <option value="rule">by rule</option>
-            </select>
+            <Select
+              value={severity}
+              onChange={setSeverity}
+              options={[
+                { value: '', label: t('common.all') },
+                { value: 'high', label: 'high' },
+                { value: 'medium', label: 'medium' },
+                { value: 'low', label: 'low' },
+              ]}
+            />
+            <Select
+              value={groupBy}
+              onChange={(v) => setGroupBy(v as 'file' | 'rule')}
+              options={[
+                { value: 'file', label: 'by file' },
+                { value: 'rule', label: 'by rule' },
+              ]}
+            />
             <button className="secondary" onClick={() => { setReport(null); setText('') }}>
               ×
             </button>

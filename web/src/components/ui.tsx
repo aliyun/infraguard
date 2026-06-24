@@ -1,5 +1,5 @@
+import { useEffect, useRef, useState } from 'react'
 import type { Severity, Summary, Violation } from '../api'
-import { useI18n } from '../i18n'
 
 export function SeverityBadge({ severity }: { severity: Severity | string }) {
   const s = (severity || '').toLowerCase()
@@ -27,8 +27,116 @@ export function Editor({
   )
 }
 
+interface Option<T extends string> {
+  value: T
+  label: string
+}
+
+// Segmented is a compact toggle for a small set of mutually exclusive options.
+export function Segmented<T extends string>({
+  value,
+  onChange,
+  options,
+}: {
+  value: T
+  onChange: (v: T) => void
+  options: Option<T>[]
+}) {
+  return (
+    <div className="segmented" role="tablist">
+      {options.map((o) => (
+        <button
+          key={o.value}
+          type="button"
+          role="tab"
+          aria-selected={value === o.value}
+          className={value === o.value ? 'active' : ''}
+          onClick={() => onChange(o.value)}
+        >
+          {o.label}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+// Select is a custom dropdown styled consistently with the rest of the UI.
+export function Select<T extends string>({
+  value,
+  onChange,
+  options,
+  width,
+}: {
+  value: T
+  onChange: (v: T) => void
+  options: Option<T>[]
+  width?: number | string
+}) {
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    function onDoc(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener('mousedown', onDoc)
+    return () => document.removeEventListener('mousedown', onDoc)
+  }, [])
+  const current = options.find((o) => o.value === value)
+  return (
+    <div className="select" ref={ref} style={{ width }}>
+      <button type="button" className="select-trigger" onClick={() => setOpen((v) => !v)}>
+        <span>{current?.label ?? value}</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
+      {open && (
+        <div className="select-menu" role="listbox">
+          {options.map((o) => (
+            <button
+              key={o.value}
+              type="button"
+              role="option"
+              aria-selected={o.value === value}
+              className={o.value === value ? 'active' : ''}
+              onClick={() => {
+                onChange(o.value)
+                setOpen(false)
+              }}
+            >
+              {o.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// FileButton is a styled trigger for choosing a local file (returns its text).
+export function FileButton({ label, accept, onText }: { label: string; accept?: string; onText: (text: string) => void }) {
+  const ref = useRef<HTMLInputElement>(null)
+  return (
+    <>
+      <button type="button" className="secondary" onClick={() => ref.current?.click()}>
+        {label}
+      </button>
+      <input
+        ref={ref}
+        type="file"
+        accept={accept}
+        style={{ display: 'none' }}
+        onChange={(e) => {
+          const f = e.target.files?.[0]
+          if (f) f.text().then(onText)
+          e.target.value = ''
+        }}
+      />
+    </>
+  )
+}
+
 export function SummaryLine({ summary }: { summary: Summary }) {
-  const { t } = useI18n()
   const c = summary.severity_counts || {}
   return (
     <div className="summary-line">
@@ -36,31 +144,16 @@ export function SummaryLine({ summary }: { summary: Summary }) {
       <SeverityBadge severity="high" /> {c.high || 0}
       <SeverityBadge severity="medium" /> {c.medium || 0}
       <SeverityBadge severity="low" /> {c.low || 0}
-      {summary.waived_count > 0 && (
-        <span className="muted">
-          · {summary.waived_count} {t('scan.waived')}
-        </span>
-      )}
-      {summary.expired_waiver_count > 0 && (
-        <span className="badge medium">
-          {summary.expired_waiver_count} {t('scan.expired')}
-        </span>
-      )}
     </div>
   )
 }
 
 export function ViolationCard({ v }: { v: Violation }) {
   return (
-    <div className={`violation ${v.waiver?.status === 'active' ? 'waived' : ''}`}>
+    <div className="violation">
       <div className="v-head">
         <SeverityBadge severity={v.severity} />
         <span className="v-title">{v.reason || v.id}</span>
-        {v.waiver && (
-          <span className={`badge ${v.waiver.status === 'expired' ? 'medium' : 'muted'}`}>
-            {v.waiver.status === 'expired' ? '⚠ expired' : '⊘ waived'}
-          </span>
-        )}
       </div>
       <div className="v-meta">
         {v.id} · {v.resource_id} · {v.file}:{v.line}
@@ -76,12 +169,6 @@ export function ViolationCard({ v }: { v: Violation }) {
         </pre>
       )}
       {v.recommendation && <div className="v-meta">→ {v.recommendation}</div>}
-      {v.waiver && (
-        <div className="waiver-note">
-          {v.waiver.source}: {v.waiver.reason}
-          {v.waiver.expires ? ` (expires ${v.waiver.expires})` : ''}
-        </div>
-      )}
     </div>
   )
 }

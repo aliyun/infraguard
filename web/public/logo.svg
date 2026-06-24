@@ -1,0 +1,21 @@
+<svg width="400" height="400" viewBox="0 0 400 450" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <path id="shield-outer-shape" d="M 200 20 L 350 70 V 260 C 350 360, 220 410, 200 430 C 180 410, 50 360, 50 260 V 70 Z" />
+  </defs>
+
+  <use href="#shield-outer-shape" fill="#D4E6FB" stroke="none" />
+
+  <use href="#shield-outer-shape" fill="none" stroke="#5C94EB" stroke-width="14" stroke-linejoin="round" stroke-linecap="round"/>
+
+  <path d="M 200 60 L 315 100 V 250 C 315 325, 215 370, 200 385 C 185 370, 85 325, 85 250 V 100 Z" 
+        fill="none" stroke="#5C94EB" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>
+
+  <path d="M 150 285 
+           L 260 285 
+           C 305 285, 310 245, 280 235 
+           C 285 185, 215 170, 190 200 
+           C 165 175, 115 195, 125 240 
+           C 105 255, 115 285, 150 285 
+           Z" 
+        fill="none" stroke="#5C94EB" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

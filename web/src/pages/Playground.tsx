@@ -1,25 +1,37 @@
 import { useState } from 'react'
 import { api, type ScanResult } from '../api'
 import { useI18n } from '../i18n'
-import { Editor, SummaryLine, ViolationCard } from '../components/ui'
+import { Editor, Segmented, SummaryLine, ViolationCard } from '../components/ui'
 
-const SAMPLE = `ROSTemplateFormatVersion: '2015-09-01'
+const SAMPLES: Record<string, string> = {
+  ros: `ROSTemplateFormatVersion: '2015-09-01'
 Resources:
   MyBucket:
     Type: ALIYUN::OSS::Bucket
     Properties:
       AccessControl: public-read
-`
+`,
+  terraform: `resource "alicloud_oss_bucket" "my_bucket" {
+  bucket = "my-bucket"
+  acl    = "public-read"
+}
+`,
+}
 
 export default function Playground() {
   const { t, lang } = useI18n()
-  const [content, setContent] = useState(SAMPLE)
   const [iac, setIac] = useState('ros')
+  const [content, setContent] = useState(SAMPLES.ros)
   const [policies, setPolicies] = useState('')
-  const [showWaived, setShowWaived] = useState(false)
   const [result, setResult] = useState<ScanResult | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
+  function changeIac(v: string) {
+    setIac(v)
+    setContent(SAMPLES[v] ?? '')
+    setResult(null)
+  }
 
   async function scan() {
     setLoading(true)
@@ -36,8 +48,6 @@ export default function Playground() {
     }
   }
 
-  const visible = result?.violations.filter((v) => showWaived || v.waiver?.status !== 'active') ?? []
-
   return (
     <div>
       <h1 className="page-title">{t('nav.playground')}</h1>
@@ -45,10 +55,15 @@ export default function Playground() {
       <div className="row">
         <div className="col">
           <div className="toolbar">
-            <select value={iac} onChange={(e) => setIac(e.target.value)} style={{ width: 'auto' }}>
-              <option value="ros">ROS</option>
-              <option value="terraform">Terraform</option>
-            </select>
+            <Segmented
+              value={iac}
+              onChange={changeIac}
+              options={[
+                { value: 'ros', label: 'ROS' },
+                { value: 'terraform', label: 'Terraform' },
+              ]}
+            />
+            <span className="grow" />
             <button onClick={scan} disabled={loading}>
               {loading ? t('common.loading') : t('common.scan')}
             </button>
@@ -69,15 +84,13 @@ export default function Playground() {
           {result && (
             <>
               <SummaryLine summary={result.summary} />
-              <label className="checkbox" style={{ marginBottom: '.6rem' }}>
-                <input type="checkbox" checked={showWaived} onChange={(e) => setShowWaived(e.target.checked)} />
-                {t('scan.showWaived')}
-              </label>
-              {visible.length === 0 ? (
-                <div className="muted">{t('common.noViolations')}</div>
-              ) : (
-                visible.map((v, i) => <ViolationCard key={i} v={v} />)
-              )}
+              <div style={{ marginTop: '.75rem' }}>
+                {result.violations.length === 0 ? (
+                  <div className="muted">{t('common.noViolations')}</div>
+                ) : (
+                  result.violations.map((v, i) => <ViolationCard key={i} v={v} />)
+                )}
+              </div>
             </>
           )}
         </div>
