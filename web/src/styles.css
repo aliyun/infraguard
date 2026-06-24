@@ -154,7 +154,6 @@ body {
   white-space: pre; tab-size: 2; overflow: auto; box-sizing: border-box;
 }
 .code-editor .code-hl { background: var(--code-bg); color: var(--text); border-color: var(--border); pointer-events: none; overflow: hidden; z-index: 0; }
-.code-editor .code-hl code { font: inherit; }
 .code-editor .code-input { background: transparent; color: transparent; caret-color: var(--text); resize: none; z-index: 1; }
 .code-editor .code-input::placeholder { color: var(--muted); }
 .code-editor .code-input:focus { outline: none; border-color: var(--border-strong); box-shadow: 0 0 0 3px var(--ring); }
@@ -166,6 +165,11 @@ pre.code {
   font-family: var(--mono); font-size: .8rem; line-height: 1.6; margin: 0;
   background: var(--code-bg); color: var(--text); border: 1px solid var(--border);
   border-radius: var(--radius-sm); padding: .7rem .85rem; overflow: auto; white-space: pre;
+}
+/* Reset the inline-code chip styling inside code blocks/editors */
+pre.code code,
+.code-editor .code-hl code {
+  background: none; padding: 0; border-radius: 0; color: inherit; font: inherit;
 }
 
 /* Syntax-highlight tokens */
