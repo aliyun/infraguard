@@ -57,6 +57,7 @@ export default function Waivers() {
   return (
     <div>
       <h1 className="page-title">{t('nav.waivers')}</h1>
+      <p className="page-sub">{t('sub.waivers')}</p>
       <div className="toolbar">
         <code className="grow muted">{path}</code>
         <button className="secondary" onClick={add}>＋ {t('waivers.add')}</button>

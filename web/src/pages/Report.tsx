@@ -65,6 +65,7 @@ export default function Report() {
   return (
     <div>
       <h1 className="page-title">{t('nav.report')}</h1>
+      <p className="page-sub">{t('sub.report')}</p>
       {!report && (
         <div className="panel">
           <label>{t('report.drop')}</label>

@@ -90,6 +90,7 @@ export default function Studio() {
   return (
     <div>
       <h1 className="page-title">{t('nav.studio')}</h1>
+      <p className="page-sub">{t('sub.studio')}</p>
       <div className="row">
         <div className="col">
           <div className="toolbar">

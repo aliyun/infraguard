@@ -41,6 +41,7 @@ export default function Playground() {
   return (
     <div>
       <h1 className="page-title">{t('nav.playground')}</h1>
+      <p className="page-sub">{t('sub.playground')}</p>
       <div className="row">
         <div className="col">
           <div className="toolbar">

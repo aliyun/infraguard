@@ -40,6 +40,7 @@ export default function Catalog() {
   return (
     <div>
       <h1 className="page-title">{t('nav.catalog')}</h1>
+      <p className="page-sub">{t('sub.catalog')}</p>
 
       {coverage && (
         <>
@@ -109,8 +110,10 @@ export default function Catalog() {
       </table>
 
       {detail && (
-        <div className="drawer">
-          <button className="close" onClick={() => setDetail(null)}>×</button>
+        <>
+          <div className="drawer-backdrop" onClick={() => setDetail(null)} />
+          <div className="drawer">
+            <button className="close" onClick={() => setDetail(null)}>×</button>
           {detail.kind === 'rule' && detail.rule && (
             <>
               <h2 style={{ marginTop: 0 }}>{pick(detail.rule.name, lang)}</h2>
@@ -143,7 +146,8 @@ export default function Catalog() {
               </table>
             </>
           )}
-        </div>
+          </div>
+        </>
       )}
     </div>
   )
