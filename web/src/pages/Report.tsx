@@ -80,9 +80,9 @@ export default function Report() {
               onChange={setSeverity}
               options={[
                 { value: '', label: t('common.all') },
-                { value: 'high', label: 'high' },
-                { value: 'medium', label: 'medium' },
-                { value: 'low', label: 'low' },
+                { value: 'high', label: 'HIGH' },
+                { value: 'medium', label: 'MEDIUM' },
+                { value: 'low', label: 'LOW' },
               ]}
             />
             <Select

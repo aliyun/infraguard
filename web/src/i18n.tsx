@@ -25,6 +25,7 @@ const dict: Record<string, Record<Lang, string>> = {
   'tab.overview': { en: 'Overview', zh: '总览' },
   'tab.packs': { en: 'Packs', zh: '合规包' },
   'tab.rules': { en: 'Rules', zh: '规则' },
+  'catalog.coverage': { en: 'Coverage by service', zh: '按服务覆盖' },
   'scan.policies': { en: 'Policies', zh: '策略' },
   'scan.allPolicies': { en: 'All policies', zh: '全部策略' },
   'report.drop': { en: 'Paste a scan JSON report, or load a file', zh: '粘贴扫描 JSON 报告，或加载文件' },

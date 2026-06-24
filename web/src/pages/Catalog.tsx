@@ -62,13 +62,13 @@ export default function Catalog() {
           <div className="stat-grid">
             <div className="stat"><div className="num">{coverage.total_rules}</div><div className="lbl">{t('tab.rules')}</div></div>
             <div className="stat"><div className="num">{coverage.total_packs}</div><div className="lbl">{t('tab.packs')}</div></div>
-            <div className="stat"><div className="num" style={{ color: 'var(--high)' }}>{coverage.by_severity.high}</div><div className="lbl">high</div></div>
-            <div className="stat"><div className="num" style={{ color: 'var(--medium)' }}>{coverage.by_severity.medium}</div><div className="lbl">medium</div></div>
-            <div className="stat"><div className="num" style={{ color: 'var(--low)' }}>{coverage.by_severity.low}</div><div className="lbl">low</div></div>
-            <div className="stat"><div className="num">{coverage.by_iac.both}</div><div className="lbl">ros+tf</div></div>
+            <div className="stat"><div className="num" style={{ color: 'var(--high)' }}>{coverage.by_severity.high}</div><div className="lbl">HIGH</div></div>
+            <div className="stat"><div className="num" style={{ color: 'var(--medium)' }}>{coverage.by_severity.medium}</div><div className="lbl">MEDIUM</div></div>
+            <div className="stat"><div className="num" style={{ color: 'var(--low)' }}>{coverage.by_severity.low}</div><div className="lbl">LOW</div></div>
+            <div className="stat"><div className="num">{coverage.by_iac.both}</div><div className="lbl">ROS+TF</div></div>
           </div>
           <div className="panel">
-            <label>Coverage by service</label>
+            <label>{t('catalog.coverage')}</label>
             {coverage.by_service.slice(0, 14).map((s) => (
               <div key={s.key} style={{ display: 'flex', alignItems: 'center', gap: '.6rem', marginBottom: '.35rem' }}>
                 <span style={{ width: 120, fontSize: '.82rem' }}>{s.key}</span>
@@ -109,9 +109,9 @@ export default function Catalog() {
               onChange={setSeverity}
               options={[
                 { value: '', label: `${t('common.severity')}: ${t('common.all')}` },
-                { value: 'high', label: 'high' },
-                { value: 'medium', label: 'medium' },
-                { value: 'low', label: 'low' },
+                { value: 'high', label: 'HIGH' },
+                { value: 'medium', label: 'MEDIUM' },
+                { value: 'low', label: 'LOW' },
               ]}
             />
             <Select
