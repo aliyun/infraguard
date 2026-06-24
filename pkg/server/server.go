@@ -56,6 +56,7 @@ func IsLoopback(host string) bool {
 func (s *Server) routes() {
 	s.mux.HandleFunc("GET /healthz", s.handleHealth)
 	s.mux.HandleFunc("GET /api/meta", s.handleMeta)
+	s.mux.HandleFunc("POST /api/scan", s.handleScan)
 	s.mux.Handle("/", staticHandler())
 }
 
