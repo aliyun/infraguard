@@ -89,23 +89,21 @@ export default function Playground() {
                 { value: 'terraform', label: 'Terraform' },
               ]}
             />
-            <span className="grow" />
+            <div className="grow">
+              <MultiSelect
+                options={options}
+                selected={selected}
+                onChange={setSelected}
+                allLabel={t('scan.allPolicies')}
+                searchPlaceholder={t('common.search')}
+                width="100%"
+              />
+            </div>
             <button onClick={scan} disabled={loading}>
               {loading ? t('common.loading') : t('common.scan')}
             </button>
           </div>
           <Editor value={content} onChange={setContent} />
-          <div style={{ marginTop: '.6rem' }}>
-            <label>{t('scan.policies')}</label>
-            <MultiSelect
-              options={options}
-              selected={selected}
-              onChange={setSelected}
-              allLabel={t('scan.allPolicies')}
-              searchPlaceholder={t('common.search')}
-              width="100%"
-            />
-          </div>
         </div>
         <div className="col fill scroll">
           {error && <div className="error">{error}</div>}
