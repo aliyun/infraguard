@@ -137,6 +137,30 @@ export function FileButton({ label, accept, onText }: { label: string; accept?: 
   )
 }
 
+const IAC_LABEL: Record<string, string> = { ros: 'ROS', terraform: 'Terraform' }
+
+// ImplTabs renders a rule's per-IaC implementations as tabs (or a single label).
+export function ImplTabs({ impls }: { impls: Record<string, { content: string }> }) {
+  const keys = Object.keys(impls)
+  const [tab, setTab] = useState(keys[0] || '')
+  useEffect(() => {
+    if (!keys.includes(tab)) setTab(keys[0] || '')
+  }, [impls]) // eslint-disable-line react-hooks/exhaustive-deps
+  if (keys.length === 0) return null
+  return (
+    <div style={{ marginTop: '.6rem' }}>
+      {keys.length > 1 ? (
+        <div style={{ marginBottom: '.5rem' }}>
+          <Segmented value={tab} onChange={setTab} options={keys.map((k) => ({ value: k, label: IAC_LABEL[k] || k }))} />
+        </div>
+      ) : (
+        <label>{IAC_LABEL[keys[0]] || keys[0]}</label>
+      )}
+      <pre className="code" style={{ whiteSpace: 'pre', overflow: 'auto' }}>{impls[tab]?.content}</pre>
+    </div>
+  )
+}
+
 // MultiSelect is a searchable, multi-value dropdown with an "All" option
 // (empty selection means all).
 export function MultiSelect({

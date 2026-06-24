@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { api, type Coverage, type PackSummary, type RuleDetail, type RuleSummary } from '../api'
 import { pick, useI18n } from '../i18n'
-import { Segmented, Select, SeverityBadge } from '../components/ui'
+import { ImplTabs, Segmented, Select, SeverityBadge } from '../components/ui'
 
 type Tab = 'overview' | 'packs' | 'rules'
+type Detail = { kind: string; rule?: RuleDetail; pack?: PackSummary; rules?: RuleSummary[] }
 
 export default function Catalog() {
   const { t, lang } = useI18n()
@@ -14,7 +15,8 @@ export default function Catalog() {
   const [q, setQ] = useState('')
   const [severity, setSeverity] = useState('')
   const [iac, setIac] = useState('')
-  const [detail, setDetail] = useState<{ kind: string; rule?: RuleDetail; pack?: PackSummary; rules?: RuleSummary[] } | null>(null)
+  const [detail, setDetail] = useState<Detail | null>(null)
+  const [back, setBack] = useState<Detail | null>(null)
 
   useEffect(() => {
     api.coverage().then(setCoverage).catch(() => {})
@@ -35,7 +37,24 @@ export default function Catalog() {
   }, [q, severity, iac])
 
   function open(id: string) {
+    setBack(null)
     api.policyDetail(id).then(setDetail).catch(() => {})
+  }
+
+  // drill opens a rule from within a pack, remembering the pack for "back".
+  function drill(id: string) {
+    setBack(detail)
+    api.policyDetail(id).then(setDetail).catch(() => {})
+  }
+
+  function closeDrawer() {
+    setDetail(null)
+    setBack(null)
+  }
+
+  function goBack() {
+    setDetail(back)
+    setBack(null)
   }
 
   const maxService = coverage?.by_service[0]?.count || 1
@@ -142,24 +161,27 @@ export default function Catalog() {
 
       {detail && (
         <>
-          <div className="drawer-backdrop" onClick={() => setDetail(null)} />
+          <div className="drawer-backdrop" onClick={closeDrawer} />
           <div className="drawer">
-            <button className="close" onClick={() => setDetail(null)}>×</button>
+            <button className="close" onClick={closeDrawer}>×</button>
+            {back && (
+              <button className="secondary drawer-back" onClick={goBack}>← {t('common.back')}</button>
+            )}
             {detail.kind === 'rule' && detail.rule && (
               <>
                 <h2 style={{ marginTop: 0 }}>{pick(detail.rule.name, lang)}</h2>
                 <div className="kv"><b>ID</b> <code>{detail.rule.id}</code></div>
                 <div className="kv"><b>{t('common.severity')}</b> <SeverityBadge severity={detail.rule.severity} /></div>
                 <div className="kv"><b>IaC</b> {(detail.rule.iac_types || []).join(', ')}</div>
-                <div className="kv"><b>Resources</b> {(detail.rule.resource_types || []).join(', ')}</div>
+                <div className="kv"><b>{t('detail.resources')}</b></div>
+                <div className="kv-vals">
+                  {(detail.rule.resource_types || []).map((rt) => (
+                    <div key={rt}><code>{rt}</code></div>
+                  ))}
+                </div>
                 <p>{pick(detail.rule.description, lang)}</p>
                 <p className="hint">{pick(detail.rule.recommendation, lang)}</p>
-                {Object.entries(detail.rule.implementations || {}).map(([k, impl]) => (
-                  <div key={k}>
-                    <label>{k}</label>
-                    <pre className="code" style={{ whiteSpace: 'pre', overflow: 'auto' }}>{impl.content}</pre>
-                  </div>
-                ))}
+                <ImplTabs impls={detail.rule.implementations || {}} />
               </>
             )}
             {detail.kind === 'pack' && detail.pack && (
@@ -171,7 +193,7 @@ export default function Catalog() {
                   <thead><tr><th>{t('common.rule')}</th><th>{t('common.severity')}</th></tr></thead>
                   <tbody>
                     {(detail.rules || []).map((r) => (
-                      <tr key={r.id} className="clickable" onClick={() => open(r.id)}>
+                      <tr key={r.id} className="clickable" onClick={() => drill(r.id)}>
                         <td><code>{r.id.replace('rule:aliyun:', '')}</code></td>
                         <td><SeverityBadge severity={r.severity} /></td>
                       </tr>

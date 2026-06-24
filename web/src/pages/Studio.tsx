@@ -163,8 +163,6 @@ export default function Studio() {
       <div className="row">
         <div className="col">
           <div className="toolbar">
-            <label style={{ margin: 0 }}>{t('studio.rego')}</label>
-            <span className="grow" />
             <Segmented
               value={iac}
               onChange={changeIac}
@@ -173,7 +171,9 @@ export default function Studio() {
                 { value: 'terraform', label: 'Terraform' },
               ]}
             />
+            <span className="grow" />
           </div>
+          <label>{t('studio.rego')}</label>
           <Editor value={rego} onChange={setRego} />
         </div>
         <div className="col">
