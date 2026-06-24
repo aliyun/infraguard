@@ -222,7 +222,7 @@ export default function Studio() {
             <div className="panel" style={{ marginTop: '.75rem' }}>
               <div className="kv"><b>{t('studio.compliant')}</b> {caseBadge(testRes.compliant)}</div>
               <div className="kv"><b>{t('studio.violation')}</b> {caseBadge(testRes.violation)}</div>
-              <div className="kv"><b>Result</b> <span className={`badge ${testRes.pass ? 'ok' : 'high'}`}>{testRes.pass ? t('studio.pass') : t('studio.fail')}</span></div>
+              <div className="kv"><b>{t('common.result')}</b> <span className={`badge ${testRes.pass ? 'ok' : 'high'}`}>{testRes.pass ? t('studio.pass') : t('studio.fail')}</span></div>
             </div>
           )}
         </div>

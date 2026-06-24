@@ -17,6 +17,8 @@ const dict: Record<string, Record<Lang, string>> = {
   'common.severity': { en: 'Severity', zh: '严重级别' },
   'common.resource': { en: 'Resource', zh: '资源' },
   'common.rule': { en: 'Rule', zh: '规则' },
+  'common.name': { en: 'Name', zh: '名称' },
+  'common.result': { en: 'Result', zh: '结果' },
   'common.all': { en: 'All', zh: '全部' },
   'common.chooseFile': { en: 'Choose file', zh: '选择文件' },
   'common.back': { en: 'Back', zh: '返回' },

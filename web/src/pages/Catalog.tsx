@@ -132,7 +132,7 @@ export default function Catalog() {
             {resTypeSelect}
           </div>
           <table>
-            <thead><tr><th>{t('tab.packs')}</th><th>Name</th><th>{t('tab.rules')}</th></tr></thead>
+            <thead><tr><th>{t('tab.packs')}</th><th>{t('common.name')}</th><th>{t('tab.rules')}</th></tr></thead>
             <tbody>
               {packs.map((p) => (
                 <tr key={p.id} className="clickable" onClick={() => open(p.id)}>
@@ -173,7 +173,7 @@ export default function Catalog() {
             />
           </div>
           <table>
-            <thead><tr><th>{t('common.rule')}</th><th>Name</th><th>{t('common.severity')}</th><th>Services</th></tr></thead>
+            <thead><tr><th>{t('common.rule')}</th><th>{t('common.name')}</th><th>{t('common.severity')}</th><th>{t('filter.product')}</th></tr></thead>
             <tbody>
               {rules.map((r) => (
                 <tr key={r.id} className="clickable" onClick={() => open(r.id)}>
