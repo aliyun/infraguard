@@ -171,7 +171,10 @@ export default function Catalog() {
                   <thead><tr><th>{t('common.rule')}</th><th>{t('common.severity')}</th></tr></thead>
                   <tbody>
                     {(detail.rules || []).map((r) => (
-                      <tr key={r.id}><td><code>{r.id.replace('rule:aliyun:', '')}</code></td><td><SeverityBadge severity={r.severity} /></td></tr>
+                      <tr key={r.id} className="clickable" onClick={() => open(r.id)}>
+                        <td><code>{r.id.replace('rule:aliyun:', '')}</code></td>
+                        <td><SeverityBadge severity={r.severity} /></td>
+                      </tr>
                     ))}
                   </tbody>
                 </table>
