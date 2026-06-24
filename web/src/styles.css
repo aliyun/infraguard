@@ -133,8 +133,15 @@ body {
 .sidebar nav a:hover { background: var(--accent-soft); color: var(--text); }
 .sidebar nav a.active { background: var(--accent-soft); color: var(--text); font-weight: 600; }
 
-.content { flex: 1; overflow: auto; padding: 2rem 2.25rem 4rem; }
-.content > * { max-width: 1160px; margin-inline: auto; width: 100%; }
+.content { flex: 1; overflow: auto; padding: 1.6rem 1.75rem 2rem; }
+.content > * { max-width: 1600px; margin-inline: auto; width: 100%; }
+
+/* Full-height pages where editors fill the viewport */
+.page-fill { display: flex; flex-direction: column; height: 100%; }
+.page-fill .row.fill { flex: 1; min-height: 0; align-items: stretch; }
+.col.fill { display: flex; flex-direction: column; min-height: 0; }
+.col.fill > textarea.code { flex: 1; min-height: 180px; }
+.col.scroll { overflow: auto; }
 .page-title { font-size: 1.55rem; font-weight: 680; letter-spacing: -.02em; margin: 0 0 .35rem; }
 .page-sub { color: var(--muted); margin: 0 0 1.5rem; font-size: .92rem; }
 

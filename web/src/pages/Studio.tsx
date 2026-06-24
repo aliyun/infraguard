@@ -157,11 +157,11 @@ export default function Studio() {
   }
 
   return (
-    <div>
+    <div className="page-fill">
       <h1 className="page-title">{t('nav.studio')}</h1>
       <p className="page-sub">{t('sub.studio')}</p>
-      <div className="row">
-        <div className="col">
+      <div className="row fill">
+        <div className="col fill">
           <div className="toolbar">
             <Segmented
               value={iac}
@@ -176,7 +176,7 @@ export default function Studio() {
           <label>{t('studio.rego')}</label>
           <Editor value={rego} onChange={setRego} />
         </div>
-        <div className="col">
+        <div className="col fill scroll">
           <div className="toolbar">
             <Segmented
               value={mode}

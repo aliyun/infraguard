@@ -75,11 +75,11 @@ export default function Playground() {
   const visible = filter ? sorted.filter((v) => v.severity === filter) : sorted
 
   return (
-    <div>
+    <div className="page-fill">
       <h1 className="page-title">{t('nav.playground')}</h1>
       <p className="page-sub">{t('sub.playground')}</p>
-      <div className="row">
-        <div className="col">
+      <div className="row fill">
+        <div className="col fill">
           <div className="toolbar">
             <Segmented
               value={iac}
@@ -107,7 +107,7 @@ export default function Playground() {
             />
           </div>
         </div>
-        <div className="col">
+        <div className="col fill scroll">
           {error && <div className="error">{error}</div>}
           {result && (
             <>
