@@ -1,214 +1,67 @@
 # Makefile for infraguard
 
-# Binary name
 BINARY_NAME := infraguard
-
-# Go parameters
 GOCMD := go
-GOBUILD := $(GOCMD) build
-GORUN := $(GOCMD) run
-GOTEST := $(GOCMD) test
-GOGET := $(GOCMD) get
-GOMOD := $(GOCMD) mod
-GOFMT := $(GOCMD) fmt
-GOVET := $(GOCMD) vet
-
-# Documentation parameters
-DOCS_DIR := docs
 NPM := npm
-
-# Build flags
 LDFLAGS := -s -w
-BUILD_DIR := .
 MAIN_PATH := ./cmd/infraguard
 
-# Default target
 .DEFAULT_GOAL := help
+.PHONY: build run docs test test-policy lint fmt validate-translations check-gen gen-policy clean help
 
-.PHONY: all build build-all web web-wasm run clean test test-policy test-all test-web test-coverage format lint tidy deps help install doc-gen doc-dev doc-serve doc-build doc-clean validate-translations validate-doc-translations plugin-install plugin-build plugin-clean
+## Build
 
-## Build targets
+gen-policy: ## Generate the policy index
+	$(GOCMD) run cmd/policy-gen/main.go
+	$(GOCMD) fmt pkg/policy/index_gen.go
 
-all: clean gen-policy build ## Clean and build the binary
-
-gen-policy: ## Generate policy index
-	$(GORUN) cmd/policy-gen/main.go
-	$(GOFMT) pkg/policy/index_gen.go
-
-validate-translations: ## Validate translation files
-	$(GORUN) scripts/validate-translations.go
-
-web: ## Build the web UI into the server embed directory
+build: gen-policy ## Build everything (web UI + binary)
 	cd web && $(NPM) ci && $(NPM) run build
 	@touch pkg/server/dist/.gitkeep
+	$(GOCMD) build -ldflags "$(LDFLAGS)" -o $(BINARY_NAME) $(MAIN_PATH)
 
-web-wasm: ## Build the WebAssembly playground assets into docs/static/playground
+run: ## Run from source
+	$(GOCMD) run $(MAIN_PATH)
+
+docs: ## Build the documentation site (incl. wasm playground)
+	$(GOCMD) run scripts/generate-policy-docs.go
 	@mkdir -p docs/static/playground
-	GOOS=js GOARCH=wasm $(GOBUILD) -o docs/static/playground/infraguard.wasm ./cmd/infraguard-wasm
+	GOOS=js GOARCH=wasm $(GOCMD) build -o docs/static/playground/infraguard.wasm ./cmd/infraguard-wasm
 	cp "$$($(GOCMD) env GOROOT)/lib/wasm/wasm_exec.js" docs/static/playground/wasm_exec.js
-	$(GORUN) ./cmd/policy-dump -pack quick-start-compliance-pack -iac ros -out docs/static/playground/rules.json
+	$(GOCMD) run ./cmd/policy-dump -pack quick-start-compliance-pack -iac ros -out docs/static/playground/rules.json
+	cd docs && $(NPM) ci && $(NPM) run build
 
-build: gen-policy validate-translations ## Build the binary
-	$(GOBUILD) -ldflags "$(LDFLAGS)" -o $(BUILD_DIR)/$(BINARY_NAME) $(MAIN_PATH)
+## Test & quality
 
-build-all: web build ## Build the web UI and the binary
+test: gen-policy ## Run all tests
+	$(GOCMD) test ./pkg/... ./cmd/... ./policies/...
 
-run: ## Run the application
-	$(GORUN) $(MAIN_PATH)
+test-policy: gen-policy ## Run policy tests only
+	$(GOCMD) test ./policies/...
 
-## Test targets
+validate-translations: ## Validate translation files
+	$(GOCMD) run scripts/validate-translations.go
 
-test: ## Run tests for pkg/ and cmd/ packages
-	$(GOTEST) -v ./pkg/... ./cmd/...
+lint: ## Run go vet
+	$(GOCMD) vet ./pkg/... ./cmd/... ./policies/...
 
-test-policy: gen-policy  ## Run tests for policies/ directory
-	$(GOTEST) -v ./policies/...
+fmt: ## Format Go code
+	$(GOCMD) fmt ./...
 
-test-all: ## Run both test and test-policy concurrently
-	@$(MAKE) -j2 test test-policy
-
-test-web: ## Run tests with GoConvey web UI (pkg/ and cmd/)
-	@if ! command -v goconvey >/dev/null 2>&1; then \
-		echo "Installing goconvey..."; \
-		$(GOCMD) install github.com/smartystreets/goconvey@latest; \
-	fi
-	@echo "Starting GoConvey web UI at http://localhost:8080"
-	@echo "Note: GoConvey will test all packages. Use browser filters to focus on specific packages."
-	goconvey
-
-test-coverage: ## Run tests with coverage for pkg/ and cmd/ and open report
-	$(GOTEST) -v -coverprofile=coverage.out ./pkg/... ./cmd/...
-	$(GOCMD) tool cover -html=coverage.out -o coverage.html
-	@echo "Coverage report generated: coverage.html"
-	@if command -v open >/dev/null 2>&1; then \
-		open coverage.html; \
-	elif command -v xdg-open >/dev/null 2>&1; then \
-		xdg-open coverage.html; \
-	elif command -v start >/dev/null 2>&1; then \
-		start coverage.html; \
-	else \
-		echo "Please open coverage.html manually in your browser"; \
-	fi
-
-## Code quality targets
-
-check-gen: ## Check if generated files are up to date
-	@echo "Checking if index_gen.go is up to date..."
-	@cp pkg/policy/index_gen.go pkg/policy/index_gen.go.bak 2>/dev/null || true
-	@$(GORUN) cmd/policy-gen/main.go
-	@$(GOFMT) pkg/policy/index_gen.go >/dev/null
-	@if ! diff -q pkg/policy/index_gen.go pkg/policy/index_gen.go.bak >/dev/null 2>&1; then \
-		echo "ERROR: pkg/policy/index_gen.go is out of date!"; \
-		echo "Please run 'make gen-policy' and commit the changes."; \
-		mv pkg/policy/index_gen.go.bak pkg/policy/index_gen.go 2>/dev/null || true; \
-		exit 1; \
-	fi
+check-gen: ## Verify the generated policy index is up to date
+	@cp pkg/policy/index_gen.go pkg/policy/index_gen.go.bak
+	@$(GOCMD) run cmd/policy-gen/main.go && $(GOCMD) fmt pkg/policy/index_gen.go >/dev/null
+	@diff -q pkg/policy/index_gen.go pkg/policy/index_gen.go.bak >/dev/null \
+		|| { echo "index_gen.go is out of date; run 'make gen-policy'"; mv pkg/policy/index_gen.go.bak pkg/policy/index_gen.go; exit 1; }
 	@rm -f pkg/policy/index_gen.go.bak
-	@echo "✓ pkg/policy/index_gen.go is up to date"
+	@echo "index_gen.go is up to date"
 
-format: ## Format code and policies
-	$(GOFMT) ./...
-	@if [ -f $(BUILD_DIR)/$(BINARY_NAME) ]; then \
-		./$(BINARY_NAME) policy format policies --write; \
-	else \
-		echo "Building $(BINARY_NAME)..."; \
-		$(MAKE) build; \
-		./$(BINARY_NAME) policy format policies --write; \
-	fi
+## Clean
 
-lint: ## Run go vet (excluding scripts directory)
-	$(GOVET) ./pkg/... ./cmd/... ./policies/...
+clean: ## Remove build artifacts
+	rm -f $(BINARY_NAME) coverage.out coverage.html
+	rm -rf pkg/server/dist/assets pkg/server/dist/index.html
+	rm -rf docs/build docs/.docusaurus docs/static/playground
 
-## Dependency targets
-
-deps: ## Download dependencies
-	$(GOMOD) download
-
-tidy: ## Tidy go modules
-	$(GOMOD) tidy
-
-vendor: ## Vendor dependencies
-	$(GOMOD) vendor
-
-## Clean targets
-
-clean: ## Clean build artifacts
-	rm -f $(BUILD_DIR)/$(BINARY_NAME)
-	rm -f coverage.out coverage.html
-	rm -rf vendor/
-	rm -rf pkg/policy/index_gen.go
-	rm -rf $(DOCS_DIR)/build
-	rm -rf $(DOCS_DIR)/.docusaurus
-	rm -rf $(DOCS_DIR)/docs/policies
-	rm -rf $(DOCS_DIR)/i18n/zh/docusaurus-plugin-content-docs/current/policies
-	find . -type d -name "__pycache__" -exec rm -rf {} +
-	find . -type f -name "*.py[co]" -delete
-
-## Install targets
-
-install: ## Install development dependencies (Node.js packages for documentation)
-	@if ! command -v node >/dev/null 2>&1; then \
-		echo "Error: Node.js is not installed. Please install Node.js first."; \
-		exit 1; \
-	fi
-	@echo "Installing documentation dependencies..."
-	cd $(DOCS_DIR) && $(NPM) install
-
-## Documentation targets
-
-
-validate-doc-translations: ## Validate documentation translations for all languages
-	@echo "Validating documentation translations..."
-	$(GORUN) scripts/validate-doc-translations.go
-
-doc-gen: ## Generate policy documentation from .rego files
-	@echo "Generating policy documentation..."
-	$(GORUN) scripts/generate-policy-docs.go
-
-doc-dev: doc-gen ## Start documentation development server (hot reload)
-	@echo "Starting documentation development server..."
-	cd $(DOCS_DIR) && $(NPM) start
-
-doc-serve: doc-build ## Serve the production build locally (supports multiple locales)
-	@echo "Serving production build..."
-	cd $(DOCS_DIR) && $(NPM) run serve
-
-doc-build: doc-gen validate-doc-translations ## Build static documentation site
-	@echo "Building documentation site..."
-	cd $(DOCS_DIR) && $(NPM) run build
-
-## Plugin targets
-
-PLUGINS_DIR := plugins
-
-plugin-install: ## Install dependencies for all plugins
-	@for dir in $(PLUGINS_DIR)/*/; do \
-		if [ -f "$$dir/Makefile" ]; then \
-			echo "Installing $$(basename $$dir) plugin dependencies..."; \
-			$(MAKE) -C $$dir install; \
-		fi; \
-	done
-
-plugin-build: ## Build all plugins
-	@for dir in $(PLUGINS_DIR)/*/; do \
-		if [ -f "$$dir/Makefile" ]; then \
-			echo "Building $$(basename $$dir) plugin..."; \
-			$(MAKE) -C $$dir build ROOT_DIR=$(CURDIR); \
-		fi; \
-	done
-
-plugin-clean: ## Clean all plugin build artifacts
-	@for dir in $(PLUGINS_DIR)/*/; do \
-		if [ -f "$$dir/Makefile" ]; then \
-			echo "Cleaning $$(basename $$dir) plugin..."; \
-			$(MAKE) -C $$dir clean; \
-		fi; \
-	done
-
-## Help target
-help: ## Show this help message
-	@echo "Usage: make [target]"
-	@echo ""
-	@echo "Targets:"
-	@awk 'BEGIN {FS = ":.*##"} /^[a-zA-Z_-]+:.*##/ {printf "  %-15s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
-
+help: ## Show this help
+	@awk 'BEGIN {FS = ":.*##"} /^[a-zA-Z_-]+:.*##/ {printf "  \033[36m%-22s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
