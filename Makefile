@@ -25,7 +25,7 @@ MAIN_PATH := ./cmd/infraguard
 # Default target
 .DEFAULT_GOAL := help
 
-.PHONY: all build build-all web run clean test test-policy test-all test-web test-coverage format lint tidy deps help install doc-gen doc-dev doc-serve doc-build doc-clean validate-translations validate-doc-translations plugin-install plugin-build plugin-clean
+.PHONY: all build build-all web web-wasm run clean test test-policy test-all test-web test-coverage format lint tidy deps help install doc-gen doc-dev doc-serve doc-build doc-clean validate-translations validate-doc-translations plugin-install plugin-build plugin-clean
 
 ## Build targets
 
@@ -41,6 +41,12 @@ validate-translations: ## Validate translation files
 web: ## Build the web UI into the server embed directory
 	cd web && $(NPM) ci && $(NPM) run build
 	@touch pkg/server/dist/.gitkeep
+
+web-wasm: ## Build the WebAssembly playground assets into docs/static/playground
+	@mkdir -p docs/static/playground
+	GOOS=js GOARCH=wasm $(GOBUILD) -o docs/static/playground/infraguard.wasm ./cmd/infraguard-wasm
+	cp "$$($(GOCMD) env GOROOT)/lib/wasm/wasm_exec.js" docs/static/playground/wasm_exec.js
+	$(GORUN) ./cmd/policy-dump -pack quick-start-compliance-pack -iac ros -out docs/static/playground/rules.json
 
 build: gen-policy validate-translations ## Build the binary
 	$(GOBUILD) -ldflags "$(LDFLAGS)" -o $(BUILD_DIR)/$(BINARY_NAME) $(MAIN_PATH)

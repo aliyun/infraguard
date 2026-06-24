@@ -76,3 +76,6 @@ docs/i18n/*/docusaurus-plugin-content-docs/current/policies/
 # Web server embedded frontend build
 pkg/server/dist/*
 !pkg/server/dist/.gitkeep
+
+# WebAssembly playground build artifacts (built in CI, not committed)
+docs/static/playground/
