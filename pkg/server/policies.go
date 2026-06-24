@@ -36,19 +36,13 @@ func (s *Server) handlePoliciesList(w http.ResponseWriter, r *http.Request) {
 	severity := strings.ToLower(r.URL.Query().Get("severity"))
 	iac := strings.ToLower(r.URL.Query().Get("iac"))
 	service := strings.ToUpper(r.URL.Query().Get("service"))
+	resourceType := r.URL.Query().Get("resource_type")
 	kind := r.URL.Query().Get("type") // "rule" | "pack" | ""
 
 	rules := []ruleSummary{}
 	if kind != "pack" {
 		for _, rule := range loader.GetAllRules() {
-			if severity != "" && !strings.EqualFold(rule.Severity, severity) {
-				continue
-			}
-			if iac != "" && !containsString(rule.IaCTypes, iac) {
-				continue
-			}
-			services := servicesFor(rule.ResourceTypes)
-			if service != "" && !containsString(services, service) {
+			if !ruleMatchesFilters(rule, severity, iac, service, resourceType) {
 				continue
 			}
 			if q != "" && !ruleMatchesQuery(rule, q) {
@@ -56,7 +50,7 @@ func (s *Server) handlePoliciesList(w http.ResponseWriter, r *http.Request) {
 			}
 			rules = append(rules, ruleSummary{
 				ID: rule.ID, Name: rule.Name, Severity: rule.Severity,
-				IaCTypes: rule.IaCTypes, ResourceTypes: rule.ResourceTypes, Services: services,
+				IaCTypes: rule.IaCTypes, ResourceTypes: rule.ResourceTypes, Services: servicesFor(rule.ResourceTypes),
 			})
 		}
 		sort.Slice(rules, func(i, j int) bool {
@@ -70,8 +64,12 @@ func (s *Server) handlePoliciesList(w http.ResponseWriter, r *http.Request) {
 
 	packs := []packSummary{}
 	if kind != "rule" {
+		ruleFiltersActive := severity != "" || iac != "" || service != "" || resourceType != ""
 		for _, p := range loader.GetAllPacks() {
 			if q != "" && !packMatchesQuery(p, q) {
+				continue
+			}
+			if ruleFiltersActive && !packHasMatchingRule(loader, p, severity, iac, service, resourceType) {
 				continue
 			}
 			packs = append(packs, packSummary{ID: p.ID, Name: p.Name, Description: p.Description, RuleCount: len(p.RuleIDs)})
@@ -80,6 +78,33 @@ func (s *Server) handlePoliciesList(w http.ResponseWriter, r *http.Request) {
 	}
 
 	writeJSON(w, http.StatusOK, map[string]interface{}{"rules": rules, "packs": packs})
+}
+
+// ruleMatchesFilters reports whether a rule passes the rule-level filters.
+func ruleMatchesFilters(rule *models.Rule, severity, iac, service, resourceType string) bool {
+	if severity != "" && !strings.EqualFold(rule.Severity, severity) {
+		return false
+	}
+	if iac != "" && !containsString(rule.IaCTypes, iac) {
+		return false
+	}
+	if service != "" && !containsString(servicesFor(rule.ResourceTypes), service) {
+		return false
+	}
+	if resourceType != "" && !containsString(rule.ResourceTypes, resourceType) {
+		return false
+	}
+	return true
+}
+
+// packHasMatchingRule reports whether a pack contains a rule passing the filters.
+func packHasMatchingRule(loader *policy.Loader, p *models.Pack, severity, iac, service, resourceType string) bool {
+	for _, id := range p.RuleIDs {
+		if rule := loader.GetRule(id); rule != nil && ruleMatchesFilters(rule, severity, iac, service, resourceType) {
+			return true
+		}
+	}
+	return false
 }
 
 // policyDetail is returned for a single rule or pack.
@@ -125,12 +150,13 @@ func (s *Server) handlePolicyDetail(w http.ResponseWriter, r *http.Request) {
 
 // coverage describes rule coverage across dimensions.
 type coverage struct {
-	TotalRules  int                 `json:"total_rules"`
-	TotalPacks  int                 `json:"total_packs"`
-	BySeverity  map[string]int      `json:"by_severity"`
-	ByIaC       map[string]int      `json:"by_iac"`
-	ByService   []countEntry        `json:"by_service"`
-	ByFramework []frameworkCoverage `json:"by_framework"`
+	TotalRules    int                 `json:"total_rules"`
+	TotalPacks    int                 `json:"total_packs"`
+	BySeverity    map[string]int      `json:"by_severity"`
+	ByIaC         map[string]int      `json:"by_iac"`
+	ByService     []countEntry        `json:"by_service"`
+	ByFramework   []frameworkCoverage `json:"by_framework"`
+	ResourceTypes []string            `json:"resource_types"`
 }
 
 type countEntry struct {
@@ -155,6 +181,7 @@ func (s *Server) handleCoverage(w http.ResponseWriter, r *http.Request) {
 		ByIaC:      map[string]int{"ros": 0, "terraform": 0, "both": 0},
 	}
 	serviceCount := map[string]int{}
+	resTypeSet := map[string]bool{}
 	rules := loader.GetAllRules()
 	cov.TotalRules = len(rules)
 	for _, rule := range rules {
@@ -170,7 +197,14 @@ func (s *Server) handleCoverage(w http.ResponseWriter, r *http.Request) {
 		for _, svc := range servicesFor(rule.ResourceTypes) {
 			serviceCount[svc]++
 		}
+		for _, rt := range rule.ResourceTypes {
+			resTypeSet[rt] = true
+		}
 	}
+	for rt := range resTypeSet {
+		cov.ResourceTypes = append(cov.ResourceTypes, rt)
+	}
+	sort.Strings(cov.ResourceTypes)
 	for k, v := range serviceCount {
 		cov.ByService = append(cov.ByService, countEntry{Key: k, Count: v})
 	}
