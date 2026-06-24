@@ -7,7 +7,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'InfraGuard',
   tagline: 'Policy Defined. Infrastructure Secured.',
-  favicon: 'img/logo.svg',
+  favicon: 'img/infraguard-logo.svg',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
@@ -127,7 +127,7 @@ const config: Config = {
       title: 'InfraGuard',
       logo: {
         alt: 'InfraGuard Logo',
-        src: 'img/logo.svg',
+        src: 'img/infraguard-logo.svg',
       },
         items: [
           {
