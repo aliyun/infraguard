@@ -43,7 +43,7 @@ func (s *Server) handleRuleEval(w http.ResponseWriter, r *http.Request) {
 	if lang == "" {
 		lang = "en"
 	}
-	rich, _, err := scanContent(iac, req.Content, req.Inputs, opts, lang)
+	rich, err := scanContent(iac, req.Content, req.Inputs, opts, lang)
 	if err != nil {
 		writeError(w, http.StatusBadRequest, err.Error())
 		return
@@ -100,7 +100,7 @@ func (s *Server) handleRuleTest(w http.ResponseWriter, r *http.Request) {
 		if strings.TrimSpace(content) == "" {
 			return caseOutcome{Pass: false, Error: "fixture is empty"}
 		}
-		rich, _, err := scanContent(iac, content, nil, newOpts(), lang)
+		rich, err := scanContent(iac, content, nil, newOpts(), lang)
 		if err != nil {
 			return caseOutcome{Pass: false, Error: err.Error()}
 		}
