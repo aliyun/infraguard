@@ -137,6 +137,11 @@ const config: Config = {
             label: 'Documentation',
           },
         {
+          to: '/playground',
+          label: 'Playground',
+          position: 'left',
+        },
+        {
           type: 'localeDropdown',
           position: 'right',
         },
