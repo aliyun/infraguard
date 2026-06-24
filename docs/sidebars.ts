@@ -28,6 +28,7 @@ const sidebars: SidebarsConfig = {
       collapsed: false,
       items: [
         'user-guide/scanning-templates',
+        'user-guide/web-ui',
         'user-guide/managing-policies',
         'user-guide/waivers',
         'user-guide/output-formats',
@@ -93,6 +94,7 @@ const sidebars: SidebarsConfig = {
       collapsed: true,
       items: [
         'cli/scan',
+        'cli/server',
         'cli/policy',
         'cli/waiver',
         'cli/config',
