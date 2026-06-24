@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { Severity, Summary, Violation } from '../api'
+import { useI18n } from '../i18n'
 
 export function SeverityBadge({ severity }: { severity: Severity | string }) {
   const s = (severity || '').toLowerCase()
@@ -136,14 +137,123 @@ export function FileButton({ label, accept, onText }: { label: string; accept?: 
   )
 }
 
-export function SummaryLine({ summary }: { summary: Summary }) {
+// MultiSelect is a searchable, multi-value dropdown with an "All" option
+// (empty selection means all).
+export function MultiSelect({
+  options,
+  selected,
+  onChange,
+  allLabel,
+  searchPlaceholder,
+  width,
+}: {
+  options: { value: string; label: string; group?: string }[]
+  selected: string[]
+  onChange: (v: string[]) => void
+  allLabel: string
+  searchPlaceholder?: string
+  width?: number | string
+}) {
+  const [open, setOpen] = useState(false)
+  const [query, setQuery] = useState('')
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    function onDoc(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener('mousedown', onDoc)
+    return () => document.removeEventListener('mousedown', onDoc)
+  }, [])
+
+  const filtered = useMemo(() => {
+    const q = query.toLowerCase()
+    return q ? options.filter((o) => o.value.toLowerCase().includes(q) || o.label.toLowerCase().includes(q)) : options
+  }, [options, query])
+
+  const sel = new Set(selected)
+  function toggle(v: string) {
+    const next = new Set(sel)
+    next.has(v) ? next.delete(v) : next.add(v)
+    onChange([...next])
+  }
+
+  const triggerText = selected.length === 0 ? allLabel : `${selected.length} selected`
+
+  return (
+    <div className="select" ref={ref} style={{ width }}>
+      <button type="button" className="select-trigger" onClick={() => setOpen((v) => !v)}>
+        <span className={selected.length === 0 ? 'muted' : undefined}>{triggerText}</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
+      {open && (
+        <div className="select-menu ms-menu">
+          <input
+            className="ms-search"
+            autoFocus
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={searchPlaceholder}
+          />
+          <button type="button" className={selected.length === 0 ? 'active' : ''} onClick={() => onChange([])}>
+            {allLabel}
+          </button>
+          {filtered.map((o) => (
+            <button
+              key={o.value}
+              type="button"
+              className={sel.has(o.value) ? 'active' : ''}
+              onClick={() => toggle(o.value)}
+            >
+              <span className="ms-check">{sel.has(o.value) ? '✓' : ''}</span>
+              {o.label}
+            </button>
+          ))}
+          {filtered.length === 0 && <div className="ms-empty muted">—</div>}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// SummaryLine shows severity counts as clickable filter chips. The total acts as
+// an "All" reset. filter is the active severity ('' = all).
+export function SummaryLine({
+  summary,
+  filter,
+  onFilter,
+}: {
+  summary: Summary
+  filter?: string
+  onFilter?: (s: string) => void
+}) {
+  const { t } = useI18n()
   const c = summary.severity_counts || {}
+  const clickable = !!onFilter
+  const chip = (sev: string, count: number) => (
+    <button
+      type="button"
+      className={`sevchip ${filter === sev ? 'active' : ''}`}
+      disabled={!clickable}
+      onClick={() => onFilter?.(filter === sev ? '' : sev)}
+    >
+      <SeverityBadge severity={sev} /> {count}
+    </button>
+  )
   return (
     <div className="summary-line">
-      <strong>{summary.total_violations}</strong>
-      <SeverityBadge severity="high" /> {c.high || 0}
-      <SeverityBadge severity="medium" /> {c.medium || 0}
-      <SeverityBadge severity="low" /> {c.low || 0}
+      <button
+        type="button"
+        className={`sevchip total ${!filter ? 'active' : ''}`}
+        disabled={!clickable}
+        onClick={() => onFilter?.('')}
+      >
+        <strong>{summary.total_violations}</strong> {t('common.all')}
+      </button>
+      {chip('high', c.high || 0)}
+      {chip('medium', c.medium || 0)}
+      {chip('low', c.low || 0)}
     </div>
   )
 }
@@ -156,7 +266,11 @@ export function ViolationCard({ v }: { v: Violation }) {
         <span className="v-title">{v.reason || v.id}</span>
       </div>
       <div className="v-meta">
-        {v.id} · {v.resource_id} · {v.file}:{v.line}
+        <code>{v.id}</code>
+        <span className="v-dot">·</span>
+        <span>{v.resource_id}</span>
+        <span className="v-dot">·</span>
+        <span>{v.file}:{v.line}</span>
       </div>
       {v.snippet_lines && v.snippet_lines.length > 0 && (
         <pre>
@@ -168,7 +282,7 @@ export function ViolationCard({ v }: { v: Violation }) {
           ))}
         </pre>
       )}
-      {v.recommendation && <div className="v-meta">→ {v.recommendation}</div>}
+      {v.recommendation && <div className="v-rec">{v.recommendation}</div>}
     </div>
   )
 }

@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { api, type ScanResult } from '../api'
-import { useI18n } from '../i18n'
-import { Editor, Segmented, SummaryLine, ViolationCard } from '../components/ui'
+import { pick, useI18n } from '../i18n'
+import { Editor, MultiSelect, Segmented, SummaryLine, ViolationCard } from '../components/ui'
 
 const SAMPLES: Record<string, string> = {
   ros: `ROSTemplateFormatVersion: '2015-09-01'
@@ -18,14 +18,33 @@ Resources:
 `,
 }
 
+const SEV_ORDER: Record<string, number> = { high: 0, medium: 1, low: 2 }
+
+function shortId(id: string): string {
+  return id.includes(':') ? id.split(':').pop() || id : id
+}
+
 export default function Playground() {
   const { t, lang } = useI18n()
   const [iac, setIac] = useState('ros')
   const [content, setContent] = useState(SAMPLES.ros)
-  const [policies, setPolicies] = useState('')
+  const [selected, setSelected] = useState<string[]>([])
+  const [options, setOptions] = useState<{ value: string; label: string }[]>([])
   const [result, setResult] = useState<ScanResult | null>(null)
+  const [filter, setFilter] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
+  useEffect(() => {
+    api
+      .policies({})
+      .then((d) => {
+        const packs = d.packs.map((p) => ({ value: p.id, label: `📦 ${pick(p.name, lang) || p.id}` }))
+        const rules = d.rules.map((r) => ({ value: shortId(r.id), label: shortId(r.id) }))
+        setOptions([...packs, ...rules])
+      })
+      .catch(() => {})
+  }, [lang])
 
   function changeIac(v: string) {
     setIac(v)
@@ -36,9 +55,9 @@ export default function Playground() {
   async function scan() {
     setLoading(true)
     setError('')
+    setFilter('')
     try {
-      const policyList = policies.split(',').map((s) => s.trim()).filter(Boolean)
-      const res = await api.scan({ content, iac, policies: policyList, lang })
+      const res = await api.scan({ content, iac, policies: selected, lang })
       setResult(res)
     } catch (e) {
       setError((e as Error).message)
@@ -47,6 +66,13 @@ export default function Playground() {
       setLoading(false)
     }
   }
+
+  const sorted = useMemo(() => {
+    const list = [...(result?.violations ?? [])]
+    list.sort((a, b) => (SEV_ORDER[a.severity] ?? 9) - (SEV_ORDER[b.severity] ?? 9))
+    return list
+  }, [result])
+  const visible = filter ? sorted.filter((v) => v.severity === filter) : sorted
 
   return (
     <div>
@@ -71,11 +97,13 @@ export default function Playground() {
           <Editor value={content} onChange={setContent} />
           <div style={{ marginTop: '.6rem' }}>
             <label>{t('scan.policies')}</label>
-            <input
-              type="text"
-              value={policies}
-              onChange={(e) => setPolicies(e.target.value)}
-              placeholder="oss-bucket-public-read-prohibited, pack:aliyun:..."
+            <MultiSelect
+              options={options}
+              selected={selected}
+              onChange={setSelected}
+              allLabel={t('scan.allPolicies')}
+              searchPlaceholder={t('common.search')}
+              width="100%"
             />
           </div>
         </div>
@@ -83,12 +111,12 @@ export default function Playground() {
           {error && <div className="error">{error}</div>}
           {result && (
             <>
-              <SummaryLine summary={result.summary} />
-              <div style={{ marginTop: '.75rem' }}>
-                {result.violations.length === 0 ? (
+              <SummaryLine summary={result.summary} filter={filter} onFilter={setFilter} />
+              <div style={{ marginTop: '.85rem' }}>
+                {visible.length === 0 ? (
                   <div className="muted">{t('common.noViolations')}</div>
                 ) : (
-                  result.violations.map((v, i) => <ViolationCard key={i} v={v} />)
+                  visible.map((v, i) => <ViolationCard key={i} v={v} />)
                 )}
               </div>
             </>
