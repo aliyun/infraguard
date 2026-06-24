@@ -62,6 +62,8 @@ func (s *Server) routes() {
 	s.mux.HandleFunc("GET /api/coverage", s.handleCoverage)
 	s.mux.HandleFunc("POST /api/rule/eval", s.handleRuleEval)
 	s.mux.HandleFunc("POST /api/rule/test", s.handleRuleTest)
+	s.mux.HandleFunc("GET /api/waivers", s.handleWaiversGet)
+	s.mux.HandleFunc("POST /api/waivers", s.handleWaiversSave)
 	s.mux.Handle("/", staticHandler())
 }
 

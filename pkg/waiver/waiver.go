@@ -88,6 +88,24 @@ func FindFile(startDir string) string {
 	}
 }
 
+// WorkspacePath returns the conventional waiver file path under startDir.
+func WorkspacePath(startDir string) string {
+	return filepath.Join(startDir, DefaultRelPath)
+}
+
+// Save writes the waivers to path in the standard file format.
+func Save(path string, waivers []Waiver) error {
+	doc := fileDoc{Version: 1, Waivers: waivers}
+	data, err := yaml.Marshal(doc)
+	if err != nil {
+		return err
+	}
+	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+		return err
+	}
+	return os.WriteFile(path, data, 0o644)
+}
+
 // Load reads and parses a waiver file.
 func Load(path string) (*Set, error) {
 	data, err := os.ReadFile(path)
