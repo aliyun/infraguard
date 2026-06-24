@@ -25,7 +25,7 @@ MAIN_PATH := ./cmd/infraguard
 # Default target
 .DEFAULT_GOAL := help
 
-.PHONY: all build run clean test test-policy test-all test-web test-coverage format lint tidy deps help install doc-gen doc-dev doc-serve doc-build doc-clean validate-translations validate-doc-translations plugin-install plugin-build plugin-clean
+.PHONY: all build build-all web run clean test test-policy test-all test-web test-coverage format lint tidy deps help install doc-gen doc-dev doc-serve doc-build doc-clean validate-translations validate-doc-translations plugin-install plugin-build plugin-clean
 
 ## Build targets
 
@@ -38,8 +38,14 @@ gen-policy: ## Generate policy index
 validate-translations: ## Validate translation files
 	$(GORUN) scripts/validate-translations.go
 
+web: ## Build the web UI into the server embed directory
+	cd web && $(NPM) ci && $(NPM) run build
+	@touch pkg/server/dist/.gitkeep
+
 build: gen-policy validate-translations ## Build the binary
 	$(GOBUILD) -ldflags "$(LDFLAGS)" -o $(BUILD_DIR)/$(BINARY_NAME) $(MAIN_PATH)
+
+build-all: web build ## Build the web UI and the binary
 
 run: ## Run the application
 	$(GORUN) $(MAIN_PATH)

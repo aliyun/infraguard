@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/api.ts","./src/i18n.tsx","./src/main.tsx","./src/pages/catalog.tsx","./src/pages/playground.tsx","./src/pages/report.tsx","./src/pages/studio.tsx","./src/pages/waivers.tsx"],"errors":true,"version":"5.9.3"}
