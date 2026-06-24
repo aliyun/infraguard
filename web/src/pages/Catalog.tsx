@@ -15,6 +15,8 @@ export default function Catalog() {
   const [q, setQ] = useState('')
   const [severity, setSeverity] = useState('')
   const [iac, setIac] = useState('')
+  const [service, setService] = useState('')
+  const [resourceType, setResourceType] = useState('')
   const [detail, setDetail] = useState<Detail | null>(null)
   const [back, setBack] = useState<Detail | null>(null)
 
@@ -27,6 +29,8 @@ export default function Catalog() {
     if (q) params.q = q
     if (severity) params.severity = severity
     if (iac) params.iac = iac
+    if (service) params.service = service
+    if (resourceType) params.resource_type = resourceType
     const h = setTimeout(() => {
       api.policies(params).then((d) => {
         setRules(d.rules)
@@ -34,7 +38,7 @@ export default function Catalog() {
       }).catch(() => {})
     }, 200)
     return () => clearTimeout(h)
-  }, [q, severity, iac])
+  }, [q, severity, iac, service, resourceType])
 
   function open(id: string) {
     setBack(null)
@@ -59,6 +63,31 @@ export default function Catalog() {
 
   const maxService = coverage?.by_service[0]?.count || 1
 
+  const productSelect = (
+    <Select
+      value={service}
+      onChange={setService}
+      searchable
+      searchPlaceholder={t('common.search')}
+      options={[
+        { value: '', label: `${t('filter.product')}: ${t('common.all')}` },
+        ...(coverage?.by_service || []).map((s) => ({ value: s.key, label: s.key })),
+      ]}
+    />
+  )
+  const resTypeSelect = (
+    <Select
+      value={resourceType}
+      onChange={setResourceType}
+      searchable
+      searchPlaceholder={t('common.search')}
+      options={[
+        { value: '', label: `${t('filter.resourceType')}: ${t('common.all')}` },
+        ...(coverage?.resource_types || []).map((rt) => ({ value: rt, label: rt })),
+      ]}
+    />
+  )
+
   return (
     <div>
       <h1 className="page-title">{t('nav.catalog')}</h1>
@@ -79,12 +108,12 @@ export default function Catalog() {
       {tab === 'overview' && coverage && (
         <>
           <div className="stat-grid">
-            <div className="stat"><div className="num">{coverage.total_rules}</div><div className="lbl">{t('tab.rules')}</div></div>
-            <div className="stat"><div className="num">{coverage.total_packs}</div><div className="lbl">{t('tab.packs')}</div></div>
+            <div className="stat clickable-stat" onClick={() => setTab('rules')}><div className="num">{coverage.total_rules}</div><div className="lbl">{t('tab.rules')}</div></div>
+            <div className="stat clickable-stat" onClick={() => setTab('packs')}><div className="num">{coverage.total_packs}</div><div className="lbl">{t('tab.packs')}</div></div>
             <div className="stat"><div className="num" style={{ color: 'var(--high)' }}>{coverage.by_severity.high}</div><div className="lbl">HIGH</div></div>
             <div className="stat"><div className="num" style={{ color: 'var(--medium)' }}>{coverage.by_severity.medium}</div><div className="lbl">MEDIUM</div></div>
             <div className="stat"><div className="num" style={{ color: 'var(--low)' }}>{coverage.by_severity.low}</div><div className="lbl">LOW</div></div>
-            <div className="stat"><div className="num">{coverage.by_iac.both}</div><div className="lbl">ROS+TF</div></div>
+            <div className="stat"><div className="num">{coverage.by_iac.both}</div><div className="lbl">ROS+Terraform</div></div>
           </div>
           <div className="panel">
             <label>{t('catalog.coverage')}</label>
@@ -103,6 +132,8 @@ export default function Catalog() {
         <>
           <div className="toolbar">
             <input type="text" className="grow" placeholder={t('common.search')} value={q} onChange={(e) => setQ(e.target.value)} />
+            {productSelect}
+            {resTypeSelect}
           </div>
           <table>
             <thead><tr><th>{t('tab.packs')}</th><th>Name</th><th>{t('tab.rules')}</th></tr></thead>
@@ -123,6 +154,8 @@ export default function Catalog() {
         <>
           <div className="toolbar">
             <input type="text" className="grow" placeholder={t('common.search')} value={q} onChange={(e) => setQ(e.target.value)} />
+            {productSelect}
+            {resTypeSelect}
             <Select
               value={severity}
               onChange={setSeverity}

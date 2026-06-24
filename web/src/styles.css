@@ -277,6 +277,8 @@ code {
 /* Stats + coverage */
 .stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: .75rem; margin-bottom: 1.25rem; }
 .stat { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: .9rem 1rem; }
+.clickable-stat { cursor: pointer; transition: border-color .12s ease, background .12s ease; }
+.clickable-stat:hover { border-color: var(--border-strong); background: var(--accent-soft); }
 .stat .num { font-size: 1.6rem; font-weight: 700; letter-spacing: -.02em; }
 .stat .lbl { color: var(--muted); font-size: .78rem; margin-top: .15rem; }
 .bar { height: 6px; background: var(--accent-soft); border-radius: 999px; overflow: hidden; }

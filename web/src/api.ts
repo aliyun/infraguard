@@ -82,6 +82,7 @@ export interface Coverage {
   by_iac: Record<string, number>
   by_service: { key: string; count: number }[]
   by_framework: { id: string; name: I18nString; rules: number }[]
+  resource_types: string[]
 }
 
 export interface Waiver {

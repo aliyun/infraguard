@@ -67,13 +67,18 @@ export function Select<T extends string>({
   onChange,
   options,
   width,
+  searchable,
+  searchPlaceholder,
 }: {
   value: T
   onChange: (v: T) => void
   options: Option<T>[]
   width?: number | string
+  searchable?: boolean
+  searchPlaceholder?: string
 }) {
   const [open, setOpen] = useState(false)
+  const [query, setQuery] = useState('')
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
     function onDoc(e: MouseEvent) {
@@ -83,6 +88,11 @@ export function Select<T extends string>({
     return () => document.removeEventListener('mousedown', onDoc)
   }, [])
   const current = options.find((o) => o.value === value)
+  const shown = useMemo(() => {
+    if (!searchable || !query) return options
+    const q = query.toLowerCase()
+    return options.filter((o) => o.value.toLowerCase().includes(q) || o.label.toLowerCase().includes(q))
+  }, [options, query, searchable])
   return (
     <div className="select" ref={ref} style={{ width }}>
       <button type="button" className="select-trigger" onClick={() => setOpen((v) => !v)}>
@@ -92,8 +102,17 @@ export function Select<T extends string>({
         </svg>
       </button>
       {open && (
-        <div className="select-menu" role="listbox">
-          {options.map((o) => (
+        <div className="select-menu ms-menu" role="listbox">
+          {searchable && (
+            <input
+              className="ms-search"
+              autoFocus
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder={searchPlaceholder}
+            />
+          )}
+          {shown.map((o) => (
             <button
               key={o.value}
               type="button"
@@ -103,11 +122,13 @@ export function Select<T extends string>({
               onClick={() => {
                 onChange(o.value)
                 setOpen(false)
+                setQuery('')
               }}
             >
               {o.label}
             </button>
           ))}
+          {shown.length === 0 && <div className="ms-empty muted">—</div>}
         </div>
       )}
     </div>
@@ -269,11 +290,11 @@ export function SummaryLine({
     <div className="summary-line">
       <button
         type="button"
-        className={`sevchip total ${!filter ? 'active' : ''}`}
+        className={`sevchip ${!filter ? 'active' : ''}`}
         disabled={!clickable}
         onClick={() => onFilter?.('')}
       >
-        <strong>{summary.total_violations}</strong> {t('common.all')}
+        <span className="badge muted">{t('common.all')}</span> {summary.total_violations}
       </button>
       {chip('high', c.high || 0)}
       {chip('medium', c.medium || 0)}

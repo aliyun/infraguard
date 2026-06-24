@@ -4,13 +4,11 @@ import { useI18n } from './i18n'
 import { api } from './api'
 import { Select } from './components/ui'
 import Playground from './pages/Playground'
-import Report from './pages/Report'
 import Catalog from './pages/Catalog'
 import Studio from './pages/Studio'
 
 const navItems = [
   { to: '/playground', key: 'nav.playground' },
-  { to: '/report', key: 'nav.report' },
   { to: '/catalog', key: 'nav.catalog' },
   { to: '/studio', key: 'nav.studio' },
 ]
@@ -76,7 +74,6 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Navigate to="/playground" replace />} />
             <Route path="/playground" element={<Playground />} />
-            <Route path="/report" element={<Report />} />
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/studio" element={<Studio />} />
           </Routes>
