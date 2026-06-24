@@ -234,13 +234,14 @@ export function MultiSelect({
   searchPlaceholder,
   width,
 }: {
-  options: { value: string; label: string; group?: string }[]
+  options: { value: string; label: string; sub?: string; group?: string }[]
   selected: string[]
   onChange: (v: string[]) => void
   allLabel: string
   searchPlaceholder?: string
   width?: number | string
 }) {
+  const { t } = useI18n()
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const ref = useRef<HTMLDivElement>(null)
@@ -254,7 +255,14 @@ export function MultiSelect({
 
   const filtered = useMemo(() => {
     const q = query.toLowerCase()
-    return q ? options.filter((o) => o.value.toLowerCase().includes(q) || o.label.toLowerCase().includes(q)) : options
+    return q
+      ? options.filter(
+          (o) =>
+            o.value.toLowerCase().includes(q) ||
+            o.label.toLowerCase().includes(q) ||
+            (o.sub || '').toLowerCase().includes(q),
+        )
+      : options
   }, [options, query])
 
   const sel = new Set(selected)
@@ -264,7 +272,7 @@ export function MultiSelect({
     onChange([...next])
   }
 
-  const triggerText = selected.length === 0 ? allLabel : `${selected.length} selected`
+  const triggerText = selected.length === 0 ? allLabel : `${selected.length} ${t('common.selected')}`
 
   return (
     <div className="select" ref={ref} style={{ width }}>
@@ -294,7 +302,10 @@ export function MultiSelect({
               onClick={() => toggle(o.value)}
             >
               <span className="ms-check">{sel.has(o.value) ? '✓' : ''}</span>
-              {o.label}
+              <span className="ms-opt">
+                <span className="ms-opt-label">{o.label}</span>
+                {o.sub && <span className="ms-opt-sub">{o.sub}</span>}
+              </span>
             </button>
           ))}
           {filtered.length === 0 && <div className="ms-empty muted">—</div>}

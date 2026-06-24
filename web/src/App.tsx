@@ -1,4 +1,4 @@
-import { NavLink, Navigate, Route, Routes } from 'react-router-dom'
+import { Link, NavLink, Navigate, Route, Routes } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useI18n } from './i18n'
 import { api } from './api'
@@ -40,10 +40,10 @@ export default function App() {
   return (
     <div className="app">
       <header className="topbar">
-        <div className="brand">
+        <Link to="/playground" className="brand">
           <img className="brand-logo" src="logo.svg" alt="" width={26} height={26} />
           <span className="brand-name">InfraGuard</span>
-        </div>
+        </Link>
         <div className="topbar-actions">
           <Select
             value={lang}

@@ -105,7 +105,7 @@ body {
   height: 56px; flex-shrink: 0; padding: 0 1.1rem;
   border-bottom: 1px solid var(--border); background: var(--bg);
 }
-.brand { display: flex; align-items: center; gap: .55rem; }
+.brand { display: flex; align-items: center; gap: .55rem; text-decoration: none; color: var(--text); }
 .brand-logo { display: block; }
 .brand-name { font-weight: 650; font-size: 1.05rem; letter-spacing: -.01em; }
 .topbar-actions { display: flex; align-items: center; gap: .55rem; }
@@ -270,7 +270,11 @@ button.secondary:hover { background: var(--accent-soft); opacity: 1; }
   width: 100%; margin-bottom: 4px; padding: .45rem .6rem; font-size: .85rem;
   border: 1px solid var(--border); border-radius: 6px; background: var(--panel);
 }
-.ms-check { display: inline-block; width: 1.1rem; color: var(--accent); font-weight: 700; }
+.ms-menu button { display: flex; align-items: flex-start; gap: .45rem; }
+.ms-check { flex-shrink: 0; width: 1.1rem; color: var(--accent); font-weight: 700; }
+.ms-opt { display: flex; flex-direction: column; min-width: 0; }
+.ms-opt-label { white-space: normal; }
+.ms-opt-sub { font-size: .72rem; color: var(--muted); font-family: var(--mono); margin-top: .1rem; }
 .ms-empty { padding: .5rem .6rem; font-size: .85rem; }
 
 /* Badges / chips */
@@ -318,6 +322,7 @@ table { width: 100%; border-collapse: collapse; font-size: .88rem; }
 th, td { text-align: left; padding: .6rem .7rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
 th { color: var(--muted); font-weight: 600; font-size: .72rem; text-transform: uppercase; letter-spacing: .04em; }
 tbody tr:last-child td { border-bottom: 0; }
+.cell-sub { font-size: .76rem; color: var(--muted); font-family: var(--mono); margin-top: .15rem; }
 tr.clickable { cursor: pointer; transition: background .1s ease; }
 tr.clickable:hover { background: var(--accent-soft); }
 code {

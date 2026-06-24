@@ -232,7 +232,10 @@ export default function Catalog() {
                   <tbody>
                     {(detail.rules || []).map((r) => (
                       <tr key={r.id} className="clickable" onClick={() => drill(r.id)}>
-                        <td><code>{r.id.replace('rule:aliyun:', '')}</code></td>
+                        <td>
+                          <div>{pick(r.name, lang)}</div>
+                          <div className="cell-sub">{r.id.replace('rule:aliyun:', '')}</div>
+                        </td>
                         <td><SeverityBadge severity={r.severity} /></td>
                       </tr>
                     ))}

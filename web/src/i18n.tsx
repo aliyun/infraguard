@@ -22,6 +22,7 @@ const dict: Record<string, Record<Lang, string>> = {
   'common.back': { en: 'Back', zh: '返回' },
   'common.copy': { en: 'Copy', zh: '复制' },
   'common.copied': { en: 'Copied', zh: '已复制' },
+  'common.selected': { en: 'selected', zh: '项已选' },
   'common.noViolations': { en: 'No violations found.', zh: '未发现违规。' },
   'detail.resources': { en: 'Resources', zh: '资源类型' },
   'detail.description': { en: 'Description', zh: '描述' },

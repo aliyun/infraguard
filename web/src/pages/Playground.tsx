@@ -29,7 +29,7 @@ export default function Playground() {
   const [iac, setIac] = useState('ros')
   const [content, setContent] = useState(SAMPLES.ros)
   const [selected, setSelected] = useState<string[]>([])
-  const [options, setOptions] = useState<{ value: string; label: string }[]>([])
+  const [options, setOptions] = useState<{ value: string; label: string; sub?: string }[]>([])
   const [result, setResult] = useState<ScanResult | null>(null)
   const [filter, setFilter] = useState('')
   const [loading, setLoading] = useState(false)
@@ -39,8 +39,16 @@ export default function Playground() {
     api
       .policies({})
       .then((d) => {
-        const packs = d.packs.map((p) => ({ value: p.id, label: `📦 ${pick(p.name, lang) || p.id}` }))
-        const rules = d.rules.map((r) => ({ value: shortId(r.id), label: shortId(r.id) }))
+        const packs = d.packs.map((p) => ({
+          value: p.id,
+          label: `📦 ${pick(p.name, lang) || shortId(p.id)}`,
+          sub: shortId(p.id),
+        }))
+        const rules = d.rules.map((r) => ({
+          value: shortId(r.id),
+          label: pick(r.name, lang) || shortId(r.id),
+          sub: shortId(r.id),
+        }))
         setOptions([...packs, ...rules])
       })
       .catch(() => {})
