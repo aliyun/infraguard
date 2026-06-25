@@ -181,11 +181,18 @@
   max-width: 100%;
 }
 
+.installCmdWrap {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  max-width: 100%;
+}
+
 .installCmd {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.55rem 0.9rem;
+  padding: 0.55rem 2.6rem 0.55rem 0.9rem;
   border: 1px solid var(--hp-border);
   border-radius: 10px;
   background: var(--hp-bg-soft);
@@ -195,6 +202,31 @@
   overflow-x: auto;
   min-width: 0;
   max-width: 100%;
+}
+
+.installCopy {
+  position: absolute;
+  top: 50%;
+  right: 0.4rem;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border: 1px solid var(--hp-border);
+  border-radius: 7px;
+  background: var(--hp-bg-soft);
+  color: var(--hp-muted);
+  cursor: pointer;
+  transition: color 0.12s ease, background 0.12s ease, border-color 0.12s ease;
+}
+
+.installCopy:hover {
+  color: var(--hp-text);
+  background: var(--hp-bg);
+  border-color: var(--hp-border-strong, var(--hp-border));
 }
 
 .installPrompt {

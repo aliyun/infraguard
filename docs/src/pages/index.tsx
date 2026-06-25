@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { useState } from "react";
 import clsx from "clsx";
 import Link from "@docusaurus/Link";
 import Translate, { translate } from "@docusaurus/Translate";
@@ -169,6 +170,72 @@ function Terminal() {
   );
 }
 
+async function copyToClipboard(text: string): Promise<boolean> {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    // Fallback for non-secure contexts / older browsers.
+  }
+  try {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand("copy");
+    document.body.removeChild(ta);
+    return ok;
+  } catch {
+    return false;
+  }
+}
+
+function CopyButton({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false);
+  const label = copied
+    ? translate({ id: "homepage.copied", message: "Copied" })
+    : translate({ id: "homepage.copy", message: "Copy" });
+  return (
+    <button
+      type="button"
+      className={styles.installCopy}
+      aria-label={label}
+      title={label}
+      onClick={() => {
+        copyToClipboard(text).then((ok) => {
+          if (!ok) return;
+          setCopied(true);
+          setTimeout(() => setCopied(false), 1500);
+        });
+      }}
+    >
+      {copied ? (
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+      ) : (
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+        </svg>
+      )}
+    </button>
+  );
+}
+
+function InstallCmd({ cmd, copyText }: { cmd: ReactNode; copyText: string }) {
+  return (
+    <div className={styles.installCmdWrap}>
+      <code className={styles.installCmd}>
+        <span className={styles.installPrompt}>$</span> {cmd}
+      </code>
+      <CopyButton text={copyText} />
+    </div>
+  );
+}
+
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
   return (
@@ -220,18 +287,23 @@ function HomepageHeader() {
           </div>
 
           <div className={styles.installRow}>
-            <code className={styles.installCmd}>
-              <span className={styles.installPrompt}>$</span> brew tap
-              aliyun/infraguard https://github.com/aliyun/infraguard &amp;&amp;
-              brew install infraguard
-            </code>
+            <InstallCmd
+              cmd={
+                <>
+                  brew tap aliyun/infraguard
+                  https://github.com/aliyun/infraguard &amp;&amp; brew install
+                  infraguard
+                </>
+              }
+              copyText="brew tap aliyun/infraguard https://github.com/aliyun/infraguard && brew install infraguard"
+            />
             <span className={styles.installOr}>
               <Translate id="homepage.installOr">or</Translate>
             </span>
-            <code className={styles.installCmd}>
-              <span className={styles.installPrompt}>$</span> go install
-              github.com/aliyun/infraguard/cmd/infraguard@latest
-            </code>
+            <InstallCmd
+              cmd={<>go install github.com/aliyun/infraguard/cmd/infraguard@latest</>}
+              copyText="go install github.com/aliyun/infraguard/cmd/infraguard@latest"
+            />
           </div>
         </div>
 
