@@ -14,7 +14,7 @@ const config: Config = {
     v4: {
       removeLegacyPostBuildHeadAttribute: true, // Required for ssgWorkerThreads
     },
-    experimental_faster: {
+    faster: {
       swcJsLoader: true,
       swcJsMinimizer: true,
       swcHtmlMinimizer: true,
@@ -110,6 +110,7 @@ const config: Config = {
       require.resolve("@easyops-cn/docusaurus-search-local"),
       {
         hashed: true,
+        indexBlog: false,
         language: ["en", "zh", "es", "fr", "de", "ja", "pt"],
         highlightSearchTermsOnTargetPage: true,
         explicitSearchResultPath: true,
