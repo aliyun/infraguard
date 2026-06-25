@@ -10,6 +10,8 @@ on:
       - 'docs/**'
       - 'policies/**'
       - 'scripts/generate-policy-docs.go'
+      - 'cmd/infraguard-wasm/**'
+      - 'cmd/policy-dump/**'
 
 jobs:
   build:
@@ -32,6 +34,13 @@ jobs:
 
       - name: Generate policy documentation
         run: go run scripts/generate-policy-docs.go
+
+      - name: Build playground assets (WASM + rules)
+        run: |
+          mkdir -p docs/static/playground
+          GOOS=js GOARCH=wasm go build -o docs/static/playground/infraguard.wasm ./cmd/infraguard-wasm
+          cp "$(go env GOROOT)/lib/wasm/wasm_exec.js" docs/static/playground/wasm_exec.js
+          go run ./cmd/policy-dump -pack "" -out docs/static/playground/rules.json
 
       - name: Validate translations
         run: make validate-translations
