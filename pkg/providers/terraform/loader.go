@@ -5,6 +5,9 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/hashicorp/hcl/v2"
+	"github.com/hashicorp/hcl/v2/hclparse"
 )
 
 // Load parses, evaluates, and converts a Terraform directory (or single .tf file)
@@ -19,6 +22,32 @@ func Load(path string, inputVars map[string]interface{}) (map[string]interface{}
 	if diags.HasErrors() {
 		return nil, fmt.Errorf("HCL parse error: %s", diags.Error())
 	}
+
+	if inputVars == nil {
+		inputVars = make(map[string]interface{})
+	}
+
+	result, err := evaluate(parsed, inputVars)
+	if err != nil {
+		return nil, fmt.Errorf("evaluation error: %w", err)
+	}
+
+	return convertToOPAInput(result), nil
+}
+
+// LoadContent parses, evaluates, and converts a single in-memory Terraform file
+// into the OPA input format. It avoids the filesystem so it can run in wasm.
+func LoadContent(filename, content string, inputVars map[string]interface{}) (map[string]interface{}, error) {
+	if filename == "" {
+		filename = "main.tf"
+	}
+	parser := hclparse.NewParser()
+	f, diags := parser.ParseHCL([]byte(content), filename)
+	if diags.HasErrors() {
+		return nil, fmt.Errorf("HCL parse error: %s", diags.Error())
+	}
+
+	parsed := &ParsedConfig{Files: map[string]*hcl.File{filename: f}, Dir: "."}
 
 	if inputVars == nil {
 		inputVars = make(map[string]interface{})

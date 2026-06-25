@@ -28,7 +28,7 @@ doc-build: ## Build the documentation site (incl. wasm playground)
 	@mkdir -p docs/static/playground
 	GOOS=js GOARCH=wasm $(GOCMD) build -o docs/static/playground/infraguard.wasm ./cmd/infraguard-wasm
 	cp "$$($(GOCMD) env GOROOT)/lib/wasm/wasm_exec.js" docs/static/playground/wasm_exec.js
-	$(GOCMD) run ./cmd/policy-dump -pack quick-start-compliance-pack -iac ros -out docs/static/playground/rules.json
+	$(GOCMD) run ./cmd/policy-dump -pack quick-start-compliance-pack -out docs/static/playground/rules.json
 	cd docs && $(NPM) ci && $(NPM) run build
 
 doc-serve: doc-build ## Serve the documentation site locally
