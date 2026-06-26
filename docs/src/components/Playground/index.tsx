@@ -131,6 +131,39 @@ function loadScript(src: string): Promise<void> {
   })
 }
 
+// UI strings for every docs locale (en/zh/es/fr/de/ja/pt). Falls back to en.
+type Lang = 'en' | 'zh' | 'es' | 'fr' | 'de' | 'ja' | 'pt'
+const STRINGS: Record<string, Record<Lang, string>> = {
+  introA: {
+    en: 'Run compliance rules against an Alibaba Cloud ROS or Terraform template, right in your browser. For the full experience, run ',
+    zh: '在浏览器中对阿里云 ROS 或 Terraform 模板执行合规规则扫描。完整功能请运行 ',
+    es: 'Ejecuta reglas de cumplimiento sobre una plantilla ROS de Alibaba Cloud o Terraform, directamente en tu navegador. Para la experiencia completa, ejecuta ',
+    fr: "Exécutez des règles de conformité sur un modèle ROS d'Alibaba Cloud ou Terraform, directement dans votre navigateur. Pour l'expérience complète, lancez ",
+    de: 'Führen Sie Compliance-Regeln direkt im Browser gegen eine Alibaba-Cloud-ROS- oder Terraform-Vorlage aus. Für den vollen Funktionsumfang führen Sie ',
+    ja: 'ブラウザー上でアリババクラウド ROS または Terraform テンプレートにコンプライアンスルールを実行します。すべての機能を試すには ',
+    pt: 'Execute regras de conformidade em um modelo ROS da Alibaba Cloud ou Terraform, diretamente no seu navegador. Para a experiência completa, execute ',
+  },
+  introB: {
+    en: ' to try it out.',
+    zh: ' 来体验。',
+    es: ' para probarlo.',
+    fr: " pour l'essayer.",
+    de: ' aus, um es auszuprobieren.',
+    ja: ' を実行してください。',
+    pt: ' para experimentar.',
+  },
+  allPolicies: { en: 'All policies', zh: '全部策略', es: 'Todas las políticas', fr: 'Toutes les politiques', de: 'Alle Richtlinien', ja: 'すべてのポリシー', pt: 'Todas as políticas' },
+  search: { en: 'Search', zh: '搜索', es: 'Buscar', fr: 'Rechercher', de: 'Suchen', ja: '検索', pt: 'Pesquisar' },
+  selected: { en: 'selected', zh: '已选', es: 'seleccionadas', fr: 'sélectionnées', de: 'ausgewählt', ja: '選択済み', pt: 'selecionadas' },
+  scan: { en: 'Scan', zh: '扫描', es: 'Analizar', fr: 'Analyser', de: 'Scannen', ja: 'スキャン', pt: 'Verificar' },
+  scanning: { en: 'Scanning…', zh: '扫描中…', es: 'Analizando…', fr: 'Analyse…', de: 'Scannen…', ja: 'スキャン中…', pt: 'Verificando…' },
+  loading: { en: 'Loading…', zh: '加载中…', es: 'Cargando…', fr: 'Chargement…', de: 'Laden…', ja: '読み込み中…', pt: 'Carregando…' },
+  all: { en: 'All', zh: '全部', es: 'Todas', fr: 'Tout', de: 'Alle', ja: 'すべて', pt: 'Todas' },
+  noViolations: { en: 'No violations found.', zh: '未发现违规。', es: 'No se encontraron infracciones.', fr: 'Aucune violation trouvée.', de: 'Keine Verstöße gefunden.', ja: '違反は見つかりませんでした。', pt: 'Nenhuma violação encontrada.' },
+  runToSee: { en: 'Run a scan to see results.', zh: '点击扫描查看结果。', es: 'Ejecuta un análisis para ver los resultados.', fr: 'Lancez une analyse pour voir les résultats.', de: 'Führen Sie einen Scan aus, um Ergebnisse zu sehen.', ja: 'スキャンを実行して結果を表示します。', pt: 'Execute uma verificação para ver os resultados.' },
+  line: { en: 'line', zh: '行', es: 'línea', fr: 'ligne', de: 'Zeile', ja: '行', pt: 'linha' },
+}
+
 export default function Playground() {
   const { i18n, siteConfig } = useDocusaurusContext()
   // Static assets are served from the site root (e.g. /infraguard/playground/...).
@@ -145,10 +178,10 @@ export default function Playground() {
   const wasmUrl = `${base}playground/infraguard.wasm`
   const execUrl = `${base}playground/wasm_exec.js`
   const rulesUrl = `${base}playground/rules.json`
-  const zh = i18n.currentLocale.startsWith('zh')
-  const t = (en: string, zhs: string) => (zh ? zhs : en)
+  const lang = (loc.split('-')[0] as Lang) || 'en'
+  const t = (key: string) => STRINGS[key]?.[lang] ?? STRINGS[key]?.en ?? key
   const pick = (n: Record<string, string>, fallback: string) =>
-    (zh && n.zh) || n.en || Object.values(n)[0] || fallback
+    n[lang] || n.en || Object.values(n)[0] || fallback
 
   const [status, setStatus] = useState('loading')
   const [iac, setIac] = useState('ros')
@@ -197,7 +230,7 @@ export default function Playground() {
       .filter((r) => r.iac_types.includes(iac))
       .map((r) => ({ value: r.id, label: pick(r.name, r.id), sub: r.id }))
     return [...packs, ...rules]
-  }, [iac, status, zh])
+  }, [iac, status, lang])
 
   function changeIac(v: string) {
     setIac(v)
@@ -239,7 +272,7 @@ export default function Playground() {
     setFilter('')
     try {
       const payload = JSON.stringify({ lib_modules: d.lib_modules, modules: resolveModules() })
-      const res = window.infraguardScan(content, payload, zh ? 'zh' : 'en', iac)
+      const res = window.infraguardScan(content, payload, loc, iac)
       const parsed = JSON.parse(res) as { violations?: Violation[]; error?: string }
       setResult({ violations: parsed.violations ?? [], error: parsed.error })
     } catch (e) {
@@ -270,22 +303,19 @@ export default function Playground() {
   }, [sorted])
 
   const scanText = loading
-    ? t('Scanning…', '扫描中…')
+    ? t('scanning')
     : status === 'ready'
-      ? t('Scan', '扫描')
+      ? t('scan')
       : status === 'loading'
-        ? t('Loading…', '加载中…')
+        ? t('loading')
         : status
 
   return (
     <div className={styles.scope}>
       <p className={styles.intro}>
-        {t(
-          'Run compliance rules against an Alibaba Cloud ROS or Terraform template, right in your browser. For the full experience, run ',
-          '在浏览器中对阿里云 ROS 或 Terraform 模板执行合规规则扫描。完整功能请运行 ',
-        )}
+        {t('introA')}
         <code>infraguard server start</code>
-        {t(' to try it out.', ' 来体验。')}
+        {t('introB')}
       </p>
 
       <div className="row">
@@ -310,9 +340,9 @@ export default function Playground() {
                 options={options}
                 selected={selected}
                 onChange={setSelected}
-                allLabel={t('All policies', '全部策略')}
-                searchPlaceholder={t('Search', '搜索')}
-                selectedLabel={t('selected', '已选')}
+                allLabel={t('allPolicies')}
+                searchPlaceholder={t('search')}
+                selectedLabel={t('selected')}
               />
             </div>
             <button onClick={scan} disabled={status !== 'ready' || loading}>
@@ -345,7 +375,7 @@ export default function Playground() {
                   className={`sevchip ${!filter ? 'active' : ''}`}
                   onClick={() => setFilter('')}
                 >
-                  <span className="badge muted">{t('All', '全部')}</span> {sorted.length}
+                  <span className="badge muted">{t('all')}</span> {sorted.length}
                 </button>
                 {(['high', 'medium', 'low'] as const).map((s) => (
                   <button
@@ -359,13 +389,13 @@ export default function Playground() {
                 ))}
               </div>
               {visible.length === 0 ? (
-                <div className="empty">✓ {t('No violations found.', '未发现违规。')}</div>
+                <div className="empty">✓ {t('noViolations')}</div>
               ) : (
-                visible.map((v, i) => <ViolationCard key={i} v={v} content={content} lineLabel={t('line', '行')} />)
+                visible.map((v, i) => <ViolationCard key={i} v={v} content={content} lineLabel={t('line')} />)
               )}
             </>
           )}
-          {!result && <div className="empty">{t('Run a scan to see results.', '点击扫描查看结果。')}</div>}
+          {!result && <div className="empty">{t('runToSee')}</div>}
         </div>
       </div>
     </div>
