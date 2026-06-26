@@ -1,6 +1,6 @@
 import { Link, NavLink, Navigate, Route, Routes } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { useI18n } from './i18n'
+import { useI18n, LANGS, type Lang } from './i18n'
 import { api } from './api'
 import { Select } from './components/ui'
 import Playground from './pages/Playground'
@@ -47,12 +47,10 @@ export default function App() {
         <div className="topbar-actions">
           <Select
             value={lang}
-            onChange={(v) => setLang(v as 'en' | 'zh')}
-            options={[
-              { value: 'en', label: 'English' },
-              { value: 'zh', label: '中文' },
-            ]}
-            width={110}
+            onChange={(v) => setLang(v as Lang)}
+            options={LANGS}
+            width={120}
+            searchable
           />
           <button className="icon-btn" onClick={toggleTheme} title="Toggle theme" aria-label="Toggle theme">
             {isDark ? '☀' : '☾'}
