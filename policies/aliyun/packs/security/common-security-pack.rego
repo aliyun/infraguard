@@ -1,0 +1,57 @@
+package infraguard.packs.aliyun.security
+
+import rego.v1
+
+pack_meta := {
+	"id": "security",
+	"name": {
+		"en": "Security Scenario Pack",
+		"zh": "安全性场景合规包",
+		"ja": "セキュリティシナリオパック",
+		"de": "Sicherheitsszenario-Paket",
+		"es": "Paquete de escenarios de seguridad",
+		"fr": "Pack de scenarios de securite",
+		"pt": "Pacote de cenarios de seguranca"
+	},
+	"description": {
+		"en": "Scenario-oriented InfraGuard policies for Security, covering identity, network exposure, data protection, audit logging, supply chain, and key management.",
+		"zh": "面向安全性场景的 InfraGuard 策略组合，覆盖身份、网络公网暴露、数据保护、审计日志、供应链和密钥管理。",
+		"ja": "セキュリティ向けのシナリオ指向 InfraGuard ポリシーで、ID、ネットワーク公開、データ保護、監査ログ、サプライチェーン、鍵管理をカバーします。",
+		"de": "Szenarioorientierte InfraGuard-Richtlinien fuer Sicherheit, mit Identitaet, Netzwerkexposition, Datenschutz, Audit-Logging, Lieferkette und Schluesselverwaltung.",
+		"es": "Politicas de InfraGuard orientadas a escenarios de seguridad, que cubren identidad, exposicion de red, proteccion de datos, registros de auditoria, cadena de suministro y gestion de claves.",
+		"fr": "Politiques InfraGuard orientees scenarios pour la securite, couvrant l'identite, l'exposition reseau, la protection des donnees, les journaux d'audit, la chaine d'approvisionnement et la gestion des cles.",
+		"pt": "Politicas InfraGuard orientadas a cenarios de seguranca, cobrindo identidade, exposicao de rede, protecao de dados, logs de auditoria, cadeia de suprimentos e gerenciamento de chaves."
+	},
+	"rules": [
+		"actiontrail-trail-intact-enabled",
+		"api-gateway-api-auth-required",
+		"api-gateway-api-internet-request-https",
+		"cr-repository-image-scanning-enabled",
+		"cr-repository-type-private",
+		"ecs-running-instance-no-public-ip",
+		"ecs-security-group-not-internet-cidr-access",
+		"ecs-security-group-risky-ports-check-with-protocol",
+		"fc-service-internet-access-disable",
+		"kms-key-rotation-enabled",
+		"kms-secret-rotation-enabled",
+		"oss-bucket-logging-enabled",
+		"oss-bucket-only-https-enabled",
+		"oss-bucket-public-read-prohibited",
+		"oss-bucket-public-write-prohibited",
+		"oss-bucket-server-side-encryption-enabled",
+		"ram-password-policy-check",
+		"ram-policy-no-statements-with-admin-access-check",
+		"ram-user-mfa-check",
+		"rds-instance-enabled-ssl",
+		"rds-instance-enabled-tde-disk-encryption",
+		"rds-public-connection-and-any-ip-access-check",
+		"redis-instance-enabled-ssl",
+		"redis-instance-no-public-ip",
+		"security-ecs-disk-encrypted",
+		"security-ecs-instance-security-group-required",
+		"security-ecs-instance-vpc-required",
+		"security-rds-instance-vpc-required",
+		"security-redis-instance-vpc-required",
+		"vpc-flow-logs-enabled"
+	]
+}

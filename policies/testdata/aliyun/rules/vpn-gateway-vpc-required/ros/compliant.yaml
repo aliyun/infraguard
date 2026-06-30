@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template for vpn-gateway-vpc-required
+Resources:
+  TargetResource:
+    Type: ALIYUN::VPC::VpnGateway
+    Properties:
+      VpcId: vpc-12345

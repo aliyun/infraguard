@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template for slb-instance-master-zone-required
+Resources:
+  TargetResource:
+    Type: ALIYUN::SLB::LoadBalancer
+    Properties:
+      MasterZoneId: cn-hangzhou-g

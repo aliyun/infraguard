@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template for rds-instance-deletion-protection-enabled
+Resources:
+  TargetResource:
+    Type: ALIYUN::RDS::DBInstance
+    Properties:
+      DeletionProtection: false

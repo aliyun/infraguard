@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template for eip-bandwidth-required
+Resources:
+  TargetResource:
+    Type: ALIYUN::VPC::EIP
+    Properties:
+      Bandwidth: 2

@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template for slb-address-type-intranet
+Resources:
+  TargetResource:
+    Type: ALIYUN::SLB::LoadBalancer
+    Properties:
+      AddressType: internet

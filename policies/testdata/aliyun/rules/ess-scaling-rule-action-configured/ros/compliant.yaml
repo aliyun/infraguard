@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template for ess-scaling-rule-action-configured
+Resources:
+  TargetResource:
+    Type: ALIYUN::ESS::ScalingRule
+    Properties:
+      AdjustmentType: QuantityChangeInCapacity

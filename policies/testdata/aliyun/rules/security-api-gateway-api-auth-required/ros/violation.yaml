@@ -1,0 +1,6 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template for security-api-gateway-api-auth-required
+Resources:
+  TargetResource:
+    Type: ALIYUN::ApiGateway::Api
+    Properties: {}

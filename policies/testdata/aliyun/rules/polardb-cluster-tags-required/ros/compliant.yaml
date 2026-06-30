@@ -1,0 +1,10 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template for polardb-cluster-tags-required
+Resources:
+  TargetResource:
+    Type: ALIYUN::POLARDB::DBCluster
+    Properties:
+      Tags:
+        -
+            Key: env
+            Value: prod

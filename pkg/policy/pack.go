@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
 
@@ -90,7 +91,7 @@ func parsePackMeta(value interface{}, filePath, packageName, baseDir string) (*m
 		// If ID is specified but doesn't have prefix, add it
 		if !strings.HasPrefix(packID, "pack:") {
 			name := packID
-			packID = GeneratePackID(filePath, baseDir, name)
+			packID = providerScopedPrefix(filePath, baseDir, "pack") + name
 		}
 	}
 
@@ -101,11 +102,9 @@ func parsePackMeta(value interface{}, filePath, packageName, baseDir string) (*m
 			// Already has prefix
 			ruleIDs = append(ruleIDs, ruleRef)
 		} else {
-			// Generate prefix based on pack's location
-			// Assume rules are in the same provider directory
-			prefix := GenerateIDPrefix(filePath, baseDir, "rule")
-			// Remove "pack:" and add "rule:"
-			prefix = strings.Replace(prefix, "pack:", "rule:", 1)
+			// Generate rule IDs in the provider namespace. Pack subdirectories
+			// are organizational categories, not rule ID namespaces.
+			prefix := providerScopedPrefix(filePath, baseDir, "rule")
 			ruleIDs = append(ruleIDs, prefix+ruleRef)
 		}
 	}
@@ -120,6 +119,12 @@ func parsePackMeta(value interface{}, filePath, packageName, baseDir string) (*m
 	}
 
 	return pack, nil
+}
+
+func providerScopedPrefix(filePath, baseDir, idType string) string {
+	baseName := path.Base(filepath.ToSlash(filePath))
+	providerScopedFilePath := path.Join(filepath.ToSlash(baseDir), baseName)
+	return GenerateIDPrefix(providerScopedFilePath, baseDir, idType)
 }
 
 // DiscoverPacks finds all packs in a directory.

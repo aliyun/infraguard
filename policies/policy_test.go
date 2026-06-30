@@ -123,7 +123,46 @@ func buildEvalOpts(loader *policy.Loader, ruleID, iacType, ruleFile string, libM
 
 // getPackFile returns the path to the pack file based on provider and pack name
 func getPackFile(provider, packName string) string {
-	return filepath.Join(policiesDir, provider, "packs", packName+".rego")
+	packsDir := filepath.Join(policiesDir, provider, "packs")
+	directPath := filepath.Join(packsDir, packName+".rego")
+	if _, err := os.Stat(directPath); err == nil {
+		return directPath
+	}
+
+	var match string
+	_ = filepath.WalkDir(packsDir, func(path string, d fs.DirEntry, err error) error {
+		if err != nil || d.IsDir() {
+			return nil
+		}
+		if filepath.Base(path) == packName+".rego" {
+			match = path
+			return filepath.SkipAll
+		}
+		return nil
+	})
+	if match != "" {
+		return match
+	}
+
+	_ = filepath.WalkDir(packsDir, func(path string, d fs.DirEntry, err error) error {
+		if err != nil || d.IsDir() || !strings.HasSuffix(path, ".rego") {
+			return nil
+		}
+		content, err := os.ReadFile(path)
+		if err != nil {
+			return nil
+		}
+		if strings.Contains(string(content), `"id": "`+packName+`"`) {
+			match = path
+			return filepath.SkipAll
+		}
+		return nil
+	})
+	if match != "" {
+		return match
+	}
+
+	return directPath
 }
 
 func containsIaCType(types []string, target string) bool {

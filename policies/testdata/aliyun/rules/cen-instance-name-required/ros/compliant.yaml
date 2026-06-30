@@ -1,0 +1,7 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Compliant template for cen-instance-name-required
+Resources:
+  TargetResource:
+    Type: ALIYUN::CEN::CenInstance
+    Properties:
+      Name: resource-name

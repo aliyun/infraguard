@@ -1,0 +1,6 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Violation template for slb-instance-master-zone-required
+Resources:
+  TargetResource:
+    Type: ALIYUN::SLB::LoadBalancer
+    Properties: {}
