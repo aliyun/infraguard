@@ -6,11 +6,21 @@ pack_meta := {
 	"id": "security",
 	"name": {
 		"en": "Security Scenario Pack",
-		"zh": "安全性场景合规包"
+		"zh": "安全性场景合规包",
+		"ja": "セキュリティシナリオパック",
+		"de": "Sicherheitsszenario-Paket",
+		"es": "Paquete de escenarios de seguridad",
+		"fr": "Pack de scenarios de securite",
+		"pt": "Pacote de cenarios de seguranca"
 	},
 	"description": {
 		"en": "Scenario-oriented InfraGuard policies for Security, covering identity, network exposure, data protection, audit logging, supply chain, and key management.",
-		"zh": "面向安全性场景的 InfraGuard 策略组合，覆盖身份、网络公网暴露、数据保护、审计日志、供应链和密钥管理。"
+		"zh": "面向安全性场景的 InfraGuard 策略组合，覆盖身份、网络公网暴露、数据保护、审计日志、供应链和密钥管理。",
+		"ja": "セキュリティ向けのシナリオ指向 InfraGuard ポリシーで、ID、ネットワーク公開、データ保護、監査ログ、サプライチェーン、鍵管理をカバーします。",
+		"de": "Szenarioorientierte InfraGuard-Richtlinien fuer Sicherheit, mit Identitaet, Netzwerkexposition, Datenschutz, Audit-Logging, Lieferkette und Schluesselverwaltung.",
+		"es": "Politicas de InfraGuard orientadas a escenarios de seguridad, que cubren identidad, exposicion de red, proteccion de datos, registros de auditoria, cadena de suministro y gestion de claves.",
+		"fr": "Politiques InfraGuard orientees scenarios pour la securite, couvrant l'identite, l'exposition reseau, la protection des donnees, les journaux d'audit, la chaine d'approvisionnement et la gestion des cles.",
+		"pt": "Politicas InfraGuard orientadas a cenarios de seguranca, cobrindo identidade, exposicao de rede, protecao de dados, logs de auditoria, cadeia de suprimentos e gerenciamento de chaves."
 	},
 	"rules": [
 		"actiontrail-trail-intact-enabled",
