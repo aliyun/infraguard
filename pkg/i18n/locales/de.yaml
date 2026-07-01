@@ -88,6 +88,8 @@ policy_list:
     Zeigt Regel/Pack-ID, Name und zusätzliche Informationen.
   rules: "Regeln"
   packs: "Packs"
+  type_flag: "Listentyp: all, pack, rule oder scenario-packs"
+  invalid_type: "Ungültiger --type-Wert %q: muss einer von %s sein."
 
 # Policy validate-Befehl
 policy_validate:

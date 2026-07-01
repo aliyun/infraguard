@@ -23,9 +23,35 @@ var policyCmd = &cobra.Command{
 }
 
 var (
-	policyRepo    string
-	policyVersion string
+	policyRepo     string
+	policyVersion  string
+	policyListType string
 )
+
+const (
+	policyListTypeAll           = "all"
+	policyListTypePack          = "pack"
+	policyListTypeRule          = "rule"
+	policyListTypeScenarioPacks = "scenario-packs"
+)
+
+var validPolicyListTypes = []string{
+	policyListTypeAll,
+	policyListTypePack,
+	policyListTypeRule,
+	policyListTypeScenarioPacks,
+}
+
+var scenarioPackIDs = map[string]struct{}{
+	"pack:aliyun:best-practice":        {},
+	"pack:aliyun:compliance":           {},
+	"pack:aliyun:cost-optimization":    {},
+	"pack:aliyun:elasticity":           {},
+	"pack:aliyun:high-availability":    {},
+	"pack:aliyun:network-architecture": {},
+	"pack:aliyun:operations":           {},
+	"pack:aliyun:security":             {},
+}
 
 var policyUpdateCmd = &cobra.Command{
 	Use:   "update",
@@ -107,6 +133,9 @@ func init() {
 	policyUpdateCmd.Flags().StringVar(&policyVersion, "version", "main",
 		"Git branch, tag, or commit to download")
 
+	policyListCmd.Flags().StringVar(&policyListType, "type", policyListTypeAll,
+		"List type: all, pack, rule, or scenario-packs")
+
 	// Format command flags
 	policyFormatCmd.Flags().BoolVarP(&formatWrite, "write", "w", false,
 		"Write formatted output to files")
@@ -177,6 +206,10 @@ func runPolicyGet(cmd *cobra.Command, args []string) error {
 func runPolicyList(cmd *cobra.Command, args []string) error {
 	msg := i18n.Msg()
 	lang := i18n.GetLanguage()
+	listType := normalizePolicyListType(policyListType)
+	if !isValidPolicyListType(listType) {
+		return fmt.Errorf(policyListInvalidTypeMessage(msg), policyListType, strings.Join(validPolicyListTypes, ", "))
+	}
 
 	// Load policies with fallback
 	loader, err := policy.LoadWithFallback()
@@ -186,6 +219,16 @@ func runPolicyList(cmd *cobra.Command, args []string) error {
 
 	rules := loader.GetAllRules()
 	packs := loader.GetAllPacks()
+
+	switch listType {
+	case policyListTypePack:
+		rules = nil
+	case policyListTypeRule:
+		packs = nil
+	case policyListTypeScenarioPacks:
+		packs = filterScenarioPacks(packs)
+		rules = nil
+	}
 
 	if len(rules) == 0 && len(packs) == 0 {
 		fmt.Println(msg.PolicyGet.NoRulesLoaded)
@@ -249,6 +292,40 @@ func runPolicyList(cmd *cobra.Command, args []string) error {
 
 	fmt.Println()
 	return nil
+}
+
+func normalizePolicyListType(value string) string {
+	value = strings.TrimSpace(strings.ToLower(value))
+	if value == "" {
+		return policyListTypeAll
+	}
+	return value
+}
+
+func isValidPolicyListType(value string) bool {
+	for _, valid := range validPolicyListTypes {
+		if value == valid {
+			return true
+		}
+	}
+	return false
+}
+
+func policyListInvalidTypeMessage(msg *i18n.Messages) string {
+	if msg.PolicyList.InvalidType != "" {
+		return msg.PolicyList.InvalidType
+	}
+	return `invalid --type %q: must be one of %s.`
+}
+
+func filterScenarioPacks(packs []*models.Pack) []*models.Pack {
+	filtered := make([]*models.Pack, 0, len(scenarioPackIDs))
+	for _, pack := range packs {
+		if _, ok := scenarioPackIDs[pack.ID]; ok {
+			filtered = append(filtered, pack)
+		}
+	}
+	return filtered
 }
 
 func printRuleDetails(rule *models.Rule, lang string, msg *i18n.Messages) {

@@ -87,6 +87,8 @@ policy_list:
     显示规则/合规包的 ID、名称和其他信息。
   rules: "规则"
   packs: "合规包"
+  type_flag: "列表类型：all、pack、rule 或 scenario-packs"
+  invalid_type: "无效的 --type %q：必须是以下值之一：%s。"
 
 # Policy validate command
 policy_validate:
@@ -659,4 +661,3 @@ waiver:
     invalid_expires: "非法的过期日期 %q（应为 YYYY-MM-DD）"
     expired: "豁免已于 %s 过期"
     permanent: "永久豁免（未设置过期时间）"
-

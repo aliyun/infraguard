@@ -2,10 +2,14 @@ package cmd
 
 import (
 	"bytes"
+	"io"
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
 
+	"github.com/aliyun/infraguard/pkg/i18n"
+	"github.com/fatih/color"
 	. "github.com/smartystreets/goconvey/convey"
 )
 
@@ -17,6 +21,66 @@ func TestPolicyCommand(t *testing.T) {
 				So(policyListCmd.Use, ShouldEqual, "list")
 				// Short description is set dynamically by i18n, may be empty during test init
 				So(policyListCmd.RunE, ShouldNotBeNil)
+			})
+		})
+
+		Convey("When executing policy list with type filters", func() {
+			i18n.SetLanguage("en")
+			updateCommandDescriptions()
+			globalLang = ""
+			t.Setenv("INFRAGUARD_POLICY_DIR", t.TempDir())
+			t.Setenv("INFRAGUARD_WORKSPACE_POLICY_DIR", repoPoliciesDir(t))
+
+			Convey("With --type pack", func() {
+				output, err := executeRootCaptureStdout("policy", "list", "--type", "pack")
+
+				Convey("It should only print packs", func() {
+					So(err, ShouldBeNil)
+					So(output, ShouldContainSubstring, "Packs (")
+					So(output, ShouldNotContainSubstring, "Rules (")
+					So(output, ShouldContainSubstring, "pack:aliyun:security")
+				})
+			})
+
+			Convey("With --type rule", func() {
+				output, err := executeRootCaptureStdout("policy", "list", "--type", "rule")
+
+				Convey("It should only print rules", func() {
+					So(err, ShouldBeNil)
+					So(output, ShouldContainSubstring, "Rules (")
+					So(output, ShouldNotContainSubstring, "Packs (")
+					So(output, ShouldContainSubstring, "rule:aliyun:")
+				})
+			})
+
+			Convey("With --type scenario-packs", func() {
+				output, err := executeRootCaptureStdout("policy", "list", "--type", "scenario-packs")
+
+				Convey("It should only print the 8 top-level scenario packs", func() {
+					So(err, ShouldBeNil)
+					So(output, ShouldContainSubstring, "Packs (8)")
+					So(strings.Count(output, "pack:aliyun:"), ShouldEqual, 8)
+					So(output, ShouldContainSubstring, "pack:aliyun:best-practice")
+					So(output, ShouldContainSubstring, "pack:aliyun:compliance")
+					So(output, ShouldContainSubstring, "pack:aliyun:cost-optimization")
+					So(output, ShouldContainSubstring, "pack:aliyun:elasticity")
+					So(output, ShouldContainSubstring, "pack:aliyun:high-availability")
+					So(output, ShouldContainSubstring, "pack:aliyun:network-architecture")
+					So(output, ShouldContainSubstring, "pack:aliyun:operations")
+					So(output, ShouldContainSubstring, "pack:aliyun:security")
+					So(output, ShouldNotContainSubstring, "pack:aliyun:security-group-best-practice")
+					So(output, ShouldNotContainSubstring, "Rules (")
+				})
+			})
+
+			Convey("With an invalid --type value", func() {
+				_, err := executeRootCaptureStdout("policy", "list", "--type", "invalid")
+
+				Convey("It should return a clear validation error", func() {
+					So(err, ShouldNotBeNil)
+					So(err.Error(), ShouldContainSubstring, `invalid --type "invalid"`)
+					So(err.Error(), ShouldContainSubstring, "all, pack, rule, scenario-packs")
+				})
 			})
 		})
 
@@ -153,4 +217,51 @@ func TestPolicyCommand(t *testing.T) {
 			})
 		})
 	})
+}
+
+func repoPoliciesDir(t *testing.T) string {
+	t.Helper()
+
+	policiesDir, err := filepath.Abs(filepath.Join("..", "..", "..", "policies"))
+	if err != nil {
+		t.Fatalf("resolve policies dir: %v", err)
+	}
+	return policiesDir
+}
+
+func executeRootCaptureStdout(args ...string) (string, error) {
+	oldStdout := os.Stdout
+	oldColorOutput := color.Output
+	r, w, err := os.Pipe()
+	if err != nil {
+		return "", err
+	}
+
+	var buf bytes.Buffer
+	done := make(chan error, 1)
+	go func() {
+		_, copyErr := io.Copy(&buf, r)
+		done <- copyErr
+	}()
+
+	os.Stdout = w
+	color.Output = w
+	rootCmd.SetOutput(w)
+	rootCmd.SetErr(w)
+	rootCmd.SetArgs(args)
+	policyListType = policyListTypeAll
+
+	execErr := rootCmd.Execute()
+	_ = w.Close()
+	os.Stdout = oldStdout
+	color.Output = oldColorOutput
+	rootCmd.SetOutput(oldStdout)
+	rootCmd.SetErr(os.Stderr)
+
+	copyErr := <-done
+	_ = r.Close()
+	if copyErr != nil {
+		return buf.String(), copyErr
+	}
+	return buf.String(), execErr
 }

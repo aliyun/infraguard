@@ -86,10 +86,12 @@ type Messages struct {
 
 	// Policy list command
 	PolicyList struct {
-		Short string `yaml:"short"`
-		Long  string `yaml:"long"`
-		Rules string `yaml:"rules"`
-		Packs string `yaml:"packs"`
+		Short       string `yaml:"short"`
+		Long        string `yaml:"long"`
+		Rules       string `yaml:"rules"`
+		Packs       string `yaml:"packs"`
+		TypeFlag    string `yaml:"type_flag"`
+		InvalidType string `yaml:"invalid_type"`
 	} `yaml:"policy_list"`
 
 	// Policy validate command

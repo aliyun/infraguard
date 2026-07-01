@@ -15,6 +15,21 @@ List all available policies:
 infraguard policy list
 ```
 
+Filter the listing by policy type:
+```bash
+infraguard policy list --type rule
+infraguard policy list --type pack
+infraguard policy list --type scenario-packs
+```
+
+`--type scenario-packs` shows the eight top-level Alibaba Cloud scenario packs:
+`best-practice`, `compliance`, `cost-optimization`, `elasticity`, `high-availability`,
+`network-architecture`, `operations`, and `security`. Each top-level scenario pack is
+an explicit directory roll-up: its `pack_meta.rules` keeps the top-level pack's curated
+rules and adds the de-duplicated rules referenced by the other packs in the same
+`policies/aliyun/packs/<scenario>/` directory. The smaller packs remain available for
+targeted scans.
+
 ### get
 
 Get details of a specific policy:
@@ -107,4 +122,3 @@ infraguard policy clean -f           # Short flag
 Removes all policies from `~/.infraguard/policies/`. Does not affect embedded policies or workspace policies.
 
 For more details, see [Managing Policies](../user-guide/managing-policies).
-

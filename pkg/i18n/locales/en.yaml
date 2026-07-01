@@ -88,6 +88,8 @@ policy_list:
     Shows rule/pack ID, name, and additional info.
   rules: "Rules"
   packs: "Packs"
+  type_flag: "List type: all, pack, rule, or scenario-packs"
+  invalid_type: "invalid --type %q: must be one of %s."
 
 # Policy validate command
 policy_validate:
@@ -660,4 +662,3 @@ waiver:
     invalid_expires: "invalid expires date %q (want YYYY-MM-DD)"
     expired: "waiver expired on %s"
     permanent: "permanent waiver (no expires date)"
-

@@ -14,13 +14,13 @@ pack_meta := {
 		"pt": "Pacote de elasticidade"
 	},
 	"description": {
-		"en": "Checks Alibaba Cloud ROS resources for autoscaling limits, placement choices, launch capacity, scaling actions, load balancer health checks, serverless concurrency, and MSE capacity.",
-		"zh": "检查阿里云 ROS 资源的自动伸缩边界、部署候选、启动容量、伸缩动作、负载均衡健康检查、Serverless 并发和 MSE 容量配置。",
-		"ja": "Alibaba Cloud ROS リソースの自動スケーリング制限、配置候補、起動容量、スケーリングアクション、ロードバランサーヘルスチェック、サーバーレス同時実行、MSE 容量を確認します。",
-		"de": "Prueft Alibaba Cloud ROS-Ressourcen auf Autoskalierungsgrenzen, Platzierungsoptionen, Startkapazitaet, Skalierungsaktionen, Load-Balancer-Health-Checks, serverlose Parallelitaet und MSE-Kapazitaet.",
-		"es": "Comprueba recursos ROS de Alibaba Cloud para limites de autoescalado, opciones de ubicacion, capacidad de arranque, acciones de escalado, verificaciones de salud de balanceadores, concurrencia serverless y capacidad MSE.",
-		"fr": "Verifie les ressources ROS Alibaba Cloud pour les limites d'autoscaling, les choix de placement, la capacite de lancement, les actions de scaling, les controles de sante des equilibreurs, la concurrence serverless et la capacite MSE.",
-		"pt": "Verifica recursos ROS da Alibaba Cloud quanto a limites de autoescalonamento, opcoes de posicionamento, capacidade de lancamento, acoes de escala, verificacoes de saude de balanceadores, concorrencia serverless e capacidade MSE."
+		"en": "Elasticity scenario roll-up for Alibaba Cloud ROS resources, covering autoscaling limits, placement choices, launch capacity, scaling actions, load balancer health checks, serverless concurrency, and MSE capacity.",
+		"zh": "阿里云弹性能力场景总包，覆盖 ROS 资源的自动伸缩边界、部署候选、启动容量、伸缩动作、负载均衡健康检查、Serverless 并发和 MSE 容量配置。",
+		"ja": "Alibaba Cloud ROS リソース向けの弾力性シナリオ roll-up で、自動スケーリング制限、配置候補、起動容量、スケーリングアクション、ロードバランサーヘルスチェック、サーバーレス同時実行、MSE 容量を確認します。",
+		"de": "Elastizitaets-Szenario-Roll-up fuer Alibaba Cloud ROS-Ressourcen mit Autoskalierungsgrenzen, Platzierungsoptionen, Startkapazitaet, Skalierungsaktionen, Load-Balancer-Health-Checks, serverloser Parallelitaet und MSE-Kapazitaet.",
+		"es": "Roll-up de escenario de elasticidad para recursos ROS de Alibaba Cloud, con limites de autoescalado, opciones de ubicacion, capacidad de arranque, acciones de escalado, health checks de balanceadores, concurrencia serverless y capacidad MSE.",
+		"fr": "Roll-up de scenario elasticite pour les ressources ROS Alibaba Cloud, couvrant limites d'autoscaling, choix de placement, capacite de lancement, actions de scaling, controles de sante des equilibreurs, concurrence serverless et capacite MSE.",
+		"pt": "Roll-up de cenario de elasticidade para recursos ROS do Alibaba Cloud, cobrindo limites de autoescalonamento, opcoes de posicionamento, capacidade de lancamento, acoes de escala, health checks de balanceadores, concorrencia serverless e capacidade MSE."
 	},
 	"rules": [
 		"ack-cluster-node-pool-autoscaling-enabled",
