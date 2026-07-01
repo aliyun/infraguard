@@ -27,6 +27,7 @@ infraguard scan <template> -p <policy>
 - `--lang <lang>`: Output language (`en` or `zh`)
 - `-m, --mode <mode>`: Scan mode (`static` for local analysis or `preview` for ROS PreviewStack API, default: `static`)
 - `-i, --input <value>`: Parameter values in `key=value`, JSON format, or file path (can be specified multiple times)
+- `--severity <level>`: Filter catalog rules by severity (`high`, `medium`, `low`); repeat the flag or use comma-separated values
 
 ## Supported Template Types
 
@@ -69,6 +70,14 @@ Scan with a pre-defined compliance pack:
 
 ```bash
 infraguard scan template.yaml -p pack:aliyun:mlps-level-3-pre-check-compliance-pack
+```
+
+Limit a pack scan to selected severity levels:
+
+```bash
+infraguard scan template.yaml \
+  -p pack:aliyun:quick-start-compliance-pack \
+  --severity high,medium
 ```
 
 ### 3. Wildcard Pattern Matching

@@ -288,6 +288,7 @@ scan:
   format_flag: "Ausgabeformat (table, json oder html)"
   output_flag: "Ausgabedateipfad (Standard: report.html für html-Format)"
   mode_flag: "Scan-Modus: 'static' für lokale Analyse oder 'preview' für ROS PreviewStack API (Standard: static)"
+  severity_flag: "Katalogregeln nach Schweregrad filtern: high, medium oder low (mehrfach oder kommagetrennt)"
   report_written: "Bericht geschrieben nach %s"
   no_violations: "Keine Verstöße gefunden."
   total_violations: "Gesamt: %d Verstoß/Verstöße"
@@ -356,6 +357,9 @@ errors:
   invalid_format: "ungültiges Format %q: muss eines sein von table, json, html."
   invalid_lang: "ungültige Sprache %q: muss eine von en, zh, es, fr, de, ja, pt sein."
   invalid_mode: "ungültiger Modus %q: muss static oder preview sein."
+  invalid_severity_filter: "ungültiger Schweregrad %q: verwende high, medium oder low."
+  no_rules_match_severity_filter: "keine Regeln entsprechen dem Schweregradfilter: %s."
+  severity_filter_unsupported: "Schweregradfilter werden nur für Katalog-Regel-IDs, Regel-Wildcards und Pack-IDs unterstützt."
   
   # Sprach-Tag-Validierungsfehler
   invalid_lang_tag_separator: "ungültiges Sprach-Tag-Format: %s (verwenden Sie '-' als Trennzeichen, z.B. 'zh-CN', 'en-US')"

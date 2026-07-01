@@ -288,6 +288,7 @@ scan:
   format_flag: "Output format (table, json, or html)"
   output_flag: "Output file path (default: report.html for html format)"
   mode_flag: "Scan mode: 'static' for local analysis or 'preview' for ROS PreviewStack API (default: static)"
+  severity_flag: "Filter catalog rules by severity: high, medium, or low (can be specified multiple times or comma-separated)"
   report_written: "Report written to %s"
   no_violations: "No violations found."
   total_violations: "Total: %d violation(s)"
@@ -356,6 +357,9 @@ errors:
   invalid_format: "invalid format %q: must be one of table, json, html."
   invalid_lang: "invalid language %q: must be one of en, zh, es, fr, de, ja, pt."
   invalid_mode: "invalid mode %q: must be static or preview."
+  invalid_severity_filter: "invalid severity %q: use high, medium, or low."
+  no_rules_match_severity_filter: "no rules match severity filter: %s."
+  severity_filter_unsupported: "severity filtering is only supported for catalog rule IDs, wildcard rules, and pack IDs."
   
   # Language tag validation errors
   invalid_lang_tag_separator: "invalid language tag format: %s (use '-' as separator, e.g., 'zh-CN', 'en-US')"
