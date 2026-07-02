@@ -3,7 +3,7 @@ name: Release CLI
 on:
   push:
     tags:
-      - 'cli/v*'
+      - 'v*'
 
 permissions:
   contents: write
@@ -42,33 +42,49 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.24'
+          go-version: '1.26'
 
       - name: Extract version
+        shell: bash
         run: |
-          VERSION=${GITHUB_REF#refs/tags/cli/}
+          RAW_VERSION=${GITHUB_REF_NAME}
+          if [[ ! "$RAW_VERSION" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]; then
+            echo "Invalid CLI release tag: $RAW_VERSION" >&2
+            exit 1
+          fi
+          VERSION=${RAW_VERSION#v}
+          SOURCE_VERSION=$(sed -nE 's/^var Version = "([^"]+)"/\1/p' cmd/infraguard/cmd/version.go)
+          if [[ "$SOURCE_VERSION" != "$VERSION" ]]; then
+            echo "Version mismatch: tag ${VERSION}, cmd/infraguard/cmd/version.go ${SOURCE_VERSION}" >&2
+            exit 1
+          fi
           echo "VERSION=${VERSION}" >> $GITHUB_ENV
+          echo "ASSET_VERSION=${RAW_VERSION}" >> $GITHUB_ENV
 
       - name: Build binary
         env:
           GOOS: ${{ matrix.goos }}
           GOARCH: ${{ matrix.goarch }}
           CGO_ENABLED: 0
+        shell: bash
         run: |
-          BINARY_NAME=infraguard-${{ env.VERSION }}-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.suffix }}
+          rm -rf dist
+          mkdir -p dist
+          BINARY_NAME=infraguard-${{ env.ASSET_VERSION }}-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.suffix }}
           go build -ldflags "-s -w -X github.com/aliyun/infraguard/cmd/infraguard/cmd.Version=${{ env.VERSION }}" \
-            -o dist/${BINARY_NAME} ./cmd/infraguard
+            -o "dist/${BINARY_NAME}" ./cmd/infraguard
 
-      - name: Create checksum
+      - name: Smoke test linux amd64 binary
+        if: matrix.goos == 'linux' && matrix.goarch == 'amd64'
+        shell: bash
         run: |
-          cd dist
-          sha256sum * > checksums.txt
+          dist/infraguard-${{ env.ASSET_VERSION }}-linux-amd64 version | grep "${{ env.VERSION }}"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: binary-${{ matrix.goos }}-${{ matrix.goarch }}
-          path: dist/
+          path: dist/infraguard-*
 
   release:
     name: Create Release
@@ -79,9 +95,21 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Extract version
+        shell: bash
         run: |
-          VERSION=${GITHUB_REF#refs/tags/cli/}
+          RAW_VERSION=${GITHUB_REF_NAME}
+          if [[ ! "$RAW_VERSION" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]; then
+            echo "Invalid CLI release tag: $RAW_VERSION" >&2
+            exit 1
+          fi
+          VERSION=${RAW_VERSION#v}
+          SOURCE_VERSION=$(sed -nE 's/^var Version = "([^"]+)"/\1/p' cmd/infraguard/cmd/version.go)
+          if [[ "$SOURCE_VERSION" != "$VERSION" ]]; then
+            echo "Version mismatch: tag ${VERSION}, cmd/infraguard/cmd/version.go ${SOURCE_VERSION}" >&2
+            exit 1
+          fi
           echo "VERSION=${VERSION}" >> $GITHUB_ENV
+          echo "ASSET_VERSION=${RAW_VERSION}" >> $GITHUB_ENV
 
       - name: Download all artifacts
         uses: actions/download-artifact@v4
@@ -90,20 +118,24 @@ jobs:
           pattern: binary-*
           merge-multiple: true
 
-      - name: Create combined checksums
+      - name: Create release assets
+        shell: bash
         run: |
-          cd artifacts
-          rm -f checksums.txt
-          cd ..
-          sha256sum artifacts/* > checksums.txt
+          mkdir -p release-assets
+          cp artifacts/infraguard-* release-assets/
+          mkdir -p policy-archive/policies
+          find policies -mindepth 1 -maxdepth 1 -type d ! -name testdata -exec cp -R {} policy-archive/policies/ \;
+          tar -C policy-archive -czf "release-assets/infraguard-policies-${{ env.VERSION }}.tar.gz" policies
+          printf '%s\n' "${{ env.VERSION }}" > release-assets/version.txt
+          cd release-assets
+          sha256sum infraguard-* > checksums.txt
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           name: "CLI ${{ env.VERSION }}"
           files: |
-            artifacts/*
-            checksums.txt
+            release-assets/*
           generate_release_notes: true
           draft: false
           prerelease: ${{ contains(env.VERSION, '-rc') || contains(env.VERSION, '-beta') || contains(env.VERSION, '-alpha') }}
