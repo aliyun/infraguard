@@ -15,6 +15,12 @@ List all available policies:
 infraguard policy list
 ```
 
+Filter the listing by policy type:
+```bash
+infraguard policy list --type rule
+infraguard policy list --type pack
+```
+
 ### get
 
 Get details of a specific policy:
@@ -107,4 +113,3 @@ infraguard policy clean -f           # Short flag
 Removes all policies from `~/.infraguard/policies/`. Does not affect embedded policies or workspace policies.
 
 For more details, see [Managing Policies](../user-guide/managing-policies).
-

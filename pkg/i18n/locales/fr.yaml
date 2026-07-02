@@ -88,6 +88,8 @@ policy_list:
     Affiche l'ID de règle/pack, le nom et des informations supplémentaires.
   rules: "Règles"
   packs: "Packs"
+  type_flag: "Type de liste : pack ou rule"
+  invalid_type: "--type %q invalide : doit être l'un de %s."
 
 # Commande policy validate
 policy_validate:
@@ -286,6 +288,7 @@ scan:
   format_flag: "Format de sortie (table, json ou html)"
   output_flag: "Chemin du fichier de sortie (par défaut: report.html pour format html)"
   mode_flag: "Mode d'analyse: 'static' pour analyse locale ou 'preview' pour API PreviewStack ROS (par défaut: static)"
+  severity_flag: "Filtrer les règles du catalogue par gravité : high, medium ou low (répétable ou séparé par des virgules)"
   report_written: "Rapport écrit dans %s"
   no_violations: "Aucune violation trouvée."
   total_violations: "Total: %d violation(s)"
@@ -354,6 +357,9 @@ errors:
   invalid_format: "format invalide %q: doit être l'un de table, json, html."
   invalid_lang: "langue invalide %q: doit être l'un de en, zh, es, fr, de, ja, pt."
   invalid_mode: "mode invalide %q: doit être static ou preview."
+  invalid_severity_filter: "gravité %q invalide : utilisez high, medium ou low."
+  no_rules_match_severity_filter: "aucune règle ne correspond au filtre de gravité : %s."
+  severity_filter_unsupported: "le filtre de gravité est uniquement pris en charge pour les IDs de règles du catalogue, les jokers de règles et les IDs de packs."
   
   # Erreurs de validation des étiquettes de langue
   invalid_lang_tag_separator: "format d'étiquette de langue invalide: %s (utilisez '-' comme séparateur, ex. 'zh-CN', 'en-US')"

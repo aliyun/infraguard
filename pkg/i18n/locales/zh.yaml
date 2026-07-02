@@ -87,6 +87,8 @@ policy_list:
     显示规则/合规包的 ID、名称和其他信息。
   rules: "规则"
   packs: "合规包"
+  type_flag: "列表类型：pack 或 rule"
+  invalid_type: "无效的 --type %q：必须是以下值之一：%s。"
 
 # Policy validate command
 policy_validate:
@@ -285,6 +287,7 @@ scan:
   format_flag: "输出格式（table、json 或 html）"
   output_flag: "输出文件路径（html 格式默认：report.html）"
   mode_flag: "扫描模式：'static' 用于本地分析，'preview' 用于 ROS PreviewStack API（默认：static）"
+  severity_flag: "按严重级别筛选内置策略规则：high、medium 或 low（可多次指定或使用逗号分隔）"
   report_written: "报告已写入 %s"
   no_violations: "未发现违规。"
   total_violations: "总计：%d 个违规"
@@ -353,6 +356,9 @@ errors:
   invalid_format: "无效的格式 %q：必须是 table、json 或 html。"
   invalid_lang: "无效的语言 %q：必须是 en、zh、es、fr、de、ja、pt 之一。"
   invalid_mode: "无效的模式 %q：必须是 static 或 preview。"
+  invalid_severity_filter: "无效的严重级别 %q：请使用 high、medium 或 low。"
+  no_rules_match_severity_filter: "没有规则匹配严重级别筛选条件：%s。"
+  severity_filter_unsupported: "严重级别筛选仅支持内置规则 ID、规则通配符和合规包 ID。"
   
   # 语言标签验证错误
   invalid_lang_tag_separator: "无效的语言标签格式：%s（请使用 '-' 作为分隔符，例如 'zh-CN'、'en-US'）"
@@ -659,4 +665,3 @@ waiver:
     invalid_expires: "非法的过期日期 %q（应为 YYYY-MM-DD）"
     expired: "豁免已于 %s 过期"
     permanent: "永久豁免（未设置过期时间）"
-

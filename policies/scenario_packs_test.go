@@ -3,9 +3,11 @@ package policies_test
 import (
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 	"testing"
 
+	"github.com/aliyun/infraguard/pkg/models"
 	"github.com/aliyun/infraguard/pkg/policy"
 )
 
@@ -54,6 +56,19 @@ func TestScenarioPacksUseNormalizedNames(t *testing.T) {
 				t.Fatalf("pack %s references missing rule %s", id, ruleID)
 			}
 		}
+
+		scenarioDir := filepath.Dir(filepath.Join(policiesDir, filePath))
+		dirPacks, err := policy.DiscoverPacks(scenarioDir)
+		if err != nil {
+			t.Fatalf("discover packs for %s: %v", scenarioDir, err)
+		}
+		if got, want := pack.RuleIDs, sortedUnique(pack.RuleIDs); !equalStrings(got, want) {
+			t.Fatalf("scenario pack %s rules should be sorted and de-duplicated:\ngot  %d %v\nwant %d %v", id, len(got), got, len(want), want)
+		}
+		siblingRules := sortedUnique(packRuleIDsExcept(dirPacks, id))
+		if missing := missingStrings(pack.RuleIDs, siblingRules); len(missing) > 0 {
+			t.Fatalf("scenario pack %s does not include all sibling pack rules: missing %d %v", id, len(missing), missing)
+		}
 	}
 
 	oldSourcePackPrefix := "pack:aliyun:" + "iac" + "-" + "code" + "-"
@@ -72,4 +87,54 @@ func TestScenarioPacksUseNormalizedNames(t *testing.T) {
 			t.Fatalf("old scenario pack name %s should not be loaded", id)
 		}
 	}
+}
+
+func packRuleIDsExcept(packs []*models.Pack, excludedID string) []string {
+	var ruleIDs []string
+	for _, pack := range packs {
+		if pack.ID == excludedID {
+			continue
+		}
+		ruleIDs = append(ruleIDs, pack.RuleIDs...)
+	}
+	return ruleIDs
+}
+
+func sortedUnique(values []string) []string {
+	seen := make(map[string]struct{}, len(values))
+	for _, value := range values {
+		seen[value] = struct{}{}
+	}
+	result := make([]string, 0, len(seen))
+	for value := range seen {
+		result = append(result, value)
+	}
+	sort.Strings(result)
+	return result
+}
+
+func equalStrings(a, b []string) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i := range a {
+		if a[i] != b[i] {
+			return false
+		}
+	}
+	return true
+}
+
+func missingStrings(have, want []string) []string {
+	seen := make(map[string]struct{}, len(have))
+	for _, value := range have {
+		seen[value] = struct{}{}
+	}
+	var missing []string
+	for _, value := range want {
+		if _, ok := seen[value]; !ok {
+			missing = append(missing, value)
+		}
+	}
+	return missing
 }

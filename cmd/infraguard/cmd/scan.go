@@ -25,11 +25,12 @@ import (
 )
 
 var (
-	scanPolicies []string // Changed to support multiple values
-	scanFormat   string
-	scanOutput   string
-	scanInput    []string
-	scanMode     string // New: scan mode (static or preview)
+	scanPolicies   []string // Changed to support multiple values
+	scanFormat     string
+	scanOutput     string
+	scanInput      []string
+	scanMode       string // New: scan mode (static or preview)
+	scanSeverities []string
 
 	scanWaivers       string // Path to waiver file (default: auto-detect .infraguard/waivers.yaml)
 	scanNoWaivers     bool   // Ignore all waivers (inline and file)
@@ -64,6 +65,8 @@ func init() {
 		"Parameter values in key=value, JSON format, or file path (can be specified multiple times)")
 	scanCmd.Flags().StringVarP(&scanMode, "mode", "m", "static",
 		"Scan mode: 'static' for local analysis or 'preview' for ROS PreviewStack API (default: static)")
+	scanCmd.Flags().StringArrayVar(&scanSeverities, "severity", nil,
+		"Filter catalog rules by severity: high, medium, or low (can be specified multiple times or comma-separated)")
 	scanCmd.Flags().StringVar(&scanWaivers, "waivers", "",
 		"Path to waiver file (default: auto-detect .infraguard/waivers.yaml)")
 	scanCmd.Flags().BoolVar(&scanNoWaivers, "no-waivers", false,
@@ -147,6 +150,11 @@ func runScan(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf(msg.Errors.InvalidMode, scanMode)
 	}
 
+	severityFilter, err := parseScanSeverityFilter(scanSeverities)
+	if err != nil {
+		return err
+	}
+
 	// Validate global language flag if provided
 	if globalLang != "" {
 		supportedLangs := i18n.GetSupportedLanguages()
@@ -178,7 +186,7 @@ func runScan(cmd *cobra.Command, args []string) error {
 	}
 
 	// Build evaluation options based on policy specs
-	evalOpts, ruleIaCMap, err := buildEvalOptions(policySpecs, msg)
+	evalOpts, ruleIaCMap, err := buildEvalOptions(policySpecs, msg, severityFilter)
 	if err != nil {
 		return err
 	}
@@ -433,6 +441,46 @@ func parsePolicySpecs(specs []string) ([]*PolicySpec, error) {
 	return result, nil
 }
 
+func parseScanSeverityFilter(values []string) (map[string]bool, error) {
+	if len(values) == 0 {
+		return nil, nil
+	}
+
+	valid := make(map[string]bool, len(models.SeverityLevels()))
+	for _, level := range models.SeverityLevels() {
+		valid[level] = true
+	}
+
+	filter := make(map[string]bool)
+	for _, value := range values {
+		for _, part := range strings.Split(value, ",") {
+			severity := strings.ToLower(strings.TrimSpace(part))
+			if severity == "" {
+				continue
+			}
+			if !valid[severity] {
+				return nil, fmt.Errorf(i18n.Msg().Errors.InvalidSeverityFilter, severity)
+			}
+			filter[severity] = true
+		}
+	}
+
+	if len(filter) == 0 {
+		return nil, nil
+	}
+	return filter, nil
+}
+
+func ruleMatchesScanSeverity(rule *models.Rule, severityFilter map[string]bool) bool {
+	if len(severityFilter) == 0 {
+		return true
+	}
+	if rule == nil {
+		return false
+	}
+	return severityFilter[strings.ToLower(rule.Severity)]
+}
+
 // ruleIaCInfo tracks which IaC types each module file supports.
 type ruleIaCInfo struct {
 	iacTypes []string
@@ -441,7 +489,7 @@ type ruleIaCInfo struct {
 
 // buildEvalOptions builds engine evaluation options from policy specs.
 // Returns the eval options and a map from module file path to its IaC type info.
-func buildEvalOptions(specs []*PolicySpec, msg *i18n.Messages) (*engine.EvalOptions, map[string]*ruleIaCInfo, error) {
+func buildEvalOptions(specs []*PolicySpec, msg *i18n.Messages, severityFilter map[string]bool) (*engine.EvalOptions, map[string]*ruleIaCInfo, error) {
 	opts := &engine.EvalOptions{
 		PolicyPaths: []string{},
 		RuleIDs:     []string{},
@@ -458,6 +506,9 @@ func buildEvalOptions(specs []*PolicySpec, msg *i18n.Messages) (*engine.EvalOpti
 			opts.Modules = make(map[string]string)
 			opts.LibModules = make(map[string]string)
 			for _, rule := range policyLoader.GetAllRules() {
+				if !ruleMatchesScanSeverity(rule, severityFilter) {
+					continue
+				}
 				opts.RuleIDs = append(opts.RuleIDs, rule.ID)
 				if rule.Content != "" {
 					opts.Modules[rule.FilePath] = rule.Content
@@ -519,6 +570,9 @@ func buildEvalOptions(specs []*PolicySpec, msg *i18n.Messages) (*engine.EvalOpti
 						return nil, nil, fmt.Errorf(msg.Errors.PolicyPatternNoMatch, spec.Value)
 					}
 					for _, rule := range matchedRules {
+						if !ruleMatchesScanSeverity(rule, severityFilter) {
+							continue
+						}
 						opts.RuleIDs = append(opts.RuleIDs, rule.ID)
 						if rule.Content != "" {
 							opts.Modules[rule.FilePath] = rule.Content
@@ -531,6 +585,9 @@ func buildEvalOptions(specs []*PolicySpec, msg *i18n.Messages) (*engine.EvalOpti
 					rule := policyLoader.GetRule(spec.Value)
 					if rule == nil {
 						return nil, nil, fmt.Errorf(msg.Errors.PolicyNotFound, spec.Value)
+					}
+					if !ruleMatchesScanSeverity(rule, severityFilter) {
+						continue
 					}
 					opts.RuleIDs = append(opts.RuleIDs, spec.Value)
 					if rule.Content != "" {
@@ -553,6 +610,9 @@ func buildEvalOptions(specs []*PolicySpec, msg *i18n.Messages) (*engine.EvalOpti
 						for _, ruleID := range pack.RuleIDs {
 							rule := policyLoader.GetRule(ruleID)
 							if rule != nil {
+								if !ruleMatchesScanSeverity(rule, severityFilter) {
+									continue
+								}
 								if rule.Content != "" {
 									opts.Modules[rule.FilePath] = rule.Content
 									iacMap[rule.FilePath] = &ruleIaCInfo{iacTypes: rule.IaCTypes, ruleID: rule.ID}
@@ -571,6 +631,9 @@ func buildEvalOptions(specs []*PolicySpec, msg *i18n.Messages) (*engine.EvalOpti
 					for _, ruleID := range pack.RuleIDs {
 						rule := policyLoader.GetRule(ruleID)
 						if rule != nil {
+							if !ruleMatchesScanSeverity(rule, severityFilter) {
+								continue
+							}
 							if rule.Content != "" {
 								opts.Modules[rule.FilePath] = rule.Content
 								iacMap[rule.FilePath] = &ruleIaCInfo{iacTypes: rule.IaCTypes, ruleID: rule.ID}
@@ -582,8 +645,15 @@ func buildEvalOptions(specs []*PolicySpec, msg *i18n.Messages) (*engine.EvalOpti
 				}
 			}
 		case "file", "dir":
+			if len(severityFilter) > 0 {
+				return nil, nil, fmt.Errorf("%s", msg.Errors.SeverityFilterUnsupported)
+			}
 			opts.PolicyPaths = append(opts.PolicyPaths, spec.Value)
 		}
+	}
+
+	if len(severityFilter) > 0 && len(opts.PolicyPaths) == 0 && len(opts.Modules) == 0 {
+		return nil, nil, fmt.Errorf(msg.Errors.NoRulesMatchSeverityFilter, formatSeverityFilter(severityFilter))
 	}
 
 	// If we have rule/pack IDs but no explicit file paths and no modules, use default policy dir
@@ -592,6 +662,16 @@ func buildEvalOptions(specs []*PolicySpec, msg *i18n.Messages) (*engine.EvalOpti
 	}
 
 	return opts, iacMap, nil
+}
+
+func formatSeverityFilter(severityFilter map[string]bool) string {
+	var levels []string
+	for _, level := range models.SeverityLevels() {
+		if severityFilter[level] {
+			levels = append(levels, level)
+		}
+	}
+	return strings.Join(levels, ",")
 }
 
 // filterEvalOptsByIaCType creates a filtered copy of eval options containing only

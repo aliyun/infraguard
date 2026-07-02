@@ -88,6 +88,8 @@ policy_list:
     Muestra ID de regla/pack, nombre e información adicional.
   rules: "Reglas"
   packs: "Packs"
+  type_flag: "Tipo de lista: pack o rule"
+  invalid_type: "--type %q no válido: debe ser uno de %s."
 
 # Comando policy validate
 policy_validate:
@@ -286,6 +288,7 @@ scan:
   format_flag: "Formato de salida (table, json o html)"
   output_flag: "Ruta de archivo de salida (predeterminado: report.html para formato html)"
   mode_flag: "Modo de escaneo: 'static' para análisis local o 'preview' para API PreviewStack de ROS (predeterminado: static)"
+  severity_flag: "Filtrar reglas del catálogo por severidad: high, medium o low (puede repetirse o separarse por comas)"
   report_written: "Informe escrito en %s"
   no_violations: "No se encontraron violaciones."
   total_violations: "Total: %d violación(es)"
@@ -354,6 +357,9 @@ errors:
   invalid_format: "formato inválido %q: debe ser uno de table, json, html."
   invalid_lang: "idioma inválido %q: debe ser uno de en, zh, es, fr, de, ja, pt."
   invalid_mode: "modo inválido %q: debe ser static o preview."
+  invalid_severity_filter: "severidad inválida %q: usa high, medium o low."
+  no_rules_match_severity_filter: "ninguna regla coincide con el filtro de severidad: %s."
+  severity_filter_unsupported: "el filtro de severidad solo se admite para IDs de reglas del catálogo, comodines de reglas e IDs de packs."
   
   # Errores de validación de etiquetas de idioma
   invalid_lang_tag_separator: "formato de etiqueta de idioma inválido: %s (use '-' como separador, ej. 'zh-CN', 'en-US')"

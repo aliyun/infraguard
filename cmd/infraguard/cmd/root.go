@@ -119,6 +119,7 @@ func updateCommandDescriptions() {
 
 	updatePolicyNewFlagDescriptions()
 	updatePolicyTestFlagDescriptions()
+	updatePolicyListFlagDescriptions()
 	updateWaiverFlagDescriptions()
 
 	// Scan command
@@ -244,6 +245,9 @@ func updateScanFlagDescriptions() {
 	if f := flags.Lookup("mode"); f != nil {
 		f.Usage = msg.Scan.ModeFlag
 	}
+	if f := flags.Lookup("severity"); f != nil {
+		f.Usage = msg.Scan.SeverityFlag
+	}
 	if f := flags.Lookup("waivers"); f != nil {
 		f.Usage = msg.Scan.WaiversFlag
 	}
@@ -266,6 +270,12 @@ func setUsage(flags *pflag.FlagSet, name, usage string) {
 	if f := flags.Lookup(name); f != nil {
 		f.Usage = usage
 	}
+}
+
+// updatePolicyListFlagDescriptions updates policy list command flag descriptions.
+func updatePolicyListFlagDescriptions() {
+	msg := i18n.Msg()
+	setUsage(policyListCmd.Flags(), "type", msg.PolicyList.TypeFlag)
 }
 
 // updatePolicyNewFlagDescriptions updates policy new command flag descriptions.

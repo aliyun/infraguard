@@ -88,6 +88,8 @@ policy_list:
     ルール/パックID、名前、および追加情報を表示します。
   rules: "ルール"
   packs: "パック"
+  type_flag: "リスト種別: pack または rule"
+  invalid_type: "無効な --type %q: 次のいずれかである必要があります: %s。"
 
 # policy validateコマンド
 policy_validate:
@@ -286,6 +288,7 @@ scan:
   format_flag: "出力形式（table、json、またはhtml）"
   output_flag: "出力ファイルパス（デフォルト: html形式の場合はreport.html）"
   mode_flag: "スキャンモード: ローカル分析の場合は'static'、ROS PreviewStack APIの場合は'preview'（デフォルト: static）"
+  severity_flag: "カタログルールを重要度でフィルター: high、medium、または low（複数回指定またはカンマ区切り）"
   report_written: "レポートを%sに書き込みました"
   no_violations: "違反は見つかりませんでした。"
   total_violations: "合計: %d件の違反"
@@ -354,6 +357,9 @@ errors:
   invalid_format: "無効な形式%q: table、json、htmlのいずれかである必要があります。"
   invalid_lang: "無効な言語%q: en、zh、es、fr、de、ja、ptのいずれかである必要があります。"
   invalid_mode: "無効なモード%q: staticまたはpreviewである必要があります。"
+  invalid_severity_filter: "無効な重要度 %q: high、medium、または low を使用してください。"
+  no_rules_match_severity_filter: "重要度フィルターに一致するルールがありません: %s。"
+  severity_filter_unsupported: "重要度フィルターはカタログのルールID、ルールワイルドカード、パックIDでのみサポートされます。"
   
   # 言語タグ検証エラー
   invalid_lang_tag_separator: "無効な言語タグ形式: %s（区切り文字として'-'を使用してください。例: 'zh-CN', 'en-US'）"

@@ -7,7 +7,7 @@ LDFLAGS := -s -w
 MAIN_PATH := ./cmd/infraguard
 
 .DEFAULT_GOAL := help
-.PHONY: build run doc-build doc-serve test test-policy lint fmt validate-translations check-gen gen-policy clean help
+.PHONY: build cli-build run doc-build doc-serve test test-policy lint fmt validate-translations check-gen gen-policy sync-scenario-packs clean help
 
 ## Build
 
@@ -15,10 +15,16 @@ gen-policy: ## Generate the policy index
 	$(GOCMD) run cmd/policy-gen/main.go
 	$(GOCMD) fmt pkg/policy/index_gen.go
 
+sync-scenario-packs: ## Sync top-level scenario packs with their directory rule roll-ups
+	$(GOCMD) run scripts/sync-scenario-packs.go
+
 build: gen-policy ## Build everything (web UI + binary)
 	cd web && $(NPM) ci && $(NPM) run build
 	@touch pkg/server/dist/.gitkeep
 	$(GOCMD) build -ldflags "$(LDFLAGS)" -o $(BINARY_NAME) $(MAIN_PATH)
+
+cli-build: gen-policy ## Build CLI binary only
+	$(GOCMD) build -ldflags "$(LDFLAGS)" -o "$(CURDIR)/$(BINARY_NAME)" $(MAIN_PATH)
 
 run: ## Run from source
 	$(GOCMD) run $(MAIN_PATH)
