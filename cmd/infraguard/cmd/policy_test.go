@@ -31,6 +31,18 @@ func TestPolicyCommand(t *testing.T) {
 			t.Setenv("INFRAGUARD_POLICY_DIR", t.TempDir())
 			t.Setenv("INFRAGUARD_WORKSPACE_POLICY_DIR", repoPoliciesDir(t))
 
+			Convey("Without --type", func() {
+				output, err := executeRootCaptureStdout("policy", "list")
+
+				Convey("It should print packs and rules", func() {
+					So(err, ShouldBeNil)
+					So(output, ShouldContainSubstring, "Packs (")
+					So(output, ShouldContainSubstring, "Rules (")
+					So(output, ShouldContainSubstring, "pack:aliyun:")
+					So(output, ShouldContainSubstring, "rule:aliyun:")
+				})
+			})
+
 			Convey("With --type pack", func() {
 				output, err := executeRootCaptureStdout("policy", "list", "--type", "pack")
 
@@ -54,22 +66,12 @@ func TestPolicyCommand(t *testing.T) {
 			})
 
 			Convey("With --type scenario-packs", func() {
-				output, err := executeRootCaptureStdout("policy", "list", "--type", "scenario-packs")
+				_, err := executeRootCaptureStdout("policy", "list", "--type", "scenario-packs")
 
-				Convey("It should only print the 8 top-level scenario packs", func() {
-					So(err, ShouldBeNil)
-					So(output, ShouldContainSubstring, "Packs (8)")
-					So(strings.Count(output, "pack:aliyun:"), ShouldEqual, 8)
-					So(output, ShouldContainSubstring, "pack:aliyun:best-practice")
-					So(output, ShouldContainSubstring, "pack:aliyun:compliance")
-					So(output, ShouldContainSubstring, "pack:aliyun:cost-optimization")
-					So(output, ShouldContainSubstring, "pack:aliyun:elasticity")
-					So(output, ShouldContainSubstring, "pack:aliyun:high-availability")
-					So(output, ShouldContainSubstring, "pack:aliyun:network-architecture")
-					So(output, ShouldContainSubstring, "pack:aliyun:operations")
-					So(output, ShouldContainSubstring, "pack:aliyun:security")
-					So(output, ShouldNotContainSubstring, "pack:aliyun:security-group-best-practice")
-					So(output, ShouldNotContainSubstring, "Rules (")
+				Convey("It should reject the removed type filter", func() {
+					So(err, ShouldNotBeNil)
+					So(err.Error(), ShouldContainSubstring, `invalid --type "scenario-packs"`)
+					So(err.Error(), ShouldContainSubstring, "pack, rule")
 				})
 			})
 
@@ -79,7 +81,17 @@ func TestPolicyCommand(t *testing.T) {
 				Convey("It should return a clear validation error", func() {
 					So(err, ShouldNotBeNil)
 					So(err.Error(), ShouldContainSubstring, `invalid --type "invalid"`)
-					So(err.Error(), ShouldContainSubstring, "all, pack, rule, scenario-packs")
+					So(err.Error(), ShouldContainSubstring, "pack, rule")
+				})
+			})
+
+			Convey("With explicit --type all", func() {
+				_, err := executeRootCaptureStdout("policy", "list", "--type", "all")
+
+				Convey("It should reject all as an explicit filter value", func() {
+					So(err, ShouldNotBeNil)
+					So(err.Error(), ShouldContainSubstring, `invalid --type "all"`)
+					So(err.Error(), ShouldContainSubstring, "pack, rule")
 				})
 			})
 		})
@@ -249,7 +261,7 @@ func executeRootCaptureStdout(args ...string) (string, error) {
 	rootCmd.SetOutput(w)
 	rootCmd.SetErr(w)
 	rootCmd.SetArgs(args)
-	policyListType = policyListTypeAll
+	resetPolicyListTypeFlag()
 
 	execErr := rootCmd.Execute()
 	_ = w.Close()
@@ -264,4 +276,14 @@ func executeRootCaptureStdout(args ...string) (string, error) {
 		return buf.String(), copyErr
 	}
 	return buf.String(), execErr
+}
+
+func resetPolicyListTypeFlag() {
+	policyListType = ""
+	flag := policyListCmd.Flags().Lookup("type")
+	if flag == nil {
+		return
+	}
+	_ = flag.Value.Set("")
+	flag.Changed = false
 }

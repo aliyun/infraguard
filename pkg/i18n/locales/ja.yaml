@@ -88,7 +88,7 @@ policy_list:
     ルール/パックID、名前、および追加情報を表示します。
   rules: "ルール"
   packs: "パック"
-  type_flag: "リスト種別: all、pack、rule、scenario-packs"
+  type_flag: "リスト種別: pack または rule"
   invalid_type: "無効な --type %q: 次のいずれかである必要があります: %s。"
 
 # policy validateコマンド

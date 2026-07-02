@@ -29,28 +29,14 @@ var (
 )
 
 const (
-	policyListTypeAll           = "all"
-	policyListTypePack          = "pack"
-	policyListTypeRule          = "rule"
-	policyListTypeScenarioPacks = "scenario-packs"
+	policyListTypeAll  = "all"
+	policyListTypePack = "pack"
+	policyListTypeRule = "rule"
 )
 
 var validPolicyListTypes = []string{
-	policyListTypeAll,
 	policyListTypePack,
 	policyListTypeRule,
-	policyListTypeScenarioPacks,
-}
-
-var scenarioPackIDs = map[string]struct{}{
-	"pack:aliyun:best-practice":        {},
-	"pack:aliyun:compliance":           {},
-	"pack:aliyun:cost-optimization":    {},
-	"pack:aliyun:elasticity":           {},
-	"pack:aliyun:high-availability":    {},
-	"pack:aliyun:network-architecture": {},
-	"pack:aliyun:operations":           {},
-	"pack:aliyun:security":             {},
 }
 
 var policyUpdateCmd = &cobra.Command{
@@ -133,8 +119,8 @@ func init() {
 	policyUpdateCmd.Flags().StringVar(&policyVersion, "version", "main",
 		"Git branch, tag, or commit to download")
 
-	policyListCmd.Flags().StringVar(&policyListType, "type", policyListTypeAll,
-		"List type: all, pack, rule, or scenario-packs")
+	policyListCmd.Flags().StringVar(&policyListType, "type", "",
+		"List type: pack or rule")
 
 	// Format command flags
 	policyFormatCmd.Flags().BoolVarP(&formatWrite, "write", "w", false,
@@ -207,7 +193,7 @@ func runPolicyList(cmd *cobra.Command, args []string) error {
 	msg := i18n.Msg()
 	lang := i18n.GetLanguage()
 	listType := normalizePolicyListType(policyListType)
-	if !isValidPolicyListType(listType) {
+	if cmd.Flags().Changed("type") && !isValidPolicyListType(listType) {
 		return fmt.Errorf(policyListInvalidTypeMessage(msg), policyListType, strings.Join(validPolicyListTypes, ", "))
 	}
 
@@ -225,9 +211,6 @@ func runPolicyList(cmd *cobra.Command, args []string) error {
 		rules = nil
 	case policyListTypeRule:
 		packs = nil
-	case policyListTypeScenarioPacks:
-		packs = filterScenarioPacks(packs)
-		rules = nil
 	}
 
 	if len(rules) == 0 && len(packs) == 0 {
@@ -316,16 +299,6 @@ func policyListInvalidTypeMessage(msg *i18n.Messages) string {
 		return msg.PolicyList.InvalidType
 	}
 	return `invalid --type %q: must be one of %s.`
-}
-
-func filterScenarioPacks(packs []*models.Pack) []*models.Pack {
-	filtered := make([]*models.Pack, 0, len(scenarioPackIDs))
-	for _, pack := range packs {
-		if _, ok := scenarioPackIDs[pack.ID]; ok {
-			filtered = append(filtered, pack)
-		}
-	}
-	return filtered
 }
 
 func printRuleDetails(rule *models.Rule, lang string, msg *i18n.Messages) {

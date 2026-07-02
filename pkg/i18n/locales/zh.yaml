@@ -87,7 +87,7 @@ policy_list:
     显示规则/合规包的 ID、名称和其他信息。
   rules: "规则"
   packs: "合规包"
-  type_flag: "列表类型：all、pack、rule 或 scenario-packs"
+  type_flag: "列表类型：pack 或 rule"
   invalid_type: "无效的 --type %q：必须是以下值之一：%s。"
 
 # Policy validate command
