@@ -86,10 +86,12 @@ type Messages struct {
 
 	// Policy list command
 	PolicyList struct {
-		Short string `yaml:"short"`
-		Long  string `yaml:"long"`
-		Rules string `yaml:"rules"`
-		Packs string `yaml:"packs"`
+		Short       string `yaml:"short"`
+		Long        string `yaml:"long"`
+		Rules       string `yaml:"rules"`
+		Packs       string `yaml:"packs"`
+		TypeFlag    string `yaml:"type_flag"`
+		InvalidType string `yaml:"invalid_type"`
 	} `yaml:"policy_list"`
 
 	// Policy validate command
@@ -308,6 +310,7 @@ type Messages struct {
 		FormatFlag           string `yaml:"format_flag"`
 		OutputFlag           string `yaml:"output_flag"`
 		ModeFlag             string `yaml:"mode_flag"`
+		SeverityFlag         string `yaml:"severity_flag"`
 		ReportWritten        string `yaml:"report_written"`
 		NoViolations         string `yaml:"no_violations"`
 		TotalViolations      string `yaml:"total_violations"`
@@ -426,9 +429,12 @@ type Messages struct {
 
 	// Error messages
 	Errors struct {
-		InvalidFormat string `yaml:"invalid_format"`
-		InvalidLang   string `yaml:"invalid_lang"`
-		InvalidMode   string `yaml:"invalid_mode"`
+		InvalidFormat              string `yaml:"invalid_format"`
+		InvalidLang                string `yaml:"invalid_lang"`
+		InvalidMode                string `yaml:"invalid_mode"`
+		InvalidSeverityFilter      string `yaml:"invalid_severity_filter"`
+		NoRulesMatchSeverityFilter string `yaml:"no_rules_match_severity_filter"`
+		SeverityFilterUnsupported  string `yaml:"severity_filter_unsupported"`
 
 		// Language tag validation errors
 		InvalidLangTagSeparator string `yaml:"invalid_lang_tag_separator"`

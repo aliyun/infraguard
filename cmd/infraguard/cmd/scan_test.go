@@ -7,7 +7,10 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/aliyun/infraguard/pkg/engine"
 	"github.com/aliyun/infraguard/pkg/i18n"
+	"github.com/aliyun/infraguard/pkg/models"
+	"github.com/aliyun/infraguard/pkg/policy"
 	. "github.com/smartystreets/goconvey/convey"
 )
 
@@ -309,4 +312,124 @@ func TestParsePolicySpec(t *testing.T) {
 			})
 		})
 	})
+}
+
+func TestParseScanSeverityFilter(t *testing.T) {
+	Convey("Given scan severity filter values", t, func() {
+		Convey("When no severity is provided", func() {
+			filter, err := parseScanSeverityFilter(nil)
+
+			Convey("It should not filter rules", func() {
+				So(err, ShouldBeNil)
+				So(filter, ShouldBeNil)
+			})
+		})
+
+		Convey("When repeated and comma-separated severities are provided", func() {
+			filter, err := parseScanSeverityFilter([]string{"HIGH, medium", "medium"})
+
+			Convey("It should normalize and deduplicate severities", func() {
+				So(err, ShouldBeNil)
+				So(filter[models.SeverityHigh], ShouldBeTrue)
+				So(filter[models.SeverityMedium], ShouldBeTrue)
+				So(filter[models.SeverityLow], ShouldBeFalse)
+				So(len(filter), ShouldEqual, 2)
+			})
+		})
+
+		Convey("When an invalid severity is provided", func() {
+			filter, err := parseScanSeverityFilter([]string{"critical"})
+
+			Convey("It should reject the value", func() {
+				So(filter, ShouldBeNil)
+				So(err, ShouldNotBeNil)
+				So(err.Error(), ShouldContainSubstring, "critical")
+			})
+		})
+	})
+}
+
+func TestBuildEvalOptionsFiltersPackRulesBySeverity(t *testing.T) {
+	Convey("Given a pack with mixed severity rules", t, func() {
+		i18n.Init()
+		loader, err := policy.LoadWithFallback()
+		So(err, ShouldBeNil)
+
+		var targetPackID string
+		var targetRuleIDs []string
+		for _, pack := range loader.GetAllPacks() {
+			hasIncludedSeverity := false
+			hasExcludedSeverity := false
+			for _, ruleID := range pack.RuleIDs {
+				rule := loader.GetRule(ruleID)
+				if rule == nil {
+					continue
+				}
+				switch strings.ToLower(rule.Severity) {
+				case models.SeverityHigh, models.SeverityMedium:
+					hasIncludedSeverity = true
+				case models.SeverityLow:
+					hasExcludedSeverity = true
+				}
+			}
+			if hasIncludedSeverity && hasExcludedSeverity {
+				targetPackID = pack.ID
+				targetRuleIDs = pack.RuleIDs
+				break
+			}
+		}
+		So(targetPackID, ShouldNotBeEmpty)
+
+		spec, err := parsePolicySpec(targetPackID)
+		So(err, ShouldBeNil)
+		filter, err := parseScanSeverityFilter([]string{"high", "medium"})
+		So(err, ShouldBeNil)
+
+		Convey("When building eval options with high and medium filters", func() {
+			opts, _, err := buildEvalOptions([]*PolicySpec{spec}, i18n.Msg(), filter)
+
+			Convey("It should only load high and medium rules from the pack", func() {
+				So(err, ShouldBeNil)
+				So(len(opts.Modules)+len(opts.PolicyPaths), ShouldBeGreaterThan, 0)
+
+				loadedRuleIDs := ruleIDsLoadedByEvalOptions(loader, opts)
+				So(len(loadedRuleIDs), ShouldBeGreaterThan, 0)
+				for _, ruleID := range targetRuleIDs {
+					rule := loader.GetRule(ruleID)
+					if rule == nil {
+						continue
+					}
+					loaded := loadedRuleIDs[rule.ID]
+					if filter[strings.ToLower(rule.Severity)] {
+						So(loaded, ShouldBeTrue)
+					} else {
+						So(loaded, ShouldBeFalse)
+					}
+				}
+			})
+		})
+	})
+}
+
+func ruleIDsLoadedByEvalOptions(loader *policy.Loader, opts *engine.EvalOptions) map[string]bool {
+	loadedPaths := make(map[string]bool)
+	for path := range opts.Modules {
+		loadedPaths[path] = true
+	}
+	for _, path := range opts.PolicyPaths {
+		loadedPaths[path] = true
+	}
+
+	loadedRuleIDs := make(map[string]bool)
+	for _, rule := range loader.GetAllRules() {
+		if loadedPaths[rule.FilePath] {
+			loadedRuleIDs[rule.ID] = true
+		}
+		for _, impl := range rule.Implementations {
+			if loadedPaths[impl.FilePath] {
+				loadedRuleIDs[rule.ID] = true
+			}
+		}
+	}
+	return loadedRuleIDs
 }

@@ -26,6 +26,7 @@ infraguard scan <template> -p <policy> [flags]
 | `--lang <lang>` | string | Output language (`en` or `zh`) |
 | `-m, --mode <mode>` | string | Scan mode: `static` for local analysis or `preview` for ROS PreviewStack API (default: `static`) |
 | `-i, --input <value>` | string | Parameter values in `key=value`, JSON format, or file path (can be specified multiple times) |
+| `--severity <level>` | string | Filter catalog rules by severity (`high`, `medium`, `low`); repeat the flag or use comma-separated values |
 | `--waivers <path>` | string | Path to waiver file (default: auto-detect `.infraguard/waivers.yaml`) |
 | `--no-waivers` | bool | Ignore all waivers (inline comments and waiver file) |
 | `--show-waived` | bool | Show waived violations instead of hiding them |
@@ -52,6 +53,9 @@ infraguard scan main.tf -p rule:aliyun:ecs-instance-no-public-ip --input terrafo
 
 # Scan with a pack
 infraguard scan template.yaml -p pack:aliyun:mlps-level-3-pre-check-compliance-pack
+
+# Scan with a pack and only run high/medium severity rules
+infraguard scan template.yaml -p pack:aliyun:quick-start-compliance-pack --severity high --severity medium
 
 # Scan with wildcard pattern (all rules)
 infraguard scan template.yaml -p "rule:*"
