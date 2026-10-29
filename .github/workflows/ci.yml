@@ -33,6 +33,10 @@ jobs:
       - name: Run policy tests
         run: make test-policy
 
+      - name: Check Go coverage
+        if: matrix.os == 'ubuntu-latest'
+        run: make test-coverage
+
   check:
     name: Check Generated Files, Lint and Validate Translations
     runs-on: ubuntu-latest

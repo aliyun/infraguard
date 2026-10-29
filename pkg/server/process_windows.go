@@ -9,11 +9,18 @@ import (
 
 // ProcessAlive reports whether a process with the given PID exists.
 func ProcessAlive(pid int) bool {
-	p, err := os.FindProcess(pid)
+	if pid <= 0 {
+		return false
+	}
+	const processQueryLimitedInformation = 0x1000
+	const stillActive = 259
+	handle, err := syscall.OpenProcess(processQueryLimitedInformation, false, uint32(pid))
 	if err != nil {
 		return false
 	}
-	return p.Signal(syscall.Signal(0)) == nil
+	defer syscall.CloseHandle(handle)
+	var exitCode uint32
+	return syscall.GetExitCodeProcess(handle, &exitCode) == nil && exitCode == stillActive
 }
 
 // DetachAttr returns SysProcAttr that detaches the child process.

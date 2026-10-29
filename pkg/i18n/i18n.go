@@ -784,9 +784,13 @@ func detectFromEnv() string {
 			return normalized
 		}
 		// Fall back to the language code alone (e.g. "zh").
-		langCode := strings.ToLower(strings.FieldsFunc(val, func(r rune) bool {
+		parts := strings.FieldsFunc(val, func(r rune) bool {
 			return r == '_' || r == '-'
-		})[0])
+		})
+		if len(parts) == 0 {
+			continue
+		}
+		langCode := strings.ToLower(parts[0])
 		if normalized := normalizeLanguageTag(langCode); isSupportedLanguage(normalized) {
 			return normalized
 		}

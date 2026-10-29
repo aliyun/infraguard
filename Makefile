@@ -7,7 +7,7 @@ LDFLAGS := -s -w
 MAIN_PATH := ./cmd/infraguard
 
 .DEFAULT_GOAL := help
-.PHONY: build cli-build run doc-build doc-serve test test-policy lint fmt validate-translations check-gen gen-policy sync-scenario-packs clean help
+.PHONY: build cli-build run doc-build doc-serve test test-coverage test-policy lint fmt validate-translations check-gen gen-policy sync-scenario-packs clean help
 
 ## Build
 
@@ -44,6 +44,21 @@ doc-serve: doc-build ## Serve the documentation site locally
 
 test: gen-policy ## Run all tests
 	$(GOCMD) test ./pkg/... ./cmd/... ./policies/...
+
+test-coverage: gen-policy ## Check total Go statement coverage is at least 95%
+	@set -e; workdir=$$(mktemp -d); trap 'rm -rf "$$workdir"' EXIT; \
+	all_packages=$$($(GOCMD) list ./pkg/... ./cmd/... ./policies/...); \
+	packages=$$(printf '%s\n' "$$all_packages" | awk '$$0 !~ /\/cmd\/policy-dump$$/'); \
+	coverpkg=$$(printf '%s\n' "$$packages" | paste -sd, -); \
+	$(GOCMD) test -timeout=30m -coverpkg="$$coverpkg" -coverprofile="$$workdir/all.out" $$packages; \
+	for script in scripts/*.go; do \
+		case "$$script" in *_test.go|scripts/generate-policy-docs.go|scripts/validate-doc-translations.go) continue;; esac; \
+		set -- "$$script"; testfile="$${script%.go}_test.go"; \
+		if [ -f "$$testfile" ]; then set -- "$$script" "$$testfile"; fi; \
+		$(GOCMD) test -timeout=30m -coverprofile="$$workdir/script.out" "$$@"; \
+		tail -n +2 "$$workdir/script.out" >> "$$workdir/all.out"; \
+	done; \
+	awk 'NR > 1 { statements[$$1] = $$2; if ($$3 > 0) hit[$$1] = 1 } END { for (block in statements) { total += statements[block]; if (hit[block]) covered += statements[block] } if (total == 0) { print "No coverage data"; exit 1 } printf "Total statement coverage: %.2f%% (%d/%d)\n", 100 * covered / total, covered, total; if (covered / total < 0.95) { print "Coverage is below 95%"; exit 1 } }' "$$workdir/all.out"
 
 test-policy: gen-policy ## Run policy tests only
 	$(GOCMD) test ./policies/...

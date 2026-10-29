@@ -723,7 +723,7 @@ func findParameterContext(lines []string, currentLine, currentIndent int) (param
 			return "", false
 		}
 
-		if ind < tempIndent && paramName == "" {
+		if ind < tempIndent {
 			key := strings.SplitN(trimmed, ":", 2)[0]
 			paramName = strings.TrimSpace(key)
 			tempIndent = ind
@@ -997,12 +997,15 @@ func extractLineKey(line string) string {
 	if strings.HasPrefix(trimmed, "- ") {
 		trimmed = trimmed[2:]
 	}
+	if strings.HasPrefix(trimmed, "Fn::") {
+		return ""
+	}
 	if !strings.Contains(trimmed, ":") {
 		return ""
 	}
 	parts := strings.SplitN(trimmed, ":", 2)
 	key := strings.TrimSpace(parts[0])
-	if strings.HasPrefix(key, "!") || strings.HasPrefix(key, "Fn::") || key == "" {
+	if strings.HasPrefix(key, "!") || key == "" {
 		return ""
 	}
 	return key
@@ -1030,24 +1033,48 @@ func findPropertyName(lines []string, currentLine, propIndent int) string {
 }
 
 func findResourceType(lines []string, resourceName string) string {
-	foundResource := false
+	inResources, foundResource := false, false
+	resourceIndent, childIndent := -1, -1
+	resourceType := ""
 	for _, line := range lines {
 		trimmed := strings.TrimSpace(line)
-		if strings.HasPrefix(trimmed, resourceName+":") {
-			foundResource = true
+		if trimmed == "" || strings.HasPrefix(trimmed, "#") {
 			continue
 		}
-		if foundResource {
-			ind := countIndent(line)
-			if ind == 0 {
+		ind := countIndent(line)
+		if ind == 0 {
+			if foundResource {
 				break
 			}
-			if strings.HasPrefix(trimmed, "Type:") {
-				return strings.TrimSpace(strings.TrimPrefix(trimmed, "Type:"))
+			inResources = strings.HasPrefix(trimmed, "Resources:") || trimmed == "Resources"
+			resourceIndent = -1
+			continue
+		}
+		if !inResources {
+			continue
+		}
+		if resourceIndent < 0 {
+			resourceIndent = ind
+		}
+		if ind <= resourceIndent {
+			if foundResource {
+				break
 			}
+			foundResource = ind == resourceIndent && isYAMLKey(trimmed, resourceName)
+			continue
+		}
+		if !foundResource {
+			continue
+		}
+		if childIndent < 0 || ind < childIndent {
+			childIndent = ind
+			resourceType = ""
+		}
+		if ind == childIndent && strings.HasPrefix(trimmed, "Type:") {
+			resourceType = strings.TrimSpace(strings.TrimPrefix(trimmed, "Type:"))
 		}
 	}
-	return ""
+	return resourceType
 }
 
 func findExistingProperties(lines []string, currentLine int) []string {

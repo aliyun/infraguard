@@ -1,3 +1,5 @@
+//go:build ignore
+
 // Script to fetch ROS resource type schema from Alibaba Cloud ROS API.
 // Usage: go run scripts/fetch-ros-schema.go [-output path/to/ros_resources.json]
 package main

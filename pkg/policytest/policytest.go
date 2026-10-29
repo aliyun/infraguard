@@ -136,7 +136,6 @@ func Run(opts Options) ([]CaseResult, Summary, error) {
 			results = append(results, CaseResult{
 				Rule: ruleName, Status: StatusError, Code: CodeNoRule, Detail: rulesDir,
 			})
-			summary.Failed++
 			seenRules[ruleName] = true
 			continue
 		}

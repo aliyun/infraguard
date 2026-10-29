@@ -81,10 +81,12 @@ func (pi *PolicyIndex) AddRule(rule *Rule) {
 			rule.Implementations = make(map[string]*RuleImpl)
 		}
 		for _, iacType := range rule.IaCTypes {
-			rule.Implementations[iacType] = &RuleImpl{
-				FilePath:    rule.FilePath,
-				PackageName: rule.PackageName,
-				Content:     rule.Content,
+			if rule.Implementations[iacType] == nil {
+				rule.Implementations[iacType] = &RuleImpl{
+					FilePath:    rule.FilePath,
+					PackageName: rule.PackageName,
+					Content:     rule.Content,
+				}
 			}
 		}
 		pi.Rules[rule.ID] = rule
@@ -111,10 +113,14 @@ func (pi *PolicyIndex) AddRule(rule *Rule) {
 		existing.Implementations = make(map[string]*RuleImpl)
 	}
 	for _, iacType := range rule.IaCTypes {
-		existing.Implementations[iacType] = &RuleImpl{
-			FilePath:    rule.FilePath,
-			PackageName: rule.PackageName,
-			Content:     rule.Content,
+		if impl := rule.Implementations[iacType]; impl != nil {
+			existing.Implementations[iacType] = impl
+		} else {
+			existing.Implementations[iacType] = &RuleImpl{
+				FilePath:    rule.FilePath,
+				PackageName: rule.PackageName,
+				Content:     rule.Content,
+			}
 		}
 	}
 }

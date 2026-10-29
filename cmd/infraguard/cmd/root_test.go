@@ -9,10 +9,12 @@ import (
 )
 
 func TestRootCommand(t *testing.T) {
+	t.Setenv("LC_ALL", "en_US.UTF-8")
 	Convey("Given the root command", t, func() {
 		// Initialize i18n for tests
 		i18n.Init()
 		updateCommandDescriptions()
+		setUsageTemplate()
 
 		Convey("When checking command registration", func() {
 			commands := rootCmd.Commands()

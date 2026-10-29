@@ -125,6 +125,12 @@ func ValidateContentWithModules(content, filePath string, extraModules []RegoMod
 
 	// Check for syntax errors first
 	if syntaxErr := checkSyntax(content, filePath); syntaxErr != nil {
+		packageName := extractPackageName(content)
+		if strings.HasPrefix(packageName, RulesPackagePrefix) {
+			result.FileType = "rule"
+		} else if strings.HasPrefix(packageName, PacksPackagePrefix) {
+			result.FileType = "pack"
+		}
 		result.Valid = false
 		result.Errors = append(result.Errors, syntaxErr)
 		return result, nil

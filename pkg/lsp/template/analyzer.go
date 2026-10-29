@@ -53,6 +53,9 @@ type AnalysisContext struct {
 
 // AnalyzePosition determines the semantic context at a given position (0-based line and col).
 func AnalyzePosition(content string, line, col int, isYAML bool) *AnalysisContext {
+	if col < 0 {
+		return &AnalysisContext{Type: ContextUnknown}
+	}
 	if isYAML {
 		return analyzeYAMLPosition(content, line, col)
 	}

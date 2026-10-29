@@ -184,11 +184,18 @@ func runServerWorker(cmd *cobra.Command, args []string) error {
 
 // serve binds and runs the HTTP server, recording state until it exits.
 func serve(host string, port int, token string) error {
+	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
+	defer stop()
+	return serveWithContext(ctx, host, port, token)
+}
+
+func serveWithContext(ctx context.Context, host string, port int, token string) error {
 	srv := server.New(server.Options{Host: host, Port: port, Token: token, Version: Version})
 	ln, err := srv.Listen()
 	if err != nil {
 		return fmt.Errorf("failed to bind %s:%d: %w", host, port, err)
 	}
+	defer ln.Close()
 
 	url := buildURL(host, srv.Port(), token)
 	state := &server.State{
@@ -209,8 +216,6 @@ func serve(host string, port int, token string) error {
 		fmt.Printf("InfraGuard server listening on %s (Ctrl-C to stop)\n", url)
 	}
 
-	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
-	defer stop()
 	return srv.Serve(ctx, ln)
 }
 
