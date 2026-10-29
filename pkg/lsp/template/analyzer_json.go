@@ -1796,10 +1796,11 @@ func extractDefinitionTargetJSON(currentLine string, lines []string, line, col i
 				}
 			}
 		}
+		return "", false
 	}
 
 	// Multiline GetAtt: cursor on a string line within a "Fn::GetAtt" array
-	for i := line; i >= 0; i-- {
+	for i := line - 1; i >= 0; i-- {
 		lt := strings.TrimSpace(lines[i])
 		if strings.Contains(lt, `"Fn::GetAtt"`) {
 			// Count items before current line

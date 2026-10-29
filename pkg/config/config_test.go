@@ -150,3 +150,67 @@ func TestConfig(t *testing.T) {
 		})
 	})
 }
+
+func TestConfigFileErrors(t *testing.T) {
+	home := t.TempDir()
+	t.Setenv("HOME", home)
+	t.Setenv("USERPROFILE", home)
+	dir := filepath.Join(home, ".infraguard")
+	if err := os.Mkdir(dir, 0755); err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(dir, configFileName)
+	if err := os.WriteFile(path, []byte("lang: ["), 0600); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := Load(); err == nil {
+		t.Fatal("expected invalid YAML error")
+	}
+	if got := GetLang(); got != "" {
+		t.Fatalf("GetLang on invalid YAML = %q", got)
+	}
+	if err := os.Remove(path); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Mkdir(path, 0755); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := Load(); err == nil {
+		t.Fatal("expected read error for directory")
+	}
+	if err := Save(&Config{Lang: "en"}); err == nil {
+		t.Fatal("expected write error for directory")
+	}
+	if err := os.Remove(path); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Remove(dir); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(dir, []byte("file"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	if err := Save(&Config{}); err == nil {
+		t.Fatal("expected error when config directory is a file")
+	}
+}
+
+func TestConfigFailsWhenHomeDirectoryUnavailable(t *testing.T) {
+	t.Setenv("HOME", "")
+	t.Setenv("USERPROFILE", "")
+	if _, err := DefaultConfigDir(); err == nil {
+		t.Fatal("missing home accepted")
+	}
+	if _, err := ConfigPath(); err == nil {
+		t.Fatal("missing home accepted for config path")
+	}
+	if _, err := Load(); err == nil {
+		t.Fatal("missing home accepted for load")
+	}
+	if err := Save(&Config{Lang: "en"}); err == nil {
+		t.Fatal("missing home accepted for save")
+	}
+	if got := GetLang(); got != "" {
+		t.Fatalf("language with missing home: %q", got)
+	}
+}

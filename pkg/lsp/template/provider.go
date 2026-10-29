@@ -180,6 +180,9 @@ func (p *ROSTemplateProvider) Complete(ctx CompletionContext) []protocol.Complet
 
 // Hover returns hover information for the given context.
 func (p *ROSTemplateProvider) Hover(ctx HoverContext) *HoverResult {
+	if ctx.Col < 0 {
+		return nil
+	}
 	analysis := AnalyzePosition(ctx.Content, ctx.Line, ctx.Col, ctx.IsYAML)
 	handler := getFormatHandler(ctx.IsYAML)
 
@@ -222,7 +225,7 @@ func (p *ROSTemplateProvider) Hover(ctx HoverContext) *HoverResult {
 // Definition returns the location of the definition for the symbol at the cursor.
 func (p *ROSTemplateProvider) Definition(ctx DefinitionContext) *protocol.Location {
 	lines := strings.Split(ctx.Content, "\n")
-	if ctx.Line < 0 || ctx.Line >= len(lines) {
+	if ctx.Line < 0 || ctx.Line >= len(lines) || ctx.Col < 0 {
 		return nil
 	}
 
@@ -2361,7 +2364,23 @@ func toFloat64Val(v interface{}) (float64, bool) {
 		return float64(n), true
 	case int:
 		return float64(n), true
+	case int8:
+		return float64(n), true
+	case int16:
+		return float64(n), true
+	case int32:
+		return float64(n), true
 	case int64:
+		return float64(n), true
+	case uint:
+		return float64(n), true
+	case uint8:
+		return float64(n), true
+	case uint16:
+		return float64(n), true
+	case uint32:
+		return float64(n), true
+	case uint64:
 		return float64(n), true
 	}
 	return 0, false

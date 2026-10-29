@@ -538,6 +538,8 @@ func TestDetectFromEnv(t *testing.T) {
 		{"C locale ignored", map[string]string{"LANG": "C"}, ""},
 		{"POSIX ignored", map[string]string{"LANG": "POSIX"}, ""},
 		{"unsupported ignored", map[string]string{"LANG": "ru_RU.UTF-8"}, ""},
+		{"malformed ignored", map[string]string{"LC_ALL": "___", "LANG": "en_US.UTF-8"}, "en-US"},
+		{"only separators", map[string]string{"LANG": "---"}, ""},
 		{"modifier stripped", map[string]string{"LANG": "zh_CN.UTF-8@pinyin"}, "zh-CN"},
 		{"empty", map[string]string{}, ""},
 	}
@@ -554,5 +556,30 @@ func TestDetectFromEnv(t *testing.T) {
 				t.Errorf("detectFromEnv() = %q, want %q", got, c.expect)
 			}
 		})
+	}
+}
+
+func TestDetectLanguagePrefersTerminalLocale(t *testing.T) {
+	t.Setenv("LC_ALL", "fr_FR.UTF-8")
+	t.Setenv("LC_MESSAGES", "")
+	t.Setenv("LANG", "en_US.UTF-8")
+	t.Setenv("LANGUAGE", "")
+	if got := DetectLanguage(); got != "fr-FR" {
+		t.Fatalf("detected locale: %q", got)
+	}
+}
+
+func TestUnknownLocaleFallbacks(t *testing.T) {
+	if err := validateLanguageTag("en-1A"); err == nil {
+		t.Fatal("region containing a digit accepted")
+	}
+	if got := GetMessages("unsupported-ZZ"); got != englishMessages {
+		t.Fatal("unsupported language did not fall back to English")
+	}
+	originalCurrent, originalEnglish := currentMessages, englishMessages
+	t.Cleanup(func() { currentMessages, englishMessages = originalCurrent, originalEnglish })
+	currentMessages, englishMessages = nil, nil
+	if got := Get(func(*Messages) string { return "unexpected" }); got != "" {
+		t.Fatalf("missing messages: %q", got)
 	}
 }

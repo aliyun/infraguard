@@ -698,10 +698,14 @@ func runPolicyFormat(cmd *cobra.Command, args []string) error {
 
 	// Print results - only show changed files and errors
 	hasOutput := false
+	var formatErr error
 	for _, result := range summary.Results {
 		if result.Error != nil {
 			redColor.Printf(msg.PolicyFormat.ErrorPrefix+"%s: %v\n", result.FilePath, result.Error)
 			hasOutput = true
+			if formatErr == nil {
+				formatErr = result.Error
+			}
 			continue
 		}
 
@@ -728,6 +732,9 @@ func runPolicyFormat(cmd *cobra.Command, args []string) error {
 	}
 	if summary.UnchangedFiles > 0 {
 		fmt.Printf(msg.PolicyFormat.SummaryUnchanged+"\n", summary.UnchangedFiles)
+	}
+	if formatErr != nil {
+		return formatErr
 	}
 
 	// Exit with error if files need formatting and not in write mode

@@ -3,6 +3,7 @@ package cmd
 import (
 	"errors"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"sort"
@@ -737,34 +738,37 @@ func formatAndPrintError(templatePath string, err error, msg *i18n.Messages) {
 	if stat, err := os.Stderr.Stat(); err == nil {
 		isTTY = (stat.Mode() & os.ModeCharDevice) != 0
 	}
+	writeScanError(os.Stderr, templatePath, err, msg, isTTY)
+}
 
+func writeScanError(out io.Writer, templatePath string, err error, msg *i18n.Messages, isTTY bool) {
 	// Try to extract FormattedAPIError from error chain using errors.As
 	var formattedErr *ros.FormattedAPIError
 	if errors.As(err, &formattedErr) {
 		// Found FormattedAPIError in error chain
 		if isTTY {
 			// Format error with color - skip the prefix since we'll format it ourselves
-			errorColor.Fprintf(os.Stderr, msg.Scan.SkippedFile+"\n", templatePath, "")
-			fmt.Fprintf(os.Stderr, "  ")
-			errorColor.Fprintf(os.Stderr, msg.Scan.StatusCode+"\n", formattedErr.StatusCode)
-			fmt.Fprintf(os.Stderr, "  ")
-			errorColor.Fprintf(os.Stderr, msg.Scan.Code+"\n", formattedErr.Code)
-			fmt.Fprintf(os.Stderr, "  ")
-			errorColor.Fprintf(os.Stderr, msg.Scan.Message+"\n", formattedErr.Message)
+			errorColor.Fprintf(out, msg.Scan.SkippedFile+"\n", templatePath, "")
+			fmt.Fprintf(out, "  ")
+			errorColor.Fprintf(out, msg.Scan.StatusCode+"\n", formattedErr.StatusCode)
+			fmt.Fprintf(out, "  ")
+			errorColor.Fprintf(out, msg.Scan.Code+"\n", formattedErr.Code)
+			fmt.Fprintf(out, "  ")
+			errorColor.Fprintf(out, msg.Scan.Message+"\n", formattedErr.Message)
 			if formattedErr.RequestID != "" {
-				fmt.Fprintf(os.Stderr, "  ")
-				dimColor.Fprintf(os.Stderr, msg.Scan.RequestID+"\n", formattedErr.RequestID)
+				fmt.Fprintf(out, "  ")
+				dimColor.Fprintf(out, msg.Scan.RequestID+"\n", formattedErr.RequestID)
 			}
 		} else {
 			// No color support, use simple format
-			fmt.Fprintf(os.Stderr, msg.Scan.SkippedFile+"\n", templatePath, formattedErr)
+			fmt.Fprintf(out, msg.Scan.SkippedFile+"\n", templatePath, formattedErr)
 		}
 	} else {
 		// Fallback to simple error format
 		if isTTY {
-			errorColor.Fprintf(os.Stderr, msg.Scan.SkippedFile+"\n", templatePath, err)
+			errorColor.Fprintf(out, msg.Scan.SkippedFile+"\n", templatePath, err)
 		} else {
-			fmt.Fprintf(os.Stderr, msg.Scan.SkippedFile+"\n", templatePath, err)
+			fmt.Fprintf(out, msg.Scan.SkippedFile+"\n", templatePath, err)
 		}
 	}
 }

@@ -434,3 +434,50 @@ func TestMaskSecret(t *testing.T) {
 		})
 	}
 }
+
+func TestCLIConfigMalformedAndRoleInference(t *testing.T) {
+	home := t.TempDir()
+	t.Setenv("HOME", home)
+	t.Setenv("USERPROFILE", home)
+	dir := filepath.Join(home, ".aliyun")
+	if err := os.MkdirAll(dir, 0700); err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(dir, "config.json")
+	for _, tc := range []struct{ name, content string }{
+		{"malformed", `{invalid`},
+		{"no profile", `{"current":"missing","profiles":[]}`},
+		{"missing secret", `{"current":"default","profiles":[{"name":"default","access_key_id":"test-key"}]}`},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			if err := os.WriteFile(path, []byte(tc.content), 0600); err != nil {
+				t.Fatal(err)
+			}
+			if _, err := loadFromCLIConfig(); err == nil {
+				t.Fatal("invalid credentials accepted")
+			}
+		})
+	}
+	role := `{"current":"default","profiles":[{"name":"default","access_key_id":"test-key","access_key_secret":"test-secret","ram_role_arn":"acs:ram::123:role/test"}]}`
+	if err := os.WriteFile(path, []byte(role), 0600); err != nil {
+		t.Fatal(err)
+	}
+	cred, err := loadFromCLIConfig()
+	if err != nil || cred.Type != "ram_role_arn" {
+		t.Fatalf("role inference: %+v %v", cred, err)
+	}
+	if err := os.Remove(path); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Mkdir(path, 0700); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := loadFromCLIConfig(); err == nil {
+		t.Fatal("config directory accepted as file")
+	}
+	t.Setenv("HOME", "")
+	t.Setenv("USERPROFILE", "")
+	if _, err := loadFromCLIConfig(); err == nil {
+		t.Fatal("missing home accepted")
+	}
+}

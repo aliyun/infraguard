@@ -1,7 +1,9 @@
 package template
 
 import (
+	"encoding/json"
 	"fmt"
+	"regexp"
 	"strings"
 
 	"github.com/aliyun/infraguard/pkg/lsp/protocol"
@@ -993,102 +995,40 @@ func findRefValueRangeJSON(content, refName string) protocol.Range {
 	return protocol.Range{}
 }
 
+var jsonGetAttArrayPattern = regexp.MustCompile(`"Fn::GetAtt"\s*:\s*\[`)
+
 func findGetAttResourceRangeJSON(content, resourceName string) protocol.Range {
-	lines := strings.Split(content, "\n")
-	quoted := `"` + resourceName + `"`
-	for i, line := range lines {
-		if strings.Contains(line, `"Fn::GetAtt"`) {
-			bracketIdx := strings.Index(line, "[")
-			if bracketIdx >= 0 {
-				idx := strings.Index(line[bracketIdx:], quoted)
-				if idx >= 0 {
-					absIdx := bracketIdx + idx
-					return protocol.Range{
-						Start: protocol.Position{Line: i, Character: absIdx + 1},
-						End:   protocol.Position{Line: i, Character: absIdx + 1 + len(resourceName)},
-					}
-				}
-			}
-		}
-		// Multiline: resource name on its own line after Fn::GetAtt
-		if strings.Contains(line, quoted) {
-			for j := i - 1; j >= 0; j-- {
-				lt := strings.TrimSpace(lines[j])
-				if strings.Contains(lt, `"Fn::GetAtt"`) {
-					itemsBefore := 0
-					for k := j + 1; k < i; k++ {
-						kt := strings.TrimSpace(lines[k])
-						if strings.Contains(kt, `"`) && kt != "[" && kt != "]" {
-							itemsBefore++
-						}
-					}
-					if itemsBefore == 0 {
-						idx := strings.Index(line, quoted)
-						if idx >= 0 {
-							return protocol.Range{
-								Start: protocol.Position{Line: i, Character: idx + 1},
-								End:   protocol.Position{Line: i, Character: idx + 1 + len(resourceName)},
-							}
-						}
-					}
-					break
-				}
-				if strings.ContainsAny(lt, "{}") && !strings.Contains(lt, "[") {
-					break
-				}
-			}
-		}
-	}
-	return protocol.Range{}
+	return findGetAttRangeJSON(content, resourceName, "")
 }
 
 func findGetAttAttributeRangeJSON(content, resourceName, attrName string) protocol.Range {
-	lines := strings.Split(content, "\n")
-	quotedRes := `"` + resourceName + `"`
-	quotedAttr := `"` + attrName + `"`
-	for i, line := range lines {
-		// Inline: "Fn::GetAtt": ["Resource", "Attribute"]
-		if strings.Contains(line, `"Fn::GetAtt"`) {
-			bracketIdx := strings.Index(line, "[")
-			if bracketIdx >= 0 {
-				elements, positions := extractJSONArrayElements(line[bracketIdx+1:], bracketIdx+1)
-				if len(elements) >= 2 && len(positions) >= 2 && elements[0] == resourceName && elements[1] == attrName {
-					pos := positions[1]
-					return protocol.Range{
-						Start: protocol.Position{Line: i, Character: pos.start},
-						End:   protocol.Position{Line: i, Character: pos.start + len(attrName)},
-					}
-				}
+	return findGetAttRangeJSON(content, resourceName, attrName)
+}
+
+func findGetAttRangeJSON(content, resourceName, attrName string) protocol.Range {
+	for _, match := range jsonGetAttArrayPattern.FindAllStringIndex(content, -1) {
+		arrayStart := match[1] - 1
+		decoder := json.NewDecoder(strings.NewReader(content[arrayStart:]))
+		_, _ = decoder.Token() // The match ends at the opening array bracket.
+		start := arrayStart + 1
+		resource, err := decoder.Token()
+		if err != nil || resource != resourceName {
+			continue
+		}
+		if attrName != "" {
+			start = arrayStart + int(decoder.InputOffset())
+			attribute, err := decoder.Token()
+			if err != nil || attribute != attrName {
+				continue
 			}
 		}
-		// Multiline: attribute on its own line after resource
-		if strings.Contains(line, quotedAttr) {
-			for j := i - 1; j >= 0; j-- {
-				lt := strings.TrimSpace(lines[j])
-				if strings.Contains(lt, quotedRes) {
-					// Verify this is under a Fn::GetAtt
-					for k := j - 1; k >= 0; k-- {
-						kt := strings.TrimSpace(lines[k])
-						if strings.Contains(kt, `"Fn::GetAtt"`) {
-							idx := strings.Index(line, quotedAttr)
-							if idx >= 0 {
-								return protocol.Range{
-									Start: protocol.Position{Line: i, Character: idx + 1},
-									End:   protocol.Position{Line: i, Character: idx + 1 + len(attrName)},
-								}
-							}
-							break
-						}
-						if strings.ContainsAny(kt, "{}") && !strings.Contains(kt, "[") {
-							break
-						}
-					}
-					break
-				}
-				if strings.Contains(lt, `"Fn::GetAtt"`) || (strings.ContainsAny(lt, "{}") && !strings.Contains(lt, "[")) {
-					break
-				}
-			}
+		end := arrayStart + int(decoder.InputOffset()) - 1
+		start += strings.IndexByte(content[start:end], '"') + 1
+		line := strings.Count(content[:start], "\n")
+		col := start - (strings.LastIndexByte(content[:start], '\n') + 1)
+		return protocol.Range{
+			Start: protocol.Position{Line: line, Character: col},
+			End:   protocol.Position{Line: line, Character: col + end - start},
 		}
 	}
 	return protocol.Range{}

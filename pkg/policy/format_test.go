@@ -338,3 +338,14 @@ func TestSortI18nLanguages(t *testing.T) {
 		})
 	})
 }
+
+func TestSortMetaFieldsKeepsCommentsWithFields(t *testing.T) {
+	input := []byte("rule_meta := {\n  # description comment\n  \"description\": \"details\",\n  # severity comment\n  \"severity\": \"high\",\n  # id comment\n  \"id\": \"one\"\n}\n")
+	got := string(sortMetaFields(input))
+	id := strings.Index(got, "# id comment\n  \"id\"")
+	severity := strings.Index(got, "# severity comment\n  \"severity\"")
+	description := strings.Index(got, "# description comment\n  \"description\"")
+	if id < 0 || severity <= id || description <= severity {
+		t.Fatalf("comments or field order lost:\n%s", got)
+	}
+}

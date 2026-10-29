@@ -2,6 +2,7 @@ package template
 
 import (
 	"fmt"
+	"regexp"
 	"strings"
 
 	"github.com/aliyun/infraguard/pkg/i18n"
@@ -946,7 +947,7 @@ func findGetAttResourceRangeYAML(content, resourceName string) protocol.Range {
 			}
 		}
 		// Fn::GetAtt: list form — first list item
-		if strings.HasPrefix(trimmed, "- "+resourceName) {
+		if yamlGetAttListValue(trimmed) == resourceName && resourceName != "" && isFirstGetAttListItem(lines, i) {
 			col := strings.Index(line, resourceName)
 			if col >= 0 {
 				return protocol.Range{
@@ -957,6 +958,9 @@ func findGetAttResourceRangeYAML(content, resourceName string) protocol.Range {
 		}
 		// Fn::GetAtt: inline value
 		if strings.HasPrefix(trimmed, "Fn::GetAtt:") {
+			if res, _, resCol, _, ok := yamlInlineGetAttPositions(line); ok && res == resourceName {
+				return protocol.Range{Start: protocol.Position{Line: i, Character: resCol}, End: protocol.Position{Line: i, Character: resCol + len(resourceName)}}
+			}
 			val := strings.TrimSpace(strings.TrimPrefix(trimmed, "Fn::GetAtt:"))
 			if val == resourceName {
 				col := strings.Index(line, resourceName)
@@ -975,6 +979,9 @@ func findGetAttResourceRangeYAML(content, resourceName string) protocol.Range {
 func findGetAttAttributeRangeYAML(content, resourceName, attrName string) protocol.Range {
 	lines := strings.Split(content, "\n")
 	for i, line := range lines {
+		if res, attr, _, attrCol, ok := yamlInlineGetAttPositions(line); ok && res == resourceName && attr == attrName {
+			return protocol.Range{Start: protocol.Position{Line: i, Character: attrCol}, End: protocol.Position{Line: i, Character: attrCol + len(attrName)}}
+		}
 		// !GetAtt Resource.Attribute
 		if idx := strings.Index(line, "!GetAtt "); idx >= 0 {
 			val := strings.TrimSpace(line[idx+8:])
@@ -989,8 +996,8 @@ func findGetAttAttributeRangeYAML(content, resourceName, attrName string) protoc
 		}
 		// Fn::GetAtt list form — second list item is the attribute
 		trimmed := strings.TrimSpace(line)
-		if strings.HasPrefix(trimmed, "- "+attrName) {
-			attrVal := strings.TrimSpace(strings.TrimPrefix(trimmed, "- "))
+		if strings.HasPrefix(trimmed, "- ") {
+			attrVal := yamlGetAttListValue(trimmed)
 			if attrVal != attrName {
 				continue
 			}
@@ -998,8 +1005,8 @@ func findGetAttAttributeRangeYAML(content, resourceName, attrName string) protoc
 			for j := i - 1; j >= 0; j-- {
 				jt := strings.TrimSpace(lines[j])
 				if strings.HasPrefix(jt, "- ") {
-					prevVal := strings.TrimSpace(strings.TrimPrefix(jt, "- "))
-					if prevVal == resourceName {
+					prevVal := yamlGetAttListValue(jt)
+					if prevVal == resourceName && isFirstGetAttListItem(lines, j) {
 						col := strings.Index(line, attrName)
 						if col >= 0 {
 							return protocol.Range{
@@ -1017,4 +1024,63 @@ func findGetAttAttributeRangeYAML(content, resourceName, attrName string) protoc
 		}
 	}
 	return protocol.Range{}
+}
+
+func yamlGetAttListValue(line string) string {
+	if !strings.HasPrefix(line, "- ") {
+		return ""
+	}
+	value := strings.TrimSpace(strings.TrimPrefix(line, "- "))
+	if comment := strings.Index(value, " #"); comment >= 0 {
+		value = strings.TrimSpace(value[:comment])
+	}
+	return strings.Trim(value, `"'`)
+}
+
+var yamlGetAttKeyPattern = regexp.MustCompile(`^(?:Fn::GetAtt|'Fn::GetAtt'|"Fn::GetAtt")[ \t]*:(?:[ \t]|$)`)
+
+// Require the first item under Fn::GetAtt so unrelated lists are not matched.
+func isFirstGetAttListItem(lines []string, line int) bool {
+	indent := countIndent(lines[line])
+	for i := line - 1; i >= 0; i-- {
+		trimmed := strings.TrimSpace(lines[i])
+		if trimmed == "" || strings.HasPrefix(trimmed, "#") {
+			continue
+		}
+		for strings.HasPrefix(trimmed, "- ") {
+			trimmed = strings.TrimSpace(trimmed[2:])
+		}
+		return countIndent(lines[i]) <= indent && yamlGetAttKeyPattern.MatchString(trimmed)
+	}
+	return false
+}
+
+func yamlInlineGetAttPositions(line string) (resource, attribute string, resourceCol, attributeCol int, ok bool) {
+	if !strings.HasPrefix(strings.TrimSpace(line), "Fn::GetAtt:") {
+		return
+	}
+	key := strings.Index(line, "Fn::GetAtt:")
+	start := strings.Index(line[key:], "[")
+	if start < 0 {
+		return
+	}
+	start += key + 1
+	end := strings.Index(line[start:], "]")
+	if end < 0 {
+		return
+	}
+	args := line[start : start+end]
+	comma := strings.Index(args, ",")
+	if comma < 0 {
+		return
+	}
+	first, second := args[:comma], args[comma+1:]
+	resource = strings.Trim(strings.TrimSpace(first), `"'`)
+	attribute = strings.Trim(strings.TrimSpace(second), `"'`)
+	if resource == "" || attribute == "" {
+		return "", "", 0, 0, false
+	}
+	resourceCol = start + strings.Index(first, resource)
+	attributeCol = start + comma + 1 + strings.Index(second, attribute)
+	return resource, attribute, resourceCol, attributeCol, true
 }

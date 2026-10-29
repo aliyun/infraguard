@@ -227,6 +227,7 @@ func TestBuildGetterURL(t *testing.T) {
 }
 
 func TestManagerUpdate(t *testing.T) {
+	isolateGitConfig(t)
 	Convey("Given a Manager", t, func() {
 		tmpDir, err := os.MkdirTemp("", "policy-update-test")
 		So(err, ShouldBeNil)
@@ -261,6 +262,7 @@ func TestManagerUpdate(t *testing.T) {
 }
 
 func TestManagerUpdateFromOSS(t *testing.T) {
+	isolateGitConfig(t)
 	Convey("Given a Manager using the default OSS policy source", t, func() {
 		tmpDir, err := os.MkdirTemp("", "policy-oss-update-test")
 		So(err, ShouldBeNil)
@@ -492,6 +494,14 @@ func buildPolicyTarGz(t *testing.T, files map[string]string) []byte {
 		t.Fatalf("close gzip: %v", err)
 	}
 	return buf.Bytes()
+}
+
+func isolateGitConfig(t *testing.T) {
+	t.Helper()
+	t.Setenv("GIT_CONFIG_NOSYSTEM", "1")
+	t.Setenv("GIT_CONFIG_GLOBAL", filepath.Join(t.TempDir(), "gitconfig"))
+	t.Setenv("GIT_CONFIG_COUNT", "0")
+	t.Setenv("GIT_TERMINAL_PROMPT", "0")
 }
 
 func initPolicyGitRepo(t *testing.T, tag string, files map[string]string) string {

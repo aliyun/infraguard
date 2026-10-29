@@ -35,6 +35,10 @@ func staticHandler() http.Handler {
 			http.Error(w, "static assets unavailable", http.StatusInternalServerError)
 		})
 	}
+	return staticHandlerFS(sub)
+}
+
+func staticHandlerFS(sub fs.FS) http.Handler {
 	built := hasFrontend(sub)
 	fileServer := http.FileServer(http.FS(sub))
 

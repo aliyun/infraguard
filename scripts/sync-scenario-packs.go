@@ -1,3 +1,5 @@
+//go:build ignore
+
 // Command sync-scenario-packs updates top-level scenario packs so each one
 // explicitly contains the de-duplicated rule union from its current curated
 // rules and all sibling packs in the scenario directory.

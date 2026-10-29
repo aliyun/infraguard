@@ -10,6 +10,9 @@ import (
 )
 
 func TestConfigCommand(t *testing.T) {
+	home := t.TempDir()
+	t.Setenv("HOME", home)
+	t.Setenv("USERPROFILE", home)
 	Convey("Given the config command", t, func() {
 
 		Convey("When executing config set command", func() {
