@@ -46,6 +46,8 @@ test: gen-policy ## Run all tests
 	$(GOCMD) test ./pkg/... ./cmd/... ./policies/...
 
 test-coverage: gen-policy ## Check total Go statement coverage is at least 95%
+	@mkdir -p reports
+	@rm -f reports/coverage.out reports/coverage.xml
 	@set -e; workdir=$$(mktemp -d); trap 'rm -rf "$$workdir"' EXIT; \
 	all_packages=$$($(GOCMD) list ./pkg/... ./cmd/... ./policies/...); \
 	packages=$$(printf '%s\n' "$$all_packages" | awk '$$0 !~ /\/cmd\/policy-dump$$/'); \
@@ -58,6 +60,7 @@ test-coverage: gen-policy ## Check total Go statement coverage is at least 95%
 		$(GOCMD) test -timeout=30m -coverprofile="$$workdir/script.out" "$$@"; \
 		tail -n +2 "$$workdir/script.out" >> "$$workdir/all.out"; \
 	done; \
+	awk 'NR == 1 { print; next } { key = $$1 " " $$2; if (!(key in hits) || $$3 > hits[key]) hits[key] = $$3 } END { for (key in hits) print key, hits[key] }' "$$workdir/all.out" > reports/coverage.out; \
 	awk 'NR > 1 { statements[$$1] = $$2; if ($$3 > 0) hit[$$1] = 1 } END { for (block in statements) { total += statements[block]; if (hit[block]) covered += statements[block] } if (total == 0) { print "No coverage data"; exit 1 } printf "Total statement coverage: %.2f%% (%d/%d)\n", 100 * covered / total, covered, total; if (covered / total < 0.95) { print "Coverage is below 95%"; exit 1 } }' "$$workdir/all.out"
 
 test-policy: gen-policy ## Run policy tests only
