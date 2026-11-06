@@ -59,6 +59,7 @@ openspec
 # infraguard
 /report.html
 coverage.html
+/reports/
 
 # VS Code extension
 *.vsix

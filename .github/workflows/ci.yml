@@ -21,6 +21,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
 
       - name: Set up Go
         uses: actions/setup-go@v5
@@ -36,6 +39,49 @@ jobs:
       - name: Check Go coverage
         if: matrix.os == 'ubuntu-latest'
         run: make test-coverage
+
+      - name: Generate main coverage XML
+        if: ${{ !cancelled() && matrix.os == 'ubuntu-latest' && hashFiles('reports/coverage.out') != '' }}
+        run: |
+          # Resolve standalone scripts without dropping their build-ignored files.
+          sed -e "s|$(go list -m)/||g" -e "s|$PWD/||g" reports/coverage.out > reports/coverage-relative.out
+          go run github.com/t-yuki/gocover-cobertura@aaee18c8195c3f2d90e5ef80ca918d265463842a < reports/coverage-relative.out > reports/coverage.xml
+          python3 - <<'PY'
+          import pathlib
+          import xml.etree.ElementTree as ET
+          profile = pathlib.Path('reports/coverage-relative.out').read_text().splitlines()[1:]
+          expected = {line.rsplit(':', 1)[0] for line in profile}
+          root = ET.parse('reports/coverage.xml').getroot()
+          actual = {item.attrib['filename'] for item in root.findall('.//class')}
+          assert expected and actual == expected, f'Coverage file mismatch: {expected ^ actual}'
+          PY
+
+      - name: Save main coverage report
+        if: ${{ !cancelled() && matrix.os == 'ubuntu-latest' && hashFiles('reports/coverage.xml') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ut-coverage-main
+          path: reports/coverage.xml
+          if-no-files-found: error
+
+      - name: Save total coverage report
+        if: ${{ !cancelled() && matrix.os == 'ubuntu-latest' && hashFiles('reports/coverage.xml') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ut-coverage
+          path: reports/coverage.xml
+          if-no-files-found: error
+
+      - name: Upload main coverage to Codecov
+        if: ${{ !cancelled() && matrix.os == 'ubuntu-latest' && hashFiles('reports/coverage.xml') != '' }}
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: aliyun/infraguard
+          files: reports/coverage.xml
+          flags: main
+          disable_search: true
+          fail_ci_if_error: true
 
   check:
     name: Check Generated Files, Lint and Validate Translations
