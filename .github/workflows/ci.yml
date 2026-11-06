@@ -33,6 +33,27 @@ jobs:
       - name: Run tests
         run: make test
 
+      - name: Save main test results
+        if: ${{ !cancelled() && matrix.os == 'ubuntu-latest' && hashFiles('reports/testcase.xml') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ut-test-results-main
+          path: reports/testcase.xml
+          if-no-files-found: error
+
+      - name: Upload main test results to Codecov
+        if: ${{ !cancelled() && matrix.os == 'ubuntu-latest' && hashFiles('reports/testcase.xml') != '' }}
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: aliyun/infraguard
+          report_type: test_results
+          files: reports/testcase.xml
+          flags: main
+          name: ut-test-results-main
+          disable_search: true
+          fail_ci_if_error: true
+
       - name: Run policy tests
         run: make test-policy
 

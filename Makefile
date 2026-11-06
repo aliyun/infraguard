@@ -43,7 +43,8 @@ doc-serve: doc-build ## Serve the documentation site locally
 ## Test & quality
 
 test: gen-policy ## Run all tests
-	$(GOCMD) test ./pkg/... ./cmd/... ./policies/...
+	@mkdir -p reports
+	$(GOCMD) run gotest.tools/gotestsum@v1.13.0 --junitfile reports/testcase.xml -- ./pkg/... ./cmd/... ./policies/...
 
 test-coverage: gen-policy ## Check total Go statement coverage is at least 95%
 	@mkdir -p reports
